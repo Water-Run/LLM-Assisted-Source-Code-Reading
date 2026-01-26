@@ -1,0 +1,857 @@
+\doxysection{llimits.\+h File Reference}
+\hypertarget{llimits_8h}{}\label{llimits_8h}\index{llimits.h@{llimits.h}}
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+Include dependency graph for llimits.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{llimits_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{llimits_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ad40053171fbf571af0be66edc7a93457}{l\+\_\+numbits}}(t)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a99e52005f8b99ce8e36df841b281078e}{MAX\+\_\+\+LMEM}}~  \mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}, (\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}}, 1) $<$$<$ (\mbox{\hyperlink{llimits_8h_ad40053171fbf571af0be66edc7a93457}{l\+\_\+numbits}}(\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}) -\/ 1)) -\/ 1)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a49c73f79c5646b12989da5efe4f2ad38}{APIstatus}}(st)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}{MAX\+\_\+\+SIZET}}~((size\+\_\+t)(\texorpdfstring{$\sim$}{\string~}(size\+\_\+t)0))
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a0592dba56693fad79136250c11e5a7fe}{MAX\+\_\+\+SIZE}}
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ada65e002d4b7df9ebfa7dde2d12357db}{ispow2}}(x)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a6185afb135442b229d91201b1a3c6eb2}{LL}}(x)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a39eebd62295cdb734e7bcc8e5896fc81}{L\+\_\+\+P2I}}~size\+\_\+t
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ad861f24ac9e8c32f78455aab3d2e7b51}{point2uint}}(p)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a5978f5fda715bd80e845df1e16ad7780}{lua\+\_\+assert}}(c)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a135fb5fd8a78712f702d4c8848995230}{assert\+\_\+code}}(c)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\+\_\+exp}}(c,  e)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a825f22ba1e16fd60e3aae8fe8efc1c4d}{lua\+\_\+longassert}}(c)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a86d500a34c624c2cae56bc25a31b12f3}{UNUSED}}(x)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t,  exp)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a52a5166d7dc0590b63a9331cfc0f4564}{cast\+\_\+void}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a672c0fddf71f33d86ed8aa62ad914d52}{cast\+\_\+voidp}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ac92cecb12c5aba1164877e81e76e2cb6}{cast\+\_\+num}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\+\_\+int}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a3d554f3ac1b8468a33284d7d00cac5b6}{cast\+\_\+short}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\+\_\+uint}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a596f5b6e992f53a5a4e5732083448dd4}{cast\+\_\+byte}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_aa0c49a2b32329cc39df5ccafd1f720e0}{cast\+\_\+uchar}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a045e548576226e8c7e9ab5de8a59f4bc}{cast\+\_\+char}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a1d905979f8c901b7143b43ee98341206}{cast\+\_\+charp}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\+\_\+sizet}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a0af45e91222292a2241c30eed1a4bf15}{cast\+\_\+\+Integer}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\+\_\+\+Inst}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a5871309e671ba9f938fcb1e0d3bcbeca}{l\+\_\+cast\+S2U}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a873fa1b216f8caed046edbcebd4c1bc8}{l\+\_\+cast\+U2S}}(i)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ad4a840f5a18a972fd5c003a74032b4cf}{cast\+\_\+st2S}}(sz)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_aed887ccea8c4b2bff34e15ce93ae3915}{ct\+\_\+diff2sz}}(df)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ab53e4f11d857c0396b569050335bc1bd}{ct\+\_\+diff2S}}(df)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_acc9d4f3030e913a0df31d4b06a9251da}{cast\+\_\+func}}(p)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\+\_\+noret}}~void
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ab9db15f364731ab60065e372cc023e36}{l\+\_\+inline}}~inline
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a30d6348cf339bed10220ef7dd501fbe6}{l\+\_\+sinline}}~static \mbox{\hyperlink{llimits_8h_ab9db15f364731ab60065e372cc023e36}{l\+\_\+inline}}
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a9ca37a98a6032ab21dcfd63d42e66f89}{luai\+\_\+numidiv}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a2a095b8d523b51332eb223df531367d2}{luai\+\_\+numdiv}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ac6e6bfca420c761a89eee023103c34f4}{luai\+\_\+nummod}}(L,  a,  b,  m)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a4a3b06f2c7239f8dcbd101ca20cc507a}{luai\+\_\+numpow}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_af3eb5d1884e4512d2701bbc97bb82e81}{luai\+\_\+numadd}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a93e733c7e860d7fb838b6af414405662}{luai\+\_\+numsub}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a1cbcef9e269f0ac1a5f34898a7c4ae36}{luai\+\_\+nummul}}(L,  a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a84c57a852cdc4b46c678cb3fab715846}{luai\+\_\+numunm}}(L,  a)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ae06bbbe345c8bb028e233120466d387d}{luai\+\_\+numeq}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ae035faaeb068720ee8540210870ee5c9}{luai\+\_\+numlt}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_af803655e8c9be7ba1f3f3fb0c4f730d7}{luai\+\_\+numle}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a252c8bc400dc44bd996b19e7cf487871}{luai\+\_\+numgt}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a727a96f18bda273bd57dee105a274abe}{luai\+\_\+numge}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a5ec99a344dba64c30c3ddc6eed8e2e51}{luai\+\_\+numisnan}}(a)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a4b0d24a7a90003778668e2d01831bb88}{lua\+\_\+numbertointeger}}(n,  p)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}}~extern
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a3f2cdf96bb04b9d2a9a318a126f99182}{LUAI\+\_\+\+DDEC}}(dec)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_affa3a74c87c69373c262fdbdc7f97837}{LUAI\+\_\+\+DDEF}}~/\texorpdfstring{$\ast$}{*} empty \texorpdfstring{$\ast$}{*}/ /\texorpdfstring{$\ast$}{*} 空 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a5df9232284dcc98967aa354c6abab9b2}{l\+\_\+likely}}(x)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_ae9c389231436634605d75b0c31f8c3be}{l\+\_\+unlikely}}(x)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a575f50815c13a7a99b8ed1ac03fe714a}{lua\+\_\+writestring}}(s,  l)
+\item 
+\#define \mbox{\hyperlink{llimits_8h_aa4791d9826315ea2d1c716f852026246}{lua\+\_\+writeline}}()
+\item 
+\#define \mbox{\hyperlink{llimits_8h_a0706f68a79575584d365d033d613707b}{lua\+\_\+writestringerror}}(s,  p)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef long \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}
+\item 
+typedef unsigned long \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}}
+\item 
+typedef unsigned char \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}}
+\item 
+typedef signed char \mbox{\hyperlink{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb}{ls\+\_\+byte}}
+\item 
+typedef \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}
+\item 
+typedef \mbox{\hyperlink{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a}{LUAI\+\_\+\+UACNUMBER}} \mbox{\hyperlink{llimits_8h_a792eefbf119f914b73400c314411c3e2}{l\+\_\+uac\+Number}}
+\item 
+typedef \mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\+\_\+\+UACINT}} \mbox{\hyperlink{llimits_8h_ac8d5f795aedd7e084ef2dab7b5d81bde}{l\+\_\+uac\+Int}}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{llimits_8h_a68da1d6d858100a545e5fd84f65abe41}{voidf}}) (void)
+\item 
+typedef unsigned long \mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{llimits_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{llimits_8h_a49c73f79c5646b12989da5efe4f2ad38}\index{llimits.h@{llimits.h}!APIstatus@{APIstatus}}
+\index{APIstatus@{APIstatus}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{APIstatus}{APIstatus}}
+{\footnotesize\ttfamily \label{llimits_8h_a49c73f79c5646b12989da5efe4f2ad38} 
+\#define APIstatus(\begin{DoxyParamCaption}\item[{}]{st}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}(st)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a135fb5fd8a78712f702d4c8848995230}\index{llimits.h@{llimits.h}!assert\_code@{assert\_code}}
+\index{assert\_code@{assert\_code}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{assert\_code}{assert\_code}}
+{\footnotesize\ttfamily \label{llimits_8h_a135fb5fd8a78712f702d4c8848995230} 
+\#define assert\+\_\+code(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}\index{llimits.h@{llimits.h}!cast@{cast}}
+\index{cast@{cast}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast}{cast}}
+{\footnotesize\ttfamily \label{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34} 
+\#define cast(\begin{DoxyParamCaption}\item[{}]{t}{, }\item[{}]{exp}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((t)(exp))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a596f5b6e992f53a5a4e5732083448dd4}\index{llimits.h@{llimits.h}!cast\_byte@{cast\_byte}}
+\index{cast\_byte@{cast\_byte}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_byte}{cast\_byte}}
+{\footnotesize\ttfamily \label{llimits_8h_a596f5b6e992f53a5a4e5732083448dd4} 
+\#define cast\+\_\+byte(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}},\ (i))\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为lu\_byte\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a045e548576226e8c7e9ab5de8a59f4bc}\index{llimits.h@{llimits.h}!cast\_char@{cast\_char}}
+\index{cast\_char@{cast\_char}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_char}{cast\_char}}
+{\footnotesize\ttfamily \label{llimits_8h_a045e548576226e8c7e9ab5de8a59f4bc} 
+\#define cast\+\_\+char(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{char},\ (i))\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为char\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a1d905979f8c901b7143b43ee98341206}\index{llimits.h@{llimits.h}!cast\_charp@{cast\_charp}}
+\index{cast\_charp@{cast\_charp}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_charp}{cast\_charp}}
+{\footnotesize\ttfamily \label{llimits_8h_a1d905979f8c901b7143b43ee98341206} 
+\#define cast\+\_\+charp(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{char}\ *,\ (i))\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为char指针\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_acc9d4f3030e913a0df31d4b06a9251da}\index{llimits.h@{llimits.h}!cast\_func@{cast\_func}}
+\index{cast\_func@{cast\_func}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_func}{cast\_func}}
+{\footnotesize\ttfamily \label{llimits_8h_acc9d4f3030e913a0df31d4b06a9251da} 
+\#define cast\+\_\+func(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\mbox{\hyperlink{llimits_8h_a68da1d6d858100a545e5fd84f65abe41}{voidf}})(p))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a95080c27926cc0e377cd52941486acd5}\index{llimits.h@{llimits.h}!cast\_Inst@{cast\_Inst}}
+\index{cast\_Inst@{cast\_Inst}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_Inst}{cast\_Inst}}
+{\footnotesize\ttfamily \label{llimits_8h_a95080c27926cc0e377cd52941486acd5} 
+\#define cast\+\_\+\+Inst(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}},\ (i))\ \ \ \ \textcolor{comment}{/*\ 转换为指令类型\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}\index{llimits.h@{llimits.h}!cast\_int@{cast\_int}}
+\index{cast\_int@{cast\_int}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_int}{cast\_int}}
+{\footnotesize\ttfamily \label{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08} 
+\#define cast\+\_\+int(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{int},\ (i))\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为int\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a0af45e91222292a2241c30eed1a4bf15}\index{llimits.h@{llimits.h}!cast\_Integer@{cast\_Integer}}
+\index{cast\_Integer@{cast\_Integer}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_Integer}{cast\_Integer}}
+{\footnotesize\ttfamily \label{llimits_8h_a0af45e91222292a2241c30eed1a4bf15} 
+\#define cast\+\_\+\+Integer(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}},\ (i))\ \textcolor{comment}{/*\ 转换为Lua整数类型\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ac92cecb12c5aba1164877e81e76e2cb6}\index{llimits.h@{llimits.h}!cast\_num@{cast\_num}}
+\index{cast\_num@{cast\_num}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_num}{cast\_num}}
+{\footnotesize\ttfamily \label{llimits_8h_ac92cecb12c5aba1164877e81e76e2cb6} 
+\#define cast\+\_\+num(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}},\ (i))\ \ \ \ \ \ \textcolor{comment}{/*\ 转换为Lua数值类型\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a3d554f3ac1b8468a33284d7d00cac5b6}\index{llimits.h@{llimits.h}!cast\_short@{cast\_short}}
+\index{cast\_short@{cast\_short}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_short}{cast\_short}}
+{\footnotesize\ttfamily \label{llimits_8h_a3d554f3ac1b8468a33284d7d00cac5b6} 
+\#define cast\+\_\+short(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{short},\ (i))\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为short\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}\index{llimits.h@{llimits.h}!cast\_sizet@{cast\_sizet}}
+\index{cast\_sizet@{cast\_sizet}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_sizet}{cast\_sizet}}
+{\footnotesize\ttfamily \label{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1} 
+\#define cast\+\_\+sizet(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{size\_t},\ (i))\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为size\_t\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ad4a840f5a18a972fd5c003a74032b4cf}\index{llimits.h@{llimits.h}!cast\_st2S@{cast\_st2S}}
+\index{cast\_st2S@{cast\_st2S}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_st2S}{cast\_st2S}}
+{\footnotesize\ttfamily \label{llimits_8h_ad4a840f5a18a972fd5c003a74032b4cf} 
+\#define cast\+\_\+st2S(\begin{DoxyParamCaption}\item[{}]{sz}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}})(sz))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_aa0c49a2b32329cc39df5ccafd1f720e0}\index{llimits.h@{llimits.h}!cast\_uchar@{cast\_uchar}}
+\index{cast\_uchar@{cast\_uchar}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_uchar}{cast\_uchar}}
+{\footnotesize\ttfamily \label{llimits_8h_aa0c49a2b32329cc39df5ccafd1f720e0} 
+\#define cast\+\_\+uchar(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char},\ (i))\ \textcolor{comment}{/*\ 转换为unsigned\ char\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}\index{llimits.h@{llimits.h}!cast\_uint@{cast\_uint}}
+\index{cast\_uint@{cast\_uint}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_uint}{cast\_uint}}
+{\footnotesize\ttfamily \label{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56} 
+\#define cast\+\_\+uint(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int},\ (i))\ \ \ \textcolor{comment}{/*\ 转换为unsigned\ int\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a52a5166d7dc0590b63a9331cfc0f4564}\index{llimits.h@{llimits.h}!cast\_void@{cast\_void}}
+\index{cast\_void@{cast\_void}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_void}{cast\_void}}
+{\footnotesize\ttfamily \label{llimits_8h_a52a5166d7dc0590b63a9331cfc0f4564} 
+\#define cast\+\_\+void(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{void},\ (i))\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为void\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a672c0fddf71f33d86ed8aa62ad914d52}\index{llimits.h@{llimits.h}!cast\_voidp@{cast\_voidp}}
+\index{cast\_voidp@{cast\_voidp}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{cast\_voidp}{cast\_voidp}}
+{\footnotesize\ttfamily \label{llimits_8h_a672c0fddf71f33d86ed8aa62ad914d52} 
+\#define cast\+\_\+voidp(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keywordtype}{void}\ *,\ (i))\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 转换为void指针\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_afac1404af62451f8653440ecb6e773fc}\index{llimits.h@{llimits.h}!check\_exp@{check\_exp}}
+\index{check\_exp@{check\_exp}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{check\_exp}{check\_exp}}
+{\footnotesize\ttfamily \label{llimits_8h_afac1404af62451f8653440ecb6e773fc} 
+\#define check\+\_\+exp(\begin{DoxyParamCaption}\item[{}]{c}{, }\item[{}]{e}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_a5978f5fda715bd80e845df1e16ad7780}{lua\_assert}}(c),\ (e))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ab53e4f11d857c0396b569050335bc1bd}\index{llimits.h@{llimits.h}!ct\_diff2S@{ct\_diff2S}}
+\index{ct\_diff2S@{ct\_diff2S}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{ct\_diff2S}{ct\_diff2S}}
+{\footnotesize\ttfamily \label{llimits_8h_ab53e4f11d857c0396b569050335bc1bd} 
+\#define ct\+\_\+diff2S(\begin{DoxyParamCaption}\item[{}]{df}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_ad4a840f5a18a972fd5c003a74032b4cf}{cast\_st2S}}(\mbox{\hyperlink{llimits_8h_aed887ccea8c4b2bff34e15ce93ae3915}{ct\_diff2sz}}(df))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_aed887ccea8c4b2bff34e15ce93ae3915}\index{llimits.h@{llimits.h}!ct\_diff2sz@{ct\_diff2sz}}
+\index{ct\_diff2sz@{ct\_diff2sz}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{ct\_diff2sz}{ct\_diff2sz}}
+{\footnotesize\ttfamily \label{llimits_8h_aed887ccea8c4b2bff34e15ce93ae3915} 
+\#define ct\+\_\+diff2sz(\begin{DoxyParamCaption}\item[{}]{df}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((size\_t)(df))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ada65e002d4b7df9ebfa7dde2d12357db}\index{llimits.h@{llimits.h}!ispow2@{ispow2}}
+\index{ispow2@{ispow2}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{ispow2}{ispow2}}
+{\footnotesize\ttfamily \label{llimits_8h_ada65e002d4b7df9ebfa7dde2d12357db} 
+\#define ispow2(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((x)\ \&\ ((x)\ -\/\ 1))\ ==\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a5871309e671ba9f938fcb1e0d3bcbeca}\index{llimits.h@{llimits.h}!l\_castS2U@{l\_castS2U}}
+\index{l\_castS2U@{l\_castS2U}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_castS2U}{l\_castS2U}}
+{\footnotesize\ttfamily \label{llimits_8h_a5871309e671ba9f938fcb1e0d3bcbeca} 
+\#define l\+\_\+cast\+S2U(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}})(i))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a873fa1b216f8caed046edbcebd4c1bc8}\index{llimits.h@{llimits.h}!l\_castU2S@{l\_castU2S}}
+\index{l\_castU2S@{l\_castU2S}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_castU2S}{l\_castU2S}}
+{\footnotesize\ttfamily \label{llimits_8h_a873fa1b216f8caed046edbcebd4c1bc8} 
+\#define l\+\_\+cast\+U2S(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}})(i))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ab9db15f364731ab60065e372cc023e36}\index{llimits.h@{llimits.h}!l\_inline@{l\_inline}}
+\index{l\_inline@{l\_inline}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_inline}{l\_inline}}
+{\footnotesize\ttfamily \label{llimits_8h_ab9db15f364731ab60065e372cc023e36} 
+\#define l\+\_\+inline~inline}
+
+\Hypertarget{llimits_8h_a5df9232284dcc98967aa354c6abab9b2}\index{llimits.h@{llimits.h}!l\_likely@{l\_likely}}
+\index{l\_likely@{l\_likely}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_likely}{l\_likely}}
+{\footnotesize\ttfamily \label{llimits_8h_a5df9232284dcc98967aa354c6abab9b2} 
+\#define l\+\_\+likely(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{luaconf_8h_a80cfa8350edf303de263ca15e45acde3}{luai\_likely}}(x)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}\index{llimits.h@{llimits.h}!l\_noret@{l\_noret}}
+\index{l\_noret@{l\_noret}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_noret}{l\_noret}}
+{\footnotesize\ttfamily \label{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302} 
+\#define l\+\_\+noret~void}
+
+\Hypertarget{llimits_8h_ad40053171fbf571af0be66edc7a93457}\index{llimits.h@{llimits.h}!l\_numbits@{l\_numbits}}
+\index{l\_numbits@{l\_numbits}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_numbits}{l\_numbits}}
+{\footnotesize\ttfamily \label{llimits_8h_ad40053171fbf571af0be66edc7a93457} 
+\#define l\+\_\+numbits(\begin{DoxyParamCaption}\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}(\textcolor{keyword}{sizeof}(t)\ *\ CHAR\_BIT)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a39eebd62295cdb734e7bcc8e5896fc81}\index{llimits.h@{llimits.h}!L\_P2I@{L\_P2I}}
+\index{L\_P2I@{L\_P2I}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{L\_P2I}{L\_P2I}}
+{\footnotesize\ttfamily \label{llimits_8h_a39eebd62295cdb734e7bcc8e5896fc81} 
+\#define L\+\_\+\+P2I~size\+\_\+t}
+
+\Hypertarget{llimits_8h_a30d6348cf339bed10220ef7dd501fbe6}\index{llimits.h@{llimits.h}!l\_sinline@{l\_sinline}}
+\index{l\_sinline@{l\_sinline}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_sinline}{l\_sinline}}
+{\footnotesize\ttfamily \label{llimits_8h_a30d6348cf339bed10220ef7dd501fbe6} 
+\#define l\+\_\+sinline~static \mbox{\hyperlink{llimits_8h_ab9db15f364731ab60065e372cc023e36}{l\+\_\+inline}}}
+
+\Hypertarget{llimits_8h_ae9c389231436634605d75b0c31f8c3be}\index{llimits.h@{llimits.h}!l\_unlikely@{l\_unlikely}}
+\index{l\_unlikely@{l\_unlikely}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_unlikely}{l\_unlikely}}
+{\footnotesize\ttfamily \label{llimits_8h_ae9c389231436634605d75b0c31f8c3be} 
+\#define l\+\_\+unlikely(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{luaconf_8h_a017f27a6da7785c98784124b9a2b8c3e}{luai\_unlikely}}(x)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a6185afb135442b229d91201b1a3c6eb2}\index{llimits.h@{llimits.h}!LL@{LL}}
+\index{LL@{LL}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{LL}{LL}}
+{\footnotesize\ttfamily \label{llimits_8h_a6185afb135442b229d91201b1a3c6eb2} 
+\#define LL(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\textcolor{keyword}{sizeof}(x)\ /\ \textcolor{keyword}{sizeof}(char)\ -\/\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a5978f5fda715bd80e845df1e16ad7780}\index{llimits.h@{llimits.h}!lua\_assert@{lua\_assert}}
+\index{lua\_assert@{lua\_assert}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_assert}{lua\_assert}}
+{\footnotesize\ttfamily \label{llimits_8h_a5978f5fda715bd80e845df1e16ad7780} 
+\#define lua\+\_\+assert(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a825f22ba1e16fd60e3aae8fe8efc1c4d}\index{llimits.h@{llimits.h}!lua\_longassert@{lua\_longassert}}
+\index{lua\_longassert@{lua\_longassert}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_longassert}{lua\_longassert}}
+{\footnotesize\ttfamily \label{llimits_8h_a825f22ba1e16fd60e3aae8fe8efc1c4d} 
+\#define lua\+\_\+longassert(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a135fb5fd8a78712f702d4c8848995230}{assert\_code}}((c)\ ?\ (\textcolor{keywordtype}{void})0\ :\ \mbox{\hyperlink{llimits_8h_a5978f5fda715bd80e845df1e16ad7780}{lua\_assert}}(0))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a4b0d24a7a90003778668e2d01831bb88}\index{llimits.h@{llimits.h}!lua\_numbertointeger@{lua\_numbertointeger}}
+\index{lua\_numbertointeger@{lua\_numbertointeger}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_numbertointeger}{lua\_numbertointeger}}
+{\footnotesize\ttfamily \label{llimits_8h_a4b0d24a7a90003778668e2d01831bb88} 
+\#define lua\+\_\+numbertointeger(\begin{DoxyParamCaption}\item[{}]{n}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ ((n)\ >=\ (\mbox{\hyperlink{luaconf_8h_a459532244178d9e61e65aaf40fb42de1}{LUA\_NUMBER}})(LUA\_MININTEGER)\ \&\&\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ (n)\ <\ -\/(\mbox{\hyperlink{luaconf_8h_a459532244178d9e61e65aaf40fb42de1}{LUA\_NUMBER}})(LUA\_MININTEGER)\ \&\&\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ (*(p)\ =\ (LUA\_INTEGER)(n),\ 1))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_aa4791d9826315ea2d1c716f852026246}\index{llimits.h@{llimits.h}!lua\_writeline@{lua\_writeline}}
+\index{lua\_writeline@{lua\_writeline}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_writeline}{lua\_writeline}}
+{\footnotesize\ttfamily \label{llimits_8h_aa4791d9826315ea2d1c716f852026246} 
+\#define lua\+\_\+writeline(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_a575f50815c13a7a99b8ed1ac03fe714a}{lua\_writestring}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}},\ 1),\ fflush(stdout))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a575f50815c13a7a99b8ed1ac03fe714a}\index{llimits.h@{llimits.h}!lua\_writestring@{lua\_writestring}}
+\index{lua\_writestring@{lua\_writestring}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_writestring}{lua\_writestring}}
+{\footnotesize\ttfamily \label{llimits_8h_a575f50815c13a7a99b8ed1ac03fe714a} 
+\#define lua\+\_\+writestring(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{l}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{fwrite((s),\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}),\ (l),\ stdout)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a0706f68a79575584d365d033d613707b}\index{llimits.h@{llimits.h}!lua\_writestringerror@{lua\_writestringerror}}
+\index{lua\_writestringerror@{lua\_writestringerror}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lua\_writestringerror}{lua\_writestringerror}}
+{\footnotesize\ttfamily \label{llimits_8h_a0706f68a79575584d365d033d613707b} 
+\#define lua\+\_\+writestringerror(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ (fprintf(stderr,\ (s),\ (p)),\ fflush(stderr))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a3f2cdf96bb04b9d2a9a318a126f99182}\index{llimits.h@{llimits.h}!LUAI\_DDEC@{LUAI\_DDEC}}
+\index{LUAI\_DDEC@{LUAI\_DDEC}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_DDEC}{LUAI\_DDEC}}
+{\footnotesize\ttfamily \label{llimits_8h_a3f2cdf96bb04b9d2a9a318a126f99182} 
+\#define LUAI\+\_\+\+DDEC(\begin{DoxyParamCaption}\item[{}]{dec}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ dec}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_affa3a74c87c69373c262fdbdc7f97837}\index{llimits.h@{llimits.h}!LUAI\_DDEF@{LUAI\_DDEF}}
+\index{LUAI\_DDEF@{LUAI\_DDEF}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_DDEF}{LUAI\_DDEF}}
+{\footnotesize\ttfamily \label{llimits_8h_affa3a74c87c69373c262fdbdc7f97837} 
+\#define LUAI\+\_\+\+DDEF~/\texorpdfstring{$\ast$}{*} empty \texorpdfstring{$\ast$}{*}/ /\texorpdfstring{$\ast$}{*} 空 \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}\index{llimits.h@{llimits.h}!LUAI\_FUNC@{LUAI\_FUNC}}
+\index{LUAI\_FUNC@{LUAI\_FUNC}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_FUNC}{LUAI\_FUNC}}
+{\footnotesize\ttfamily \label{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e} 
+\#define LUAI\+\_\+\+FUNC~extern}
+
+\Hypertarget{llimits_8h_af3eb5d1884e4512d2701bbc97bb82e81}\index{llimits.h@{llimits.h}!luai\_numadd@{luai\_numadd}}
+\index{luai\_numadd@{luai\_numadd}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numadd}{luai\_numadd}}
+{\footnotesize\ttfamily \label{llimits_8h_af3eb5d1884e4512d2701bbc97bb82e81} 
+\#define luai\+\_\+numadd(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ +\ (b))\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 加法\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a2a095b8d523b51332eb223df531367d2}\index{llimits.h@{llimits.h}!luai\_numdiv@{luai\_numdiv}}
+\index{luai\_numdiv@{luai\_numdiv}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numdiv}{luai\_numdiv}}
+{\footnotesize\ttfamily \label{llimits_8h_a2a095b8d523b51332eb223df531367d2} 
+\#define luai\+\_\+numdiv(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ /\ (b))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ae06bbbe345c8bb028e233120466d387d}\index{llimits.h@{llimits.h}!luai\_numeq@{luai\_numeq}}
+\index{luai\_numeq@{luai\_numeq}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numeq}{luai\_numeq}}
+{\footnotesize\ttfamily \label{llimits_8h_ae06bbbe345c8bb028e233120466d387d} 
+\#define luai\+\_\+numeq(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ ==\ (b))\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 相等\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a727a96f18bda273bd57dee105a274abe}\index{llimits.h@{llimits.h}!luai\_numge@{luai\_numge}}
+\index{luai\_numge@{luai\_numge}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numge}{luai\_numge}}
+{\footnotesize\ttfamily \label{llimits_8h_a727a96f18bda273bd57dee105a274abe} 
+\#define luai\+\_\+numge(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ >=\ (b))\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 大于等于\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a252c8bc400dc44bd996b19e7cf487871}\index{llimits.h@{llimits.h}!luai\_numgt@{luai\_numgt}}
+\index{luai\_numgt@{luai\_numgt}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numgt}{luai\_numgt}}
+{\footnotesize\ttfamily \label{llimits_8h_a252c8bc400dc44bd996b19e7cf487871} 
+\#define luai\+\_\+numgt(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ >\ (b))\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 大于\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a9ca37a98a6032ab21dcfd63d42e66f89}\index{llimits.h@{llimits.h}!luai\_numidiv@{luai\_numidiv}}
+\index{luai\_numidiv@{luai\_numidiv}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numidiv}{luai\_numidiv}}
+{\footnotesize\ttfamily \label{llimits_8h_a9ca37a98a6032ab21dcfd63d42e66f89} 
+\#define luai\+\_\+numidiv(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)L,\ \mbox{\hyperlink{luaconf_8h_a89e74d547b8879cf8d10c3e956c283b9}{l\_floor}}(\mbox{\hyperlink{llimits_8h_a2a095b8d523b51332eb223df531367d2}{luai\_numdiv}}(L,\ a,\ b)))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a5ec99a344dba64c30c3ddc6eed8e2e51}\index{llimits.h@{llimits.h}!luai\_numisnan@{luai\_numisnan}}
+\index{luai\_numisnan@{luai\_numisnan}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numisnan}{luai\_numisnan}}
+{\footnotesize\ttfamily \label{llimits_8h_a5ec99a344dba64c30c3ddc6eed8e2e51} 
+\#define luai\+\_\+numisnan(\begin{DoxyParamCaption}\item[{}]{a}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(!\mbox{\hyperlink{llimits_8h_ae06bbbe345c8bb028e233120466d387d}{luai\_numeq}}((a),\ (a)))\ \textcolor{comment}{/*\ 是否为NaN\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_af803655e8c9be7ba1f3f3fb0c4f730d7}\index{llimits.h@{llimits.h}!luai\_numle@{luai\_numle}}
+\index{luai\_numle@{luai\_numle}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numle}{luai\_numle}}
+{\footnotesize\ttfamily \label{llimits_8h_af803655e8c9be7ba1f3f3fb0c4f730d7} 
+\#define luai\+\_\+numle(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ <=\ (b))\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 小于等于\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ae035faaeb068720ee8540210870ee5c9}\index{llimits.h@{llimits.h}!luai\_numlt@{luai\_numlt}}
+\index{luai\_numlt@{luai\_numlt}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numlt}{luai\_numlt}}
+{\footnotesize\ttfamily \label{llimits_8h_ae035faaeb068720ee8540210870ee5c9} 
+\#define luai\+\_\+numlt(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ <\ (b))\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 小于\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_ac6e6bfca420c761a89eee023103c34f4}\index{llimits.h@{llimits.h}!luai\_nummod@{luai\_nummod}}
+\index{luai\_nummod@{luai\_nummod}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_nummod}{luai\_nummod}}
+{\footnotesize\ttfamily \label{llimits_8h_ac6e6bfca420c761a89eee023103c34f4} 
+\#define luai\+\_\+nummod(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{, }\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ (void)L;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ (m)\ =\ \mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\_mathop}}(fmod)(a,\ b);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ if\ (((m)\ >\ 0)\ ?\ (b)\ <\ 0\ :\ ((m)\ <\ 0\ \&\&\ (b)\ >\ 0))\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ (m)\ +=\ (b);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a1cbcef9e269f0ac1a5f34898a7c4ae36}\index{llimits.h@{llimits.h}!luai\_nummul@{luai\_nummul}}
+\index{luai\_nummul@{luai\_nummul}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_nummul}{luai\_nummul}}
+{\footnotesize\ttfamily \label{llimits_8h_a1cbcef9e269f0ac1a5f34898a7c4ae36} 
+\#define luai\+\_\+nummul(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ *\ (b))\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 乘法\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a4a3b06f2c7239f8dcbd101ca20cc507a}\index{llimits.h@{llimits.h}!luai\_numpow@{luai\_numpow}}
+\index{luai\_numpow@{luai\_numpow}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numpow}{luai\_numpow}}
+{\footnotesize\ttfamily \label{llimits_8h_a4a3b06f2c7239f8dcbd101ca20cc507a} 
+\#define luai\+\_\+numpow(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ ((void)L,\ (b\ ==\ 2)\ ?\ (a)\ *\ (a)\ :\ \mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\_mathop}}(pow)(a,\ b))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a93e733c7e860d7fb838b6af414405662}\index{llimits.h@{llimits.h}!luai\_numsub@{luai\_numsub}}
+\index{luai\_numsub@{luai\_numsub}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numsub}{luai\_numsub}}
+{\footnotesize\ttfamily \label{llimits_8h_a93e733c7e860d7fb838b6af414405662} 
+\#define luai\+\_\+numsub(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ -\/\ (b))\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 减法\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a84c57a852cdc4b46c678cb3fab715846}\index{llimits.h@{llimits.h}!luai\_numunm@{luai\_numunm}}
+\index{luai\_numunm@{luai\_numunm}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{luai\_numunm}{luai\_numunm}}
+{\footnotesize\ttfamily \label{llimits_8h_a84c57a852cdc4b46c678cb3fab715846} 
+\#define luai\+\_\+numunm(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{a}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(-\/(a))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 取负\ */}}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a99e52005f8b99ce8e36df841b281078e}\index{llimits.h@{llimits.h}!MAX\_LMEM@{MAX\_LMEM}}
+\index{MAX\_LMEM@{MAX\_LMEM}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_LMEM}{MAX\_LMEM}}
+{\footnotesize\ttfamily \label{llimits_8h_a99e52005f8b99ce8e36df841b281078e} 
+\#define MAX\+\_\+\+LMEM~  \mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}, (\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}}, 1) $<$$<$ (\mbox{\hyperlink{llimits_8h_ad40053171fbf571af0be66edc7a93457}{l\+\_\+numbits}}(\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}) -\/ 1)) -\/ 1)}
+
+\Hypertarget{llimits_8h_a0592dba56693fad79136250c11e5a7fe}\index{llimits.h@{llimits.h}!MAX\_SIZE@{MAX\_SIZE}}
+\index{MAX\_SIZE@{MAX\_SIZE}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_SIZE}{MAX\_SIZE}}
+{\footnotesize\ttfamily \label{llimits_8h_a0592dba56693fad79136250c11e5a7fe} 
+\#define MAX\+\_\+\+SIZE}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{sizeof}(size\_t)\ <\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}})\ ?\ \mbox{\hyperlink{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}{MAX\_SIZET}}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(LUA\_MAXINTEGER))}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}\index{llimits.h@{llimits.h}!MAX\_SIZET@{MAX\_SIZET}}
+\index{MAX\_SIZET@{MAX\_SIZET}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_SIZET}{MAX\_SIZET}}
+{\footnotesize\ttfamily \label{llimits_8h_aa927c7bf177c162feda3483e1e972b3a} 
+\#define MAX\+\_\+\+SIZET~((size\+\_\+t)(\texorpdfstring{$\sim$}{\string~}(size\+\_\+t)0))}
+
+\Hypertarget{llimits_8h_ad861f24ac9e8c32f78455aab3d2e7b51}\index{llimits.h@{llimits.h}!point2uint@{point2uint}}
+\index{point2uint@{point2uint}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{point2uint}{point2uint}}
+{\footnotesize\ttfamily \label{llimits_8h_ad861f24ac9e8c32f78455aab3d2e7b51} 
+\#define point2uint(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\_uint}}((\mbox{\hyperlink{llimits_8h_a39eebd62295cdb734e7bcc8e5896fc81}{L\_P2I}})(p)\ \&\ UINT\_MAX)}
+
+\end{DoxyCode}
+\Hypertarget{llimits_8h_a86d500a34c624c2cae56bc25a31b12f3}\index{llimits.h@{llimits.h}!UNUSED@{UNUSED}}
+\index{UNUSED@{UNUSED}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{UNUSED}{UNUSED}}
+{\footnotesize\ttfamily \label{llimits_8h_a86d500a34c624c2cae56bc25a31b12f3} 
+\#define UNUSED(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)(x))}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{llimits_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}\index{llimits.h@{llimits.h}!l\_mem@{l\_mem}}
+\index{l\_mem@{l\_mem}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_mem}{l\_mem}}
+{\footnotesize\ttfamily \label{llimits_8h_a24fc195087e262c99a4cf0f9b346a684} 
+typedef long \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}}
+
+\Hypertarget{llimits_8h_ac8d5f795aedd7e084ef2dab7b5d81bde}\index{llimits.h@{llimits.h}!l\_uacInt@{l\_uacInt}}
+\index{l\_uacInt@{l\_uacInt}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_uacInt}{l\_uacInt}}
+{\footnotesize\ttfamily \label{llimits_8h_ac8d5f795aedd7e084ef2dab7b5d81bde} 
+typedef \mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\+\_\+\+UACINT}} \mbox{\hyperlink{llimits_8h_ac8d5f795aedd7e084ef2dab7b5d81bde}{l\+\_\+uac\+Int}}}
+
+\Hypertarget{llimits_8h_a792eefbf119f914b73400c314411c3e2}\index{llimits.h@{llimits.h}!l\_uacNumber@{l\_uacNumber}}
+\index{l\_uacNumber@{l\_uacNumber}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_uacNumber}{l\_uacNumber}}
+{\footnotesize\ttfamily \label{llimits_8h_a792eefbf119f914b73400c314411c3e2} 
+typedef \mbox{\hyperlink{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a}{LUAI\+\_\+\+UACNUMBER}} \mbox{\hyperlink{llimits_8h_a792eefbf119f914b73400c314411c3e2}{l\+\_\+uac\+Number}}}
+
+\Hypertarget{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}\index{llimits.h@{llimits.h}!l\_uint32@{l\_uint32}}
+\index{l\_uint32@{l\_uint32}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{l\_uint32}{l\_uint32}}
+{\footnotesize\ttfamily \label{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a} 
+typedef unsigned long \mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}}}
+
+\Hypertarget{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb}\index{llimits.h@{llimits.h}!ls\_byte@{ls\_byte}}
+\index{ls\_byte@{ls\_byte}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{ls\_byte}{ls\_byte}}
+{\footnotesize\ttfamily \label{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb} 
+typedef signed char \mbox{\hyperlink{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb}{ls\+\_\+byte}}}
+
+\Hypertarget{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}\index{llimits.h@{llimits.h}!lu\_byte@{lu\_byte}}
+\index{lu\_byte@{lu\_byte}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lu\_byte}{lu\_byte}}
+{\footnotesize\ttfamily \label{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68} 
+typedef unsigned char \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}}}
+
+\Hypertarget{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}\index{llimits.h@{llimits.h}!lu\_mem@{lu\_mem}}
+\index{lu\_mem@{lu\_mem}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{lu\_mem}{lu\_mem}}
+{\footnotesize\ttfamily \label{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8} 
+typedef unsigned long \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}}}
+
+\Hypertarget{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}\index{llimits.h@{llimits.h}!TStatus@{TStatus}}
+\index{TStatus@{TStatus}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{TStatus}{TStatus}}
+{\footnotesize\ttfamily \label{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae} 
+typedef \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}}
+
+\Hypertarget{llimits_8h_a68da1d6d858100a545e5fd84f65abe41}\index{llimits.h@{llimits.h}!voidf@{voidf}}
+\index{voidf@{voidf}!llimits.h@{llimits.h}}
+\doxysubsubsection{\texorpdfstring{voidf}{voidf}}
+{\footnotesize\ttfamily \label{llimits_8h_a68da1d6d858100a545e5fd84f65abe41} 
+typedef void(\texorpdfstring{$\ast$}{*} voidf) (void)}
+

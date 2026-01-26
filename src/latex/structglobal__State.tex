@@ -1,0 +1,373 @@
+\doxysection{global\+\_\+\+State Struct Reference}
+\hypertarget{structglobal__State}{}\label{structglobal__State}\index{global\_State@{global\_State}}
+
+
+{\ttfamily \#include $<$lstate.\+h$>$}
+
+
+
+Collaboration diagram for global\+\_\+\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structglobal__State__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\+\_\+\+Alloc}} \mbox{\hyperlink{structglobal__State_aa26cfe7f3761fda56740a545d15001ea}{frealloc}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_af12419c778ac134ece8e269bfcaf06ad}{ud}}
+\item 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} \mbox{\hyperlink{structglobal__State_aaca0824b783d72bcbc3c14dddebe1f21}{GCtotalbytes}}
+\item 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} \mbox{\hyperlink{structglobal__State_a238d1f76279f013961d01abb93a74a47}{GCdebt}}
+\item 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} \mbox{\hyperlink{structglobal__State_a25849ffdfd13bf88aa73b2c80b7ba2ba}{GCmarked}}
+\item 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} \mbox{\hyperlink{structglobal__State_a2fd2bd7bafd42ee4b5668384f4c10aea}{GCmajorminor}}
+\item 
+\mbox{\hyperlink{structstringtable}{stringtable}} \mbox{\hyperlink{structglobal__State_a8cdea736db8d268e488aa9e9fa5c992c}{strt}}
+\item 
+\mbox{\hyperlink{structTValue}{TValue}} \mbox{\hyperlink{structglobal__State_a3e4eaa91bd14094bf3217073aa40b4f7}{l\+\_\+registry}}
+\item 
+\mbox{\hyperlink{structTValue}{TValue}} \mbox{\hyperlink{structglobal__State_a112c02e74c5adda770367c8a120b1fdd}{nilvalue}}
+\item 
+unsigned int \mbox{\hyperlink{structglobal__State_a3e1a9b3a2f2dd49f14a38726239494e2}{seed}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_a15336deb7defd1b096d875c3d16a6d15}{gcparams}} \mbox{[}\mbox{\hyperlink{lua_8h_a3dd9c4fbc9fa4aef56809bf6bc2d6697}{LUA\+\_\+\+GCPN}}\mbox{]}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_a31fbedd19538500531d49532226a001a}{currentwhite}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_aea4d494b8b9accef389f2be8830f7a84}{gcstate}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_acf4c834918cf4766f13dd91306360802}{gckind}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_a435de3a5495d7529fff62accc539a96d}{gcstopem}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_ad8326cdab506c623a4daf1d91ef8981f}{gcstp}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structglobal__State_a3caf542e40aca4f02d6cc6ff2008f467}{gcemergency}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_aaba2570fb1444c6457a82df9fbad05ed}{allgc}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a357ff5a5981fc6c64825508c7718fbbc}{sweepgc}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_afa672a968752a31f2319d40deecfeecc}{finobj}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a2d96e2afbc62ff832ab660ed4c357696}{gray}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a2ccaa5d2e98c086489c04e2045082535}{grayagain}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_ab84f67e3b1e863392e504e9d13787891}{weak}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a291641a891457af2d199cb920d9d1a0d}{ephemeron}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_ab092ebab0f825675b9e4861d4d4a4fb9}{allweak}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a90da07dbcac2e16b87e559180ebbe852}{tobefnz}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a429b525c636d5b268e03f1c10a85cf8f}{fixedgc}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_aff359f11cdc555233f202a9cd03c0b8d}{survival}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_ad26c972db49d6ae2befcdd842c21e59b}{old1}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a3e26ca024b115b33c7af7c5c5c09edaa}{reallyold}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a1519e03d08f4b7ec0d91d135a7ea3150}{firstold1}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a13b646894c7b76cfe43c9d084e1a5634}{finobjsur}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a3472d212085f38fb8b5e7aaf2800826f}{finobjold1}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a237e6929ce1995e5ea10c2099899fd5e}{finobjrold}}
+\item 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a5e243c2a4646364e0507a5a6cf417eec}{twups}}
+\item 
+\mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\+\_\+\+CFunction}} \mbox{\hyperlink{structglobal__State_aa925f5bcdedf55e5353e37cfe9e5d6d0}{panic}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a713375c43bd8b0b3016a97f173ce6992}{memerrmsg}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_ac1d80bd5bb3d4427b25054696eb1542c}{tmname}} \mbox{[}\mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a0d06a30ffbc1d1f7e21a96f52da3ef56}{TM\+\_\+N}}\mbox{]}
+\item 
+struct \mbox{\hyperlink{structTable}{Table}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a9421b13533e373174ec5f62e974e2ee9}{mt}} \mbox{[}\mbox{\hyperlink{lua_8h_a99a031e2239fe191c2a4e1dfb7511d87}{LUA\+\_\+\+NUMTYPES}}\mbox{]}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a6a097f2df5d409e565d4a8270be00e13}{strcache}} \mbox{[}\mbox{\hyperlink{lstate_8h_aa8382779dd8eeb2dea3deb97dec0ed1c}{STRCACHE\+\_\+N}}\mbox{]}\mbox{[}\mbox{\hyperlink{lstate_8h_a3e028bcc45ab536a37bb6860caf3d2ca}{STRCACHE\+\_\+M}}\mbox{]}
+\item 
+\mbox{\hyperlink{lua_8h_a01be53d7e053b2703a9a0ee91aff4974}{lua\+\_\+\+Warn\+Function}} \mbox{\hyperlink{structglobal__State_a31ea16cf1c2d0244112365de89e84b5d}{warnf}}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structglobal__State_a650d67aa8435f102fe0345f6c357db6f}{ud\+\_\+warn}}
+\item 
+\mbox{\hyperlink{structLX}{LX}} \mbox{\hyperlink{structglobal__State_a677d0dd20f4b87d93b0f7e6b224440f2}{mainth}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structglobal__State_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structglobal__State_aaba2570fb1444c6457a82df9fbad05ed}\index{global\_State@{global\_State}!allgc@{allgc}}
+\index{allgc@{allgc}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{allgc}{allgc}}
+{\footnotesize\ttfamily \label{structglobal__State_aaba2570fb1444c6457a82df9fbad05ed} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::allgc}
+
+\Hypertarget{structglobal__State_ab092ebab0f825675b9e4861d4d4a4fb9}\index{global\_State@{global\_State}!allweak@{allweak}}
+\index{allweak@{allweak}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{allweak}{allweak}}
+{\footnotesize\ttfamily \label{structglobal__State_ab092ebab0f825675b9e4861d4d4a4fb9} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::allweak}
+
+\Hypertarget{structglobal__State_a31fbedd19538500531d49532226a001a}\index{global\_State@{global\_State}!currentwhite@{currentwhite}}
+\index{currentwhite@{currentwhite}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{currentwhite}{currentwhite}}
+{\footnotesize\ttfamily \label{structglobal__State_a31fbedd19538500531d49532226a001a} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::currentwhite}
+
+\Hypertarget{structglobal__State_a291641a891457af2d199cb920d9d1a0d}\index{global\_State@{global\_State}!ephemeron@{ephemeron}}
+\index{ephemeron@{ephemeron}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{ephemeron}{ephemeron}}
+{\footnotesize\ttfamily \label{structglobal__State_a291641a891457af2d199cb920d9d1a0d} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::ephemeron}
+
+\Hypertarget{structglobal__State_afa672a968752a31f2319d40deecfeecc}\index{global\_State@{global\_State}!finobj@{finobj}}
+\index{finobj@{finobj}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{finobj}{finobj}}
+{\footnotesize\ttfamily \label{structglobal__State_afa672a968752a31f2319d40deecfeecc} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::finobj}
+
+\Hypertarget{structglobal__State_a3472d212085f38fb8b5e7aaf2800826f}\index{global\_State@{global\_State}!finobjold1@{finobjold1}}
+\index{finobjold1@{finobjold1}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{finobjold1}{finobjold1}}
+{\footnotesize\ttfamily \label{structglobal__State_a3472d212085f38fb8b5e7aaf2800826f} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::finobjold1}
+
+\Hypertarget{structglobal__State_a237e6929ce1995e5ea10c2099899fd5e}\index{global\_State@{global\_State}!finobjrold@{finobjrold}}
+\index{finobjrold@{finobjrold}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{finobjrold}{finobjrold}}
+{\footnotesize\ttfamily \label{structglobal__State_a237e6929ce1995e5ea10c2099899fd5e} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::finobjrold}
+
+\Hypertarget{structglobal__State_a13b646894c7b76cfe43c9d084e1a5634}\index{global\_State@{global\_State}!finobjsur@{finobjsur}}
+\index{finobjsur@{finobjsur}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{finobjsur}{finobjsur}}
+{\footnotesize\ttfamily \label{structglobal__State_a13b646894c7b76cfe43c9d084e1a5634} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::finobjsur}
+
+\Hypertarget{structglobal__State_a1519e03d08f4b7ec0d91d135a7ea3150}\index{global\_State@{global\_State}!firstold1@{firstold1}}
+\index{firstold1@{firstold1}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{firstold1}{firstold1}}
+{\footnotesize\ttfamily \label{structglobal__State_a1519e03d08f4b7ec0d91d135a7ea3150} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::firstold1}
+
+\Hypertarget{structglobal__State_a429b525c636d5b268e03f1c10a85cf8f}\index{global\_State@{global\_State}!fixedgc@{fixedgc}}
+\index{fixedgc@{fixedgc}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{fixedgc}{fixedgc}}
+{\footnotesize\ttfamily \label{structglobal__State_a429b525c636d5b268e03f1c10a85cf8f} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::fixedgc}
+
+\Hypertarget{structglobal__State_aa26cfe7f3761fda56740a545d15001ea}\index{global\_State@{global\_State}!frealloc@{frealloc}}
+\index{frealloc@{frealloc}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{frealloc}{frealloc}}
+{\footnotesize\ttfamily \label{structglobal__State_aa26cfe7f3761fda56740a545d15001ea} 
+\mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\+\_\+\+Alloc}} global\+\_\+\+State\+::frealloc}
+
+\Hypertarget{structglobal__State_a238d1f76279f013961d01abb93a74a47}\index{global\_State@{global\_State}!GCdebt@{GCdebt}}
+\index{GCdebt@{GCdebt}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{GCdebt}{GCdebt}}
+{\footnotesize\ttfamily \label{structglobal__State_a238d1f76279f013961d01abb93a74a47} 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} global\+\_\+\+State\+::\+GCdebt}
+
+\Hypertarget{structglobal__State_a3caf542e40aca4f02d6cc6ff2008f467}\index{global\_State@{global\_State}!gcemergency@{gcemergency}}
+\index{gcemergency@{gcemergency}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gcemergency}{gcemergency}}
+{\footnotesize\ttfamily \label{structglobal__State_a3caf542e40aca4f02d6cc6ff2008f467} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gcemergency}
+
+\Hypertarget{structglobal__State_acf4c834918cf4766f13dd91306360802}\index{global\_State@{global\_State}!gckind@{gckind}}
+\index{gckind@{gckind}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gckind}{gckind}}
+{\footnotesize\ttfamily \label{structglobal__State_acf4c834918cf4766f13dd91306360802} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gckind}
+
+\Hypertarget{structglobal__State_a2fd2bd7bafd42ee4b5668384f4c10aea}\index{global\_State@{global\_State}!GCmajorminor@{GCmajorminor}}
+\index{GCmajorminor@{GCmajorminor}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{GCmajorminor}{GCmajorminor}}
+{\footnotesize\ttfamily \label{structglobal__State_a2fd2bd7bafd42ee4b5668384f4c10aea} 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} global\+\_\+\+State\+::\+GCmajorminor}
+
+\Hypertarget{structglobal__State_a25849ffdfd13bf88aa73b2c80b7ba2ba}\index{global\_State@{global\_State}!GCmarked@{GCmarked}}
+\index{GCmarked@{GCmarked}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{GCmarked}{GCmarked}}
+{\footnotesize\ttfamily \label{structglobal__State_a25849ffdfd13bf88aa73b2c80b7ba2ba} 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} global\+\_\+\+State\+::\+GCmarked}
+
+\Hypertarget{structglobal__State_a15336deb7defd1b096d875c3d16a6d15}\index{global\_State@{global\_State}!gcparams@{gcparams}}
+\index{gcparams@{gcparams}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gcparams}{gcparams}}
+{\footnotesize\ttfamily \label{structglobal__State_a15336deb7defd1b096d875c3d16a6d15} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gcparams\mbox{[}\mbox{\hyperlink{lua_8h_a3dd9c4fbc9fa4aef56809bf6bc2d6697}{LUA\+\_\+\+GCPN}}\mbox{]}}
+
+\Hypertarget{structglobal__State_aea4d494b8b9accef389f2be8830f7a84}\index{global\_State@{global\_State}!gcstate@{gcstate}}
+\index{gcstate@{gcstate}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gcstate}{gcstate}}
+{\footnotesize\ttfamily \label{structglobal__State_aea4d494b8b9accef389f2be8830f7a84} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gcstate}
+
+\Hypertarget{structglobal__State_a435de3a5495d7529fff62accc539a96d}\index{global\_State@{global\_State}!gcstopem@{gcstopem}}
+\index{gcstopem@{gcstopem}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gcstopem}{gcstopem}}
+{\footnotesize\ttfamily \label{structglobal__State_a435de3a5495d7529fff62accc539a96d} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gcstopem}
+
+\Hypertarget{structglobal__State_ad8326cdab506c623a4daf1d91ef8981f}\index{global\_State@{global\_State}!gcstp@{gcstp}}
+\index{gcstp@{gcstp}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gcstp}{gcstp}}
+{\footnotesize\ttfamily \label{structglobal__State_ad8326cdab506c623a4daf1d91ef8981f} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} global\+\_\+\+State\+::gcstp}
+
+\Hypertarget{structglobal__State_aaca0824b783d72bcbc3c14dddebe1f21}\index{global\_State@{global\_State}!GCtotalbytes@{GCtotalbytes}}
+\index{GCtotalbytes@{GCtotalbytes}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{GCtotalbytes}{GCtotalbytes}}
+{\footnotesize\ttfamily \label{structglobal__State_aaca0824b783d72bcbc3c14dddebe1f21} 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} global\+\_\+\+State\+::\+GCtotalbytes}
+
+\Hypertarget{structglobal__State_a2d96e2afbc62ff832ab660ed4c357696}\index{global\_State@{global\_State}!gray@{gray}}
+\index{gray@{gray}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{gray}{gray}}
+{\footnotesize\ttfamily \label{structglobal__State_a2d96e2afbc62ff832ab660ed4c357696} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::gray}
+
+\Hypertarget{structglobal__State_a2ccaa5d2e98c086489c04e2045082535}\index{global\_State@{global\_State}!grayagain@{grayagain}}
+\index{grayagain@{grayagain}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{grayagain}{grayagain}}
+{\footnotesize\ttfamily \label{structglobal__State_a2ccaa5d2e98c086489c04e2045082535} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::grayagain}
+
+\Hypertarget{structglobal__State_a3e4eaa91bd14094bf3217073aa40b4f7}\index{global\_State@{global\_State}!l\_registry@{l\_registry}}
+\index{l\_registry@{l\_registry}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{l\_registry}{l\_registry}}
+{\footnotesize\ttfamily \label{structglobal__State_a3e4eaa91bd14094bf3217073aa40b4f7} 
+\mbox{\hyperlink{structTValue}{TValue}} global\+\_\+\+State\+::l\+\_\+registry}
+
+\Hypertarget{structglobal__State_a677d0dd20f4b87d93b0f7e6b224440f2}\index{global\_State@{global\_State}!mainth@{mainth}}
+\index{mainth@{mainth}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{mainth}{mainth}}
+{\footnotesize\ttfamily \label{structglobal__State_a677d0dd20f4b87d93b0f7e6b224440f2} 
+\mbox{\hyperlink{structLX}{LX}} global\+\_\+\+State\+::mainth}
+
+\Hypertarget{structglobal__State_a713375c43bd8b0b3016a97f173ce6992}\index{global\_State@{global\_State}!memerrmsg@{memerrmsg}}
+\index{memerrmsg@{memerrmsg}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{memerrmsg}{memerrmsg}}
+{\footnotesize\ttfamily \label{structglobal__State_a713375c43bd8b0b3016a97f173ce6992} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::memerrmsg}
+
+\Hypertarget{structglobal__State_a9421b13533e373174ec5f62e974e2ee9}\index{global\_State@{global\_State}!mt@{mt}}
+\index{mt@{mt}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{mt}{mt}}
+{\footnotesize\ttfamily \label{structglobal__State_a9421b13533e373174ec5f62e974e2ee9} 
+struct \mbox{\hyperlink{structTable}{Table}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::mt\mbox{[}\mbox{\hyperlink{lua_8h_a99a031e2239fe191c2a4e1dfb7511d87}{LUA\+\_\+\+NUMTYPES}}\mbox{]}}
+
+\Hypertarget{structglobal__State_a112c02e74c5adda770367c8a120b1fdd}\index{global\_State@{global\_State}!nilvalue@{nilvalue}}
+\index{nilvalue@{nilvalue}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{nilvalue}{nilvalue}}
+{\footnotesize\ttfamily \label{structglobal__State_a112c02e74c5adda770367c8a120b1fdd} 
+\mbox{\hyperlink{structTValue}{TValue}} global\+\_\+\+State\+::nilvalue}
+
+\Hypertarget{structglobal__State_ad26c972db49d6ae2befcdd842c21e59b}\index{global\_State@{global\_State}!old1@{old1}}
+\index{old1@{old1}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{old1}{old1}}
+{\footnotesize\ttfamily \label{structglobal__State_ad26c972db49d6ae2befcdd842c21e59b} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::old1}
+
+\Hypertarget{structglobal__State_aa925f5bcdedf55e5353e37cfe9e5d6d0}\index{global\_State@{global\_State}!panic@{panic}}
+\index{panic@{panic}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{panic}{panic}}
+{\footnotesize\ttfamily \label{structglobal__State_aa925f5bcdedf55e5353e37cfe9e5d6d0} 
+\mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\+\_\+\+CFunction}} global\+\_\+\+State\+::panic}
+
+\Hypertarget{structglobal__State_a3e26ca024b115b33c7af7c5c5c09edaa}\index{global\_State@{global\_State}!reallyold@{reallyold}}
+\index{reallyold@{reallyold}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{reallyold}{reallyold}}
+{\footnotesize\ttfamily \label{structglobal__State_a3e26ca024b115b33c7af7c5c5c09edaa} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::reallyold}
+
+\Hypertarget{structglobal__State_a3e1a9b3a2f2dd49f14a38726239494e2}\index{global\_State@{global\_State}!seed@{seed}}
+\index{seed@{seed}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{seed}{seed}}
+{\footnotesize\ttfamily \label{structglobal__State_a3e1a9b3a2f2dd49f14a38726239494e2} 
+unsigned int global\+\_\+\+State\+::seed}
+
+\Hypertarget{structglobal__State_a6a097f2df5d409e565d4a8270be00e13}\index{global\_State@{global\_State}!strcache@{strcache}}
+\index{strcache@{strcache}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{strcache}{strcache}}
+{\footnotesize\ttfamily \label{structglobal__State_a6a097f2df5d409e565d4a8270be00e13} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::strcache\mbox{[}\mbox{\hyperlink{lstate_8h_aa8382779dd8eeb2dea3deb97dec0ed1c}{STRCACHE\+\_\+N}}\mbox{]}\mbox{[}\mbox{\hyperlink{lstate_8h_a3e028bcc45ab536a37bb6860caf3d2ca}{STRCACHE\+\_\+M}}\mbox{]}}
+
+\Hypertarget{structglobal__State_a8cdea736db8d268e488aa9e9fa5c992c}\index{global\_State@{global\_State}!strt@{strt}}
+\index{strt@{strt}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{strt}{strt}}
+{\footnotesize\ttfamily \label{structglobal__State_a8cdea736db8d268e488aa9e9fa5c992c} 
+\mbox{\hyperlink{structstringtable}{stringtable}} global\+\_\+\+State\+::strt}
+
+\Hypertarget{structglobal__State_aff359f11cdc555233f202a9cd03c0b8d}\index{global\_State@{global\_State}!survival@{survival}}
+\index{survival@{survival}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{survival}{survival}}
+{\footnotesize\ttfamily \label{structglobal__State_aff359f11cdc555233f202a9cd03c0b8d} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::survival}
+
+\Hypertarget{structglobal__State_a357ff5a5981fc6c64825508c7718fbbc}\index{global\_State@{global\_State}!sweepgc@{sweepgc}}
+\index{sweepgc@{sweepgc}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{sweepgc}{sweepgc}}
+{\footnotesize\ttfamily \label{structglobal__State_a357ff5a5981fc6c64825508c7718fbbc} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::sweepgc}
+
+\Hypertarget{structglobal__State_ac1d80bd5bb3d4427b25054696eb1542c}\index{global\_State@{global\_State}!tmname@{tmname}}
+\index{tmname@{tmname}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{tmname}{tmname}}
+{\footnotesize\ttfamily \label{structglobal__State_ac1d80bd5bb3d4427b25054696eb1542c} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::tmname\mbox{[}\mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a0d06a30ffbc1d1f7e21a96f52da3ef56}{TM\+\_\+N}}\mbox{]}}
+
+\Hypertarget{structglobal__State_a90da07dbcac2e16b87e559180ebbe852}\index{global\_State@{global\_State}!tobefnz@{tobefnz}}
+\index{tobefnz@{tobefnz}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{tobefnz}{tobefnz}}
+{\footnotesize\ttfamily \label{structglobal__State_a90da07dbcac2e16b87e559180ebbe852} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::tobefnz}
+
+\Hypertarget{structglobal__State_a5e243c2a4646364e0507a5a6cf417eec}\index{global\_State@{global\_State}!twups@{twups}}
+\index{twups@{twups}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{twups}{twups}}
+{\footnotesize\ttfamily \label{structglobal__State_a5e243c2a4646364e0507a5a6cf417eec} 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::twups}
+
+\Hypertarget{structglobal__State_af12419c778ac134ece8e269bfcaf06ad}\index{global\_State@{global\_State}!ud@{ud}}
+\index{ud@{ud}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{ud}{ud}}
+{\footnotesize\ttfamily \label{structglobal__State_af12419c778ac134ece8e269bfcaf06ad} 
+void\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::ud}
+
+\Hypertarget{structglobal__State_a650d67aa8435f102fe0345f6c357db6f}\index{global\_State@{global\_State}!ud\_warn@{ud\_warn}}
+\index{ud\_warn@{ud\_warn}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{ud\_warn}{ud\_warn}}
+{\footnotesize\ttfamily \label{structglobal__State_a650d67aa8435f102fe0345f6c357db6f} 
+void\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::ud\+\_\+warn}
+
+\Hypertarget{structglobal__State_a31ea16cf1c2d0244112365de89e84b5d}\index{global\_State@{global\_State}!warnf@{warnf}}
+\index{warnf@{warnf}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{warnf}{warnf}}
+{\footnotesize\ttfamily \label{structglobal__State_a31ea16cf1c2d0244112365de89e84b5d} 
+\mbox{\hyperlink{lua_8h_a01be53d7e053b2703a9a0ee91aff4974}{lua\+\_\+\+Warn\+Function}} global\+\_\+\+State\+::warnf}
+
+\Hypertarget{structglobal__State_ab84f67e3b1e863392e504e9d13787891}\index{global\_State@{global\_State}!weak@{weak}}
+\index{weak@{weak}!global\_State@{global\_State}}
+\doxysubsubsection{\texorpdfstring{weak}{weak}}
+{\footnotesize\ttfamily \label{structglobal__State_ab84f67e3b1e863392e504e9d13787891} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} global\+\_\+\+State\+::weak}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lstate_8h}{lstate.\+h}}\end{DoxyCompactItemize}

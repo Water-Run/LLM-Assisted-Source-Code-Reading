@@ -1,0 +1,27 @@
+<map id="luaK_reserveregs" name="luaK_reserveregs">
+<area shape="rect" id="Node000001" title=" " alt="" coords="547,259,670,285"/>
+<area shape="rect" id="Node000002" href="$lcode_8c.html#a252b7ff26ed24db991e8a11275bcf75c" title=" " alt="" coords="374,132,499,159"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="575,251,455,161,458,157,578,247"/>
+<area shape="rect" id="Node000009" href="$lcode_8c.html#a38f9aab7679b62f5902d9adf5c502ea1" title=" " alt="" coords="43,309,119,336"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="532,282,119,322,119,316,532,277"/>
+<area shape="rect" id="Node000012" href="$lcode_8c.html#aa088b6c0fff724b3d4c76830416da244" title=" " alt="" coords="380,309,493,336"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="547,293,485,311,484,306,545,288"/>
+<area shape="rect" id="Node000003" href="$lcode_8c.html#ad2850d253ee1400e3e00e5a0d26d596d" title=" " alt="" coords="205,157,326,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="359,160,327,164,326,159,358,154"/>
+<area shape="rect" id="Node000008" href="$lcode_8c.html#a07039dc526d35d6db3f1a29c7304fe89" title=" " alt="" coords="42,5,120,32"/>
+<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="394,127,325,97,214,59,120,31,121,26,215,54,327,92,396,122"/>
+<area shape="rect" id="Node000011" href="$lcode_8c.html#a21e9443ce3d06694c2f9ea497052fab4" title=" " alt="" coords="221,107,310,133"/>
+<area shape="poly" id="edge11_Node000002_Node000011" title=" " alt="" coords="358,136,310,129,311,124,359,131"/>
+<area shape="rect" id="Node000004" href="$lcode_8c.html#a156f8ffef53209872b84f172c8ea08a5" title=" " alt="" coords="5,208,157,235"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="200,191,133,210,132,205,199,186"/>
+<area shape="rect" id="Node000005" href="$lcode_8c.html#ad975c434bb45ed1baff91522069c4f11" title=" " alt="" coords="13,259,149,285"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="237,196,201,223,158,249,131,260,129,256,155,244,198,219,234,192"/>
+<area shape="rect" id="Node000006" href="$lcode_8c.html#a214015f257d752c11c44ba82460a603a" title=" " alt="" coords="31,56,131,83"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="211,152,203,147,188,134,179,121,170,109,155,97,130,85,132,80,158,92,174,105,183,118,192,131,206,143,213,148"/>
+<area shape="rect" id="Node000007" href="$lcode_8c.html#af9e8e4c1ab85deb3fe8fdbc39d25c6d9" title=" " alt="" coords="31,107,131,133"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="199,155,130,136,132,131,200,150"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="207,151,203,147,185,121,179,95,172,70,155,46,138,35,120,28,122,23,141,30,159,42,177,68,184,94,190,119,207,144,210,147"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="247,198,201,256,158,300,120,317,118,312,155,295,197,252,243,195"/>
+<area shape="rect" id="Node000010" href="$lcode_8c.html#a31c85ce631d5ee0a691cb58a1bd360be" title=" " alt="" coords="30,157,132,184"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="189,173,132,173,132,168,189,168"/>
+</map>

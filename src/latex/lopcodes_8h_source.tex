@@ -1,0 +1,444 @@
+\doxysection{lopcodes.\+h}
+\hypertarget{lopcodes_8h_source}{}\label{lopcodes_8h_source}\mbox{\hyperlink{lopcodes_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lopcodes.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Opcodes\ for\ Lua\ virtual\ machine}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lopcodes\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lopcodes\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llimits_8h}{llimits.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{/*===========================================================================}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ We\ assume\ that\ instructions\ are\ unsigned\ 32-\/bit\ integers.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ All\ instructions\ have\ an\ opcode\ in\ the\ first\ 7\ bits.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ Instructions\ can\ have\ the\ following\ formats:}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ \ \ \ \ 3\ 3\ 2\ 2\ 2\ 2\ 2\ 2\ 2\ 2\ 2\ 2\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ 0}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ \ \ \ \ 1\ 0\ 9\ 8\ 7\ 6\ 5\ 4\ 3\ 2\ 1\ 0\ 9\ 8\ 7\ 6\ 5\ 4\ 3\ 2\ 1\ 0\ 9\ 8\ 7\ 6\ 5\ 4\ 3\ 2\ 1\ 0}}
+\DoxyCodeLine{00021\ \textcolor{comment}{iABC\ \ \ \ \ \ \ \ \ \ C(8)\ \ \ \ \ |\ \ \ \ \ \ B(8)\ \ \ \ \ |k|\ \ \ \ \ A(8)\ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00022\ \textcolor{comment}{ivABC\ \ \ \ \ \ \ \ \ vC(10)\ \ \ \ \ |\ \ \ \ \ vB(6)\ \ \ |k|\ \ \ \ \ A(8)\ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00023\ \textcolor{comment}{iABx\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Bx(17)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ A(8)\ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00024\ \textcolor{comment}{iAsBx\ \ \ \ \ \ \ \ \ \ \ \ \ \ sBx\ (signed)(17)\ \ \ \ \ \ |\ \ \ \ \ A(8)\ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00025\ \textcolor{comment}{iAx\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ax(25)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00026\ \textcolor{comment}{isJ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sJ\ (signed)(25)\ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ Op(7)\ \ \ \ \ |}}
+\DoxyCodeLine{00027\ \textcolor{comment}{}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ ('v'\ stands\ for\ "{}variant"{},\ 's'\ for\ "{}signed"{},\ 'x'\ for\ "{}extended"{}.)}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ A\ signed\ argument\ is\ represented\ in\ excess\ K:\ The\ represented\ value\ is}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ the\ written\ unsigned\ value\ minus\ K,\ where\ K\ is\ half\ (rounded\ down)\ the}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ maximum\ value\ for\ the\ corresponding\ unsigned\ argument.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{===========================================================================*/}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{/*\ basic\ instruction\ formats\ */}}
+\DoxyCodeLine{00036\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}{OpMode}}\ \{\mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3}{iABC}},\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0}{ivABC}},\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afae162f330f7a1e7581cdbbb4af60dc8ea}{iABx}},\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5db94456d16691b254a6b2fc7b473e55}{iAsBx}},\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa453db051897b5faf2716653c2aa5a2e2}{iAx}},\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa8c4168189c62aed69b9160daeb20f20e}{isJ}}\};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00040\ \textcolor{comment}{**\ size\ and\ position\ of\ opcode\ arguments.}}
+\DoxyCodeLine{00041\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ SIZE\_C\ \ \ \ \ \ 8}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ SIZE\_vC\ \ \ \ \ 10}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ SIZE\_B\ \ \ \ \ \ 8}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ SIZE\_vB\ \ \ \ \ 6}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ SIZE\_Bx\ \ \ \ \ (SIZE\_C\ +\ SIZE\_B\ +\ 1)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ SIZE\_A\ \ \ \ \ \ 8}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ SIZE\_Ax\ \ \ \ \ (SIZE\_Bx\ +\ SIZE\_A)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ SIZE\_sJ\ \ \ \ \ (SIZE\_Bx\ +\ SIZE\_A)}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ SIZE\_OP\ \ \ \ \ 7}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ POS\_OP\ \ \ \ \ \ 0}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ POS\_A\ \ \ \ \ \ \ (POS\_OP\ +\ SIZE\_OP)}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ POS\_k\ \ \ \ \ \ \ (POS\_A\ +\ SIZE\_A)}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ POS\_B\ \ \ \ \ \ \ (POS\_k\ +\ 1)}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ POS\_vB\ \ \ \ \ \ (POS\_k\ +\ 1)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ POS\_C\ \ \ \ \ \ \ (POS\_B\ +\ SIZE\_B)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ POS\_vC\ \ \ \ \ \ (POS\_vB\ +\ SIZE\_vB)}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ POS\_Bx\ \ \ \ \ \ POS\_k}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ POS\_Ax\ \ \ \ \ \ POS\_A}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ POS\_sJ\ \ \ \ \ \ POS\_A}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00070\ \textcolor{comment}{**\ limits\ for\ opcode\ arguments.}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ we\ use\ (signed)\ 'int'\ to\ manipulate\ most\ arguments,}}
+\DoxyCodeLine{00072\ \textcolor{comment}{**\ so\ they\ must\ fit\ in\ ints.}}
+\DoxyCodeLine{00073\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00076\ \textcolor{comment}{**\ Check\ whether\ type\ 'int'\ has\ at\ least\ 'b'\ +\ 1\ bits.}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ 'b'\ <\ 32;\ +1\ for\ the\ sign\ bit.}}
+\DoxyCodeLine{00078\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ L\_INTHASBITS(b)\ \ \ \ \ ((UINT\_MAX\ >>\ (b))\ >=\ 1)}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#if\ L\_INTHASBITS(SIZE\_Bx)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ MAXARG\_Bx\ \ \ ((1<<SIZE\_Bx)-\/1)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ MAXARG\_Bx\ \ \ INT\_MAX}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ OFFSET\_sBx\ \ (MAXARG\_Bx>>1)\ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 'sBx'\ is\ signed\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#if\ L\_INTHASBITS(SIZE\_Ax)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ MAXARG\_Ax\ \ \ ((1<<SIZE\_Ax)-\/1)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ MAXARG\_Ax\ \ \ INT\_MAX}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#if\ L\_INTHASBITS(SIZE\_sJ)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#define\ MAXARG\_sJ\ \ \ ((1\ <<\ SIZE\_sJ)\ -\/\ 1)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ MAXARG\_sJ\ \ \ INT\_MAX}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#define\ OFFSET\_sJ\ \ \ (MAXARG\_sJ\ >>\ 1)}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ MAXARG\_A\ \ \ \ ((1<<SIZE\_A)-\/1)}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ MAXARG\_B\ \ \ \ ((1<<SIZE\_B)-\/1)}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#define\ MAXARG\_vB\ \ \ ((1<<SIZE\_vB)-\/1)}}
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#define\ MAXARG\_C\ \ \ \ ((1<<SIZE\_C)-\/1)}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ MAXARG\_vC\ \ \ ((1<<SIZE\_vC)-\/1)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ OFFSET\_sC\ \ \ (MAXARG\_C\ >>\ 1)}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ int2sC(i)\ \ \ ((i)\ +\ OFFSET\_sC)}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ sC2int(i)\ \ \ ((i)\ -\/\ OFFSET\_sC)}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{comment}{/*\ creates\ a\ mask\ with\ 'n'\ 1\ bits\ at\ position\ 'p'\ */}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ MASK1(n,p)\ \ ((\string~((\string~(Instruction)0)<<(n)))<<(p))}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{/*\ creates\ a\ mask\ with\ 'n'\ 0\ bits\ at\ position\ 'p'\ */}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#define\ MASK0(n,p)\ \ (\string~MASK1(n,p))}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00124\ \textcolor{comment}{**\ the\ following\ macros\ help\ to\ manipulate\ instructions}}
+\DoxyCodeLine{00125\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#define\ GET\_OPCODE(i)\ \ \ (cast(OpCode,\ ((i)>>POS\_OP)\ \&\ MASK1(SIZE\_OP,0)))}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#define\ SET\_OPCODE(i,o)\ ((i)\ =\ (((i)\&MASK0(SIZE\_OP,POS\_OP))\ |\ \(\backslash\)}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ ((cast\_Inst(o)<<POS\_OP)\&MASK1(SIZE\_OP,POS\_OP))))}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#define\ checkopm(i,m)\ \ \ (getOpMode(GET\_OPCODE(i))\ ==\ m)}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ getarg(i,pos,size)\ \ (cast\_int(((i)>>(pos))\ \&\ MASK1(size,0)))}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ setarg(i,v,pos,size)\ \ \ \ ((i)\ =\ (((i)\&MASK0(size,pos))\ |\ \(\backslash\)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((cast\_Inst(v)<<pos)\&MASK1(size,pos))))}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#define\ GETARG\_A(i)\ getarg(i,\ POS\_A,\ SIZE\_A)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#define\ SETARG\_A(i,v)\ \ \ setarg(i,\ v,\ POS\_A,\ SIZE\_A)}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#define\ GETARG\_B(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ iABC),\ getarg(i,\ POS\_B,\ SIZE\_B))}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#define\ GETARG\_vB(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ ivABC),\ getarg(i,\ POS\_vB,\ SIZE\_vB))}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ GETARG\_sB(i)\ \ \ \ sC2int(GETARG\_B(i))}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#define\ SETARG\_B(i,v)\ \ \ setarg(i,\ v,\ POS\_B,\ SIZE\_B)}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#define\ SETARG\_vB(i,v)\ \ setarg(i,\ v,\ POS\_vB,\ SIZE\_vB)}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#define\ GETARG\_C(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ iABC),\ getarg(i,\ POS\_C,\ SIZE\_C))}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#define\ GETARG\_vC(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ ivABC),\ getarg(i,\ POS\_vC,\ SIZE\_vC))}}
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#define\ GETARG\_sC(i)\ \ \ \ sC2int(GETARG\_C(i))}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#define\ SETARG\_C(i,v)\ \ \ setarg(i,\ v,\ POS\_C,\ SIZE\_C)}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#define\ SETARG\_vC(i,v)\ \ setarg(i,\ v,\ POS\_vC,\ SIZE\_vC)}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\#define\ TESTARG\_k(i)\ \ \ \ (cast\_int(((i)\ \&\ (1u\ <<\ POS\_k))))}}
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\#define\ GETARG\_k(i)\ getarg(i,\ POS\_k,\ 1)}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\#define\ SETARG\_k(i,v)\ \ \ setarg(i,\ v,\ POS\_k,\ 1)}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \textcolor{preprocessor}{\#define\ GETARG\_Bx(i)\ \ \ \ check\_exp(checkopm(i,\ iABx),\ getarg(i,\ POS\_Bx,\ SIZE\_Bx))}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#define\ SETARG\_Bx(i,v)\ \ setarg(i,\ v,\ POS\_Bx,\ SIZE\_Bx)}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\#define\ GETARG\_Ax(i)\ \ \ \ check\_exp(checkopm(i,\ iAx),\ getarg(i,\ POS\_Ax,\ SIZE\_Ax))}}
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#define\ SETARG\_Ax(i,v)\ \ setarg(i,\ v,\ POS\_Ax,\ SIZE\_Ax)}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#define\ GETARG\_sBx(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ iAsBx),\ getarg(i,\ POS\_Bx,\ SIZE\_Bx)\ -\/\ OFFSET\_sBx)}}
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#define\ SETARG\_sBx(i,b)\ SETARG\_Bx((i),cast\_uint((b)+OFFSET\_sBx))}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\#define\ GETARG\_sJ(i)\ \ \(\backslash\)}}
+\DoxyCodeLine{00172\ \textcolor{preprocessor}{\ \ \ \ check\_exp(checkopm(i,\ isJ),\ getarg(i,\ POS\_sJ,\ SIZE\_sJ)\ -\/\ OFFSET\_sJ)}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#define\ SETARG\_sJ(i,j)\ \(\backslash\)}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\ \ \ \ setarg(i,\ cast\_uint((j)+OFFSET\_sJ),\ POS\_sJ,\ SIZE\_sJ)}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#define\ CREATE\_ABCk(o,a,b,c,k)\ \ ((cast\_Inst(o)<<POS\_OP)\ \(\backslash\)}}
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(a)<<POS\_A)\ \(\backslash\)}}
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(b)<<POS\_B)\ \(\backslash\)}}
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(c)<<POS\_C)\ \(\backslash\)}}
+\DoxyCodeLine{00181\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(k)<<POS\_k))}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \textcolor{preprocessor}{\#define\ CREATE\_vABCk(o,a,b,c,k)\ ((cast\_Inst(o)<<POS\_OP)\ \(\backslash\)}}
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(a)<<POS\_A)\ \(\backslash\)}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(b)<<POS\_vB)\ \(\backslash\)}}
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(c)<<POS\_vC)\ \(\backslash\)}}
+\DoxyCodeLine{00187\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(k)<<POS\_k))}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \textcolor{preprocessor}{\#define\ CREATE\_ABx(o,a,bc)\ \ ((cast\_Inst(o)<<POS\_OP)\ \(\backslash\)}}
+\DoxyCodeLine{00190\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(a)<<POS\_A)\ \(\backslash\)}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(bc)<<POS\_Bx))}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\#define\ CREATE\_Ax(o,a)\ \ \ \ \ \ ((cast\_Inst(o)<<POS\_OP)\ \(\backslash\)}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(a)<<POS\_Ax))}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#define\ CREATE\_sJ(o,j,k)\ \ \ \ ((cast\_Inst(o)\ <<\ POS\_OP)\ \(\backslash\)}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(j)\ <<\ POS\_sJ)\ \(\backslash\)}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ |\ (cast\_Inst(k)\ <<\ POS\_k))}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#if\ !defined(MAXINDEXRK)\ \ }\textcolor{comment}{/*\ (for\ debugging\ only)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\#define\ MAXINDEXRK\ \ MAXARG\_B}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00207\ \textcolor{comment}{**\ Maximum\ size\ for\ the\ stack\ of\ a\ Lua\ function.\ It\ must\ fit\ in\ 8\ bits.}}
+\DoxyCodeLine{00208\ \textcolor{comment}{**\ The\ highest\ valid\ register\ is\ one\ less\ than\ this\ value.}}
+\DoxyCodeLine{00209\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00210\ \textcolor{preprocessor}{\#define\ MAX\_FSTACK\ \ MAXARG\_A}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00213\ \textcolor{comment}{**\ Invalid\ register\ (one\ more\ than\ last\ valid\ register).}}
+\DoxyCodeLine{00214\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#define\ NO\_REG\ \ \ \ \ \ MAX\_FSTACK}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00220\ \textcolor{comment}{**\ R[x]\ -\/\ register}}
+\DoxyCodeLine{00221\ \textcolor{comment}{**\ K[x]\ -\/\ constant\ (in\ constant\ table)}}
+\DoxyCodeLine{00222\ \textcolor{comment}{**\ RK(x)\ ==\ if\ k(i)\ then\ K[x]\ else\ R[x]}}
+\DoxyCodeLine{00223\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00227\ \textcolor{comment}{**\ Grep\ "{}ORDER\ OP"{}\ if\ you\ change\ this\ enum.}}
+\DoxyCodeLine{00228\ \textcolor{comment}{**\ See\ "{}Notes"{}\ below\ for\ more\ information\ about\ some\ instructions.}}
+\DoxyCodeLine{00229\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00232\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00233\ \textcolor{comment}{\ \ name\ \ \ \ \ \ args\ \ \ \ description}}
+\DoxyCodeLine{00234\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00235\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7addf83bbc02b6a88d325135c880d12184}{OP\_MOVE}},\textcolor{comment}{/*\ \ \ A\ B\ R[A]\ :=\ R[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00236\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a60de4d2d9c05216369b32f22325ac26c}{OP\_LOADI}},\textcolor{comment}{/*\ A\ sBx\ \ \ R[A]\ :=\ sBx\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00237\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a82da04477198d0562981ddd7d3adda8b}{OP\_LOADF}},\textcolor{comment}{/*\ A\ sBx\ \ \ R[A]\ :=\ (lua\_Number)sBx\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00238\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab34a8eaf6d32d3c41810653d9eb99c1a}{OP\_LOADK}},\textcolor{comment}{/*\ A\ Bx\ \ \ \ R[A]\ :=\ K[Bx]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00239\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae95580de7b3877b66fdf87366b8e5887}{OP\_LOADKX}},\textcolor{comment}{/*\ \ \ A\ \ \ R[A]\ :=\ K[extra\ arg]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00240\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8653663e33ebaa8572c7e76c86c6539d}{OP\_LOADFALSE}},\textcolor{comment}{/*\ A\ \ \ R[A]\ :=\ false\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00241\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1163876c1d6575f1f220aca5be6751b8}{OP\_LFALSESKIP}},\textcolor{comment}{/*A\ \ R[A]\ :=\ false;\ pc++\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00242\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac1fc81b1c2650990762cf656ac42540d}{OP\_LOADTRUE}},\textcolor{comment}{/*\ \ \ A\ \ \ R[A]\ :=\ true\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00243\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5c399a98a26c923cdae3971b5e5b6432}{OP\_LOADNIL}},\textcolor{comment}{/*\ A\ B\ R[A],\ R[A+1],\ ...,\ R[A+B]\ :=\ nil\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00244\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab48573533495922f053a7d1c9b0d00b4}{OP\_GETUPVAL}},\textcolor{comment}{/*\ \ \ A\ B\ R[A]\ :=\ UpValue[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00245\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a47df60373847890b47b447c870aea678}{OP\_SETUPVAL}},\textcolor{comment}{/*\ \ \ A\ B\ UpValue[B]\ :=\ R[A]\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acba90301f3ac979a3edd23f74182367b}{OP\_GETTABUP}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ UpValue[B][K[C]:shortstring]\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00248\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab1ec2a36c59db7612249cc31e382fdd9}{OP\_GETTABLE}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B][R[C]]\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00249\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a965a4251f6730e9c8e5ca9e4ba4d8568}{OP\_GETI}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B][C]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00250\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab8cb85274c0cd7f8d8525953bd844207}{OP\_GETFIELD}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B][K[C]:shortstring]\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac486cd83792b58a638e37cb249d54a7e}{OP\_SETTABUP}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ UpValue[A][K[B]:shortstring]\ :=\ RK(C)\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00253\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a34315d7408f31b006bf41c9e9c2d736e}{OP\_SETTABLE}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A][R[B]]\ :=\ RK(C)\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00254\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a51eb594f07db275f5c6a77621b2de777}{OP\_SETI}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A][B]\ :=\ RK(C)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00255\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a342ca5ec1477419948043acb24ef3032}{OP\_SETFIELD}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A][K[B]:shortstring]\ :=\ RK(C)\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af4ae9eb9a3c88596112a1d99d0c66280}{OP\_NEWTABLE}},\textcolor{comment}{/*\ \ \ A\ vB\ vC\ k\ \ \ R[A]\ :=\ \{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a64bea18253f9e73c4c5fcfa6b0d5abd2}{OP\_SELF}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A+1]\ :=\ R[B];\ R[A]\ :=\ R[B][K[C]:shortstring]\ \ */}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae59b0459d271ccd33e3b5e525d8d82ec}{OP\_ADDI}},\textcolor{comment}{/*\ \ \ A\ B\ sC\ \ R[A]\ :=\ R[B]\ +\ sC\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aabeaee235c2d819809ba4179c9ad7c40}{OP\_ADDK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ +\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00264\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7affb0b7800883712a266b8f74d7ed67de}{OP\_SUBK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ -\/\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00265\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2bb6b0300af606f3f17cc492e8a0fd9c}{OP\_MULK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ *\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00266\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acdf979ebf1cab75f05b47c659568a2c2}{OP\_MODK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \%\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00267\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a20894c12c21a091fc6b3965894a66a29}{OP\_POWK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \string^\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00268\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8ea5e5bf7705ac9d64a421520f641561}{OP\_DIVK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ /\ K[C]:number\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00269\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9cf8f2bf4a89a2965fba615eb70da736}{OP\_IDIVK}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ //\ K[C]:number\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a257504b0bf681f2fbcb9395a3c4e7deb}{OP\_BANDK}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \&\ K[C]:integer\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00272\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a57ac522387add616066acffc523b74f6}{OP\_BORK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ |\ K[C]:integer\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00273\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af49936a7a3eb6346a7f200981837265c}{OP\_BXORK}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \string~\ K[C]:integer\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab0da05be7645df562d8968b4f254df2b}{OP\_SHLI}},\textcolor{comment}{/*\ \ \ A\ B\ sC\ \ R[A]\ :=\ sC\ <<\ R[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00276\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9159011638ef566ddb323918488443e8}{OP\_SHRI}},\textcolor{comment}{/*\ \ \ A\ B\ sC\ \ R[A]\ :=\ R[B]\ >>\ sC\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a96186829480e5b34b1373288e956b1c8}{OP\_ADD}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ +\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00279\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6c224b456bd394d4d8bad0631ca8e2b7}{OP\_SUB}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ -\/\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00280\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa0e08a6f94350f03d29e4a55d543ba2f}{OP\_MUL}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ *\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00281\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39c596fc7eae450b7218bd97126e37c9}{OP\_MOD}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \%\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00282\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a35127684be890cfd81d556dc84d5f9db}{OP\_POW}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \string^\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00283\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a719aeab2140dd5f575d1559b95bf74e1}{OP\_DIV}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ /\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00284\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac813f8b860222d35f2d02410a84f53b3}{OP\_IDIV}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ //\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6410f6c403b6cd759180c8b8be874cac}{OP\_BAND}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \&\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00287\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2f4bd7bbcff0799872d56d31e258599b}{OP\_BOR}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ |\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00288\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd5cb32a2593241c564d2cdce914021b}{OP\_BXOR}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ \string~\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00289\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a845012132d1f5f2d1cd125326476c25b}{OP\_SHL}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ <<\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00290\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a789f5e2846cb039c0273aff134011fd4}{OP\_SHR}},\textcolor{comment}{/*\ A\ B\ C\ \ \ R[A]\ :=\ R[B]\ >>\ R[C]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00292\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a25acd5dff5083adb067889345ae100d6}{OP\_MMBIN}},\textcolor{comment}{/*\ A\ B\ C\ \ \ call\ C\ metamethod\ over\ R[A]\ and\ R[B]\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00293\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2068a8603e2904d2abd826877ab9e516}{OP\_MMBINI}},\textcolor{comment}{/*\ \ \ A\ sB\ C\ k\ \ \ \ call\ C\ metamethod\ over\ R[A]\ and\ sB\ \ */}}
+\DoxyCodeLine{00294\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a023d51bef94e0b9450cce3b76788a229}{OP\_MMBINK}},\textcolor{comment}{/*\ \ \ A\ B\ C\ k\ \ \ \ \ call\ C\ metamethod\ over\ R[A]\ and\ K[B]\ \ \ \ */}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3fd0932f8be8e5e810d731fd60ab8ef}{OP\_UNM}},\textcolor{comment}{/*\ A\ B\ R[A]\ :=\ -\/R[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00297\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ada36dd48f6870a79b5998262341c57d6}{OP\_BNOT}},\textcolor{comment}{/*\ \ \ A\ B\ R[A]\ :=\ \string~R[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00298\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a36a6b73cc4823f54891a013e2cc760d1}{OP\_NOT}},\textcolor{comment}{/*\ A\ B\ R[A]\ :=\ not\ R[B]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00299\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a55406931f4958f887e6d966d154a1931}{OP\_LEN}},\textcolor{comment}{/*\ A\ B\ R[A]\ :=\ \#R[B]\ (length\ operator)\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a28a7da14b1413b441cf2a5d433b43a51}{OP\_CONCAT}},\textcolor{comment}{/*\ \ \ A\ B\ R[A]\ :=\ R[A]..\ ...\ ..R[A\ +\ B\ -\/\ 1]\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9e771dc35104ec1246adba881d27e372}{OP\_CLOSE}},\textcolor{comment}{/*\ A\ \ \ close\ all\ upvalues\ >=\ R[A]\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00304\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a45ba48df2b6802b55eb5eef6bc66b749}{OP\_TBC}},\textcolor{comment}{/*\ A\ \ \ mark\ variable\ A\ "{}to\ be\ closed"{}\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00305\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd679fab86e6a91d22c91734e287639b}{OP\_JMP}},\textcolor{comment}{/*\ sJ\ \ pc\ +=\ sJ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00306\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1634898deb6e4d1bcb15416034c641c5}{OP\_EQ}},\textcolor{comment}{/*\ \ \ A\ B\ k\ \ \ if\ ((R[A]\ ==\ R[B])\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ */}}
+\DoxyCodeLine{00307\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7d5ed006824d331041dad8486e52df50}{OP\_LT}},\textcolor{comment}{/*\ \ \ A\ B\ k\ \ \ if\ ((R[A]\ <\ \ R[B])\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ */}}
+\DoxyCodeLine{00308\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acef6e71b662db063ff532d89500bb0c0}{OP\_LE}},\textcolor{comment}{/*\ \ \ A\ B\ k\ \ \ if\ ((R[A]\ <=\ R[B])\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ */}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac474caab30c580d7a336de092e3e8754}{OP\_EQK}},\textcolor{comment}{/*\ A\ B\ k\ \ \ if\ ((R[A]\ ==\ K[B])\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ */}}
+\DoxyCodeLine{00311\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a073492f9f138556d12ee1020f01afa9d}{OP\_EQI}},\textcolor{comment}{/*\ A\ sB\ k\ \ if\ ((R[A]\ ==\ sB)\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00312\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7355d162e8b15877fe33c54e3b755746}{OP\_LTI}},\textcolor{comment}{/*\ A\ sB\ k\ \ if\ ((R[A]\ <\ sB)\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00313\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aec7e53f36f35ef810ecff8a7eb274877}{OP\_LEI}},\textcolor{comment}{/*\ A\ sB\ k\ \ if\ ((R[A]\ <=\ sB)\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00314\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a4c9ef8190def252dc1e0deb1bf7e787e}{OP\_GTI}},\textcolor{comment}{/*\ A\ sB\ k\ \ if\ ((R[A]\ >\ sB)\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00315\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ade0bd78cc2f7ec9c1bf6c161759221fa}{OP\_GEI}},\textcolor{comment}{/*\ A\ sB\ k\ \ if\ ((R[A]\ >=\ sB)\ \string~=\ k)\ then\ pc++\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8952e66300f2660060e38c67ccd21c9d}{OP\_TEST}},\textcolor{comment}{/*\ \ \ A\ k\ if\ (not\ R[A]\ ==\ k)\ then\ pc++\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00318\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39b4077a15fb8fffc166f5045dddacee}{OP\_TESTSET}},\textcolor{comment}{/*\ A\ B\ k\ \ \ if\ (not\ R[B]\ ==\ k)\ then\ pc++\ else\ R[A]\ :=\ R[B]\ \ */}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a098bbeea13096667b102f7fd90cbe38f}{OP\_CALL}},\textcolor{comment}{/*\ \ \ A\ B\ C\ \ \ R[A],\ ...\ ,R[A+C-\/2]\ :=\ R[A](R[A+1],\ ...\ ,R[A+B-\/1])\ */}}
+\DoxyCodeLine{00321\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aff2c07ebfd82aa22cc247e9855a16069}{OP\_TAILCALL}},\textcolor{comment}{/*\ \ \ A\ B\ C\ k\ return\ R[A](R[A+1],\ ...\ ,R[A+B-\/1])\ \ \ \ \ \ */}}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ad436c18b194473f5ec64c28b774e41b3}{OP\_RETURN}},\textcolor{comment}{/*\ \ \ A\ B\ C\ k\ return\ R[A],\ ...\ ,R[A+B-\/2]\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00324\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3f8033d220b543563720de9ab788e82}{OP\_RETURN0}},\textcolor{comment}{/*\ \ \ \ \ return\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00325\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a85801949afc11b7d95553fd0ee912f38}{OP\_RETURN1}},\textcolor{comment}{/*\ A\ \ \ return\ R[A]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa01470a2fc70a3f2dbd20c7c8f270802}{OP\_FORLOOP}},\textcolor{comment}{/*\ A\ Bx\ \ \ \ update\ counters;\ if\ loop\ continues\ then\ pc-\/=Bx;\ */}}
+\DoxyCodeLine{00328\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5277c6eb2b1ab790c4942fdccd749e33}{OP\_FORPREP}},\textcolor{comment}{/*\ A\ Bx\ \ \ \ <check\ values\ and\ prepare\ counters>;}}
+\DoxyCodeLine{00329\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ not\ to\ run\ then\ pc+=Bx+1;\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aafeb9e3e631d6f6c1700bf77134d425e}{OP\_TFORPREP}},\textcolor{comment}{/*\ \ \ A\ Bx\ \ \ \ create\ upvalue\ for\ R[A\ +\ 3];\ pc+=Bx\ \ \ \ \ */}}
+\DoxyCodeLine{00332\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a899602d2c96443e08eec9e477071aa22}{OP\_TFORCALL}},\textcolor{comment}{/*\ \ \ A\ C\ R[A+4],\ ...\ ,R[A+3+C]\ :=\ R[A](R[A+1],\ R[A+2]);\ \ */}}
+\DoxyCodeLine{00333\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7dabccd7671c8ff374cb4502a6edb9c0}{OP\_TFORLOOP}},\textcolor{comment}{/*\ \ \ A\ Bx\ \ \ \ if\ R[A+2]\ \string~=\ nil\ then\ \{\ R[A]=R[A+2];\ pc\ -\/=\ Bx\ \}\ */}}
+\DoxyCodeLine{00334\ }
+\DoxyCodeLine{00335\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a01618d8295953fd4ab2ef721b2051718}{OP\_SETLIST}},\textcolor{comment}{/*\ A\ vB\ vC\ k\ \ \ R[A][vC+i]\ :=\ R[A+i],\ 1\ <=\ i\ <=\ vB\ \ */}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a407a76cd8c503b0f4dc14603687a77a2}{OP\_CLOSURE}},\textcolor{comment}{/*\ A\ Bx\ \ \ \ R[A]\ :=\ closure(KPROTO[Bx])\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1856103c50818d72aaa506821a4ef004}{OP\_VARARG}},\textcolor{comment}{/*\ \ \ A\ B\ C\ k\ R[A],\ ...,\ R[A+C-\/2]\ =\ varargs\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1fef421d733b227c65508a8d0dbb8d91}{OP\_GETVARG}},\ \textcolor{comment}{/*\ A\ B\ C\ \ R[A]\ :=\ R[B][R[C]],\ R[B]\ is\ vararg\ parameter\ \ \ \ */}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac60d85a7aad029584666b5a2d46bffb5}{OP\_ERRNNIL}},\textcolor{comment}{/*\ A\ Bx\ \ \ \ raise\ error\ if\ R[A]\ \string~=\ nil\ (K[Bx\ -\/\ 1]\ is\ global\ name)*/}}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a0ac7fd650d101088cfc6beed3757ba44}{OP\_VARARGPREP}},\textcolor{comment}{/*\ \ \ (adjust\ varargs)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00347\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea}{OP\_EXTRAARG}}\textcolor{comment}{/*\ \ \ \ Ax\ \ extra\ (larger)\ argument\ for\ previous\ opcode\ */}}
+\DoxyCodeLine{00348\ \}\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{OpCode}};}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\#define\ NUM\_OPCODES\ ((int)(OP\_EXTRAARG)\ +\ 1)}}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \textcolor{comment}{/*===========================================================================}}
+\DoxyCodeLine{00356\ \textcolor{comment}{\ \ Notes:}}
+\DoxyCodeLine{00357\ \textcolor{comment}{}}
+\DoxyCodeLine{00358\ \textcolor{comment}{\ \ (*)\ Opcode\ OP\_LFALSESKIP\ is\ used\ to\ convert\ a\ condition\ to\ a\ boolean}}
+\DoxyCodeLine{00359\ \textcolor{comment}{\ \ value,\ in\ a\ code\ equivalent\ to\ (not\ cond\ ?\ false\ :\ true).\ \ (It}}
+\DoxyCodeLine{00360\ \textcolor{comment}{\ \ produces\ false\ and\ skips\ the\ next\ instruction\ producing\ true.)}}
+\DoxyCodeLine{00361\ \textcolor{comment}{}}
+\DoxyCodeLine{00362\ \textcolor{comment}{\ \ (*)\ Opcodes\ OP\_MMBIN\ and\ variants\ follow\ each\ arithmetic\ and}}
+\DoxyCodeLine{00363\ \textcolor{comment}{\ \ bitwise\ opcode.\ If\ the\ operation\ succeeds,\ it\ skips\ this\ next}}
+\DoxyCodeLine{00364\ \textcolor{comment}{\ \ opcode.\ Otherwise,\ this\ opcode\ calls\ the\ corresponding\ metamethod.}}
+\DoxyCodeLine{00365\ \textcolor{comment}{}}
+\DoxyCodeLine{00366\ \textcolor{comment}{\ \ (*)\ Opcode\ OP\_TESTSET\ is\ used\ in\ short-\/circuit\ expressions\ that\ need}}
+\DoxyCodeLine{00367\ \textcolor{comment}{\ \ both\ to\ jump\ and\ to\ produce\ a\ value,\ such\ as\ (a\ =\ b\ or\ c).}}
+\DoxyCodeLine{00368\ \textcolor{comment}{}}
+\DoxyCodeLine{00369\ \textcolor{comment}{\ \ (*)\ In\ OP\_CALL,\ if\ (B\ ==\ 0)\ then\ B\ =\ top\ -\/\ A.\ If\ (C\ ==\ 0),\ then}}
+\DoxyCodeLine{00370\ \textcolor{comment}{\ \ 'top'\ is\ set\ to\ last\_result+1,\ so\ next\ open\ instruction\ (OP\_CALL,}}
+\DoxyCodeLine{00371\ \textcolor{comment}{\ \ OP\_RETURN*,\ OP\_SETLIST)\ may\ use\ 'top'.}}
+\DoxyCodeLine{00372\ \textcolor{comment}{}}
+\DoxyCodeLine{00373\ \textcolor{comment}{\ \ (*)\ In\ OP\_VARARG,\ if\ (C\ ==\ 0)\ then\ use\ actual\ number\ of\ varargs\ and}}
+\DoxyCodeLine{00374\ \textcolor{comment}{\ \ set\ top\ (like\ in\ OP\_CALL\ with\ C\ ==\ 0).\ 'k'\ means\ function\ has\ a}}
+\DoxyCodeLine{00375\ \textcolor{comment}{\ \ vararg\ table,\ which\ is\ in\ R[B].}}
+\DoxyCodeLine{00376\ \textcolor{comment}{}}
+\DoxyCodeLine{00377\ \textcolor{comment}{\ \ (*)\ In\ OP\_RETURN,\ if\ (B\ ==\ 0)\ then\ return\ up\ to\ 'top'.}}
+\DoxyCodeLine{00378\ \textcolor{comment}{}}
+\DoxyCodeLine{00379\ \textcolor{comment}{\ \ (*)\ In\ OP\_LOADKX\ and\ OP\_NEWTABLE,\ the\ next\ instruction\ is\ always}}
+\DoxyCodeLine{00380\ \textcolor{comment}{\ \ OP\_EXTRAARG.}}
+\DoxyCodeLine{00381\ \textcolor{comment}{}}
+\DoxyCodeLine{00382\ \textcolor{comment}{\ \ (*)\ In\ OP\_SETLIST,\ if\ (B\ ==\ 0)\ then\ real\ B\ =\ 'top';\ if\ k,\ then}}
+\DoxyCodeLine{00383\ \textcolor{comment}{\ \ real\ C\ =\ EXTRAARG\ \_\ C\ (the\ bits\ of\ EXTRAARG\ concatenated\ with\ the}}
+\DoxyCodeLine{00384\ \textcolor{comment}{\ \ bits\ of\ C).}}
+\DoxyCodeLine{00385\ \textcolor{comment}{}}
+\DoxyCodeLine{00386\ \textcolor{comment}{\ \ (*)\ In\ OP\_NEWTABLE,\ vB\ is\ log2\ of\ the\ hash\ size\ (which\ is\ always\ a}}
+\DoxyCodeLine{00387\ \textcolor{comment}{\ \ power\ of\ 2)\ plus\ 1,\ or\ zero\ for\ size\ zero.\ If\ not\ k,\ the\ array\ size}}
+\DoxyCodeLine{00388\ \textcolor{comment}{\ \ is\ vC.\ Otherwise,\ the\ array\ size\ is\ EXTRAARG\ \_\ vC.}}
+\DoxyCodeLine{00389\ \textcolor{comment}{}}
+\DoxyCodeLine{00390\ \textcolor{comment}{\ \ (*)\ In\ OP\_ERRNNIL,\ (Bx\ ==\ 0)\ means\ index\ of\ global\ name\ doesn't}}
+\DoxyCodeLine{00391\ \textcolor{comment}{\ \ fit\ in\ Bx.\ (So,\ that\ name\ is\ not\ available\ for\ the\ error\ message.)}}
+\DoxyCodeLine{00392\ \textcolor{comment}{}}
+\DoxyCodeLine{00393\ \textcolor{comment}{\ \ (*)\ For\ comparisons,\ k\ specifies\ what\ condition\ the\ test\ should\ accept}}
+\DoxyCodeLine{00394\ \textcolor{comment}{\ \ (true\ or\ false).}}
+\DoxyCodeLine{00395\ \textcolor{comment}{}}
+\DoxyCodeLine{00396\ \textcolor{comment}{\ \ (*)\ In\ OP\_MMBINI/OP\_MMBINK,\ k\ means\ the\ arguments\ were\ flipped}}
+\DoxyCodeLine{00397\ \textcolor{comment}{\ \ (the\ constant\ is\ the\ first\ operand).}}
+\DoxyCodeLine{00398\ \textcolor{comment}{}}
+\DoxyCodeLine{00399\ \textcolor{comment}{\ \ (*)\ All\ comparison\ and\ test\ instructions\ assume\ that\ the\ instruction}}
+\DoxyCodeLine{00400\ \textcolor{comment}{\ \ being\ skipped\ (pc++)\ is\ a\ jump.}}
+\DoxyCodeLine{00401\ \textcolor{comment}{}}
+\DoxyCodeLine{00402\ \textcolor{comment}{\ \ (*)\ In\ instructions\ OP\_RETURN/OP\_TAILCALL,\ 'k'\ specifies\ that\ the}}
+\DoxyCodeLine{00403\ \textcolor{comment}{\ \ function\ builds\ upvalues,\ which\ may\ need\ to\ be\ closed.\ C\ >\ 0\ means}}
+\DoxyCodeLine{00404\ \textcolor{comment}{\ \ the\ function\ has\ hidden\ vararg\ arguments,\ so\ that\ its\ 'func'\ must\ be}}
+\DoxyCodeLine{00405\ \textcolor{comment}{\ \ corrected\ before\ returning;\ in\ this\ case,\ (C\ -\/\ 1)\ is\ its\ number\ of}}
+\DoxyCodeLine{00406\ \textcolor{comment}{\ \ fixed\ parameters.}}
+\DoxyCodeLine{00407\ \textcolor{comment}{}}
+\DoxyCodeLine{00408\ \textcolor{comment}{\ \ (*)\ In\ comparisons\ with\ an\ immediate\ operand,\ C\ signals\ whether\ the}}
+\DoxyCodeLine{00409\ \textcolor{comment}{\ \ original\ operand\ was\ a\ float.\ (It\ must\ be\ corrected\ in\ case\ of}}
+\DoxyCodeLine{00410\ \textcolor{comment}{\ \ metamethods.)}}
+\DoxyCodeLine{00411\ \textcolor{comment}{}}
+\DoxyCodeLine{00412\ \textcolor{comment}{===========================================================================*/}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00416\ \textcolor{comment}{**\ masks\ for\ instruction\ properties.\ The\ format\ is:}}
+\DoxyCodeLine{00417\ \textcolor{comment}{**\ bits\ 0-\/2:\ op\ mode}}
+\DoxyCodeLine{00418\ \textcolor{comment}{**\ bit\ 3:\ instruction\ set\ register\ A}}
+\DoxyCodeLine{00419\ \textcolor{comment}{**\ bit\ 4:\ operator\ is\ a\ test\ (next\ instruction\ must\ be\ a\ jump)}}
+\DoxyCodeLine{00420\ \textcolor{comment}{**\ bit\ 5:\ instruction\ uses\ 'L-\/>top'\ set\ by\ previous\ instruction\ (when\ B\ ==\ 0)}}
+\DoxyCodeLine{00421\ \textcolor{comment}{**\ bit\ 6:\ instruction\ sets\ 'L-\/>top'\ for\ next\ instruction\ (when\ C\ ==\ 0)}}
+\DoxyCodeLine{00422\ \textcolor{comment}{**\ bit\ 7:\ instruction\ is\ an\ MM\ instruction\ (call\ a\ metamethod)}}
+\DoxyCodeLine{00423\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00425\ \mbox{\hyperlink{llimits_8h_a3f2cdf96bb04b9d2a9a318a126f99182}{LUAI\_DDEC}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[\mbox{\hyperlink{lopcodes_8h_a1fb469ba81540d3314cfbe37c675ba20}{NUM\_OPCODES}}];)}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00427\ \#define\ \mbox{\hyperlink{lopcodes_8h_afb3fdd221fb95fdd1c254f7ab479739e}{getOpMode}}(m)\ \ \ (\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keyword}{enum}\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}{OpMode}},\ \mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ 7))}
+\DoxyCodeLine{00428\ \#define\ \mbox{\hyperlink{lopcodes_8h_aaae51a1c7e304923c51509b7cd644f29}{testAMode}}(m)\ \ \ (\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 3))}
+\DoxyCodeLine{00429\ \#define\ \mbox{\hyperlink{lopcodes_8h_a6750851f9d04ae7f9612146b07f88c97}{testTMode}}(m)\ \ \ (\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 4))}
+\DoxyCodeLine{00430\ \#define\ \mbox{\hyperlink{lopcodes_8h_ac5afff4b1215ce8a72b400c40834241b}{testITMode}}(m)\ (\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 5))}
+\DoxyCodeLine{00431\ \#define\ \mbox{\hyperlink{lopcodes_8h_a0d5c4bc6c8c7a22a6591c65a93d9c908}{testOTMode}}(m)\ (\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 6))}
+\DoxyCodeLine{00432\ \#define\ \mbox{\hyperlink{lopcodes_8h_a128c04f70b43fb82ed2eadb2b255cc81}{testMMMode}}(m)\ (\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 7))}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ }
+\DoxyCodeLine{00435\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lopcodes_8c_a547f56c693537c7fbbd7e68facb67367}{luaP\_isOT}}\ (\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}\ i);}
+\DoxyCodeLine{00436\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lopcodes_8h_a0eb5a24da76fa24d4f05b81cae59f2d9}{luaP\_isIT}}\ (\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}\ i);}
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

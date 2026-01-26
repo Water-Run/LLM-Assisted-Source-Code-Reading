@@ -1,0 +1,13 @@
+<map id="lua_toboolean" name="lua_toboolean">
+<area shape="rect" id="Node000001" title=" " alt="" coords="349,81,450,108"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#a1adeae26be7c2e3001c3583f43f70720" title=" " alt="" coords="218,5,286,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,76,278,35,281,30,359,71"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a3cb8205f86c838d8f82b7d2360b1b0f4" title=" " alt="" coords="204,56,300,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,86,299,80,300,75,334,81"/>
+<area shape="rect" id="Node000005" href="$lauxlib_8c.html#a64d366034d114de946f1b93199847dab" title=" " alt="" coords="203,107,301,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="334,109,302,114,301,109,333,103"/>
+<area shape="rect" id="Node000006" href="$lua_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="227,157,276,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="360,118,278,161,276,156,357,113"/>
+<area shape="rect" id="Node000004" href="$linit_8c.html#ad09996aefb08d65ffee01b1729919261" title=" " alt="" coords="5,56,155,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="189,72,155,72,155,67,189,67"/>
+</map>

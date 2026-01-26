@@ -1,0 +1,234 @@
+\doxysection{lua.\+c File Reference}
+\hypertarget{lua_8c}{}\label{lua_8c}\index{lua.c@{lua.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lua.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lua_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lua_8c_a09f0a4e06f4ea52525adbd7eb990ec1b}{lua\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lua_8c_af34f43dfd47b8179ae1eb1a03e4abc60}{LUA\+\_\+\+PROGNAME}}~"{}lua"{}
+\item 
+\#define \mbox{\hyperlink{lua_8c_aa26556c39a8c231bc647902b495de4a6}{LUA\+\_\+\+INIT\+\_\+\+VAR}}~"{}LUA\+\_\+\+INIT"{}
+\item 
+\#define \mbox{\hyperlink{lua_8c_a23a4ddde7b8770311b5f5cfe0e7b6b9c}{LUA\+\_\+\+INITVARVERSION}}~\mbox{\hyperlink{lua_8c_aa26556c39a8c231bc647902b495de4a6}{LUA\+\_\+\+INIT\+\_\+\+VAR}} \mbox{\hyperlink{lualib_8h_a06a8221265cf7c226030b5a16b18a1f0}{LUA\+\_\+\+VERSUFFIX}}
+\item 
+\#define \mbox{\hyperlink{lua_8c_a2b4965e3d9acf735d37b9bf133968cce}{setsignal}}~signal
+\item 
+\#define \mbox{\hyperlink{lua_8c_a7aa07cb625a50d1de019e68b223629dd}{has\+\_\+error}}~1 /\texorpdfstring{$\ast$}{*} bad option \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lua_8c_abe04c677e6b350ca13b68c28a2a12f04}{has\+\_\+i}}~2 /\texorpdfstring{$\ast$}{*} -\/i \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lua_8c_a7136ee26052850280aaffb4e04db8f0d}{has\+\_\+v}}~4 /\texorpdfstring{$\ast$}{*} -\/v \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lua_8c_a062f4556e993b5521901729db1abb78b}{has\+\_\+e}}~8 /\texorpdfstring{$\ast$}{*} -\/e \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lua_8c_a8c7799a931aadcdf663a40d5973e9457}{has\+\_\+E}}~16 /\texorpdfstring{$\ast$}{*} -\/E \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lua_8c_aa23cea14795d309b45458e284c03feb4}{LUA\+\_\+\+PROMPT}}~"{}$>$ "{}
+\item 
+\#define \mbox{\hyperlink{lua_8c_ac2d8f72be488d4fcc8483eda1f19e10d}{LUA\+\_\+\+PROMPT2}}~"{}$>$$>$ "{}
+\item 
+\#define \mbox{\hyperlink{lua_8c_a05ae1f2d6224a7ed765d937f3e29b273}{LUA\+\_\+\+MAXINPUT}}~512
+\item 
+\#define \mbox{\hyperlink{lua_8c_ac64250ed95450c29366bf34f4b1f0cbf}{lua\+\_\+stdin\+\_\+is\+\_\+tty}}()
+\item 
+\#define \mbox{\hyperlink{lua_8c_a1be3c5b4b1cc3a2b27aef6eebecdd482}{lua\+\_\+initreadline}}(L)
+\item 
+\#define \mbox{\hyperlink{lua_8c_a0972b8ff1b2e2d2abdd184890b79ad90}{EOFMARK}}~"{}$<$eof$>$"{}
+\item 
+\#define \mbox{\hyperlink{lua_8c_af4095ba5ce624b3061385b49e5863c90}{marklen}}~(sizeof(\mbox{\hyperlink{lua_8c_a0972b8ff1b2e2d2abdd184890b79ad90}{EOFMARK}})/sizeof(char) -\/ 1)
+\item 
+\#define \mbox{\hyperlink{lua_8c_a3897d8ba9329bb8be4723b7e9fa822a1}{luai\+\_\+openlibs}}(L)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lua_8c_a46cd9e7a0b3aae1d2aadd70c1b9c1c52}{l\+\_\+readlineT}}) (const char \texorpdfstring{$\ast$}{*}prompt)
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lua_8c_a4009d85211906f582b8847e3b0e9535a}{l\+\_\+addhistT}}) (const char \texorpdfstring{$\ast$}{*}string)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{lua_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lua_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lua_8c_a0972b8ff1b2e2d2abdd184890b79ad90}\index{lua.c@{lua.c}!EOFMARK@{EOFMARK}}
+\index{EOFMARK@{EOFMARK}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{EOFMARK}{EOFMARK}}
+{\footnotesize\ttfamily \label{lua_8c_a0972b8ff1b2e2d2abdd184890b79ad90} 
+\#define EOFMARK~"{}$<$eof$>$"{}}
+
+\Hypertarget{lua_8c_a8c7799a931aadcdf663a40d5973e9457}\index{lua.c@{lua.c}!has\_E@{has\_E}}
+\index{has\_E@{has\_E}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{has\_E}{has\_E}}
+{\footnotesize\ttfamily \label{lua_8c_a8c7799a931aadcdf663a40d5973e9457} 
+\#define has\+\_\+E~16 /\texorpdfstring{$\ast$}{*} -\/E \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lua_8c_a062f4556e993b5521901729db1abb78b}\index{lua.c@{lua.c}!has\_e@{has\_e}}
+\index{has\_e@{has\_e}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{has\_e}{has\_e}}
+{\footnotesize\ttfamily \label{lua_8c_a062f4556e993b5521901729db1abb78b} 
+\#define has\+\_\+e~8 /\texorpdfstring{$\ast$}{*} -\/e \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lua_8c_a7aa07cb625a50d1de019e68b223629dd}\index{lua.c@{lua.c}!has\_error@{has\_error}}
+\index{has\_error@{has\_error}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{has\_error}{has\_error}}
+{\footnotesize\ttfamily \label{lua_8c_a7aa07cb625a50d1de019e68b223629dd} 
+\#define has\+\_\+error~1 /\texorpdfstring{$\ast$}{*} bad option \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lua_8c_abe04c677e6b350ca13b68c28a2a12f04}\index{lua.c@{lua.c}!has\_i@{has\_i}}
+\index{has\_i@{has\_i}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{has\_i}{has\_i}}
+{\footnotesize\ttfamily \label{lua_8c_abe04c677e6b350ca13b68c28a2a12f04} 
+\#define has\+\_\+i~2 /\texorpdfstring{$\ast$}{*} -\/i \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lua_8c_a7136ee26052850280aaffb4e04db8f0d}\index{lua.c@{lua.c}!has\_v@{has\_v}}
+\index{has\_v@{has\_v}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{has\_v}{has\_v}}
+{\footnotesize\ttfamily \label{lua_8c_a7136ee26052850280aaffb4e04db8f0d} 
+\#define has\+\_\+v~4 /\texorpdfstring{$\ast$}{*} -\/v \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lua_8c_a09f0a4e06f4ea52525adbd7eb990ec1b}\index{lua.c@{lua.c}!lua\_c@{lua\_c}}
+\index{lua\_c@{lua\_c}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{lua\_c}{lua\_c}}
+{\footnotesize\ttfamily \label{lua_8c_a09f0a4e06f4ea52525adbd7eb990ec1b} 
+\#define lua\+\_\+c}
+
+\Hypertarget{lua_8c_aa26556c39a8c231bc647902b495de4a6}\index{lua.c@{lua.c}!LUA\_INIT\_VAR@{LUA\_INIT\_VAR}}
+\index{LUA\_INIT\_VAR@{LUA\_INIT\_VAR}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_INIT\_VAR}{LUA\_INIT\_VAR}}
+{\footnotesize\ttfamily \label{lua_8c_aa26556c39a8c231bc647902b495de4a6} 
+\#define LUA\+\_\+\+INIT\+\_\+\+VAR~"{}LUA\+\_\+\+INIT"{}}
+
+\Hypertarget{lua_8c_a1be3c5b4b1cc3a2b27aef6eebecdd482}\index{lua.c@{lua.c}!lua\_initreadline@{lua\_initreadline}}
+\index{lua\_initreadline@{lua\_initreadline}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{lua\_initreadline}{lua\_initreadline}}
+{\footnotesize\ttfamily \label{lua_8c_a1be3c5b4b1cc3a2b27aef6eebecdd482} 
+\#define lua\+\_\+initreadline(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)L)}
+
+\end{DoxyCode}
+\Hypertarget{lua_8c_a23a4ddde7b8770311b5f5cfe0e7b6b9c}\index{lua.c@{lua.c}!LUA\_INITVARVERSION@{LUA\_INITVARVERSION}}
+\index{LUA\_INITVARVERSION@{LUA\_INITVARVERSION}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_INITVARVERSION}{LUA\_INITVARVERSION}}
+{\footnotesize\ttfamily \label{lua_8c_a23a4ddde7b8770311b5f5cfe0e7b6b9c} 
+\#define LUA\+\_\+\+INITVARVERSION~\mbox{\hyperlink{lua_8c_aa26556c39a8c231bc647902b495de4a6}{LUA\+\_\+\+INIT\+\_\+\+VAR}} \mbox{\hyperlink{lualib_8h_a06a8221265cf7c226030b5a16b18a1f0}{LUA\+\_\+\+VERSUFFIX}}}
+
+\Hypertarget{lua_8c_a05ae1f2d6224a7ed765d937f3e29b273}\index{lua.c@{lua.c}!LUA\_MAXINPUT@{LUA\_MAXINPUT}}
+\index{LUA\_MAXINPUT@{LUA\_MAXINPUT}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_MAXINPUT}{LUA\_MAXINPUT}}
+{\footnotesize\ttfamily \label{lua_8c_a05ae1f2d6224a7ed765d937f3e29b273} 
+\#define LUA\+\_\+\+MAXINPUT~512}
+
+\Hypertarget{lua_8c_af34f43dfd47b8179ae1eb1a03e4abc60}\index{lua.c@{lua.c}!LUA\_PROGNAME@{LUA\_PROGNAME}}
+\index{LUA\_PROGNAME@{LUA\_PROGNAME}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_PROGNAME}{LUA\_PROGNAME}}
+{\footnotesize\ttfamily \label{lua_8c_af34f43dfd47b8179ae1eb1a03e4abc60} 
+\#define LUA\+\_\+\+PROGNAME~"{}lua"{}}
+
+\Hypertarget{lua_8c_aa23cea14795d309b45458e284c03feb4}\index{lua.c@{lua.c}!LUA\_PROMPT@{LUA\_PROMPT}}
+\index{LUA\_PROMPT@{LUA\_PROMPT}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_PROMPT}{LUA\_PROMPT}}
+{\footnotesize\ttfamily \label{lua_8c_aa23cea14795d309b45458e284c03feb4} 
+\#define LUA\+\_\+\+PROMPT~"{}$>$ "{}}
+
+\Hypertarget{lua_8c_ac2d8f72be488d4fcc8483eda1f19e10d}\index{lua.c@{lua.c}!LUA\_PROMPT2@{LUA\_PROMPT2}}
+\index{LUA\_PROMPT2@{LUA\_PROMPT2}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_PROMPT2}{LUA\_PROMPT2}}
+{\footnotesize\ttfamily \label{lua_8c_ac2d8f72be488d4fcc8483eda1f19e10d} 
+\#define LUA\+\_\+\+PROMPT2~"{}$>$$>$ "{}}
+
+\Hypertarget{lua_8c_ac64250ed95450c29366bf34f4b1f0cbf}\index{lua.c@{lua.c}!lua\_stdin\_is\_tty@{lua\_stdin\_is\_tty}}
+\index{lua\_stdin\_is\_tty@{lua\_stdin\_is\_tty}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{lua\_stdin\_is\_tty}{lua\_stdin\_is\_tty}}
+{\footnotesize\ttfamily \label{lua_8c_ac64250ed95450c29366bf34f4b1f0cbf} 
+\#define lua\+\_\+stdin\+\_\+is\+\_\+tty(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1\ \ \textcolor{comment}{/*\ assume\ stdin\ is\ a\ tty\ */}}
+
+\end{DoxyCode}
+\Hypertarget{lua_8c_a3897d8ba9329bb8be4723b7e9fa822a1}\index{lua.c@{lua.c}!luai\_openlibs@{luai\_openlibs}}
+\index{luai\_openlibs@{luai\_openlibs}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{luai\_openlibs}{luai\_openlibs}}
+{\footnotesize\ttfamily \label{lua_8c_a3897d8ba9329bb8be4723b7e9fa822a1} 
+\#define luai\+\_\+openlibs(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{linit_8c_ad09996aefb08d65ffee01b1729919261}{luaL\_openselectedlibs}}(L,\ \string~0,\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{lua_8c_af4095ba5ce624b3061385b49e5863c90}\index{lua.c@{lua.c}!marklen@{marklen}}
+\index{marklen@{marklen}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{marklen}{marklen}}
+{\footnotesize\ttfamily \label{lua_8c_af4095ba5ce624b3061385b49e5863c90} 
+\#define marklen~(sizeof(\mbox{\hyperlink{lua_8c_a0972b8ff1b2e2d2abdd184890b79ad90}{EOFMARK}})/sizeof(char) -\/ 1)}
+
+\Hypertarget{lua_8c_a2b4965e3d9acf735d37b9bf133968cce}\index{lua.c@{lua.c}!setsignal@{setsignal}}
+\index{setsignal@{setsignal}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{setsignal}{setsignal}}
+{\footnotesize\ttfamily \label{lua_8c_a2b4965e3d9acf735d37b9bf133968cce} 
+\#define setsignal~signal}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{lua_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lua_8c_a4009d85211906f582b8847e3b0e9535a}\index{lua.c@{lua.c}!l\_addhistT@{l\_addhistT}}
+\index{l\_addhistT@{l\_addhistT}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{l\_addhistT}{l\_addhistT}}
+{\footnotesize\ttfamily \label{lua_8c_a4009d85211906f582b8847e3b0e9535a} 
+typedef void(\texorpdfstring{$\ast$}{*} l\+\_\+addhistT) (const char \texorpdfstring{$\ast$}{*}string)}
+
+\Hypertarget{lua_8c_a46cd9e7a0b3aae1d2aadd70c1b9c1c52}\index{lua.c@{lua.c}!l\_readlineT@{l\_readlineT}}
+\index{l\_readlineT@{l\_readlineT}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{l\_readlineT}{l\_readlineT}}
+{\footnotesize\ttfamily \label{lua_8c_a46cd9e7a0b3aae1d2aadd70c1b9c1c52} 
+typedef char \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} l\+\_\+readlineT) (const char \texorpdfstring{$\ast$}{*}prompt)}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lua_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lua_8c_a3c04138a5bfe5d72780bb7e82a18e627}\index{lua.c@{lua.c}!main@{main}}
+\index{main@{main}!lua.c@{lua.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{lua_8c_a3c04138a5bfe5d72780bb7e82a18e627} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lua_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}

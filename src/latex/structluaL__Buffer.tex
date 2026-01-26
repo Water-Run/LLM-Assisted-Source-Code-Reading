@@ -1,0 +1,87 @@
+\doxysection{lua\+L\+\_\+\+Buffer Struct Reference}
+\hypertarget{structluaL__Buffer}{}\label{structluaL__Buffer}\index{luaL\_Buffer@{luaL\_Buffer}}
+
+
+{\ttfamily \#include $<$lauxlib.\+h$>$}
+
+
+
+Collaboration diagram for lua\+L\+\_\+\+Buffer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structluaL__Buffer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structluaL__Buffer_ad519a6ef1557666cbdef35e5e8a4ef3b}{b}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structluaL__Buffer_a2d0288dac89591516c834328beee71cf}{size}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structluaL__Buffer_a85c23e8716842c83ee8e9d80f1652812}{n}}
+\item 
+\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structluaL__Buffer_a66ae63716768952c74910da4351886fb}{L}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>\mbox{\hyperlink{structluaL__Buffer_a27bb352f42e1d97ffe512c947542ad62}{LUAI\_MAXALIGN}}\\
+\>char \mbox{\hyperlink{structluaL__Buffer_a9216b80b23dca5599b5dade85bed1298}{b}} \mbox{[}\mbox{\hyperlink{luaconf_8h_af360ad37a770dfdc29291a99c398f42d}{LUAL\_BUFFERSIZE}}\mbox{]}\\
+\} \mbox{\hyperlink{structluaL__Buffer_ab57f2329723b3162159e2e74115484ac}{init}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structluaL__Buffer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structluaL__Buffer_ad519a6ef1557666cbdef35e5e8a4ef3b}\index{luaL\_Buffer@{luaL\_Buffer}!b@{b}}
+\index{b@{b}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{b}{b}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_ad519a6ef1557666cbdef35e5e8a4ef3b} 
+char\texorpdfstring{$\ast$}{*} lua\+L\+\_\+\+Buffer\+::b}
+
+\Hypertarget{structluaL__Buffer_a9216b80b23dca5599b5dade85bed1298}\index{luaL\_Buffer@{luaL\_Buffer}!b@{b}}
+\index{b@{b}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{b}{b}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_a9216b80b23dca5599b5dade85bed1298} 
+char lua\+L\+\_\+\+Buffer\+::b\mbox{[}\mbox{\hyperlink{luaconf_8h_af360ad37a770dfdc29291a99c398f42d}{LUAL\+\_\+\+BUFFERSIZE}}\mbox{]}}
+
+\Hypertarget{structluaL__Buffer_ab57f2329723b3162159e2e74115484ac}\index{luaL\_Buffer@{luaL\_Buffer}!init@{init}}
+\index{init@{init}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_ab57f2329723b3162159e2e74115484ac} 
+union  \{ ... \}  lua\+L\+\_\+\+Buffer\+::init}
+
+\Hypertarget{structluaL__Buffer_a66ae63716768952c74910da4351886fb}\index{luaL\_Buffer@{luaL\_Buffer}!L@{L}}
+\index{L@{L}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{L}{L}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_a66ae63716768952c74910da4351886fb} 
+\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}\texorpdfstring{$\ast$}{*} lua\+L\+\_\+\+Buffer\+::L}
+
+\Hypertarget{structluaL__Buffer_a27bb352f42e1d97ffe512c947542ad62}\index{luaL\_Buffer@{luaL\_Buffer}!LUAI\_MAXALIGN@{LUAI\_MAXALIGN}}
+\index{LUAI\_MAXALIGN@{LUAI\_MAXALIGN}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{LUAI\_MAXALIGN}{LUAI\_MAXALIGN}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_a27bb352f42e1d97ffe512c947542ad62} 
+lua\+L\+\_\+\+Buffer\+::\+LUAI\+\_\+\+MAXALIGN}
+
+\Hypertarget{structluaL__Buffer_a85c23e8716842c83ee8e9d80f1652812}\index{luaL\_Buffer@{luaL\_Buffer}!n@{n}}
+\index{n@{n}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_a85c23e8716842c83ee8e9d80f1652812} 
+size\+\_\+t lua\+L\+\_\+\+Buffer\+::n}
+
+\Hypertarget{structluaL__Buffer_a2d0288dac89591516c834328beee71cf}\index{luaL\_Buffer@{luaL\_Buffer}!size@{size}}
+\index{size@{size}!luaL\_Buffer@{luaL\_Buffer}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{structluaL__Buffer_a2d0288dac89591516c834328beee71cf} 
+size\+\_\+t lua\+L\+\_\+\+Buffer\+::size}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lauxlib_8h}{lauxlib.\+h}}\end{DoxyCompactItemize}

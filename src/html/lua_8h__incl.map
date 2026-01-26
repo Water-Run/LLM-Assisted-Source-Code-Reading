@@ -1,0 +1,12 @@
+<map id="lua.h" name="lua.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,136,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,74,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,34,64,71,61,67,97,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="77,155,146,181"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,33,114,139,109,139,109,33"/>
+<area shape="rect" id="Node000004" href="$luaconf_8h.html" title=" " alt="" coords="149,80,223,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="126,31,164,67,161,71,123,34"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="175,109,137,146,133,142,171,105"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="169,155,232,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="191,107,198,139,193,140,186,108"/>
+</map>

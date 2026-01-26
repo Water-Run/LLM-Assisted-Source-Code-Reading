@@ -1,0 +1,126 @@
+\doxysection{lundump.\+h File Reference}
+\hypertarget{lundump_8h}{}\label{lundump_8h}\index{lundump.h@{lundump.h}}
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lzio.\+h"{}}\newline
+Include dependency graph for lundump.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{lundump_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lundump_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lundump_8h_ad6f33b546a90e78ddb67428b712b48ae}{LUAC\+\_\+\+DATA}}~"{}\textbackslash{}x19\textbackslash{}x93\textbackslash{}r\textbackslash{}n\textbackslash{}x1a\textbackslash{}n"{}
+\item 
+\#define \mbox{\hyperlink{lundump_8h_af8b5bd7f864ed14aef7a9e7405ce6aad}{LUAC\+\_\+\+INT}}~-\/0x5678
+\item 
+\#define \mbox{\hyperlink{lundump_8h_acc5e08088d3780b427e5dc124ab75087}{LUAC\+\_\+\+INST}}~0x12345678
+\item 
+\#define \mbox{\hyperlink{lundump_8h_a83a08bb2d400b526bb4a2f449523dd62}{LUAC\+\_\+\+NUM}}~\mbox{\hyperlink{llimits_8h_ac92cecb12c5aba1164877e81e76e2cb6}{cast\+\_\+num}}(-\/370.\+5)
+\item 
+\#define \mbox{\hyperlink{lundump_8h_aaef225d352d4ab1461adc02e4fa027cd}{LUAC\+\_\+\+VERSION}}~(\mbox{\hyperlink{lua_8h_a43ab5ef7bb3e7a52930bc15eba1685d3}{LUA\+\_\+\+VERSION\+\_\+\+MAJOR\+\_\+N}}\texorpdfstring{$\ast$}{*}16+\mbox{\hyperlink{lua_8h_a04a59a0ddc568ee857eaa677493dc4d2}{LUA\+\_\+\+VERSION\+\_\+\+MINOR\+\_\+N}})
+\item 
+\#define \mbox{\hyperlink{lundump_8h_a1898203259aab6e1d60737b1e95c2adc}{LUAC\+\_\+\+FORMAT}}~0 /\texorpdfstring{$\ast$}{*} this is the official format \texorpdfstring{$\ast$}{*}/
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lundump_8h_a55a19bf7f9cefd80e3e8185d8deeb7de}{lua\+U\+\_\+undump}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}Z, const char \texorpdfstring{$\ast$}{*}name, int fixed)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int \mbox{\hyperlink{lundump_8h_a2b9d33dfd898f6284de183d168556786}{lua\+U\+\_\+dump}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const \mbox{\hyperlink{structProto}{Proto}} \texorpdfstring{$\ast$}{*}f, \mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\+\_\+\+Writer}} w, void \texorpdfstring{$\ast$}{*}data, int strip)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lundump_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lundump_8h_ad6f33b546a90e78ddb67428b712b48ae}\index{lundump.h@{lundump.h}!LUAC\_DATA@{LUAC\_DATA}}
+\index{LUAC\_DATA@{LUAC\_DATA}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_DATA}{LUAC\_DATA}}
+{\footnotesize\ttfamily \label{lundump_8h_ad6f33b546a90e78ddb67428b712b48ae} 
+\#define LUAC\+\_\+\+DATA~"{}\textbackslash{}x19\textbackslash{}x93\textbackslash{}r\textbackslash{}n\textbackslash{}x1a\textbackslash{}n"{}}
+
+\Hypertarget{lundump_8h_a1898203259aab6e1d60737b1e95c2adc}\index{lundump.h@{lundump.h}!LUAC\_FORMAT@{LUAC\_FORMAT}}
+\index{LUAC\_FORMAT@{LUAC\_FORMAT}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_FORMAT}{LUAC\_FORMAT}}
+{\footnotesize\ttfamily \label{lundump_8h_a1898203259aab6e1d60737b1e95c2adc} 
+\#define LUAC\+\_\+\+FORMAT~0 /\texorpdfstring{$\ast$}{*} this is the official format \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lundump_8h_acc5e08088d3780b427e5dc124ab75087}\index{lundump.h@{lundump.h}!LUAC\_INST@{LUAC\_INST}}
+\index{LUAC\_INST@{LUAC\_INST}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_INST}{LUAC\_INST}}
+{\footnotesize\ttfamily \label{lundump_8h_acc5e08088d3780b427e5dc124ab75087} 
+\#define LUAC\+\_\+\+INST~0x12345678}
+
+\Hypertarget{lundump_8h_af8b5bd7f864ed14aef7a9e7405ce6aad}\index{lundump.h@{lundump.h}!LUAC\_INT@{LUAC\_INT}}
+\index{LUAC\_INT@{LUAC\_INT}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_INT}{LUAC\_INT}}
+{\footnotesize\ttfamily \label{lundump_8h_af8b5bd7f864ed14aef7a9e7405ce6aad} 
+\#define LUAC\+\_\+\+INT~-\/0x5678}
+
+\Hypertarget{lundump_8h_a83a08bb2d400b526bb4a2f449523dd62}\index{lundump.h@{lundump.h}!LUAC\_NUM@{LUAC\_NUM}}
+\index{LUAC\_NUM@{LUAC\_NUM}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_NUM}{LUAC\_NUM}}
+{\footnotesize\ttfamily \label{lundump_8h_a83a08bb2d400b526bb4a2f449523dd62} 
+\#define LUAC\+\_\+\+NUM~\mbox{\hyperlink{llimits_8h_ac92cecb12c5aba1164877e81e76e2cb6}{cast\+\_\+num}}(-\/370.\+5)}
+
+\Hypertarget{lundump_8h_aaef225d352d4ab1461adc02e4fa027cd}\index{lundump.h@{lundump.h}!LUAC\_VERSION@{LUAC\_VERSION}}
+\index{LUAC\_VERSION@{LUAC\_VERSION}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{LUAC\_VERSION}{LUAC\_VERSION}}
+{\footnotesize\ttfamily \label{lundump_8h_aaef225d352d4ab1461adc02e4fa027cd} 
+\#define LUAC\+\_\+\+VERSION~(\mbox{\hyperlink{lua_8h_a43ab5ef7bb3e7a52930bc15eba1685d3}{LUA\+\_\+\+VERSION\+\_\+\+MAJOR\+\_\+N}}\texorpdfstring{$\ast$}{*}16+\mbox{\hyperlink{lua_8h_a04a59a0ddc568ee857eaa677493dc4d2}{LUA\+\_\+\+VERSION\+\_\+\+MINOR\+\_\+N}})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lundump_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lundump_8h_a2b9d33dfd898f6284de183d168556786}\index{lundump.h@{lundump.h}!luaU\_dump@{luaU\_dump}}
+\index{luaU\_dump@{luaU\_dump}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{luaU\_dump()}{luaU\_dump()}}
+{\footnotesize\ttfamily \label{lundump_8h_a2b9d33dfd898f6284de183d168556786} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int lua\+U\+\_\+dump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const \mbox{\hyperlink{structProto}{Proto}} \texorpdfstring{$\ast$}{*}}]{f}{, }\item[{\mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\+\_\+\+Writer}}}]{w}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{strip}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lundump_8h_a2b9d33dfd898f6284de183d168556786_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{lundump_8h_a2b9d33dfd898f6284de183d168556786_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lundump_8h_a55a19bf7f9cefd80e3e8185d8deeb7de}\index{lundump.h@{lundump.h}!luaU\_undump@{luaU\_undump}}
+\index{luaU\_undump@{luaU\_undump}!lundump.h@{lundump.h}}
+\doxysubsubsection{\texorpdfstring{luaU\_undump()}{luaU\_undump()}}
+{\footnotesize\ttfamily \label{lundump_8h_a55a19bf7f9cefd80e3e8185d8deeb7de} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} lua\+U\+\_\+undump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{Z}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{int}]{fixed}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lundump_8h_a55a19bf7f9cefd80e3e8185d8deeb7de_cgraph}
+\end{center}
+\end{figure}

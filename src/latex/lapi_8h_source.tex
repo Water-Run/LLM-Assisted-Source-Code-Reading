@@ -1,0 +1,404 @@
+\doxysection{lapi.\+h}
+\hypertarget{lapi_8h_source}{}\label{lapi_8h_source}\mbox{\hyperlink{lapi_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ 文件概要说明}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00005\ \textcolor{comment}{**\ 文件名:\ lapi.h}}
+\DoxyCodeLine{00006\ \textcolor{comment}{**\ 原始标识:\ \$Id:\ lapi.h\ \$}}
+\DoxyCodeLine{00007\ \textcolor{comment}{**\ 功能描述:\ Lua\ API\ 辅助函数和宏定义}}
+\DoxyCodeLine{00008\ \textcolor{comment}{**\ 版权声明:\ 参见\ lua.h\ 中的版权声明}}
+\DoxyCodeLine{00009\ \textcolor{comment}{**}}
+\DoxyCodeLine{00010\ \textcolor{comment}{**\ 【文件整体功能】}}
+\DoxyCodeLine{00011\ \textcolor{comment}{**\ 这个头文件是\ Lua\ 核心\ API\ 的内部辅助文件,定义了一系列用于\ API\ 实现的宏和检查机制。}}
+\DoxyCodeLine{00012\ \textcolor{comment}{**\ 主要用于:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{**\ 1.\ 栈操作的安全检查(防止栈溢出、栈下溢等)}}
+\DoxyCodeLine{00014\ \textcolor{comment}{**\ 2.\ API\ 调用的断言检查(用于调试和测试)}}
+\DoxyCodeLine{00015\ \textcolor{comment}{**\ 3.\ 线程锁定机制的定义(用于多线程环境)}}
+\DoxyCodeLine{00016\ \textcolor{comment}{**\ 4.\ 函数调用结果的调整处理}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ 【关键概念】}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ -\/\ Lua\ 栈:\ Lua\ C\ API\ 通过一个虚拟栈在\ C\ 和\ Lua\ 之间传递值}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ -\/\ 栈顶(top):\ 指向栈中下一个可用位置}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ -\/\ 调用信息(ci):\ 记录当前函数调用的状态信息}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**\ -\/\ TBC列表(to-\/be-\/closed):\ 记录需要在作用域结束时关闭的变量}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ 【依赖关系】}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ -\/\ llimits.h:\ Lua\ 的基础限制和类型定义}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ -\/\ lstate.h:\ Lua\ 状态机的定义}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ lapi\_h}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ lapi\_h}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llimits_8h}{llimits.h}}"{}}\ \textcolor{comment}{/*\ 包含\ Lua\ 的基本限制定义,如整数范围、内存限制等\ */}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lstate_8h}{lstate.h}}"{}}\ \ \textcolor{comment}{/*\ 包含\ Lua\ 状态机(lua\_State)的结构定义\ */}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00037\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00038\ \textcolor{comment}{**\ API\ 检查机制}}
+\DoxyCodeLine{00039\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00040\ \textcolor{comment}{**\ 这部分定义了\ api\_check\ 宏,用于在\ API\ 调用时进行断言检查。}}
+\DoxyCodeLine{00041\ \textcolor{comment}{**\ 根据是否定义了\ LUA\_USE\_APICHECK,有两种不同的实现方式。}}
+\DoxyCodeLine{00042\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_APICHECK)}}
+\DoxyCodeLine{00045\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00046\ \textcolor{comment}{**\ 【开发模式\ -\/\ 使用标准\ assert】}}
+\DoxyCodeLine{00047\ \textcolor{comment}{**\ 当定义了\ LUA\_USE\_APICHECK\ 时,使用\ C\ 标准库的\ assert\ 进行检查。}}
+\DoxyCodeLine{00048\ \textcolor{comment}{**\ 这种方式在断言失败时会直接终止程序并输出错误信息,适合开发调试。}}
+\DoxyCodeLine{00049\ \textcolor{comment}{**}}
+\DoxyCodeLine{00050\ \textcolor{comment}{**\ 参数说明:}}
+\DoxyCodeLine{00051\ \textcolor{comment}{**\ \ \ l\ -\/\ lua\_State\ 指针(在这个版本中未使用,但保留参数以保持接口一致)}}
+\DoxyCodeLine{00052\ \textcolor{comment}{**\ \ \ e\ -\/\ 要检查的条件表达式}}
+\DoxyCodeLine{00053\ \textcolor{comment}{**\ \ \ msg\ -\/\ 错误消息(在标准\ assert\ 中未使用)}}
+\DoxyCodeLine{00054\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ <assert.h>}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ api\_check(l,\ e,\ msg)\ assert(e)}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ for\ testing\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{**\ 【测试/发布模式\ -\/\ 使用\ Lua\ 自定义断言】}}
+\DoxyCodeLine{00061\ \textcolor{comment}{**\ 当未定义\ LUA\_USE\_APICHECK\ 时,使用\ Lua\ 内部的\ lua\_assert\ 进行检查。}}
+\DoxyCodeLine{00062\ \textcolor{comment}{**}}
+\DoxyCodeLine{00063\ \textcolor{comment}{**\ 宏展开说明:}}
+\DoxyCodeLine{00064\ \textcolor{comment}{**\ \ \ ((void)(l),\ lua\_assert((e)\ \&\&\ msg))}}
+\DoxyCodeLine{00065\ \textcolor{comment}{**\ \ \ -\/\ (void)(l):\ 将\ l\ 转为\ void\ 类型,避免"{}未使用参数"{}的编译警告}}
+\DoxyCodeLine{00066\ \textcolor{comment}{**\ \ \ -\/\ (e)\ \&\&\ msg:\ 条件\ e\ 必须为真,且\ msg\ 提供错误描述信息}}
+\DoxyCodeLine{00067\ \textcolor{comment}{**\ \ \ -\/\ lua\_assert:\ Lua\ 内部定义的断言宏,可能在发布版本中被编译为空操作}}
+\DoxyCodeLine{00068\ \textcolor{comment}{**}}
+\DoxyCodeLine{00069\ \textcolor{comment}{**\ 使用逗号运算符的技巧:}}
+\DoxyCodeLine{00070\ \textcolor{comment}{**\ \ \ 逗号运算符\ (expr1,\ expr2)\ 会先执行\ expr1,然后执行\ expr2,整个表达式的值为\ expr2\ 的值。}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ \ \ 这里用来先处理\ l\ 参数(避免警告),然后执行真正的断言检查。}}
+\DoxyCodeLine{00072\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ api\_check(l,\ e,\ msg)\ ((void)(l),\ lua\_assert((e)\ \&\&\ msg))}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**\ 栈顶递增宏\ -\/\ api\_incr\_top}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00080\ \textcolor{comment}{**\ 功能:\ 将\ Lua\ 栈顶指针向上移动一个位置(压入一个元素后调用)}}
+\DoxyCodeLine{00081\ \textcolor{comment}{**}}
+\DoxyCodeLine{00082\ \textcolor{comment}{**\ 【详细说明】}}
+\DoxyCodeLine{00083\ \textcolor{comment}{**\ 这个宏执行两个操作:}}
+\DoxyCodeLine{00084\ \textcolor{comment}{**\ 1.\ L-\/>top.p++:\ 将栈顶指针向上移动一个位置}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**\ 2.\ api\_check(...):\ 检查栈是否溢出}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**}}
+\DoxyCodeLine{00087\ \textcolor{comment}{**\ 【栈溢出检查】}}
+\DoxyCodeLine{00088\ \textcolor{comment}{**\ 条件:\ L-\/>top.p\ <=\ L-\/>ci-\/>top.p}}
+\DoxyCodeLine{00089\ \textcolor{comment}{**\ \ \ -\/\ L-\/>top.p:\ 当前实际的栈顶位置}}
+\DoxyCodeLine{00090\ \textcolor{comment}{**\ \ \ -\/\ L-\/>ci-\/>top.p:\ 当前调用信息允许的最大栈顶位置}}
+\DoxyCodeLine{00091\ \textcolor{comment}{**\ \ \ -\/\ 如果\ top.p\ 超过了\ ci-\/>top.p,说明栈空间不足,发生溢出}}
+\DoxyCodeLine{00092\ \textcolor{comment}{**}}
+\DoxyCodeLine{00093\ \textcolor{comment}{**\ 【使用场景】}}
+\DoxyCodeLine{00094\ \textcolor{comment}{**\ 每当向\ Lua\ 栈压入一个新值后,都需要调用此宏更新栈顶指针。}}
+\DoxyCodeLine{00095\ \textcolor{comment}{**\ 例如:\ lua\_pushinteger、lua\_pushstring\ 等函数内部都会使用此宏。}}
+\DoxyCodeLine{00096\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00097\ \textcolor{comment}{/*\ Increments\ 'L-\/>top.p',\ checking\ for\ stack\ overflows\ */}}
+\DoxyCodeLine{00098\ \textcolor{comment}{/*\ 递增\ 'L-\/>top.p',同时检查栈溢出\ */}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ api\_incr\_top(L)\ \(\backslash\)}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\ \ \ \ (L-\/>top.p++,\ api\_check(L,\ L-\/>top.p\ <=\ L-\/>ci-\/>top.p,\ "{}stack\ overflow"{}))}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00103\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00104\ \textcolor{comment}{**\ 线程锁定机制宏}}
+\DoxyCodeLine{00105\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00106\ \textcolor{comment}{**\ 功能:\ 定义进入和离开\ Lua\ 核心代码时执行的宏}}
+\DoxyCodeLine{00107\ \textcolor{comment}{**}}
+\DoxyCodeLine{00108\ \textcolor{comment}{**\ 【设计目的】}}
+\DoxyCodeLine{00109\ \textcolor{comment}{**\ 在多线程环境中,这些宏可以被重定义为实际的互斥锁操作,保证线程安全。}}
+\DoxyCodeLine{00110\ \textcolor{comment}{**\ 在单线程环境中,它们被定义为空操作,不产生任何开销。}}
+\DoxyCodeLine{00111\ \textcolor{comment}{**}}
+\DoxyCodeLine{00112\ \textcolor{comment}{**\ 【宏定义说明】}}
+\DoxyCodeLine{00113\ \textcolor{comment}{**\ -\/\ lua\_lock(L):\ 在进入\ Lua\ 核心代码前调用(例如开始执行\ Lua\ API\ 函数)}}
+\DoxyCodeLine{00114\ \textcolor{comment}{**\ -\/\ lua\_unlock(L):\ 在离开\ Lua\ 核心代码后调用(例如\ API\ 函数返回前)}}
+\DoxyCodeLine{00115\ \textcolor{comment}{**\ -\/\ ((void)\ 0):\ C\ 语言中的空语句,不做任何操作}}
+\DoxyCodeLine{00116\ \textcolor{comment}{**}}
+\DoxyCodeLine{00117\ \textcolor{comment}{**\ 【如何自定义】}}
+\DoxyCodeLine{00118\ \textcolor{comment}{**\ 在编译时可以通过\ -\/D\ 选项或在包含此头文件前定义这些宏:}}
+\DoxyCodeLine{00119\ \textcolor{comment}{**\ \ \ \#define\ lua\_lock(L)\ pthread\_mutex\_lock(\&global\_mutex)}}
+\DoxyCodeLine{00120\ \textcolor{comment}{**\ \ \ \#define\ lua\_unlock(L)\ pthread\_mutex\_unlock(\&global\_mutex)}}
+\DoxyCodeLine{00121\ \textcolor{comment}{**}}
+\DoxyCodeLine{00122\ \textcolor{comment}{**\ 【注意事项】}}
+\DoxyCodeLine{00123\ \textcolor{comment}{**\ 如果自定义了这些宏,必须确保:}}
+\DoxyCodeLine{00124\ \textcolor{comment}{**\ 1.\ 每个\ lua\_lock\ 都有对应的\ lua\_unlock}}
+\DoxyCodeLine{00125\ \textcolor{comment}{**\ 2.\ 不能在持有锁的情况下调用可能阻塞的操作}}
+\DoxyCodeLine{00126\ \textcolor{comment}{**\ 3.\ 避免死锁情况}}
+\DoxyCodeLine{00127\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00128\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00129\ \textcolor{comment}{**\ macros\ that\ are\ executed\ whenever\ program\ enters\ the\ Lua\ core}}
+\DoxyCodeLine{00130\ \textcolor{comment}{**\ ('lua\_lock')\ and\ leaves\ the\ core\ ('lua\_unlock')}}
+\DoxyCodeLine{00131\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00132\ \textcolor{comment}{/*\ 宏定义:程序进入\ Lua\ 核心时执行\ ('lua\_lock'),离开核心时执行\ ('lua\_unlock')\ */}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#if\ !defined(lua\_lock)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ lua\_lock(L)\ ((void)0)}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ lua\_unlock(L)\ ((void)0)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00139\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00140\ \textcolor{comment}{**\ 调整函数返回结果宏\ -\/\ adjustresults}}
+\DoxyCodeLine{00141\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00142\ \textcolor{comment}{**\ 功能:\ 处理函数调用返回多个值时的栈空间调整}}
+\DoxyCodeLine{00143\ \textcolor{comment}{**}}
+\DoxyCodeLine{00144\ \textcolor{comment}{**\ 【背景知识】}}
+\DoxyCodeLine{00145\ \textcolor{comment}{**\ Lua\ 函数可以返回多个值。当被调用的函数返回的值多于调用者预期时,}}
+\DoxyCodeLine{00146\ \textcolor{comment}{**\ 可能需要调整调用者的栈顶指针,以容纳所有返回值。}}
+\DoxyCodeLine{00147\ \textcolor{comment}{**}}
+\DoxyCodeLine{00148\ \textcolor{comment}{**\ 【宏参数】}}
+\DoxyCodeLine{00149\ \textcolor{comment}{**\ -\/\ L:\ lua\_State\ 指针}}
+\DoxyCodeLine{00150\ \textcolor{comment}{**\ -\/\ nres:\ 期望的返回值数量}}
+\DoxyCodeLine{00151\ \textcolor{comment}{**\ \ \ *\ 如果\ nres\ >=\ 0:\ 期望固定数量的返回值}}
+\DoxyCodeLine{00152\ \textcolor{comment}{**\ \ \ *\ 如果\ nres\ ==\ LUA\_MULTRET:\ 接受所有返回值(多返回值模式)}}
+\DoxyCodeLine{00153\ \textcolor{comment}{**}}
+\DoxyCodeLine{00154\ \textcolor{comment}{**\ 【调整逻辑】}}
+\DoxyCodeLine{00155\ \textcolor{comment}{**\ 条件:\ (nres)\ <=\ LUA\_MULTRET\ \&\&\ L-\/>ci-\/>top.p\ <\ L-\/>top.p}}
+\DoxyCodeLine{00156\ \textcolor{comment}{**\ 1.\ (nres)\ <=\ LUA\_MULTRET:\ 检查是否是多返回值模式}}
+\DoxyCodeLine{00157\ \textcolor{comment}{**\ \ \ \ -\/\ LUA\_MULTRET\ 通常定义为\ -\/1,表示接受任意数量的返回值}}
+\DoxyCodeLine{00158\ \textcolor{comment}{**\ \ \ \ -\/\ 如果\ nres\ >\ LUA\_MULTRET(即\ nres\ >=\ 0),不需要调整}}
+\DoxyCodeLine{00159\ \textcolor{comment}{**}}
+\DoxyCodeLine{00160\ \textcolor{comment}{**\ 2.\ L-\/>ci-\/>top.p\ <\ L-\/>top.p:\ 实际栈顶超出了当前调用信息的栈顶}}
+\DoxyCodeLine{00161\ \textcolor{comment}{**\ \ \ \ -\/\ L-\/>top.p:\ 实际的栈顶(包含所有返回值)}}
+\DoxyCodeLine{00162\ \textcolor{comment}{**\ \ \ \ -\/\ L-\/>ci-\/>top.p:\ 调用信息中记录的栈顶}}
+\DoxyCodeLine{00163\ \textcolor{comment}{**\ \ \ \ -\/\ 如果实际栈顶更高,说明返回值超出预期,需要扩展\ ci-\/>top.p}}
+\DoxyCodeLine{00164\ \textcolor{comment}{**}}
+\DoxyCodeLine{00165\ \textcolor{comment}{**\ 3.\ L-\/>ci-\/>top.p\ =\ L-\/>top.p:\ 调整调用信息的栈顶以容纳所有返回值}}
+\DoxyCodeLine{00166\ \textcolor{comment}{**}}
+\DoxyCodeLine{00167\ \textcolor{comment}{**\ 【使用示例】}}
+\DoxyCodeLine{00168\ \textcolor{comment}{**\ 假设函数\ f()\ 被调用,期望返回\ 2\ 个值,但实际返回了\ 5\ 个值:}}
+\DoxyCodeLine{00169\ \textcolor{comment}{**\ -\/\ 调用前:\ ci-\/>top.p\ 设置为能容纳\ 2\ 个返回值}}
+\DoxyCodeLine{00170\ \textcolor{comment}{**\ -\/\ 调用后:\ top.p\ 实际移动到了\ 5\ 个返回值的位置}}
+\DoxyCodeLine{00171\ \textcolor{comment}{**\ -\/\ adjustresults\ 将\ ci-\/>top.p\ 调整到\ top.p,避免后续操作出错}}
+\DoxyCodeLine{00172\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00173\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00174\ \textcolor{comment}{**\ If\ a\ call\ returns\ too\ many\ multiple\ returns,\ the\ callee\ may\ not\ have}}
+\DoxyCodeLine{00175\ \textcolor{comment}{**\ stack\ space\ to\ accommodate\ all\ results.\ In\ this\ case,\ this\ macro}}
+\DoxyCodeLine{00176\ \textcolor{comment}{**\ increases\ its\ stack\ space\ ('L-\/>ci-\/>top.p').}}
+\DoxyCodeLine{00177\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00178\ \textcolor{comment}{/*\ 如果一个调用返回了太多的多返回值,被调用者可能没有足够的栈空间}}
+\DoxyCodeLine{00179\ \textcolor{comment}{**\ 来容纳所有结果。在这种情况下,此宏会增加其栈空间\ ('L-\/>ci-\/>top.p')。}}
+\DoxyCodeLine{00180\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00181\ \textcolor{preprocessor}{\#define\ adjustresults(L,\ nres)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00183\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ ((nres)\ <=\ LUA\_MULTRET\ \&\&\ L-\/>ci-\/>top.p\ <\ L-\/>top.p)\ \(\backslash\)}}
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ L-\/>ci-\/>top.p\ =\ L-\/>top.p;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00188\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00189\ \textcolor{comment}{**\ 检查栈元素数量宏\ -\/\ api\_checknelems}}
+\DoxyCodeLine{00190\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00191\ \textcolor{comment}{**\ 功能:\ 确保栈中至少有\ n\ 个元素可用}}
+\DoxyCodeLine{00192\ \textcolor{comment}{**}}
+\DoxyCodeLine{00193\ \textcolor{comment}{**\ 【详细说明】}}
+\DoxyCodeLine{00194\ \textcolor{comment}{**\ 这个宏用于在执行栈操作前验证栈中有足够的元素。}}
+\DoxyCodeLine{00195\ \textcolor{comment}{**}}
+\DoxyCodeLine{00196\ \textcolor{comment}{**\ 【计算逻辑】}}
+\DoxyCodeLine{00197\ \textcolor{comment}{**\ 条件:\ (n)\ <\ (L-\/>top.p\ -\/\ L-\/>ci-\/>func.p)}}
+\DoxyCodeLine{00198\ \textcolor{comment}{**}}
+\DoxyCodeLine{00199\ \textcolor{comment}{**\ -\/\ L-\/>top.p:\ 当前栈顶指针(指向下一个可用位置)}}
+\DoxyCodeLine{00200\ \textcolor{comment}{**\ -\/\ L-\/>ci-\/>func.p:\ 当前函数在栈中的位置}}
+\DoxyCodeLine{00201\ \textcolor{comment}{**\ -\/\ L-\/>top.p\ -\/\ L-\/>ci-\/>func.p:\ 栈中实际存储的元素数量}}
+\DoxyCodeLine{00202\ \textcolor{comment}{**\ \ \ *\ func.p\ 指向当前执行的函数对象}}
+\DoxyCodeLine{00203\ \textcolor{comment}{**\ \ \ *\ func.p\ 上方的所有位置都是可用的栈元素}}
+\DoxyCodeLine{00204\ \textcolor{comment}{**\ \ \ *\ 这个差值就是当前栈中的元素总数}}
+\DoxyCodeLine{00205\ \textcolor{comment}{**}}
+\DoxyCodeLine{00206\ \textcolor{comment}{**\ -\/\ (n)\ <\ (元素总数):\ 检查所需的\ n\ 个元素是否存在}}
+\DoxyCodeLine{00207\ \textcolor{comment}{**\ \ \ *\ 如果\ n\ >=\ 元素总数,说明栈中元素不足,触发断言}}
+\DoxyCodeLine{00208\ \textcolor{comment}{**}}
+\DoxyCodeLine{00209\ \textcolor{comment}{**\ 【使用场景】}}
+\DoxyCodeLine{00210\ \textcolor{comment}{**\ 在执行需要从栈中获取参数的操作前调用,例如:}}
+\DoxyCodeLine{00211\ \textcolor{comment}{**\ -\/\ lua\_tonumber(L,\ -\/1):\ 需要至少\ 1\ 个元素}}
+\DoxyCodeLine{00212\ \textcolor{comment}{**\ -\/\ lua\_concat(L,\ 3):\ 需要至少\ 3\ 个元素}}
+\DoxyCodeLine{00213\ \textcolor{comment}{**}}
+\DoxyCodeLine{00214\ \textcolor{comment}{**\ 【栈布局示意】}}
+\DoxyCodeLine{00215\ \textcolor{comment}{**\ 低地址\ -\/>\ 高地址:}}
+\DoxyCodeLine{00216\ \textcolor{comment}{**\ [...]\ [func]\ [arg1]\ [arg2]\ [arg3]\ [空]\ <-\/\ top.p}}
+\DoxyCodeLine{00217\ \textcolor{comment}{**\ \ \ \ \ \ \ \ \string^\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string^}}
+\DoxyCodeLine{00218\ \textcolor{comment}{**\ \ \ \ \ \ \ \ func.p\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ top.p}}
+\DoxyCodeLine{00219\ \textcolor{comment}{**\ \ \ \ \ \ \ \ |<-\/-\/-\/\ (top.p\ -\/\ func.p)\ -\/-\/-\/>|}}
+\DoxyCodeLine{00220\ \textcolor{comment}{**\ \ \ \ \ \ \ \ 这个距离就是栈中的元素数量}}
+\DoxyCodeLine{00221\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00222\ \textcolor{comment}{/*\ Ensure\ the\ stack\ has\ at\ least\ 'n'\ elements\ */}}
+\DoxyCodeLine{00223\ \textcolor{comment}{/*\ 确保栈中至少有\ 'n'\ 个元素\ */}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#define\ api\_checknelems(L,\ n)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\ \ \ \ api\_check(L,\ (n)\ <\ (L-\/>top.p\ -\/\ L-\/>ci-\/>func.p),\ \(\backslash\)}}
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}not\ enough\ elements\ in\ the\ stack"{})}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00229\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00230\ \textcolor{comment}{**\ 检查可弹出元素数量宏\ -\/\ api\_checkpop}}
+\DoxyCodeLine{00231\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00232\ \textcolor{comment}{**\ 功能:\ 确保栈中至少有\ n\ 个元素可以被安全弹出}}
+\DoxyCodeLine{00233\ \textcolor{comment}{**}}
+\DoxyCodeLine{00234\ \textcolor{comment}{**\ 【详细说明】}}
+\DoxyCodeLine{00235\ \textcolor{comment}{**\ 这个宏比\ api\_checknelems\ 更严格,它不仅检查元素数量,还要考虑}}
+\DoxyCodeLine{00236\ \textcolor{comment}{**\ to-\/be-\/closed\ (TBC)\ 变量的影响。}}
+\DoxyCodeLine{00237\ \textcolor{comment}{**}}
+\DoxyCodeLine{00238\ \textcolor{comment}{**\ 【检查条件】}}
+\DoxyCodeLine{00239\ \textcolor{comment}{**\ 需要同时满足两个条件:}}
+\DoxyCodeLine{00240\ \textcolor{comment}{**}}
+\DoxyCodeLine{00241\ \textcolor{comment}{**\ 1.\ (n)\ <\ L-\/>top.p\ -\/\ L-\/>ci-\/>func.p}}
+\DoxyCodeLine{00242\ \textcolor{comment}{**\ \ \ \ -\/\ 与\ api\_checknelems\ 相同,确保有足够的元素}}
+\DoxyCodeLine{00243\ \textcolor{comment}{**}}
+\DoxyCodeLine{00244\ \textcolor{comment}{**\ 2.\ L-\/>tbclist.p\ <\ L-\/>top.p\ -\/\ (n)}}
+\DoxyCodeLine{00245\ \textcolor{comment}{**\ \ \ \ -\/\ L-\/>tbclist.p:\ to-\/be-\/closed\ 变量列表的指针}}
+\DoxyCodeLine{00246\ \textcolor{comment}{**\ \ \ \ -\/\ L-\/>top.p\ -\/\ (n):\ 弹出\ n\ 个元素后的栈顶位置}}
+\DoxyCodeLine{00247\ \textcolor{comment}{**\ \ \ \ -\/\ 这个条件确保弹出操作不会影响到需要关闭的变量}}
+\DoxyCodeLine{00248\ \textcolor{comment}{**}}
+\DoxyCodeLine{00249\ \textcolor{comment}{**\ 【TBC\ (To-\/Be-\/Closed)\ 变量】}}
+\DoxyCodeLine{00250\ \textcolor{comment}{**\ Lua\ 5.4\ 引入了\ <close>\ 标记,允许变量在离开作用域时自动调用清理函数。}}
+\DoxyCodeLine{00251\ \textcolor{comment}{**\ 这些变量记录在\ tbclist\ 中。如果弹出操作会移除这些变量,可能导致}}
+\DoxyCodeLine{00252\ \textcolor{comment}{**\ 资源泄漏或清理函数不被调用。}}
+\DoxyCodeLine{00253\ \textcolor{comment}{**}}
+\DoxyCodeLine{00254\ \textcolor{comment}{**\ 【为什么需要第二个条件】}}
+\DoxyCodeLine{00255\ \textcolor{comment}{**\ 考虑以下情况:}}
+\DoxyCodeLine{00256\ \textcolor{comment}{**\ \ \ local\ x\ <close>\ =\ some\_resource()\ \ -\/-\/\ x\ 在\ tbclist\ 中}}
+\DoxyCodeLine{00257\ \textcolor{comment}{**\ \ \ -\/-\/\ 此时如果\ API\ 试图弹出包含\ x\ 的元素,会违反\ TBC\ 约定}}
+\DoxyCodeLine{00258\ \textcolor{comment}{**}}
+\DoxyCodeLine{00259\ \textcolor{comment}{**\ 第二个条件保证:}}
+\DoxyCodeLine{00260\ \textcolor{comment}{**\ -\/\ tbclist.p\ <\ top.p\ -\/\ n:\ TBC变量的位置要低于弹出后的栈顶}}
+\DoxyCodeLine{00261\ \textcolor{comment}{**\ -\/\ 这样弹出操作不会影响到任何\ TBC\ 变量}}
+\DoxyCodeLine{00262\ \textcolor{comment}{**}}
+\DoxyCodeLine{00263\ \textcolor{comment}{**\ 【注释中的说明】}}
+\DoxyCodeLine{00264\ \textcolor{comment}{**\ "{}Some\ functions\ only\ update\ a\ slot\ after\ checking\ it\ for\ popping"{}}}
+\DoxyCodeLine{00265\ \textcolor{comment}{**\ "{}某些函数只在检查可以弹出后才更新插槽"{}}}
+\DoxyCodeLine{00266\ \textcolor{comment}{**}}
+\DoxyCodeLine{00267\ \textcolor{comment}{**\ 这是一个优化说明:有些函数会先检查能否弹出,然后执行"{}弹出+压入"{}}}
+\DoxyCodeLine{00268\ \textcolor{comment}{**\ 的组合操作。这个检查保证了即使是这种优化场景也是安全的。}}
+\DoxyCodeLine{00269\ \textcolor{comment}{**}}
+\DoxyCodeLine{00270\ \textcolor{comment}{**\ 【使用场景】}}
+\DoxyCodeLine{00271\ \textcolor{comment}{**\ -\/\ lua\_pop(L,\ n):\ 弹出\ n\ 个元素}}
+\DoxyCodeLine{00272\ \textcolor{comment}{**\ -\/\ lua\_remove(L,\ index):\ 移除指定位置的元素}}
+\DoxyCodeLine{00273\ \textcolor{comment}{**\ -\/\ lua\_replace(L,\ index):\ 替换指定位置的元素(先弹出再压入)}}
+\DoxyCodeLine{00274\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00275\ \textcolor{comment}{/*\ Ensure\ the\ stack\ has\ at\ least\ 'n'\ elements\ to\ be\ popped.\ (Some}}
+\DoxyCodeLine{00276\ \textcolor{comment}{**\ functions\ only\ update\ a\ slot\ after\ checking\ it\ for\ popping,\ but\ that}}
+\DoxyCodeLine{00277\ \textcolor{comment}{**\ is\ only\ an\ optimization\ for\ a\ pop\ followed\ by\ a\ push.)}}
+\DoxyCodeLine{00278\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00279\ \textcolor{comment}{/*\ 确保栈中至少有\ 'n'\ 个元素可以被弹出。(某些函数只在检查可以弹出后}}
+\DoxyCodeLine{00280\ \textcolor{comment}{**\ 才更新插槽,但这只是弹出后紧跟压入操作的一种优化。)}}
+\DoxyCodeLine{00281\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00282\ \textcolor{preprocessor}{\#define\ api\_checkpop(L,\ n)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00283\ \textcolor{preprocessor}{\ \ \ \ api\_check(L,\ (n)\ <\ L-\/>top.p\ -\/\ L-\/>ci-\/>func.p\ \&\&\ L-\/>tbclist.p\ <\ L-\/>top.p\ -\/\ (n),\ \(\backslash\)}}
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}not\ enough\ free\ elements\ in\ the\ stack"{})}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00289\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00290\ \textcolor{comment}{**\ 文件总结说明}}
+\DoxyCodeLine{00291\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00292\ \textcolor{comment}{**}}
+\DoxyCodeLine{00293\ \textcolor{comment}{**\ 【整体架构】}}
+\DoxyCodeLine{00294\ \textcolor{comment}{**\ 这个头文件是\ Lua\ C\ API\ 实现的基础设施层,提供了一套宏定义来保证}}
+\DoxyCodeLine{00295\ \textcolor{comment}{**\ API\ 调用的安全性和正确性。所有这些宏都是内联的(编译时展开),}}
+\DoxyCodeLine{00296\ \textcolor{comment}{**\ 因此在发布版本中可以通过条件编译优化掉,几乎没有运行时开销。}}
+\DoxyCodeLine{00297\ \textcolor{comment}{**}}
+\DoxyCodeLine{00298\ \textcolor{comment}{**\ 【核心宏总结】}}
+\DoxyCodeLine{00299\ \textcolor{comment}{**}}
+\DoxyCodeLine{00300\ \textcolor{comment}{**\ 1.\ api\_check\ -\/\ API\ 断言检查}}
+\DoxyCodeLine{00301\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 在开发阶段捕获\ API\ 误用}}
+\DoxyCodeLine{00302\ \textcolor{comment}{**\ \ \ \ -\/\ 实现:\ 可配置使用标准\ assert\ 或\ Lua\ 内部断言}}
+\DoxyCodeLine{00303\ \textcolor{comment}{**\ \ \ \ -\/\ 影响:\ 在发布版本中可以完全禁用}}
+\DoxyCodeLine{00304\ \textcolor{comment}{**}}
+\DoxyCodeLine{00305\ \textcolor{comment}{**\ 2.\ api\_incr\_top\ -\/\ 栈顶递增}}
+\DoxyCodeLine{00306\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 压入元素后移动栈顶指针}}
+\DoxyCodeLine{00307\ \textcolor{comment}{**\ \ \ \ -\/\ 检查:\ 防止栈溢出}}
+\DoxyCodeLine{00308\ \textcolor{comment}{**\ \ \ \ -\/\ 频率:\ 每次\ push\ 操作都会调用}}
+\DoxyCodeLine{00309\ \textcolor{comment}{**}}
+\DoxyCodeLine{00310\ \textcolor{comment}{**\ 3.\ lua\_lock\ /\ lua\_unlock\ -\/\ 线程同步}}
+\DoxyCodeLine{00311\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 多线程环境下的互斥访问}}
+\DoxyCodeLine{00312\ \textcolor{comment}{**\ \ \ \ -\/\ 默认:\ 空操作(适合单线程)}}
+\DoxyCodeLine{00313\ \textcolor{comment}{**\ \ \ \ -\/\ 自定义:\ 可重定义为实际的锁机制}}
+\DoxyCodeLine{00314\ \textcolor{comment}{**}}
+\DoxyCodeLine{00315\ \textcolor{comment}{**\ 4.\ adjustresults\ -\/\ 调整返回值}}
+\DoxyCodeLine{00316\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 处理多返回值情况}}
+\DoxyCodeLine{00317\ \textcolor{comment}{**\ \ \ \ -\/\ 时机:\ 函数调用返回后}}
+\DoxyCodeLine{00318\ \textcolor{comment}{**\ \ \ \ -\/\ 逻辑:\ 扩展调用者栈空间以容纳所有返回值}}
+\DoxyCodeLine{00319\ \textcolor{comment}{**}}
+\DoxyCodeLine{00320\ \textcolor{comment}{**\ 5.\ api\_checknelems\ -\/\ 检查元素数量}}
+\DoxyCodeLine{00321\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 确保有足够的元素可操作}}
+\DoxyCodeLine{00322\ \textcolor{comment}{**\ \ \ \ -\/\ 计算:\ 基于\ top.p\ 和\ func.p\ 的距离}}
+\DoxyCodeLine{00323\ \textcolor{comment}{**\ \ \ \ -\/\ 场景:\ 读取栈元素前}}
+\DoxyCodeLine{00324\ \textcolor{comment}{**}}
+\DoxyCodeLine{00325\ \textcolor{comment}{**\ 6.\ api\_checkpop\ -\/\ 检查可弹出数量}}
+\DoxyCodeLine{00326\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 确保弹出操作安全}}
+\DoxyCodeLine{00327\ \textcolor{comment}{**\ \ \ \ -\/\ 额外检查:\ 考虑\ TBC\ 变量的影响}}
+\DoxyCodeLine{00328\ \textcolor{comment}{**\ \ \ \ -\/\ 场景:\ 弹出或移除栈元素前}}
+\DoxyCodeLine{00329\ \textcolor{comment}{**}}
+\DoxyCodeLine{00330\ \textcolor{comment}{**\ 【设计模式】}}
+\DoxyCodeLine{00331\ \textcolor{comment}{**}}
+\DoxyCodeLine{00332\ \textcolor{comment}{**\ 1.\ 防御性编程}}
+\DoxyCodeLine{00333\ \textcolor{comment}{**\ \ \ \ -\/\ 每个可能出错的操作都有对应的检查宏}}
+\DoxyCodeLine{00334\ \textcolor{comment}{**\ \ \ \ -\/\ 在开发阶段及早发现问题}}
+\DoxyCodeLine{00335\ \textcolor{comment}{**\ \ \ \ -\/\ 在发布阶段可以优化掉检查以提高性能}}
+\DoxyCodeLine{00336\ \textcolor{comment}{**}}
+\DoxyCodeLine{00337\ \textcolor{comment}{**\ 2.\ 宏的使用}}
+\DoxyCodeLine{00338\ \textcolor{comment}{**\ \ \ \ -\/\ 优点:\ 零运行时开销,类型安全,可内联}}
+\DoxyCodeLine{00339\ \textcolor{comment}{**\ \ \ \ -\/\ 技巧:\ 使用逗号运算符组合多个操作}}
+\DoxyCodeLine{00340\ \textcolor{comment}{**\ \ \ \ -\/\ 注意:\ 参数可能被多次求值,需要小心副作用}}
+\DoxyCodeLine{00341\ \textcolor{comment}{**}}
+\DoxyCodeLine{00342\ \textcolor{comment}{**\ 3.\ 条件编译}}
+\DoxyCodeLine{00343\ \textcolor{comment}{**\ \ \ \ -\/\ 通过\ \#if\ defined\ 支持不同的编译配置}}
+\DoxyCodeLine{00344\ \textcolor{comment}{**\ \ \ \ -\/\ 开发版本启用所有检查}}
+\DoxyCodeLine{00345\ \textcolor{comment}{**\ \ \ \ -\/\ 发布版本可以移除检查以提高性能}}
+\DoxyCodeLine{00346\ \textcolor{comment}{**}}
+\DoxyCodeLine{00347\ \textcolor{comment}{**\ 【关键数据结构关系】}}
+\DoxyCodeLine{00348\ \textcolor{comment}{**}}
+\DoxyCodeLine{00349\ \textcolor{comment}{**\ lua\_State\ (L):}}
+\DoxyCodeLine{00350\ \textcolor{comment}{**\ \ \ ├─\ top.p\ \ \ \ \ \ \ \ \ \ :\ 栈顶指针(下一个可用位置)}}
+\DoxyCodeLine{00351\ \textcolor{comment}{**\ \ \ ├─\ ci\ \ \ \ \ \ \ \ \ \ \ \ \ :\ 当前调用信息}}
+\DoxyCodeLine{00352\ \textcolor{comment}{**\ \ \ │\ \ \ ├─\ func.p\ \ \ \ \ :\ 当前函数在栈中的位置}}
+\DoxyCodeLine{00353\ \textcolor{comment}{**\ \ \ │\ \ \ └─\ top.p\ \ \ \ \ \ :\ 当前调用允许的最大栈顶}}
+\DoxyCodeLine{00354\ \textcolor{comment}{**\ \ \ └─\ tbclist.p\ \ \ \ \ \ :\ to-\/be-\/closed\ 变量列表}}
+\DoxyCodeLine{00355\ \textcolor{comment}{**}}
+\DoxyCodeLine{00356\ \textcolor{comment}{**\ 栈空间关系:}}
+\DoxyCodeLine{00357\ \textcolor{comment}{**\ \ \ func.p\ <=\ 栈元素\ <\ top.p\ <=\ ci-\/>top.p}}
+\DoxyCodeLine{00358\ \textcolor{comment}{**\ \ \ tbclist.p\ 指向需要关闭的变量(如果有)}}
+\DoxyCodeLine{00359\ \textcolor{comment}{**}}
+\DoxyCodeLine{00360\ \textcolor{comment}{**\ 【与其他模块的关系】}}
+\DoxyCodeLine{00361\ \textcolor{comment}{**}}
+\DoxyCodeLine{00362\ \textcolor{comment}{**\ -\/\ llimits.h:\ 提供基础类型定义(如\ lua\_assert\ 的定义)}}
+\DoxyCodeLine{00363\ \textcolor{comment}{**\ -\/\ lstate.h:\ 提供\ lua\_State\ 结构的完整定义}}
+\DoxyCodeLine{00364\ \textcolor{comment}{**\ -\/\ lapi.c:\ 实际的\ API\ 函数实现,会大量使用这些宏}}
+\DoxyCodeLine{00365\ \textcolor{comment}{**\ -\/\ lvm.c:\ Lua\ 虚拟机,也会使用这些栈操作宏}}
+\DoxyCodeLine{00366\ \textcolor{comment}{**}}
+\DoxyCodeLine{00367\ \textcolor{comment}{**\ 【使用建议】}}
+\DoxyCodeLine{00368\ \textcolor{comment}{**}}
+\DoxyCodeLine{00369\ \textcolor{comment}{**\ 1.\ 学习\ Lua\ 内部实现时:}}
+\DoxyCodeLine{00370\ \textcolor{comment}{**\ \ \ \ -\/\ 先理解\ Lua\ 栈的概念}}
+\DoxyCodeLine{00371\ \textcolor{comment}{**\ \ \ \ -\/\ 再理解\ CallInfo\ 的作用}}
+\DoxyCodeLine{00372\ \textcolor{comment}{**\ \ \ \ -\/\ 最后理解这些宏如何保护栈操作}}
+\DoxyCodeLine{00373\ \textcolor{comment}{**}}
+\DoxyCodeLine{00374\ \textcolor{comment}{**\ 2.\ 修改或扩展\ Lua\ 时:}}
+\DoxyCodeLine{00375\ \textcolor{comment}{**\ \ \ \ -\/\ 在开发时启用\ LUA\_USE\_APICHECK}}
+\DoxyCodeLine{00376\ \textcolor{comment}{**\ \ \ \ -\/\ 使用这些宏而不是直接操作指针}}
+\DoxyCodeLine{00377\ \textcolor{comment}{**\ \ \ \ -\/\ 确保所有栈操作都有相应的检查}}
+\DoxyCodeLine{00378\ \textcolor{comment}{**}}
+\DoxyCodeLine{00379\ \textcolor{comment}{**\ 3.\ 多线程应用:}}
+\DoxyCodeLine{00380\ \textcolor{comment}{**\ \ \ \ -\/\ 定义自己的\ lua\_lock\ 和\ lua\_unlock}}
+\DoxyCodeLine{00381\ \textcolor{comment}{**\ \ \ \ -\/\ 确保粒度合适(既要安全又要高效)}}
+\DoxyCodeLine{00382\ \textcolor{comment}{**\ \ \ \ -\/\ 测试死锁和竞态条件}}
+\DoxyCodeLine{00383\ \textcolor{comment}{**}}
+\DoxyCodeLine{00384\ \textcolor{comment}{**\ 【性能考虑】}}
+\DoxyCodeLine{00385\ \textcolor{comment}{**}}
+\DoxyCodeLine{00386\ \textcolor{comment}{**\ -\/\ 宏展开是编译时操作,不影响运行时性能}}
+\DoxyCodeLine{00387\ \textcolor{comment}{**\ -\/\ api\_check\ 在发布版本中可以完全消除}}
+\DoxyCodeLine{00388\ \textcolor{comment}{**\ -\/\ 栈操作的检查开销极小(只是指针比较)}}
+\DoxyCodeLine{00389\ \textcolor{comment}{**\ -\/\ 对性能敏感的代码可以在确保安全后禁用某些检查}}
+\DoxyCodeLine{00390\ \textcolor{comment}{**}}
+\DoxyCodeLine{00391\ \textcolor{comment}{**\ 【常见陷阱】}}
+\DoxyCodeLine{00392\ \textcolor{comment}{**}}
+\DoxyCodeLine{00393\ \textcolor{comment}{**\ 1.\ 忘记调用\ api\_incr\_top\ 导致栈状态不一致}}
+\DoxyCodeLine{00394\ \textcolor{comment}{**\ 2.\ 在持有\ lua\_lock\ 时调用阻塞操作导致死锁}}
+\DoxyCodeLine{00395\ \textcolor{comment}{**\ 3.\ 弹出元素时忽略\ TBC\ 变量导致资源泄漏}}
+\DoxyCodeLine{00396\ \textcolor{comment}{**\ 4.\ 直接操作\ L-\/>top.p\ 而不使用宏导致检查失效}}
+\DoxyCodeLine{00397\ \textcolor{comment}{**}}
+\DoxyCodeLine{00398\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00399\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

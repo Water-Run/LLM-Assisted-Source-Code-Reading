@@ -1,0 +1,98 @@
+\doxysection{llex.\+h}
+\hypertarget{llex_8h_source}{}\label{llex_8h_source}\mbox{\hyperlink{llex_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ llex.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Lexical\ Analyzer}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ llex\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ llex\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <limits.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lzio_8h}{lzio.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**\ Single-\/char\ tokens\ (terminal\ symbols)\ are\ represented\ by\ their\ own}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ numeric\ code.\ Other\ tokens\ start\ at\ the\ following\ value.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ FIRST\_RESERVED\ \ (UCHAR\_MAX\ +\ 1)}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#if\ !defined(LUA\_ENV)}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ LUA\_ENV\ \ \ \ \ "{}\_ENV"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*\ WARNING:\ if\ you\ change\ the\ order\ of\ this\ enumeration,}}
+\DoxyCodeLine{00030\ \textcolor{comment}{*\ grep\ "{}ORDER\ RESERVED"{}}}
+\DoxyCodeLine{00031\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00032\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04}{RESERVED}}\ \{}
+\DoxyCodeLine{00033\ \ \ \textcolor{comment}{/*\ terminal\ symbols\ denoted\ by\ reserved\ words\ */}}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04adbea546e357b70d29f631824a4f9cfed}{TK\_AND}}\ =\ \mbox{\hyperlink{llex_8h_a6bc8e20ff15b7aa178aceea51e691e44}{FIRST\_RESERVED}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a37065a9cb3cc1cc8a17537dc1ee5e0f0}{TK\_BREAK}},}
+\DoxyCodeLine{00035\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a2fbaee0c1e87c30a1809ff22893fe2f9}{TK\_DO}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a3f50a3a010dc1ba1401d460900575b47}{TK\_ELSE}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04af85f1d50bab033c17f7341b5e71f4d60}{TK\_ELSEIF}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a541ef482a7317bd2a54032f165d90db7}{TK\_END}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a065bdf8569f3a1ab4130f7e1ff2203ae}{TK\_FALSE}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a7dcf533a644fc9cb697137a8a9b54f4b}{TK\_FOR}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04aafc8fa070d8d0bb9569b875cbc6b1a8c}{TK\_FUNCTION}},}
+\DoxyCodeLine{00036\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a029358423b3a98a79a57c761f276f47e}{TK\_GLOBAL}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04af41cf088c658a62b2381424416171445}{TK\_GOTO}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a601b374145c8554a0dc2d1663cbdfeb1}{TK\_IF}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a88b8f5e56057cb0d4e633046b2b9e66e}{TK\_IN}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a5d6f51dd7b248ee46da5de8e33f34992}{TK\_LOCAL}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a905f67bd8b8ac9b5e0236aa5dec2e7b5}{TK\_NIL}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a985342409492de2e599c6202e9180ad9}{TK\_NOT}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04ab4578d7ddbacda8286ad2205d3d917e9}{TK\_OR}},}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a9f9929bcc6f4a87310869eaf9efed4cd}{TK\_REPEAT}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04aba4fafc284c6c6aa99340efdba0b76e8}{TK\_RETURN}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a757e31c13acf13af22615dca8c1b7c97}{TK\_THEN}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a67fdd8ec6c80ac2163c8d3e7d0ac50c1}{TK\_TRUE}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04ab7232de731ef17fbc644b370c783719c}{TK\_UNTIL}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a592e99387742b5748aa5e341c99dffd0}{TK\_WHILE}},}
+\DoxyCodeLine{00038\ \ \ \textcolor{comment}{/*\ other\ terminal\ symbols\ */}}
+\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a7f7c69f2e524e3ab183318cf52575ba8}{TK\_IDIV}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a8367a7a9a88e9ea3cef16ab15887a278}{TK\_CONCAT}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a500efed658259c56ef30938c20c3b6c4}{TK\_DOTS}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04ae9b97178246db483138ab3d18039bfb2}{TK\_EQ}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a39306a802115256cf2099f6c724a95b0}{TK\_GE}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04ace38c3f7b08d6ffe00acdd0706ba35de}{TK\_LE}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a6897243f49a32e90ca094af33c16374b}{TK\_NE}},}
+\DoxyCodeLine{00040\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04afe39400ab62457e9a823aa8521d0610b}{TK\_SHL}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04ad15c43ae39b99d8f834419ec74183185}{TK\_SHR}},}
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a3a767e0c4ce0407785d87a1a56980de2}{TK\_DBCOLON}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a9fcd34e2e50a0afb82f0dae65836187b}{TK\_EOS}},}
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a81df881e62ebf1fe93b4820b7b54984d}{TK\_FLT}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a9f48ed12541fab691e25e3ca9e38ac9f}{TK\_INT}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a84e5aed35515b2881005d88dccaf0c30}{TK\_NAME}},\ \mbox{\hyperlink{llex_8h_ae5bd761f37716726f95e4be16a08ac04a2f748d118b4a20e2b1dc12538ccd9876}{TK\_STRING}}}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*\ number\ of\ reserved\ words\ */}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ NUM\_RESERVED\ \ \ \ (cast\_int(TK\_WHILE-\/FIRST\_RESERVED\ +\ 1))}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00050\ \ \ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ \mbox{\hyperlink{unionSemInfo_a43b00f784510a2d500550b81578177d8}{r}};}
+\DoxyCodeLine{00051\ \ \ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ \mbox{\hyperlink{unionSemInfo_a6ed52b8a8b415d8f16089445f93e5391}{i}};}
+\DoxyCodeLine{00052\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{unionSemInfo_a393ebb62432ff3e689283e54e113b33e}{ts}};}
+\DoxyCodeLine{00053\ \}\ \mbox{\hyperlink{unionSemInfo}{SemInfo}};\ \ \textcolor{comment}{/*\ semantics\ information\ */}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structToken}{Token}}\ \{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structToken_a92d1dfeae343659449f1bc29d6731c5d}{token}};}
+\DoxyCodeLine{00058\ \ \ \mbox{\hyperlink{unionSemInfo}{SemInfo}}\ \mbox{\hyperlink{structToken_a87067a25b1e511befc45d56cf535ef59}{seminfo}};}
+\DoxyCodeLine{00059\ \}\ \mbox{\hyperlink{structToken}{Token}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{comment}{/*\ state\ of\ the\ scanner\ plus\ state\ of\ the\ parser\ when\ shared\ by\ all}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ functions\ */}}
+\DoxyCodeLine{00064\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structLexState}{LexState}}\ \{}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structLexState_ad31cc4568332a48d22d37a13c8eae006}{current}};\ \ \textcolor{comment}{/*\ current\ character\ (charint)\ */}}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structLexState_a9047632ca93c760b66b6303c819099d5}{linenumber}};\ \ \textcolor{comment}{/*\ input\ line\ counter\ */}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structLexState_aaadb237d4fc6b81d2242e666de885bf7}{lastline}};\ \ \textcolor{comment}{/*\ line\ of\ last\ token\ 'consumed'\ */}}
+\DoxyCodeLine{00068\ \ \ \mbox{\hyperlink{structToken}{Token}}\ \mbox{\hyperlink{structLexState_a597c734626136f4ddb8232e8fc3abfc4}{t}};\ \ \textcolor{comment}{/*\ current\ token\ */}}
+\DoxyCodeLine{00069\ \ \ \mbox{\hyperlink{structToken}{Token}}\ \mbox{\hyperlink{structLexState_ad3c75c11dbbdae006057cb4b847a4f91}{lookahead}};\ \ \textcolor{comment}{/*\ look\ ahead\ token\ */}}
+\DoxyCodeLine{00070\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structFuncState}{FuncState}}\ *\mbox{\hyperlink{structLexState_a01999e4f68cc6a3bd0b9eb6ebd241f7b}{fs}};\ \ \textcolor{comment}{/*\ current\ function\ (parser)\ */}}
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\mbox{\hyperlink{structLexState_af1ffd91f6684eee85e707a4b9927019b}{L}};}
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\ *\mbox{\hyperlink{structLexState_a591ffaffa1f3c21653904dccf81a4377}{z}};\ \ \textcolor{comment}{/*\ input\ stream\ */}}
+\DoxyCodeLine{00073\ \ \ \mbox{\hyperlink{structMbuffer}{Mbuffer}}\ *\mbox{\hyperlink{structLexState_aab00ebdc0eaf42caa098ecb6ca3c8389}{buff}};\ \ \textcolor{comment}{/*\ buffer\ for\ tokens\ */}}
+\DoxyCodeLine{00074\ \ \ \mbox{\hyperlink{structTable}{Table}}\ *\mbox{\hyperlink{structLexState_a0fcd03e58c52d100bc9dcd52787724f4}{h}};\ \ \textcolor{comment}{/*\ to\ avoid\ collection/reuse\ strings\ */}}
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structDyndata}{Dyndata}}\ *\mbox{\hyperlink{structLexState_a3275102e0a909a24d21e8dd183847a2b}{dyd}};\ \ \textcolor{comment}{/*\ dynamic\ structures\ used\ by\ the\ parser\ */}}
+\DoxyCodeLine{00076\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structLexState_a054af516711cc3d173a73a301497ff27}{source}};\ \ \textcolor{comment}{/*\ current\ source\ name\ */}}
+\DoxyCodeLine{00077\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structLexState_a1f3368576038a65ab629da91de3edfaf}{envn}};\ \ \textcolor{comment}{/*\ environment\ variable\ name\ */}}
+\DoxyCodeLine{00078\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structLexState_a857e26bd0a34d69d72e98193f068be57}{brkn}};\ \ \textcolor{comment}{/*\ "{}break"{}\ name\ (used\ as\ a\ label)\ */}}
+\DoxyCodeLine{00079\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structLexState_a13134d7e5b4ef8430baee3284bd41068}{glbn}};\ \ \textcolor{comment}{/*\ "{}global"{}\ name\ (when\ not\ a\ reserved\ word)\ */}}
+\DoxyCodeLine{00080\ \}\ \mbox{\hyperlink{structLexState}{LexState}};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{llex_8h_a5f7573e2f03006437bd01422a0e390df}{luaX\_init}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00084\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{llex_8h_aac9c3f80c74f7d861348e74f5fda1452}{luaX\_setinput}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structLexState}{LexState}}\ *ls,\ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\ *z,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structTString}{TString}}\ *source,\ \textcolor{keywordtype}{int}\ firstchar);}
+\DoxyCodeLine{00086\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{llex_8h_a26726604b0988a0595c135ef12ef5494}{luaX\_newstring}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *str,\ \textcolor{keywordtype}{size\_t}\ l);}
+\DoxyCodeLine{00087\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{llex_8h_a626896648b5c598666b1e051fd70a568}{luaX\_next}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls);}
+\DoxyCodeLine{00088\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{llex_8h_ad024d435463fc54e7e592d9bb8a7b26b}{luaX\_lookahead}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls);}
+\DoxyCodeLine{00089\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\_noret}}\ \mbox{\hyperlink{llex_8h_a189ff2bb7bd23c89531fdad321fccd02}{luaX\_syntaxerror}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s);}
+\DoxyCodeLine{00090\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{llex_8h_a7eca11f667896bba4957267d6bff5823}{luaX\_token2str}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls,\ \textcolor{keywordtype}{int}\ token);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,189 @@
+\doxysection{ltable.\+h}
+\hypertarget{ltable_8h_source}{}\label{ltable_8h_source}\mbox{\hyperlink{ltable_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ ltable.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Lua\ tables\ (hash)}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ ltable\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ ltable\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ gnode(t,i)\ \ (\&(t)-\/>node[i])}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ gval(n)\ \ \ \ \ (\&(n)-\/>i\_val)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ gnext(n)\ \ \ \ ((n)-\/>u.next)}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ Clear\ all\ bits\ of\ fast-\/access\ metamethods,\ which\ means\ that\ the\ table}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ may\ have\ any\ of\ these\ metamethods.\ (First\ access\ that\ fails\ after\ the}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ clearing\ will\ set\ the\ bit\ again.)}}
+\DoxyCodeLine{00022\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ invalidateTMcache(t)\ \ \ \ ((t)-\/>flags\ \&=\ cast\_byte(\string~maskflags))}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ Bit\ BITDUMMY\ set\ in\ 'flags'\ means\ the\ table\ is\ using\ the\ dummy\ node}}
+\DoxyCodeLine{00028\ \textcolor{comment}{**\ for\ its\ hash\ part.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ BITDUMMY\ \ \ \ \ \ \ \ (1\ <<\ 6)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ NOTBITDUMMY\ \ \ \ \ cast\_byte(\string~BITDUMMY)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ isdummy(t)\ \ \ \ \ \ ((t)-\/>flags\ \&\ BITDUMMY)}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ setnodummy(t)\ \ \ \ \ \ \ ((t)-\/>flags\ \&=\ NOTBITDUMMY)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ setdummy(t)\ \ \ \ \ ((t)-\/>flags\ |=\ BITDUMMY)}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*\ allocated\ size\ for\ hash\ nodes\ */}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ allocsizenode(t)\ \ \ \ (isdummy(t)\ ?\ 0\ :\ sizenode(t))}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{/*\ returns\ the\ Node,\ given\ the\ value\ of\ a\ table\ entry\ */}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ nodefromval(v)\ \ cast(Node\ *,\ (v))}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ luaH\_fastgeti(t,k,res,tag)\ \(\backslash\)}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\ \ \{\ Table\ *h\ =\ t;\ lua\_Unsigned\ u\ =\ l\_castS2U(k)\ -\/\ 1u;\ \(\backslash\)}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \ \ if\ ((u\ <\ h-\/>asize))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\ \ \ \ \ \ tag\ =\ *getArrTag(h,\ u);\ \(\backslash\)}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\ \ \ \ \ \ if\ (!tagisempty(tag))\ \{\ farr2val(h,\ u,\ tag,\ res);\ \}\}\ \(\backslash\)}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\ \ \ \ else\ \{\ tag\ =\ luaH\_getint(h,\ (k),\ res);\ \}\}}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ luaH\_fastseti(t,k,val,hres)\ \(\backslash\)}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \{\ Table\ *h\ =\ t;\ lua\_Unsigned\ u\ =\ l\_castS2U(k)\ -\/\ 1u;\ \(\backslash\)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\ \ \ \ if\ ((u\ <\ h-\/>asize))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\ \ \ \ \ \ lu\_byte\ *tag\ =\ getArrTag(h,\ u);\ \(\backslash\)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \ \ \ \ if\ (checknoTM(h-\/>metatable,\ TM\_NEWINDEX)\ ||\ !tagisempty(*tag))\ \(\backslash\)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{\ fval2arr(h,\ u,\ tag,\ val);\ hres\ =\ HOK;\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \ \ \ \ else\ hres\ =\ \string~cast\_int(u);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \ \ else\ \{\ hres\ =\ luaH\_psetint(h,\ k,\ val);\ \}\}}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{/*\ results\ from\ pset\ */}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ HOK\ \ \ \ \ 0}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ HNOTFOUND\ \ \ 1}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ HNOTATABLE\ \ 2}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ HFIRSTNODE\ \ 3}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00074\ \textcolor{comment}{**\ 'luaH\_get*'\ operations\ set\ 'res',\ unless\ the\ value\ is\ absent,\ and}}
+\DoxyCodeLine{00075\ \textcolor{comment}{**\ return\ the\ tag\ of\ the\ result.}}
+\DoxyCodeLine{00076\ \textcolor{comment}{**\ The\ 'luaH\_pset*'\ (pre-\/set)\ operations\ set\ the\ given\ value\ and\ return}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ HOK,\ unless\ the\ original\ value\ is\ absent.\ In\ that\ case,\ if\ the\ key}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**\ is\ really\ absent,\ they\ return\ HNOTFOUND.\ Otherwise,\ if\ there\ is\ a}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ slot\ with\ that\ key\ but\ with\ no\ value,\ 'luaH\_pset*'\ return\ an\ encoding}}
+\DoxyCodeLine{00080\ \textcolor{comment}{**\ of\ where\ the\ key\ is\ (usually\ called\ 'hres').\ (pset\ cannot\ set\ that}}
+\DoxyCodeLine{00081\ \textcolor{comment}{**\ value\ because\ there\ might\ be\ a\ metamethod.)\ If\ the\ slot\ is\ in\ the}}
+\DoxyCodeLine{00082\ \textcolor{comment}{**\ hash\ part,\ the\ encoding\ is\ (HFIRSTNODE\ +\ hash\ index);\ if\ the\ slot\ is}}
+\DoxyCodeLine{00083\ \textcolor{comment}{**\ in\ the\ array\ part,\ the\ encoding\ is\ (\string~array\ index),\ a\ negative\ value.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{**\ The\ value\ HNOTATABLE\ is\ used\ by\ the\ fast\ macros\ to\ signal\ that\ the}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**\ value\ being\ indexed\ is\ not\ a\ table.}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**\ (The\ size\ for\ the\ array\ part\ is\ limited\ by\ the\ maximum\ power\ of\ two}}
+\DoxyCodeLine{00087\ \textcolor{comment}{**\ that\ fits\ in\ an\ unsigned\ integer;\ that\ is\ INT\_MAX+1.\ So,\ the\ C-\/index}}
+\DoxyCodeLine{00088\ \textcolor{comment}{**\ ranges\ from\ 0,\ which\ encodes\ to\ -\/1,\ to\ INT\_MAX,\ which\ encodes\ to}}
+\DoxyCodeLine{00089\ \textcolor{comment}{**\ INT\_MIN.\ The\ size\ of\ the\ hash\ part\ is\ limited\ by\ the\ maximum\ power\ of}}
+\DoxyCodeLine{00090\ \textcolor{comment}{**\ two\ that\ fits\ in\ a\ signed\ integer;\ that\ is\ (INT\_MAX+1)/2.\ So,\ it\ is}}
+\DoxyCodeLine{00091\ \textcolor{comment}{**\ safe\ to\ add\ HFIRSTNODE\ to\ any\ index\ there.)}}
+\DoxyCodeLine{00092\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00096\ \textcolor{comment}{**\ The\ array\ part\ of\ a\ table\ is\ represented\ by\ an\ inverted\ array\ of}}
+\DoxyCodeLine{00097\ \textcolor{comment}{**\ values\ followed\ by\ an\ array\ of\ tags,\ to\ avoid\ wasting\ space\ with}}
+\DoxyCodeLine{00098\ \textcolor{comment}{**\ padding.\ In\ between\ them\ there\ is\ an\ unsigned\ int,\ explained\ later.}}
+\DoxyCodeLine{00099\ \textcolor{comment}{**\ The\ 'array'\ pointer\ points\ between\ the\ two\ arrays,\ so\ that\ values\ are}}
+\DoxyCodeLine{00100\ \textcolor{comment}{**\ indexed\ with\ negative\ indices\ and\ tags\ with\ non-\/negative\ indices.}}
+\DoxyCodeLine{00101\ \textcolor{comment}{}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Values\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Tags}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ \ ...\ \ |\ \ \ Value\ 1\ \ \ \ \ |\ \ \ Value\ 0\ \ \ \ \ |unsigned|0|1|...}}
+\DoxyCodeLine{00105\ \textcolor{comment}{\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00106\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string^\ t-\/>array}}
+\DoxyCodeLine{00107\ \textcolor{comment}{}}
+\DoxyCodeLine{00108\ \textcolor{comment}{**\ All\ accesses\ to\ 't-\/>array'\ should\ be\ through\ the\ macros\ 'getArrTag'}}
+\DoxyCodeLine{00109\ \textcolor{comment}{**\ and\ 'getArrVal'.}}
+\DoxyCodeLine{00110\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{comment}{/*\ Computes\ the\ address\ of\ the\ tag\ for\ the\ abstract\ C-\/index\ 'k'\ */}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ getArrTag(t,k)\ \ (cast(lu\_byte*,\ (t)-\/>array)\ +\ sizeof(unsigned)\ +\ (k))}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{comment}{/*\ Computes\ the\ address\ of\ the\ value\ for\ the\ abstract\ C-\/index\ 'k'\ */}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#define\ getArrVal(t,k)\ \ ((t)-\/>array\ -\/\ 1\ -\/\ (k))}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00120\ \textcolor{comment}{**\ The\ unsigned\ between\ the\ two\ arrays\ is\ used\ as\ a\ hint\ for\ \#t;}}
+\DoxyCodeLine{00121\ \textcolor{comment}{**\ see\ luaH\_getn.\ It\ is\ stored\ there\ to\ avoid\ wasting\ space\ in}}
+\DoxyCodeLine{00122\ \textcolor{comment}{**\ the\ structure\ Table\ for\ tables\ with\ no\ array\ part.}}
+\DoxyCodeLine{00123\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#define\ lenhint(t)\ \ cast(unsigned*,\ (t)-\/>array)}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00128\ \textcolor{comment}{**\ Move\ TValues\ to/from\ arrays,\ using\ C\ indices}}
+\DoxyCodeLine{00129\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#define\ arr2obj(h,k,val)\ \ \(\backslash\)}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\ \ ((val)-\/>tt\_\ =\ *getArrTag(h,(k)),\ (val)-\/>value\_\ =\ *getArrVal(h,(k)))}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#define\ obj2arr(h,k,val)\ \ \(\backslash\)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\ \ (*getArrTag(h,(k))\ =\ (val)-\/>tt\_,\ *getArrVal(h,(k))\ =\ (val)-\/>value\_)}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00138\ \textcolor{comment}{**\ Often,\ we\ need\ to\ check\ the\ tag\ of\ a\ value\ before\ moving\ it.\ The}}
+\DoxyCodeLine{00139\ \textcolor{comment}{**\ following\ macros\ also\ move\ TValues\ to/from\ arrays,\ but\ receive\ the}}
+\DoxyCodeLine{00140\ \textcolor{comment}{**\ precomputed\ tag\ value\ or\ address\ as\ an\ extra\ argument.}}
+\DoxyCodeLine{00141\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#define\ farr2val(h,k,tag,res)\ \ \(\backslash\)}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\ \ ((res)-\/>tt\_\ =\ tag,\ (res)-\/>value\_\ =\ *getArrVal(h,(k)))}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ fval2arr(h,k,tag,val)\ \ \(\backslash\)}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\ \ (*tag\ =\ (val)-\/>tt\_,\ *getArrVal(h,(k))\ =\ (val)-\/>value\_)}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{ltable_8h_aba1d7dc5ad7152a059101915ec0dcad4}{luaH\_get}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *res);}
+\DoxyCodeLine{00150\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{ltable_8h_aedec5832a6781a4fe8f3de7c2a76144b}{luaH\_getshortstr}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{structTString}{TString}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *res);}
+\DoxyCodeLine{00151\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{ltable_8h_a5454c72376783365b4534378b774f017}{luaH\_getstr}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{structTString}{TString}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *res);}
+\DoxyCodeLine{00152\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{ltable_8h_a6a542d74e5a43a675eb98c81e89d4fd4}{luaH\_getint}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *res);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{comment}{/*\ Special\ get\ for\ metamethods\ */}}
+\DoxyCodeLine{00155\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *\mbox{\hyperlink{ltable_8h_a9f5d752a8b44b770b53bfdcb1483c65c}{luaH\_Hgetshortstr}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{structTString}{TString}}\ *key);}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltable_8h_a39c02ce7da8b7b67a3969a5ce965c41c}{luaH\_psetint}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *val);}
+\DoxyCodeLine{00158\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltable_8h_afb75711d2aa4f3eba64141dd2e005e30}{luaH\_psetshortstr}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{structTString}{TString}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *val);}
+\DoxyCodeLine{00159\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltable_8h_a7ce2b87e99dbb6f0a7940e4da153a0a7}{luaH\_psetstr}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{structTString}{TString}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *val);}
+\DoxyCodeLine{00160\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltable_8h_a43642596f87a566fad5f981b61e379c9}{luaH\_pset}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,\ \mbox{\hyperlink{structTValue}{TValue}}\ *val);}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_ac62838e269732b63812012592c454462}{luaH\_setint}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ key,}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *value);}
+\DoxyCodeLine{00164\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_a8957db41a7676a02ce7ed2008f1cbc9f}{luaH\_set}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *value);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_a39985315613372d8f0b78a9d90717341}{luaH\_finishset}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *value,\ \textcolor{keywordtype}{int}\ hres);}
+\DoxyCodeLine{00169\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structTable}{Table}}\ *\mbox{\hyperlink{ltable_8h_a226f2738cfb2497699d62e7380d38a25}{luaH\_new}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00170\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_ae4766b15dd5b7e67c08de66c1cff61b9}{luaH\_resize}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keywordtype}{unsigned}\ nasize,}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ nhsize);}
+\DoxyCodeLine{00172\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_a5e19ee816496686b3ecd3159c6c848c5}{luaH\_resizearray}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keywordtype}{unsigned}\ nasize);}
+\DoxyCodeLine{00173\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\_mem}}\ \mbox{\hyperlink{ltable_8h_accf0bd8be305086394e47d4984957854}{luaH\_size}}\ (\mbox{\hyperlink{structTable}{Table}}\ *t);}
+\DoxyCodeLine{00174\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltable_8h_aa2e2ed92ac2178bb87aa3a178c0a83bb}{luaH\_free}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t);}
+\DoxyCodeLine{00175\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltable_8h_a55be2c48e6e2c113dabda3819f5301e7}{luaH\_next}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ key);}
+\DoxyCodeLine{00176\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}}\ \mbox{\hyperlink{ltable_8h_a077936f1c77ab8ca6f004e521467afef}{luaH\_getn}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTable}{Table}}\ *t);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#if\ defined(LUA\_DEBUG)}}
+\DoxyCodeLine{00180\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{unionNode}{Node}}\ *luaH\_mainposition\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structTable}{Table}}\ *t,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *key);}
+\DoxyCodeLine{00181\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

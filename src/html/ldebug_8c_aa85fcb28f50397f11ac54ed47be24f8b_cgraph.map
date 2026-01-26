@@ -1,0 +1,22 @@
+<map id="luaG_traceexec" name="luaG_traceexec">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,105,118,132"/>
+<area shape="rect" id="Node000002" href="$ldo_8c.html#aa74dd2ed1bf68092213c0cd69d3a8aab" title=" " alt="" coords="183,5,266,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,103,116,73,164,42,174,37,176,41,167,46,119,77,81,107"/>
+<area shape="rect" id="Node000003" href="$ldo_8c.html#a717a80f91a6e8dd85101173268d94eca" title=" " alt="" coords="181,80,268,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,107,165,100,166,105,119,113"/>
+<area shape="rect" id="Node000009" href="$ldebug_8c.html#ae7a6d2f88b11cc05758e44acd433ee2f" title=" " alt="" coords="166,131,284,157"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="119,125,151,130,150,135,118,130"/>
+<area shape="rect" id="Node000010" href="$lopcodes_8c.html#ae3513c9fab10fdf9ebe3fd4d6896b6a0" title=" " alt="" coords="187,181,263,208"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="91,130,167,167,178,172,176,177,165,172,89,135"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="197,81,192,71,195,62,206,56,225,53,245,56,255,62,252,67,243,61,225,59,208,61,199,65,197,71,201,78"/>
+<area shape="rect" id="Node000004" href="$lstate_8c.html#af2b2e81381729fcf0a3b2de177690f30" title=" " alt="" coords="332,80,451,107"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="269,91,317,91,317,96,269,96"/>
+<area shape="rect" id="Node000005" href="$ldo_8c.html#ae31623da75dbabe97ca5b144707a0711" title=" " alt="" coords="499,29,640,56"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="441,77,505,58,506,63,442,82"/>
+<area shape="rect" id="Node000007" href="$ldo_8c.html#a75b8b0016e9182d4fd9f71c1a7238e8a" title=" " alt="" coords="507,80,632,107"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="452,91,491,91,491,96,452,96"/>
+<area shape="rect" id="Node000008" href="$ldo_8c.html#a9153a47dea14648c3ab2233c0e1adf72" title=" " alt="" coords="511,131,628,157"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="442,105,506,123,505,129,441,110"/>
+<area shape="rect" id="Node000006" href="$ldo_8c.html#a59c9c7d8bc8b72b332dad178c9ab43df" title=" " alt="" coords="688,29,836,56"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="640,40,672,40,672,45,640,45"/>
+</map>

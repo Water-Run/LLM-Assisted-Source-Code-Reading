@@ -1,0 +1,578 @@
+\doxysection{luaconf.\+h File Reference}
+\hypertarget{luaconf_8h}{}\label{luaconf_8h}\index{luaconf.h@{luaconf.h}}
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for luaconf.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{luaconf_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{luaconf_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_afd80ecd3fd68a9deaa257dc69ef513a4}{LUAI\+\_\+\+IS32\+INT}}~((UINT\+\_\+\+MAX $>$$>$ 30) $>$= 3)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a5461d3c4dc325bf5fcf098a3f03863c8}{LUA\+\_\+\+INT\+\_\+\+INT}}~1
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ab1f6c4b114cfd661371c87276e44da78}{LUA\+\_\+\+INT\+\_\+\+LONG}}~2
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a2f18aa3c06d6b4b001c02347e68014c2}{LUA\+\_\+\+INT\+\_\+\+LONGLONG}}~3
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a12fe69eaae577fc72deec2a0ecd00e1c}{LUA\+\_\+\+FLOAT\+\_\+\+FLOAT}}~1
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a5231cde35be0cc5880683225b8b82d4b}{LUA\+\_\+\+FLOAT\+\_\+\+DOUBLE}}~2
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aba2804d23f0e9cc5ff8bd1052b764114}{LUA\+\_\+\+FLOAT\+\_\+\+LONGDOUBLE}}~3
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a28ca17417e3046bbe2f1414a2e429680}{LUA\+\_\+\+INT\+\_\+\+DEFAULT}}~\mbox{\hyperlink{luaconf_8h_a2f18aa3c06d6b4b001c02347e68014c2}{LUA\+\_\+\+INT\+\_\+\+LONGLONG}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ae8372ef657cd3b8af9fb6c3554aaadf6}{LUA\+\_\+\+FLOAT\+\_\+\+DEFAULT}}~\mbox{\hyperlink{luaconf_8h_a5231cde35be0cc5880683225b8b82d4b}{LUA\+\_\+\+FLOAT\+\_\+\+DOUBLE}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a5708c589686c31b4ac0820882d596522}{LUA\+\_\+\+C89\+\_\+\+NUMBERS}}~0
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a824d3b6b74c7366b0938085f22dd7e6e}{LUA\+\_\+\+INT\+\_\+\+TYPE}}~\mbox{\hyperlink{luaconf_8h_a28ca17417e3046bbe2f1414a2e429680}{LUA\+\_\+\+INT\+\_\+\+DEFAULT}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_af2869411745f915b895705306bee32b4}{LUA\+\_\+\+FLOAT\+\_\+\+TYPE}}~\mbox{\hyperlink{luaconf_8h_ae8372ef657cd3b8af9fb6c3554aaadf6}{LUA\+\_\+\+FLOAT\+\_\+\+DEFAULT}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ae9873b615af1ca0225fb3bc8d880a25e}{LUA\+\_\+\+PATH\+\_\+\+SEP}}~"{};"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a6d221295f625b3cb9cac477c0c475bb4}{LUA\+\_\+\+PATH\+\_\+\+MARK}}~"{}?"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a172ab2e6c826acf300219b4bce1ad7c6}{LUA\+\_\+\+EXEC\+\_\+\+DIR}}~"{}!"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a5b5da3c6dbd6545245caa7e23243340d}{LUA\+\_\+\+VDIR}}~\mbox{\hyperlink{lua_8h_a63a596b6a839201a9461aefb2b5297c3}{LUA\+\_\+\+VERSION\+\_\+\+MAJOR}} "{}."{} \mbox{\hyperlink{lua_8h_a6650b301b9f1e26623859bd07a6952c5}{LUA\+\_\+\+VERSION\+\_\+\+MINOR}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}{LUA\+\_\+\+ROOT}}~"{}/usr/local/"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a3c00e6041f7f276f3c8e8125c7d28cb3}{LUA\+\_\+\+LDIR}}~\mbox{\hyperlink{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}{LUA\+\_\+\+ROOT}} "{}share/lua/"{} LUA\+\_\+\+VDIR "{}/"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}{LUA\+\_\+\+CDIR}}~\mbox{\hyperlink{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}{LUA\+\_\+\+ROOT}} "{}lib/lua/"{} LUA\+\_\+\+VDIR "{}/"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ade5464817bc6ac4c929ac914191c6a60}{LUA\+\_\+\+PATH\+\_\+\+DEFAULT}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a45f20f03a0802b0d90d75639a339b406}{LUA\+\_\+\+CPATH\+\_\+\+DEFAULT}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}{LUA\+\_\+\+DIRSEP}}~"{}/"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ad598457446eb8bed37166e57d94deecc}{LUA\+\_\+\+IGMARK}}~"{}-\/"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\+\_\+\+API}}~extern
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}}~\mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\+\_\+\+API}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}}~\mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\+\_\+\+API}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aae73b28b2e1e12eba94aba753861dacd}{LUA\+\_\+\+COMPAT\+\_\+\+GLOBAL}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_af1950fb3c542d036245559b5f5ae9346}{lua\+\_\+strlen}}(L,  i)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aa7ab631663aff67d73ac08a6c58cc14b}{lua\+\_\+objlen}}(L,  i)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a42f712c0857afd658a3183092f4c995d}{lua\+\_\+equal}}(L,  idx1,  idx2)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a6a793e41114cc3b48d9887ba95c1be12}{lua\+\_\+lessthan}}(L,  idx1,  idx2)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a89e74d547b8879cf8d10c3e956c283b9}{l\+\_\+floor}}(x)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a459532244178d9e61e65aaf40fb42de1}{LUA\+\_\+\+NUMBER}}~double
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_af41b220b80eae0908ca2e190ca024990}{l\+\_\+floatatt}}(n)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a}{LUAI\+\_\+\+UACNUMBER}}~double
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a673aa80d0742c8b420ddd05844432d80}{LUA\+\_\+\+NUMBER\+\_\+\+FRMLEN}}~"{}"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a8d91a1bf1619825be5a0275c36f20216}{LUA\+\_\+\+NUMBER\+\_\+\+FMT}}~"{}\%.\+15g"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_adfb78de8a01fff9acfec5dcd89d9ae18}{LUA\+\_\+\+NUMBER\+\_\+\+FMT\+\_\+N}}~"{}\%.\+17g"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\+\_\+mathop}}(op)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a4b751913c0b1598d6de4acb99ae48f5a}{lua\+\_\+str2number}}(s,  p)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a0147f0a7d04c83b70f691a7549c1e3ed}{LUA\+\_\+\+INTEGER\+\_\+\+FMT}}~"{}\%"{} LUA\+\_\+\+INTEGER\+\_\+\+FRMLEN "{}d"{}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\+\_\+\+UACINT}}~LUA\+\_\+\+INTEGER
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a6bd94665fb1db85f2bb6aed3fa1cb455}{lua\+\_\+integer2str}}(s,  sz,  n)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aebcf6bf84bcfb38b3004d9ff0b937c35}{LUA\+\_\+\+UNSIGNED}}~unsigned \mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\+\_\+\+UACINT}}
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955}{l\+\_\+sprintf}}(s,  sz,  f,  i)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a4b53a01f7ac167204d227cb6e8d8c1e2}{lua\+\_\+strx2number}}(s,  p)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a927f26920bfa5ced499783fca8cf1e2f}{lua\+\_\+pointer2str}}(buff,  sz,  p)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aac67fd4fc4890ea6ee5a623abfae127a}{lua\+\_\+number2strx}}(L,  b,  sz,  f,  n)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_aa0ee03595b0ac0cf402754071af956de}{LUA\+\_\+\+KCONTEXT}}~ptrdiff\+\_\+t
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a20bcdecbc9221570e70455f767061698}{lua\+\_\+getlocaledecpoint}}()
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a80cfa8350edf303de263ca15e45acde3}{luai\+\_\+likely}}(x)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a017f27a6da7785c98784124b9a2b8c3e}{luai\+\_\+unlikely}}(x)
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_ae25668dff58d6257a4fc5b01c1e5820b}{LUA\+\_\+\+EXTRASPACE}}~(sizeof(void \texorpdfstring{$\ast$}{*}))
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb}{LUA\+\_\+\+IDSIZE}}~60
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_af360ad37a770dfdc29291a99c398f42d}{LUAL\+\_\+\+BUFFERSIZE}}~((int)(16 \texorpdfstring{$\ast$}{*} sizeof(void \texorpdfstring{$\ast$}{*}) \texorpdfstring{$\ast$}{*} sizeof(\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}})))
+\item 
+\#define \mbox{\hyperlink{luaconf_8h_a07ff709daaaf9cee410310059ef7bc75}{LUAI\+\_\+\+MAXALIGN}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{luaconf_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{luaconf_8h_af41b220b80eae0908ca2e190ca024990}\index{luaconf.h@{luaconf.h}!l\_floatatt@{l\_floatatt}}
+\index{l\_floatatt@{l\_floatatt}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{l\_floatatt}{l\_floatatt}}
+{\footnotesize\ttfamily \label{luaconf_8h_af41b220b80eae0908ca2e190ca024990} 
+\#define l\+\_\+floatatt(\begin{DoxyParamCaption}\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(DBL\_\#\#n)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a89e74d547b8879cf8d10c3e956c283b9}\index{luaconf.h@{luaconf.h}!l\_floor@{l\_floor}}
+\index{l\_floor@{l\_floor}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{l\_floor}{l\_floor}}
+{\footnotesize\ttfamily \label{luaconf_8h_a89e74d547b8879cf8d10c3e956c283b9} 
+\#define l\+\_\+floor(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\_mathop}}(floor)(x))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}\index{luaconf.h@{luaconf.h}!l\_mathop@{l\_mathop}}
+\index{l\_mathop@{l\_mathop}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{l\_mathop}{l\_mathop}}
+{\footnotesize\ttfamily \label{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d} 
+\#define l\+\_\+mathop(\begin{DoxyParamCaption}\item[{}]{op}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{op}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955}\index{luaconf.h@{luaconf.h}!l\_sprintf@{l\_sprintf}}
+\index{l\_sprintf@{l\_sprintf}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{l\_sprintf}{l\_sprintf}}
+{\footnotesize\ttfamily \label{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955} 
+\#define l\+\_\+sprintf(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{sz}{, }\item[{}]{f}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{snprintf(s,\ sz,\ f,\ i)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}\index{luaconf.h@{luaconf.h}!LUA\_API@{LUA\_API}}
+\index{LUA\_API@{LUA\_API}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_API}{LUA\_API}}
+{\footnotesize\ttfamily \label{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69} 
+\#define LUA\+\_\+\+API~extern}
+
+\Hypertarget{luaconf_8h_a5708c589686c31b4ac0820882d596522}\index{luaconf.h@{luaconf.h}!LUA\_C89\_NUMBERS@{LUA\_C89\_NUMBERS}}
+\index{LUA\_C89\_NUMBERS@{LUA\_C89\_NUMBERS}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_C89\_NUMBERS}{LUA\_C89\_NUMBERS}}
+{\footnotesize\ttfamily \label{luaconf_8h_a5708c589686c31b4ac0820882d596522} 
+\#define LUA\+\_\+\+C89\+\_\+\+NUMBERS~0}
+
+\Hypertarget{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}\index{luaconf.h@{luaconf.h}!LUA\_CDIR@{LUA\_CDIR}}
+\index{LUA\_CDIR@{LUA\_CDIR}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_CDIR}{LUA\_CDIR}}
+{\footnotesize\ttfamily \label{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080} 
+\#define LUA\+\_\+\+CDIR~\mbox{\hyperlink{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}{LUA\+\_\+\+ROOT}} "{}lib/lua/"{} LUA\+\_\+\+VDIR "{}/"{}}
+
+\Hypertarget{luaconf_8h_aae73b28b2e1e12eba94aba753861dacd}\index{luaconf.h@{luaconf.h}!LUA\_COMPAT\_GLOBAL@{LUA\_COMPAT\_GLOBAL}}
+\index{LUA\_COMPAT\_GLOBAL@{LUA\_COMPAT\_GLOBAL}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_COMPAT\_GLOBAL}{LUA\_COMPAT\_GLOBAL}}
+{\footnotesize\ttfamily \label{luaconf_8h_aae73b28b2e1e12eba94aba753861dacd} 
+\#define LUA\+\_\+\+COMPAT\+\_\+\+GLOBAL}
+
+\Hypertarget{luaconf_8h_a45f20f03a0802b0d90d75639a339b406}\index{luaconf.h@{luaconf.h}!LUA\_CPATH\_DEFAULT@{LUA\_CPATH\_DEFAULT}}
+\index{LUA\_CPATH\_DEFAULT@{LUA\_CPATH\_DEFAULT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_CPATH\_DEFAULT}{LUA\_CPATH\_DEFAULT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a45f20f03a0802b0d90d75639a339b406} 
+\#define LUA\+\_\+\+CPATH\+\_\+\+DEFAULT}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}{LUA\_CDIR}}\ \textcolor{stringliteral}{"{}?.so;"{}}\ \mbox{\hyperlink{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}{LUA\_CDIR}}\ \textcolor{stringliteral}{"{}loadall.so;"{}}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./?.so"{}}}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}\index{luaconf.h@{luaconf.h}!LUA\_DIRSEP@{LUA\_DIRSEP}}
+\index{LUA\_DIRSEP@{LUA\_DIRSEP}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_DIRSEP}{LUA\_DIRSEP}}
+{\footnotesize\ttfamily \label{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8} 
+\#define LUA\+\_\+\+DIRSEP~"{}/"{}}
+
+\Hypertarget{luaconf_8h_a42f712c0857afd658a3183092f4c995d}\index{luaconf.h@{luaconf.h}!lua\_equal@{lua\_equal}}
+\index{lua\_equal@{lua\_equal}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_equal}{lua\_equal}}
+{\footnotesize\ttfamily \label{luaconf_8h_a42f712c0857afd658a3183092f4c995d} 
+\#define lua\+\_\+equal(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{idx1}{, }\item[{}]{idx2}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a5fbae51f515549d4657d0efc676defee}{lua\_compare}}(L,\ (idx1),\ (idx2),\ \mbox{\hyperlink{lua_8h_ac03b3a20eb47ae78f0ba9de673dbbc18}{LUA\_OPEQ}})}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a172ab2e6c826acf300219b4bce1ad7c6}\index{luaconf.h@{luaconf.h}!LUA\_EXEC\_DIR@{LUA\_EXEC\_DIR}}
+\index{LUA\_EXEC\_DIR@{LUA\_EXEC\_DIR}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_EXEC\_DIR}{LUA\_EXEC\_DIR}}
+{\footnotesize\ttfamily \label{luaconf_8h_a172ab2e6c826acf300219b4bce1ad7c6} 
+\#define LUA\+\_\+\+EXEC\+\_\+\+DIR~"{}!"{}}
+
+\Hypertarget{luaconf_8h_ae25668dff58d6257a4fc5b01c1e5820b}\index{luaconf.h@{luaconf.h}!LUA\_EXTRASPACE@{LUA\_EXTRASPACE}}
+\index{LUA\_EXTRASPACE@{LUA\_EXTRASPACE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_EXTRASPACE}{LUA\_EXTRASPACE}}
+{\footnotesize\ttfamily \label{luaconf_8h_ae25668dff58d6257a4fc5b01c1e5820b} 
+\#define LUA\+\_\+\+EXTRASPACE~(sizeof(void \texorpdfstring{$\ast$}{*}))}
+
+\Hypertarget{luaconf_8h_ae8372ef657cd3b8af9fb6c3554aaadf6}\index{luaconf.h@{luaconf.h}!LUA\_FLOAT\_DEFAULT@{LUA\_FLOAT\_DEFAULT}}
+\index{LUA\_FLOAT\_DEFAULT@{LUA\_FLOAT\_DEFAULT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FLOAT\_DEFAULT}{LUA\_FLOAT\_DEFAULT}}
+{\footnotesize\ttfamily \label{luaconf_8h_ae8372ef657cd3b8af9fb6c3554aaadf6} 
+\#define LUA\+\_\+\+FLOAT\+\_\+\+DEFAULT~\mbox{\hyperlink{luaconf_8h_a5231cde35be0cc5880683225b8b82d4b}{LUA\+\_\+\+FLOAT\+\_\+\+DOUBLE}}}
+
+\Hypertarget{luaconf_8h_a5231cde35be0cc5880683225b8b82d4b}\index{luaconf.h@{luaconf.h}!LUA\_FLOAT\_DOUBLE@{LUA\_FLOAT\_DOUBLE}}
+\index{LUA\_FLOAT\_DOUBLE@{LUA\_FLOAT\_DOUBLE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FLOAT\_DOUBLE}{LUA\_FLOAT\_DOUBLE}}
+{\footnotesize\ttfamily \label{luaconf_8h_a5231cde35be0cc5880683225b8b82d4b} 
+\#define LUA\+\_\+\+FLOAT\+\_\+\+DOUBLE~2}
+
+\Hypertarget{luaconf_8h_a12fe69eaae577fc72deec2a0ecd00e1c}\index{luaconf.h@{luaconf.h}!LUA\_FLOAT\_FLOAT@{LUA\_FLOAT\_FLOAT}}
+\index{LUA\_FLOAT\_FLOAT@{LUA\_FLOAT\_FLOAT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FLOAT\_FLOAT}{LUA\_FLOAT\_FLOAT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a12fe69eaae577fc72deec2a0ecd00e1c} 
+\#define LUA\+\_\+\+FLOAT\+\_\+\+FLOAT~1}
+
+\Hypertarget{luaconf_8h_aba2804d23f0e9cc5ff8bd1052b764114}\index{luaconf.h@{luaconf.h}!LUA\_FLOAT\_LONGDOUBLE@{LUA\_FLOAT\_LONGDOUBLE}}
+\index{LUA\_FLOAT\_LONGDOUBLE@{LUA\_FLOAT\_LONGDOUBLE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FLOAT\_LONGDOUBLE}{LUA\_FLOAT\_LONGDOUBLE}}
+{\footnotesize\ttfamily \label{luaconf_8h_aba2804d23f0e9cc5ff8bd1052b764114} 
+\#define LUA\+\_\+\+FLOAT\+\_\+\+LONGDOUBLE~3}
+
+\Hypertarget{luaconf_8h_af2869411745f915b895705306bee32b4}\index{luaconf.h@{luaconf.h}!LUA\_FLOAT\_TYPE@{LUA\_FLOAT\_TYPE}}
+\index{LUA\_FLOAT\_TYPE@{LUA\_FLOAT\_TYPE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FLOAT\_TYPE}{LUA\_FLOAT\_TYPE}}
+{\footnotesize\ttfamily \label{luaconf_8h_af2869411745f915b895705306bee32b4} 
+\#define LUA\+\_\+\+FLOAT\+\_\+\+TYPE~\mbox{\hyperlink{luaconf_8h_ae8372ef657cd3b8af9fb6c3554aaadf6}{LUA\+\_\+\+FLOAT\+\_\+\+DEFAULT}}}
+
+\Hypertarget{luaconf_8h_a20bcdecbc9221570e70455f767061698}\index{luaconf.h@{luaconf.h}!lua\_getlocaledecpoint@{lua\_getlocaledecpoint}}
+\index{lua\_getlocaledecpoint@{lua\_getlocaledecpoint}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_getlocaledecpoint}{lua\_getlocaledecpoint}}
+{\footnotesize\ttfamily \label{luaconf_8h_a20bcdecbc9221570e70455f767061698} 
+\#define lua\+\_\+getlocaledecpoint(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(localeconv()-\/>decimal\_point[0])}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb}\index{luaconf.h@{luaconf.h}!LUA\_IDSIZE@{LUA\_IDSIZE}}
+\index{LUA\_IDSIZE@{LUA\_IDSIZE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_IDSIZE}{LUA\_IDSIZE}}
+{\footnotesize\ttfamily \label{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb} 
+\#define LUA\+\_\+\+IDSIZE~60}
+
+\Hypertarget{luaconf_8h_ad598457446eb8bed37166e57d94deecc}\index{luaconf.h@{luaconf.h}!LUA\_IGMARK@{LUA\_IGMARK}}
+\index{LUA\_IGMARK@{LUA\_IGMARK}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_IGMARK}{LUA\_IGMARK}}
+{\footnotesize\ttfamily \label{luaconf_8h_ad598457446eb8bed37166e57d94deecc} 
+\#define LUA\+\_\+\+IGMARK~"{}-\/"{}}
+
+\Hypertarget{luaconf_8h_a28ca17417e3046bbe2f1414a2e429680}\index{luaconf.h@{luaconf.h}!LUA\_INT\_DEFAULT@{LUA\_INT\_DEFAULT}}
+\index{LUA\_INT\_DEFAULT@{LUA\_INT\_DEFAULT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INT\_DEFAULT}{LUA\_INT\_DEFAULT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a28ca17417e3046bbe2f1414a2e429680} 
+\#define LUA\+\_\+\+INT\+\_\+\+DEFAULT~\mbox{\hyperlink{luaconf_8h_a2f18aa3c06d6b4b001c02347e68014c2}{LUA\+\_\+\+INT\+\_\+\+LONGLONG}}}
+
+\Hypertarget{luaconf_8h_a5461d3c4dc325bf5fcf098a3f03863c8}\index{luaconf.h@{luaconf.h}!LUA\_INT\_INT@{LUA\_INT\_INT}}
+\index{LUA\_INT\_INT@{LUA\_INT\_INT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INT\_INT}{LUA\_INT\_INT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a5461d3c4dc325bf5fcf098a3f03863c8} 
+\#define LUA\+\_\+\+INT\+\_\+\+INT~1}
+
+\Hypertarget{luaconf_8h_ab1f6c4b114cfd661371c87276e44da78}\index{luaconf.h@{luaconf.h}!LUA\_INT\_LONG@{LUA\_INT\_LONG}}
+\index{LUA\_INT\_LONG@{LUA\_INT\_LONG}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INT\_LONG}{LUA\_INT\_LONG}}
+{\footnotesize\ttfamily \label{luaconf_8h_ab1f6c4b114cfd661371c87276e44da78} 
+\#define LUA\+\_\+\+INT\+\_\+\+LONG~2}
+
+\Hypertarget{luaconf_8h_a2f18aa3c06d6b4b001c02347e68014c2}\index{luaconf.h@{luaconf.h}!LUA\_INT\_LONGLONG@{LUA\_INT\_LONGLONG}}
+\index{LUA\_INT\_LONGLONG@{LUA\_INT\_LONGLONG}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INT\_LONGLONG}{LUA\_INT\_LONGLONG}}
+{\footnotesize\ttfamily \label{luaconf_8h_a2f18aa3c06d6b4b001c02347e68014c2} 
+\#define LUA\+\_\+\+INT\+\_\+\+LONGLONG~3}
+
+\Hypertarget{luaconf_8h_a824d3b6b74c7366b0938085f22dd7e6e}\index{luaconf.h@{luaconf.h}!LUA\_INT\_TYPE@{LUA\_INT\_TYPE}}
+\index{LUA\_INT\_TYPE@{LUA\_INT\_TYPE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INT\_TYPE}{LUA\_INT\_TYPE}}
+{\footnotesize\ttfamily \label{luaconf_8h_a824d3b6b74c7366b0938085f22dd7e6e} 
+\#define LUA\+\_\+\+INT\+\_\+\+TYPE~\mbox{\hyperlink{luaconf_8h_a28ca17417e3046bbe2f1414a2e429680}{LUA\+\_\+\+INT\+\_\+\+DEFAULT}}}
+
+\Hypertarget{luaconf_8h_a6bd94665fb1db85f2bb6aed3fa1cb455}\index{luaconf.h@{luaconf.h}!lua\_integer2str@{lua\_integer2str}}
+\index{lua\_integer2str@{lua\_integer2str}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_integer2str}{lua\_integer2str}}
+{\footnotesize\ttfamily \label{luaconf_8h_a6bd94665fb1db85f2bb6aed3fa1cb455} 
+\#define lua\+\_\+integer2str(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{sz}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955}{l\_sprintf}}((s),\ sz,\ \mbox{\hyperlink{luaconf_8h_a0147f0a7d04c83b70f691a7549c1e3ed}{LUA\_INTEGER\_FMT}},\ (\mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\_UACINT}})(n))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a0147f0a7d04c83b70f691a7549c1e3ed}\index{luaconf.h@{luaconf.h}!LUA\_INTEGER\_FMT@{LUA\_INTEGER\_FMT}}
+\index{LUA\_INTEGER\_FMT@{LUA\_INTEGER\_FMT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_INTEGER\_FMT}{LUA\_INTEGER\_FMT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a0147f0a7d04c83b70f691a7549c1e3ed} 
+\#define LUA\+\_\+\+INTEGER\+\_\+\+FMT~"{}\%"{} LUA\+\_\+\+INTEGER\+\_\+\+FRMLEN "{}d"{}}
+
+\Hypertarget{luaconf_8h_aa0ee03595b0ac0cf402754071af956de}\index{luaconf.h@{luaconf.h}!LUA\_KCONTEXT@{LUA\_KCONTEXT}}
+\index{LUA\_KCONTEXT@{LUA\_KCONTEXT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_KCONTEXT}{LUA\_KCONTEXT}}
+{\footnotesize\ttfamily \label{luaconf_8h_aa0ee03595b0ac0cf402754071af956de} 
+\#define LUA\+\_\+\+KCONTEXT~ptrdiff\+\_\+t}
+
+\Hypertarget{luaconf_8h_a3c00e6041f7f276f3c8e8125c7d28cb3}\index{luaconf.h@{luaconf.h}!LUA\_LDIR@{LUA\_LDIR}}
+\index{LUA\_LDIR@{LUA\_LDIR}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_LDIR}{LUA\_LDIR}}
+{\footnotesize\ttfamily \label{luaconf_8h_a3c00e6041f7f276f3c8e8125c7d28cb3} 
+\#define LUA\+\_\+\+LDIR~\mbox{\hyperlink{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}{LUA\+\_\+\+ROOT}} "{}share/lua/"{} LUA\+\_\+\+VDIR "{}/"{}}
+
+\Hypertarget{luaconf_8h_a6a793e41114cc3b48d9887ba95c1be12}\index{luaconf.h@{luaconf.h}!lua\_lessthan@{lua\_lessthan}}
+\index{lua\_lessthan@{lua\_lessthan}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_lessthan}{lua\_lessthan}}
+{\footnotesize\ttfamily \label{luaconf_8h_a6a793e41114cc3b48d9887ba95c1be12} 
+\#define lua\+\_\+lessthan(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{idx1}{, }\item[{}]{idx2}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a5fbae51f515549d4657d0efc676defee}{lua\_compare}}(L,\ (idx1),\ (idx2),\ \mbox{\hyperlink{lua_8h_a0386da34771797273cad6b7a4b2ce53e}{LUA\_OPLT}})}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a459532244178d9e61e65aaf40fb42de1}\index{luaconf.h@{luaconf.h}!LUA\_NUMBER@{LUA\_NUMBER}}
+\index{LUA\_NUMBER@{LUA\_NUMBER}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_NUMBER}{LUA\_NUMBER}}
+{\footnotesize\ttfamily \label{luaconf_8h_a459532244178d9e61e65aaf40fb42de1} 
+\#define LUA\+\_\+\+NUMBER~double}
+
+\Hypertarget{luaconf_8h_aac67fd4fc4890ea6ee5a623abfae127a}\index{luaconf.h@{luaconf.h}!lua\_number2strx@{lua\_number2strx}}
+\index{lua\_number2strx@{lua\_number2strx}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_number2strx}{lua\_number2strx}}
+{\footnotesize\ttfamily \label{luaconf_8h_aac67fd4fc4890ea6ee5a623abfae127a} 
+\#define lua\+\_\+number2strx(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{b}{, }\item[{}]{sz}{, }\item[{}]{f}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((void)L,\ \mbox{\hyperlink{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955}{l\_sprintf}}(b,\ sz,\ f,\ (\mbox{\hyperlink{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a}{LUAI\_UACNUMBER}})(n)))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a8d91a1bf1619825be5a0275c36f20216}\index{luaconf.h@{luaconf.h}!LUA\_NUMBER\_FMT@{LUA\_NUMBER\_FMT}}
+\index{LUA\_NUMBER\_FMT@{LUA\_NUMBER\_FMT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_NUMBER\_FMT}{LUA\_NUMBER\_FMT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a8d91a1bf1619825be5a0275c36f20216} 
+\#define LUA\+\_\+\+NUMBER\+\_\+\+FMT~"{}\%.\+15g"{}}
+
+\Hypertarget{luaconf_8h_adfb78de8a01fff9acfec5dcd89d9ae18}\index{luaconf.h@{luaconf.h}!LUA\_NUMBER\_FMT\_N@{LUA\_NUMBER\_FMT\_N}}
+\index{LUA\_NUMBER\_FMT\_N@{LUA\_NUMBER\_FMT\_N}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_NUMBER\_FMT\_N}{LUA\_NUMBER\_FMT\_N}}
+{\footnotesize\ttfamily \label{luaconf_8h_adfb78de8a01fff9acfec5dcd89d9ae18} 
+\#define LUA\+\_\+\+NUMBER\+\_\+\+FMT\+\_\+N~"{}\%.\+17g"{}}
+
+\Hypertarget{luaconf_8h_a673aa80d0742c8b420ddd05844432d80}\index{luaconf.h@{luaconf.h}!LUA\_NUMBER\_FRMLEN@{LUA\_NUMBER\_FRMLEN}}
+\index{LUA\_NUMBER\_FRMLEN@{LUA\_NUMBER\_FRMLEN}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_NUMBER\_FRMLEN}{LUA\_NUMBER\_FRMLEN}}
+{\footnotesize\ttfamily \label{luaconf_8h_a673aa80d0742c8b420ddd05844432d80} 
+\#define LUA\+\_\+\+NUMBER\+\_\+\+FRMLEN~"{}"{}}
+
+\Hypertarget{luaconf_8h_aa7ab631663aff67d73ac08a6c58cc14b}\index{luaconf.h@{luaconf.h}!lua\_objlen@{lua\_objlen}}
+\index{lua\_objlen@{lua\_objlen}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_objlen}{lua\_objlen}}
+{\footnotesize\ttfamily \label{luaconf_8h_aa7ab631663aff67d73ac08a6c58cc14b} 
+\#define lua\+\_\+objlen(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a161e2baf3d7a6a84499f6a9010cf12c8}{lua\_rawlen}}(L,\ (i))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_ade5464817bc6ac4c929ac914191c6a60}\index{luaconf.h@{luaconf.h}!LUA\_PATH\_DEFAULT@{LUA\_PATH\_DEFAULT}}
+\index{LUA\_PATH\_DEFAULT@{LUA\_PATH\_DEFAULT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_PATH\_DEFAULT}{LUA\_PATH\_DEFAULT}}
+{\footnotesize\ttfamily \label{luaconf_8h_ade5464817bc6ac4c929ac914191c6a60} 
+\#define LUA\+\_\+\+PATH\+\_\+\+DEFAULT}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{luaconf_8h_a3c00e6041f7f276f3c8e8125c7d28cb3}{LUA\_LDIR}}\ \textcolor{stringliteral}{"{}?.lua;"{}}\ \mbox{\hyperlink{luaconf_8h_a3c00e6041f7f276f3c8e8125c7d28cb3}{LUA\_LDIR}}\ \textcolor{stringliteral}{"{}?/init.lua;"{}}\ \mbox{\hyperlink{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}{LUA\_CDIR}}\ \textcolor{stringliteral}{"{}?.lua;"{}}\ \mbox{\hyperlink{luaconf_8h_a6cb5bc40fe287c1223c0b461372ac080}{LUA\_CDIR}}\ \textcolor{stringliteral}{"{}?/init.lua;"{}}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./?.lua;"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./?/init.lua"{}}}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a6d221295f625b3cb9cac477c0c475bb4}\index{luaconf.h@{luaconf.h}!LUA\_PATH\_MARK@{LUA\_PATH\_MARK}}
+\index{LUA\_PATH\_MARK@{LUA\_PATH\_MARK}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_PATH\_MARK}{LUA\_PATH\_MARK}}
+{\footnotesize\ttfamily \label{luaconf_8h_a6d221295f625b3cb9cac477c0c475bb4} 
+\#define LUA\+\_\+\+PATH\+\_\+\+MARK~"{}?"{}}
+
+\Hypertarget{luaconf_8h_ae9873b615af1ca0225fb3bc8d880a25e}\index{luaconf.h@{luaconf.h}!LUA\_PATH\_SEP@{LUA\_PATH\_SEP}}
+\index{LUA\_PATH\_SEP@{LUA\_PATH\_SEP}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_PATH\_SEP}{LUA\_PATH\_SEP}}
+{\footnotesize\ttfamily \label{luaconf_8h_ae9873b615af1ca0225fb3bc8d880a25e} 
+\#define LUA\+\_\+\+PATH\+\_\+\+SEP~"{};"{}}
+
+\Hypertarget{luaconf_8h_a927f26920bfa5ced499783fca8cf1e2f}\index{luaconf.h@{luaconf.h}!lua\_pointer2str@{lua\_pointer2str}}
+\index{lua\_pointer2str@{lua\_pointer2str}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_pointer2str}{lua\_pointer2str}}
+{\footnotesize\ttfamily \label{luaconf_8h_a927f26920bfa5ced499783fca8cf1e2f} 
+\#define lua\+\_\+pointer2str(\begin{DoxyParamCaption}\item[{}]{buff}{, }\item[{}]{sz}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{luaconf_8h_a66e2cc299fcf55c169a67b5b3781a955}{l\_sprintf}}(buff,\ sz,\ \textcolor{stringliteral}{"{}\%p"{}},\ p)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24}\index{luaconf.h@{luaconf.h}!LUA\_ROOT@{LUA\_ROOT}}
+\index{LUA\_ROOT@{LUA\_ROOT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_ROOT}{LUA\_ROOT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a910ba17d2686e3a014e5f8464334fa24} 
+\#define LUA\+\_\+\+ROOT~"{}/usr/local/"{}}
+
+\Hypertarget{luaconf_8h_a4b751913c0b1598d6de4acb99ae48f5a}\index{luaconf.h@{luaconf.h}!lua\_str2number@{lua\_str2number}}
+\index{lua\_str2number@{lua\_str2number}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_str2number}{lua\_str2number}}
+{\footnotesize\ttfamily \label{luaconf_8h_a4b751913c0b1598d6de4acb99ae48f5a} 
+\#define lua\+\_\+str2number(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{strtod((s),\ (p))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_af1950fb3c542d036245559b5f5ae9346}\index{luaconf.h@{luaconf.h}!lua\_strlen@{lua\_strlen}}
+\index{lua\_strlen@{lua\_strlen}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_strlen}{lua\_strlen}}
+{\footnotesize\ttfamily \label{luaconf_8h_af1950fb3c542d036245559b5f5ae9346} 
+\#define lua\+\_\+strlen(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a161e2baf3d7a6a84499f6a9010cf12c8}{lua\_rawlen}}(L,\ (i))}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a4b53a01f7ac167204d227cb6e8d8c1e2}\index{luaconf.h@{luaconf.h}!lua\_strx2number@{lua\_strx2number}}
+\index{lua\_strx2number@{lua\_strx2number}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{lua\_strx2number}{lua\_strx2number}}
+{\footnotesize\ttfamily \label{luaconf_8h_a4b53a01f7ac167204d227cb6e8d8c1e2} 
+\#define lua\+\_\+strx2number(\begin{DoxyParamCaption}\item[{}]{s}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{luaconf_8h_a4b751913c0b1598d6de4acb99ae48f5a}{lua\_str2number}}(s,\ p)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_aebcf6bf84bcfb38b3004d9ff0b937c35}\index{luaconf.h@{luaconf.h}!LUA\_UNSIGNED@{LUA\_UNSIGNED}}
+\index{LUA\_UNSIGNED@{LUA\_UNSIGNED}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_UNSIGNED}{LUA\_UNSIGNED}}
+{\footnotesize\ttfamily \label{luaconf_8h_aebcf6bf84bcfb38b3004d9ff0b937c35} 
+\#define LUA\+\_\+\+UNSIGNED~unsigned \mbox{\hyperlink{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}{LUAI\+\_\+\+UACINT}}}
+
+\Hypertarget{luaconf_8h_a5b5da3c6dbd6545245caa7e23243340d}\index{luaconf.h@{luaconf.h}!LUA\_VDIR@{LUA\_VDIR}}
+\index{LUA\_VDIR@{LUA\_VDIR}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_VDIR}{LUA\_VDIR}}
+{\footnotesize\ttfamily \label{luaconf_8h_a5b5da3c6dbd6545245caa7e23243340d} 
+\#define LUA\+\_\+\+VDIR~\mbox{\hyperlink{lua_8h_a63a596b6a839201a9461aefb2b5297c3}{LUA\+\_\+\+VERSION\+\_\+\+MAJOR}} "{}."{} \mbox{\hyperlink{lua_8h_a6650b301b9f1e26623859bd07a6952c5}{LUA\+\_\+\+VERSION\+\_\+\+MINOR}}}
+
+\Hypertarget{luaconf_8h_afd80ecd3fd68a9deaa257dc69ef513a4}\index{luaconf.h@{luaconf.h}!LUAI\_IS32INT@{LUAI\_IS32INT}}
+\index{LUAI\_IS32INT@{LUAI\_IS32INT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_IS32INT}{LUAI\_IS32INT}}
+{\footnotesize\ttfamily \label{luaconf_8h_afd80ecd3fd68a9deaa257dc69ef513a4} 
+\#define LUAI\+\_\+\+IS32\+INT~((UINT\+\_\+\+MAX $>$$>$ 30) $>$= 3)}
+
+\Hypertarget{luaconf_8h_a80cfa8350edf303de263ca15e45acde3}\index{luaconf.h@{luaconf.h}!luai\_likely@{luai\_likely}}
+\index{luai\_likely@{luai\_likely}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{luai\_likely}{luai\_likely}}
+{\footnotesize\ttfamily \label{luaconf_8h_a80cfa8350edf303de263ca15e45acde3} 
+\#define luai\+\_\+likely(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(x)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a07ff709daaaf9cee410310059ef7bc75}\index{luaconf.h@{luaconf.h}!LUAI\_MAXALIGN@{LUAI\_MAXALIGN}}
+\index{LUAI\_MAXALIGN@{LUAI\_MAXALIGN}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_MAXALIGN}{LUAI\_MAXALIGN}}
+{\footnotesize\ttfamily \label{luaconf_8h_a07ff709daaaf9cee410310059ef7bc75} 
+\#define LUAI\+\_\+\+MAXALIGN}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ n;\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{double}\ u;\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ *s;\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ i;\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{long}\ l}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177}\index{luaconf.h@{luaconf.h}!LUAI\_UACINT@{LUAI\_UACINT}}
+\index{LUAI\_UACINT@{LUAI\_UACINT}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_UACINT}{LUAI\_UACINT}}
+{\footnotesize\ttfamily \label{luaconf_8h_a7a9d650ef5ea12d81160db595fe9f177} 
+\#define LUAI\+\_\+\+UACINT~LUA\+\_\+\+INTEGER}
+
+\Hypertarget{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a}\index{luaconf.h@{luaconf.h}!LUAI\_UACNUMBER@{LUAI\_UACNUMBER}}
+\index{LUAI\_UACNUMBER@{LUAI\_UACNUMBER}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAI\_UACNUMBER}{LUAI\_UACNUMBER}}
+{\footnotesize\ttfamily \label{luaconf_8h_ae3594e990592ab0bf7243dad64c76d2a} 
+\#define LUAI\+\_\+\+UACNUMBER~double}
+
+\Hypertarget{luaconf_8h_a017f27a6da7785c98784124b9a2b8c3e}\index{luaconf.h@{luaconf.h}!luai\_unlikely@{luai\_unlikely}}
+\index{luai\_unlikely@{luai\_unlikely}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{luai\_unlikely}{luai\_unlikely}}
+{\footnotesize\ttfamily \label{luaconf_8h_a017f27a6da7785c98784124b9a2b8c3e} 
+\#define luai\+\_\+unlikely(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(x)}
+
+\end{DoxyCode}
+\Hypertarget{luaconf_8h_af360ad37a770dfdc29291a99c398f42d}\index{luaconf.h@{luaconf.h}!LUAL\_BUFFERSIZE@{LUAL\_BUFFERSIZE}}
+\index{LUAL\_BUFFERSIZE@{LUAL\_BUFFERSIZE}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAL\_BUFFERSIZE}{LUAL\_BUFFERSIZE}}
+{\footnotesize\ttfamily \label{luaconf_8h_af360ad37a770dfdc29291a99c398f42d} 
+\#define LUAL\+\_\+\+BUFFERSIZE~((int)(16 \texorpdfstring{$\ast$}{*} sizeof(void \texorpdfstring{$\ast$}{*}) \texorpdfstring{$\ast$}{*} sizeof(\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}})))}
+
+\Hypertarget{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}\index{luaconf.h@{luaconf.h}!LUALIB\_API@{LUALIB\_API}}
+\index{LUALIB\_API@{LUALIB\_API}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUALIB\_API}{LUALIB\_API}}
+{\footnotesize\ttfamily \label{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95} 
+\#define LUALIB\+\_\+\+API~\mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\+\_\+\+API}}}
+
+\Hypertarget{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}\index{luaconf.h@{luaconf.h}!LUAMOD\_API@{LUAMOD\_API}}
+\index{LUAMOD\_API@{LUAMOD\_API}!luaconf.h@{luaconf.h}}
+\doxysubsubsection{\texorpdfstring{LUAMOD\_API}{LUAMOD\_API}}
+{\footnotesize\ttfamily \label{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50} 
+\#define LUAMOD\+\_\+\+API~\mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\+\_\+\+API}}}
+

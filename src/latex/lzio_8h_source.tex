@@ -1,0 +1,72 @@
+\doxysection{lzio.\+h}
+\hypertarget{lzio_8h_source}{}\label{lzio_8h_source}\mbox{\hyperlink{lzio_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lzio.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Buffered\ streams}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ lzio\_h}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ lzio\_h}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lua_8h}{lua.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lmem_8h}{lmem.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ EOZ\ (-\/1)\ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ end\ of\ stream\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structZio}{Zio}}\ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ zgetc(z)\ \ (((z)-\/>n-\/-\/)>0\ ?\ \ cast\_uchar(*(z)-\/>p++)\ :\ luaZ\_fill(z))}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structMbuffer}{Mbuffer}}\ \{}
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structMbuffer_a857012deb824b216c19d7e4d15be5561}{buffer}};}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structMbuffer_abd195588f24e02b6f5bfb1a39a109380}{n}};}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structMbuffer_a48bbc7ce4413bf1cf9f4825f1ce36e41}{buffsize}};}
+\DoxyCodeLine{00027\ \}\ \mbox{\hyperlink{structMbuffer}{Mbuffer}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ luaZ\_initbuffer(L,\ buff)\ ((buff)-\/>buffer\ =\ NULL,\ (buff)-\/>buffsize\ =\ 0)}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ luaZ\_buffer(buff)\ \ \ ((buff)-\/>buffer)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ luaZ\_sizebuffer(buff)\ \ \ ((buff)-\/>buffsize)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ luaZ\_bufflen(buff)\ \ ((buff)-\/>n)}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ luaZ\_buffremove(buff,i)\ ((buff)-\/>n\ -\/=\ cast\_sizet(i))}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ luaZ\_resetbuffer(buff)\ ((buff)-\/>n\ =\ 0)}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ luaZ\_resizebuffer(L,\ buff,\ size)\ \(\backslash\)}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \ \ ((buff)-\/>buffer\ =\ luaM\_reallocvchar(L,\ (buff)-\/>buffer,\ \(\backslash\)}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (buff)-\/>buffsize,\ size),\ \(\backslash\)}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\ \ \ \ (buff)-\/>buffsize\ =\ size)}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ luaZ\_freebuffer(L,\ buff)\ \ \ \ luaZ\_resizebuffer(L,\ buff,\ 0)}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lzio_8h_a182323feac5ab7363dbf654d87f057d5}{luaZ\_init}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\ *z,\ \mbox{\hyperlink{lua_8h_a1708af7a68b7af536d43d126ca53b0f5}{lua\_Reader}}\ reader,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *data);}
+\DoxyCodeLine{00049\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{lzio_8h_a1f10428fa224047cec9e9b1756a0b733}{luaZ\_read}}\ (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}*\ z,\ \textcolor{keywordtype}{void}\ *b,\ \textcolor{keywordtype}{size\_t}\ n);\ \ \ \ \textcolor{comment}{/*\ read\ next\ n\ bytes\ */}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{lzio_8h_a85ed74ee4752ed6e4fb6f0046d36dbc1}{luaZ\_getaddr}}\ (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}*\ z,\ \textcolor{keywordtype}{size\_t}\ n);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/\ Private\ Part\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structZio}{Zio}}\ \{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structZio_a7e086aa8f8c620f46c4697dc14c186ce}{n}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ bytes\ still\ unread\ */}}
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structZio_a14ac73a363603164c07329d14063221b}{p}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ position\ in\ buffer\ */}}
+\DoxyCodeLine{00059\ \ \ \mbox{\hyperlink{lua_8h_a1708af7a68b7af536d43d126ca53b0f5}{lua\_Reader}}\ \mbox{\hyperlink{structZio_a543c6a2239f478a708e4549ee4453b56}{reader}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ reader\ function\ */}}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structZio_a78d84c6b39ee04b43be6638f2887915d}{data}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ additional\ data\ */}}
+\DoxyCodeLine{00061\ \ \ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *\mbox{\hyperlink{structZio_a605b7ca7868887491196af34d9b7d765}{L}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Lua\ state\ (for\ reader)\ */}}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lzio_8h_a407faec289b7559f210ac784e11a59bb}{luaZ\_fill}}\ (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\ *z);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

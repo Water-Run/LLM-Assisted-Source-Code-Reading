@@ -1,0 +1,96 @@
+\doxysection{lbaselib.\+c File Reference}
+\hypertarget{lbaselib_8c}{}\label{lbaselib_8c}\index{lbaselib.c@{lbaselib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lbaselib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lbaselib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lbaselib_8c_a2f5604e97f34f28d76a1eb287e7784a2}{lbaselib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lbaselib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{lbaselib_8c_a65fad87fefeb813e5ff7e217a1c89eef}{SPACECHARS}}~"{} \textbackslash{}f\textbackslash{}n\textbackslash{}r\textbackslash{}t\textbackslash{}v"{}
+\item 
+\#define \mbox{\hyperlink{lbaselib_8c_a5ab163307cc6c4a1722a4e077f8b4706}{checkvalres}}(res)
+\item 
+\#define \mbox{\hyperlink{lbaselib_8c_a47cb030f7cbc859ebdfb6101eec2f64f}{RESERVEDSLOT}}~5
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{lbaselib_8c_ae99bbf706d0fcfb0c1c7afbe3c4de382}{luaopen\+\_\+base}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lbaselib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lbaselib_8c_a5ab163307cc6c4a1722a4e077f8b4706}\index{lbaselib.c@{lbaselib.c}!checkvalres@{checkvalres}}
+\index{checkvalres@{checkvalres}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{checkvalres}{checkvalres}}
+{\footnotesize\ttfamily \label{lbaselib_8c_a5ab163307cc6c4a1722a4e077f8b4706} 
+\#define checkvalres(\begin{DoxyParamCaption}\item[{}]{res}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\ \textcolor{keywordflow}{if}\ (res\ ==\ -\/1)\ \textcolor{keywordflow}{break};\ \}}
+
+\end{DoxyCode}
+\Hypertarget{lbaselib_8c_a2f5604e97f34f28d76a1eb287e7784a2}\index{lbaselib.c@{lbaselib.c}!lbaselib\_c@{lbaselib\_c}}
+\index{lbaselib\_c@{lbaselib\_c}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{lbaselib\_c}{lbaselib\_c}}
+{\footnotesize\ttfamily \label{lbaselib_8c_a2f5604e97f34f28d76a1eb287e7784a2} 
+\#define lbaselib\+\_\+c}
+
+\Hypertarget{lbaselib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{lbaselib.c@{lbaselib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{lbaselib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{lbaselib_8c_a47cb030f7cbc859ebdfb6101eec2f64f}\index{lbaselib.c@{lbaselib.c}!RESERVEDSLOT@{RESERVEDSLOT}}
+\index{RESERVEDSLOT@{RESERVEDSLOT}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{RESERVEDSLOT}{RESERVEDSLOT}}
+{\footnotesize\ttfamily \label{lbaselib_8c_a47cb030f7cbc859ebdfb6101eec2f64f} 
+\#define RESERVEDSLOT~5}
+
+\Hypertarget{lbaselib_8c_a65fad87fefeb813e5ff7e217a1c89eef}\index{lbaselib.c@{lbaselib.c}!SPACECHARS@{SPACECHARS}}
+\index{SPACECHARS@{SPACECHARS}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{SPACECHARS}{SPACECHARS}}
+{\footnotesize\ttfamily \label{lbaselib_8c_a65fad87fefeb813e5ff7e217a1c89eef} 
+\#define SPACECHARS~"{} \textbackslash{}f\textbackslash{}n\textbackslash{}r\textbackslash{}t\textbackslash{}v"{}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lbaselib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lbaselib_8c_ae99bbf706d0fcfb0c1c7afbe3c4de382}\index{lbaselib.c@{lbaselib.c}!luaopen\_base@{luaopen\_base}}
+\index{luaopen\_base@{luaopen\_base}!lbaselib.c@{lbaselib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_base()}{luaopen\_base()}}
+{\footnotesize\ttfamily \label{lbaselib_8c_ae99bbf706d0fcfb0c1c7afbe3c4de382} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lbaselib_8c_ae99bbf706d0fcfb0c1c7afbe3c4de382_cgraph}
+\end{center}
+\end{figure}

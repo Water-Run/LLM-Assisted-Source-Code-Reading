@@ -1,0 +1,2403 @@
+\doxysection{lua.\+h}
+\hypertarget{lua_8h_source}{}\label{lua_8h_source}\mbox{\hyperlink{lua_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ 文件概要说明}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00005\ \textcolor{comment}{**\ 文件名:\ lua.h}}
+\DoxyCodeLine{00006\ \textcolor{comment}{**\ 版本:\ Lua\ 5.5.0}}
+\DoxyCodeLine{00007\ \textcolor{comment}{**\ 作用:\ Lua\ C\ API\ 的主头文件}}
+\DoxyCodeLine{00008\ \textcolor{comment}{**}}
+\DoxyCodeLine{00009\ \textcolor{comment}{**\ 这是\ Lua\ 解释器与\ C\ 语言交互的核心接口文件。它定义了:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{**\ 1.\ Lua\ 的基本数据类型\ (nil,\ boolean,\ number,\ string,\ table,\ function\ 等)}}
+\DoxyCodeLine{00011\ \textcolor{comment}{**\ 2.\ Lua\ 虚拟栈操作函数\ (push/pop/get/set\ 等)}}
+\DoxyCodeLine{00012\ \textcolor{comment}{**\ 3.\ Lua\ 状态机\ (lua\_State)\ 的管理函数}}
+\DoxyCodeLine{00013\ \textcolor{comment}{**\ 4.\ C\ 函数与\ Lua\ 交互的机制}}
+\DoxyCodeLine{00014\ \textcolor{comment}{**\ 5.\ 垃圾回收控制接口}}
+\DoxyCodeLine{00015\ \textcolor{comment}{**\ 6.\ 调试接口}}
+\DoxyCodeLine{00016\ \textcolor{comment}{**}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**\ 重要概念:}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ -\/\ lua\_State:\ Lua\ 虚拟机的状态,所有操作都需要这个参数}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ -\/\ 虚拟栈:\ Lua\ 与\ C\ 交互的主要方式,通过栈传递数据}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ -\/\ 索引机制:\ 正索引从栈底开始(1,2,3...),负索引从栈顶开始(-\/1,-\/2,-\/3...)}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ -\/\ 伪索引:\ 特殊的索引值,用于访问注册表等特殊位置}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**\ C\ 语言知识点:}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ -\/\ \#ifndef/\#define/\#endif:\ 头文件保护,防止重复包含}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ -\/\ typedef:\ 类型别名定义}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ -\/\ 函数指针:\ 如\ lua\_CFunction,\ lua\_Alloc\ 等}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ -\/\ 可变参数:\ va\_list,\ ...\ 等}}
+\DoxyCodeLine{00028\ \textcolor{comment}{**\ -\/\ 宏定义:\ \#define\ 用于定义常量和简单函数}}
+\DoxyCodeLine{00029\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00030\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00033\ \textcolor{comment}{**\ \$Id:\ lua.h\ \$}}
+\DoxyCodeLine{00034\ \textcolor{comment}{**\ Lua\ -\/\ A\ Scripting\ Language}}
+\DoxyCodeLine{00035\ \textcolor{comment}{**\ Lua.org,\ PUC-\/Rio,\ Brazil\ (www.lua.org)}}
+\DoxyCodeLine{00036\ \textcolor{comment}{**\ See\ Copyright\ Notice\ at\ the\ end\ of\ this\ file}}
+\DoxyCodeLine{00037\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00040\ \textcolor{comment}{**\ 头文件保护机制\ -\/\ 防止同一个头文件被多次包含}}
+\DoxyCodeLine{00041\ \textcolor{comment}{**\ \#ifndef\ 检查\ lua\_h\ 是否未定义}}
+\DoxyCodeLine{00042\ \textcolor{comment}{**\ \#define\ 定义\ lua\_h}}
+\DoxyCodeLine{00043\ \textcolor{comment}{**\ \#endif\ 结束条件编译}}
+\DoxyCodeLine{00044\ \textcolor{comment}{**\ 这是\ C\ 语言的标准做法,避免重复定义导致编译错误}}
+\DoxyCodeLine{00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#ifndef\ lua\_h}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ lua\_h}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{**\ 包含标准\ C\ 库头文件}}
+\DoxyCodeLine{00051\ \textcolor{comment}{**\ stdarg.h:\ 提供可变参数列表支持\ (va\_list,\ va\_start,\ va\_end\ 等)}}
+\DoxyCodeLine{00052\ \textcolor{comment}{**\ stddef.h:\ 提供基础类型定义\ (size\_t,\ ptrdiff\_t,\ NULL\ 等)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ <stdarg.h>}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*\ 版权和作者信息\ -\/\ 使用宏定义便于维护\ */}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ LUA\_COPYRIGHT\ LUA\_RELEASE\ "{}\ \ Copyright\ (C)\ 1994-\/2025\ Lua.org,\ PUC-\/Rio"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ LUA\_AUTHORS\ "{}R.\ Ierusalimschy,\ L.\ H.\ de\ Figueiredo,\ W.\ Celes"{}}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00062\ \textcolor{comment}{**\ Lua\ 版本号定义}}
+\DoxyCodeLine{00063\ \textcolor{comment}{**\ 采用三段式版本号:\ 主版本.次版本.发布版本}}
+\DoxyCodeLine{00064\ \textcolor{comment}{**\ 例如:\ 5.5.0\ 表示主版本\ 5,\ 次版本\ 5,\ 发布版本\ 0}}
+\DoxyCodeLine{00065\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_MAJOR\_N\ 5\ \ \ }\textcolor{comment}{/*\ 主版本号\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_MINOR\_N\ 5\ \ \ }\textcolor{comment}{/*\ 次版本号\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_RELEASE\_N\ 0\ }\textcolor{comment}{/*\ 发布版本号\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ 版本号的数值表示}}
+\DoxyCodeLine{00072\ \textcolor{comment}{**\ LUA\_VERSION\_NUM:\ 主版本*100\ +\ 次版本\ =\ 505}}
+\DoxyCodeLine{00073\ \textcolor{comment}{**\ 这样可以方便地进行数值比较,例如\ \#if\ LUA\_VERSION\_NUM\ >=\ 503}}
+\DoxyCodeLine{00074\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_NUM\ (LUA\_VERSION\_MAJOR\_N\ *\ 100\ +\ LUA\_VERSION\_MINOR\_N)}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**\ 完整版本号的数值表示}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ LUA\_VERSION\_RELEASE\_NUM:\ (主版本*100\ +\ 次版本)*100\ +\ 发布版本\ =\ 50500}}
+\DoxyCodeLine{00080\ \textcolor{comment}{**\ 提供更精细的版本比较能力}}
+\DoxyCodeLine{00081\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_RELEASE\_NUM\ (LUA\_VERSION\_NUM\ *\ 100\ +\ LUA\_VERSION\_RELEASE\_N)}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**\ 包含\ Lua\ 配置文件}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**\ luaconf.h\ 包含了平台相关的配置和类型定义}}
+\DoxyCodeLine{00087\ \textcolor{comment}{**\ 例如\ LUA\_NUMBER,\ LUA\_INTEGER\ 等类型的具体定义}}
+\DoxyCodeLine{00088\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{luaconf_8h}{luaconf.h}}"{}}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00092\ \textcolor{comment}{**\ 预编译代码的标记\ ('<esc>Lua')}}
+\DoxyCodeLine{00093\ \textcolor{comment}{**\ \(\backslash\)x1b\ 是\ ESC\ 字符的十六进制表示\ (ASCII\ 27)}}
+\DoxyCodeLine{00094\ \textcolor{comment}{**\ 这个签名用于识别\ Lua\ 编译后的字节码文件}}
+\DoxyCodeLine{00095\ \textcolor{comment}{**\ 当加载二进制\ chunk\ 时,Lua\ 会检查这个签名确保文件格式正确}}
+\DoxyCodeLine{00096\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00097\ \textcolor{comment}{/*\ mark\ for\ precompiled\ code\ ('<esc>Lua')\ */}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#define\ LUA\_SIGNATURE\ "{}\(\backslash\)x1bLua"{}}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00101\ \textcolor{comment}{**\ 多返回值标记}}
+\DoxyCodeLine{00102\ \textcolor{comment}{**\ 在\ lua\_pcall\ 和\ lua\_call\ 中使用}}
+\DoxyCodeLine{00103\ \textcolor{comment}{**\ 表示函数可以返回任意数量的结果}}
+\DoxyCodeLine{00104\ \textcolor{comment}{**\ 例如:\ lua\_call(L,\ 0,\ LUA\_MULTRET)\ 表示接受所有返回值}}
+\DoxyCodeLine{00105\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00106\ \textcolor{comment}{/*\ option\ for\ multiple\ returns\ in\ 'lua\_pcall'\ and\ 'lua\_call'\ */}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ LUA\_MULTRET\ (-\/1)}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00110\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00111\ \textcolor{comment}{**\ 伪索引\ (Pseudo-\/indices)}}
+\DoxyCodeLine{00112\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00113\ \textcolor{comment}{**}}
+\DoxyCodeLine{00114\ \textcolor{comment}{**\ 伪索引是特殊的索引值,不指向栈上的元素,而是指向特殊的位置:}}
+\DoxyCodeLine{00115\ \textcolor{comment}{**}}
+\DoxyCodeLine{00116\ \textcolor{comment}{**\ 1.\ 注册表\ (Registry):\ 一个全局的表,C\ 代码可以在其中存储\ Lua\ 值}}
+\DoxyCodeLine{00117\ \textcolor{comment}{**\ \ \ \ -\/\ 索引:\ LUA\_REGISTRYINDEX}}
+\DoxyCodeLine{00118\ \textcolor{comment}{**\ \ \ \ -\/\ 用途:\ 存储全局数据,避免污染\ Lua\ 的全局环境}}
+\DoxyCodeLine{00119\ \textcolor{comment}{**}}
+\DoxyCodeLine{00120\ \textcolor{comment}{**\ 2.\ Upvalues:\ 闭包的上值,通过\ lua\_upvalueindex(i)\ 访问}}
+\DoxyCodeLine{00121\ \textcolor{comment}{**\ \ \ \ -\/\ i\ 从\ 1\ 开始计数}}
+\DoxyCodeLine{00122\ \textcolor{comment}{**\ \ \ \ -\/\ 用于实现\ C\ 闭包,存储函数的私有数据}}
+\DoxyCodeLine{00123\ \textcolor{comment}{**}}
+\DoxyCodeLine{00124\ \textcolor{comment}{**\ 设计说明:}}
+\DoxyCodeLine{00125\ \textcolor{comment}{**\ -\/\ 栈大小限制为\ INT\_MAX/2\ (整数最大值的一半)}}
+\DoxyCodeLine{00126\ \textcolor{comment}{**\ -\/\ 在\ INT\_MAX/2\ 之后保留一些空间用于溢出检测}}
+\DoxyCodeLine{00127\ \textcolor{comment}{**\ -\/\ 减\ 1000\ 是为了确保伪索引不会与栈索引冲突}}
+\DoxyCodeLine{00128\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00129\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00130\ \textcolor{comment}{**\ Pseudo-\/indices}}
+\DoxyCodeLine{00131\ \textcolor{comment}{**\ (The\ stack\ size\ is\ limited\ to\ INT\_MAX/2;\ we\ keep\ some\ free\ empty}}
+\DoxyCodeLine{00132\ \textcolor{comment}{**\ space\ after\ that\ to\ help\ overflow\ detection.)}}
+\DoxyCodeLine{00133\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00134\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00135\ \textcolor{comment}{**\ 注册表索引}}
+\DoxyCodeLine{00136\ \textcolor{comment}{**\ 计算方式:\ -\/(INT\_MAX/2\ +\ 1000)}}
+\DoxyCodeLine{00137\ \textcolor{comment}{**\ 这是一个很大的负数,确保不会与普通栈索引冲突}}
+\DoxyCodeLine{00138\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#define\ LUA\_REGISTRYINDEX\ (-\/(INT\_MAX\ /\ 2\ +\ 1000))}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00142\ \textcolor{comment}{**\ Upvalue\ 索引计算宏}}
+\DoxyCodeLine{00143\ \textcolor{comment}{**\ 参数\ i:\ upvalue\ 的编号\ (从\ 1\ 开始)}}
+\DoxyCodeLine{00144\ \textcolor{comment}{**\ 返回值:\ 对应的伪索引}}
+\DoxyCodeLine{00145\ \textcolor{comment}{**\ 例如:\ lua\_upvalueindex(1)\ 返回第一个\ upvalue\ 的索引}}
+\DoxyCodeLine{00146\ \textcolor{comment}{**}}
+\DoxyCodeLine{00147\ \textcolor{comment}{**\ 工作原理:\ 从\ LUA\_REGISTRYINDEX\ 向下递减}}
+\DoxyCodeLine{00148\ \textcolor{comment}{**\ 第\ 1\ 个\ upvalue:\ LUA\_REGISTRYINDEX\ -\/\ 1}}
+\DoxyCodeLine{00149\ \textcolor{comment}{**\ 第\ 2\ 个\ upvalue:\ LUA\_REGISTRYINDEX\ -\/\ 2}}
+\DoxyCodeLine{00150\ \textcolor{comment}{**\ 以此类推}}
+\DoxyCodeLine{00151\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#define\ lua\_upvalueindex(i)\ (LUA\_REGISTRYINDEX\ -\/\ (i))}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00155\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00156\ \textcolor{comment}{**\ 线程状态码\ (Thread\ Status)}}
+\DoxyCodeLine{00157\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00158\ \textcolor{comment}{**\ 这些常量表示\ Lua\ 协程\ (coroutine)\ 的执行状态}}
+\DoxyCodeLine{00159\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00160\ \textcolor{comment}{/*\ thread\ status\ */}}
+\DoxyCodeLine{00161\ \textcolor{preprocessor}{\#define\ LUA\_OK\ 0\ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 正常状态,无错误\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#define\ LUA\_YIELD\ 1\ \ \ \ \ }\textcolor{comment}{/*\ 协程挂起状态\ (yield)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#define\ LUA\_ERRRUN\ 2\ \ \ \ }\textcolor{comment}{/*\ 运行时错误\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\#define\ LUA\_ERRSYNTAX\ 3\ }\textcolor{comment}{/*\ 语法错误\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#define\ LUA\_ERRMEM\ 4\ \ \ \ }\textcolor{comment}{/*\ 内存分配错误\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00166\ \textcolor{preprocessor}{\#define\ LUA\_ERRERR\ 5\ \ \ \ }\textcolor{comment}{/*\ 错误处理函数本身出错\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00169\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00170\ \textcolor{comment}{**\ Lua\ 状态机结构体\ (前向声明)}}
+\DoxyCodeLine{00171\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00172\ \textcolor{comment}{**\ lua\_State\ 是\ Lua\ 虚拟机的核心数据结构}}
+\DoxyCodeLine{00173\ \textcolor{comment}{**\ 这里使用前向声明,实际定义在实现文件中}}
+\DoxyCodeLine{00174\ \textcolor{comment}{**}}
+\DoxyCodeLine{00175\ \textcolor{comment}{**\ 每个\ lua\_State\ 代表一个独立的\ Lua\ 执行环境:}}
+\DoxyCodeLine{00176\ \textcolor{comment}{**\ -\/\ 有自己的栈}}
+\DoxyCodeLine{00177\ \textcolor{comment}{**\ -\/\ 有自己的全局环境}}
+\DoxyCodeLine{00178\ \textcolor{comment}{**\ -\/\ 可以有多个\ lua\_State\ (用于多线程或协程)}}
+\DoxyCodeLine{00179\ \textcolor{comment}{**}}
+\DoxyCodeLine{00180\ \textcolor{comment}{**\ C\ 语言知识点:}}
+\DoxyCodeLine{00181\ \textcolor{comment}{**\ typedef\ struct\ lua\_State\ lua\_State;}}
+\DoxyCodeLine{00182\ \textcolor{comment}{**\ 这是结构体的前向声明,允许在定义之前使用指针类型}}
+\DoxyCodeLine{00183\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00184\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structlua__State}{lua\_State}}\ \mbox{\hyperlink{structlua__State}{lua\_State}};}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00187\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00188\ \textcolor{comment}{**\ Lua\ 基本类型常量}}
+\DoxyCodeLine{00189\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00190\ \textcolor{comment}{**\ 这些常量定义了\ Lua\ 的所有基本数据类型}}
+\DoxyCodeLine{00191\ \textcolor{comment}{**\ 使用\ lua\_type()\ 函数可以获取一个值的类型}}
+\DoxyCodeLine{00192\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00193\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00194\ \textcolor{comment}{**\ basic\ types}}
+\DoxyCodeLine{00195\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#define\ LUA\_TNONE\ (-\/1)\ }\textcolor{comment}{/*\ 无效索引,不是真正的类型\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\#define\ LUA\_TNIL\ 0\ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ nil\ 类型\ -\/\ 表示空值或不存在\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\#define\ LUA\_TBOOLEAN\ 1\ \ \ \ \ \ \ }\textcolor{comment}{/*\ boolean\ 类型\ -\/\ true\ 或\ false\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\#define\ LUA\_TLIGHTUSERDATA\ 2\ }\textcolor{comment}{/*\ 轻量用户数据\ -\/\ 就是\ C\ 指针,不受\ GC\ 管理\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#define\ LUA\_TNUMBER\ 3\ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ number\ 类型\ -\/\ 数值\ (整数或浮点数)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\#define\ LUA\_TSTRING\ 4\ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ string\ 类型\ -\/\ 字符串\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#define\ LUA\_TTABLE\ 5\ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ table\ 类型\ -\/\ 表\ (关联数组)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\#define\ LUA\_TFUNCTION\ 6\ \ \ \ \ \ }\textcolor{comment}{/*\ function\ 类型\ -\/\ 函数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\#define\ LUA\_TUSERDATA\ 7\ \ \ \ \ \ }\textcolor{comment}{/*\ 完整用户数据\ -\/\ 由\ Lua\ 管理的\ C\ 数据,可以有元表\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\#define\ LUA\_TTHREAD\ 8\ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ thread\ 类型\ -\/\ 协程\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \textcolor{preprocessor}{\#define\ LUA\_NUMTYPES\ 9\ }\textcolor{comment}{/*\ 类型总数\ (不包括\ LUA\_TNONE)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00211\ \textcolor{comment}{**\ C\ 函数可用的最小\ Lua\ 栈空间}}
+\DoxyCodeLine{00212\ \textcolor{comment}{**\ 当\ C\ 函数被调用时,Lua\ 保证至少有\ 20\ 个栈位可用}}
+\DoxyCodeLine{00213\ \textcolor{comment}{**\ 如果需要更多空间,需要调用\ lua\_checkstack()\ 检查并扩展}}
+\DoxyCodeLine{00214\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00215\ \textcolor{comment}{/*\ minimum\ Lua\ stack\ available\ to\ a\ C\ function\ */}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\#define\ LUA\_MINSTACK\ 20}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00219\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00220\ \textcolor{comment}{**\ 注册表中的预定义索引}}
+\DoxyCodeLine{00221\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00222\ \textcolor{comment}{**\ 注册表是一个特殊的表,只能被\ C\ 代码访问}}
+\DoxyCodeLine{00223\ \textcolor{comment}{**\ 这些常量定义了注册表中的特殊位置}}
+\DoxyCodeLine{00224\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00225\ \textcolor{comment}{/*\ predefined\ values\ in\ the\ registry\ */}}
+\DoxyCodeLine{00226\ \textcolor{comment}{/*\ index\ 1\ is\ reserved\ for\ the\ reference\ mechanism\ */}}
+\DoxyCodeLine{00227\ \textcolor{comment}{/*\ 索引\ 1\ 保留给引用机制使用\ (luaL\_ref/luaL\_unref)\ */}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#define\ LUA\_RIDX\_GLOBALS\ 2\ \ \ \ }\textcolor{comment}{/*\ 全局环境表的位置\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#define\ LUA\_RIDX\_MAINTHREAD\ 3\ }\textcolor{comment}{/*\ 主线程的位置\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\#define\ LUA\_RIDX\_LAST\ 3\ \ \ \ \ \ \ }\textcolor{comment}{/*\ 最后一个预定义索引\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00233\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00234\ \textcolor{comment}{**\ 数值类型定义}}
+\DoxyCodeLine{00235\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00236\ \textcolor{comment}{**\ 这些类型的实际定义在\ luaconf.h\ 中}}
+\DoxyCodeLine{00237\ \textcolor{comment}{**\ 可以根据平台进行配置}}
+\DoxyCodeLine{00238\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00241\ \textcolor{comment}{**\ Lua\ 中数值的类型}}
+\DoxyCodeLine{00242\ \textcolor{comment}{**\ 通常定义为\ double\ (双精度浮点数)}}
+\DoxyCodeLine{00243\ \textcolor{comment}{**\ 在\ luaconf.h\ 中可以配置为其他类型}}
+\DoxyCodeLine{00244\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00245\ \textcolor{comment}{/*\ type\ of\ numbers\ in\ Lua\ */}}
+\DoxyCodeLine{00246\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{luaconf_8h_a459532244178d9e61e65aaf40fb42de1}{LUA\_NUMBER}}\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}};}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00249\ \textcolor{comment}{**\ Lua\ 整数类型}}
+\DoxyCodeLine{00250\ \textcolor{comment}{**\ 通常定义为\ long\ long\ 或\ \_\_int64}}
+\DoxyCodeLine{00251\ \textcolor{comment}{**\ 用于表示整数值,避免浮点数的精度问题}}
+\DoxyCodeLine{00252\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00253\ \textcolor{comment}{/*\ type\ for\ integer\ functions\ */}}
+\DoxyCodeLine{00254\ \textcolor{keyword}{typedef}\ LUA\_INTEGER\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}};}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00257\ \textcolor{comment}{**\ 无符号整数类型}}
+\DoxyCodeLine{00258\ \textcolor{comment}{**\ 用于位运算等需要无符号整数的场合}}
+\DoxyCodeLine{00259\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00260\ \textcolor{comment}{/*\ unsigned\ integer\ type\ */}}
+\DoxyCodeLine{00261\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{luaconf_8h_aebcf6bf84bcfb38b3004d9ff0b937c35}{LUA\_UNSIGNED}}\ \mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}};}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00264\ \textcolor{comment}{**\ 延续函数的上下文类型}}
+\DoxyCodeLine{00265\ \textcolor{comment}{**\ 用于协程和异步操作中传递额外信息}}
+\DoxyCodeLine{00266\ \textcolor{comment}{**\ 通常是一个指针大小的整数类型}}
+\DoxyCodeLine{00267\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00268\ \textcolor{comment}{/*\ type\ for\ continuation-\/function\ contexts\ */}}
+\DoxyCodeLine{00269\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{luaconf_8h_aa0ee03595b0ac0cf402754071af956de}{LUA\_KCONTEXT}}\ \mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}};}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00272\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00273\ \textcolor{comment}{**\ 函数指针类型定义}}
+\DoxyCodeLine{00274\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00275\ \textcolor{comment}{**}}
+\DoxyCodeLine{00276\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ 函数指针:}}
+\DoxyCodeLine{00277\ \textcolor{comment}{**\ typedef\ int\ (*lua\_CFunction)\ (lua\_State\ *L);}}
+\DoxyCodeLine{00278\ \textcolor{comment}{**}}
+\DoxyCodeLine{00279\ \textcolor{comment}{**\ 解析:}}
+\DoxyCodeLine{00280\ \textcolor{comment}{**\ -\/\ int:\ 返回类型}}
+\DoxyCodeLine{00281\ \textcolor{comment}{**\ -\/\ (*lua\_CFunction):\ 指向函数的指针,类型名为\ lua\_CFunction}}
+\DoxyCodeLine{00282\ \textcolor{comment}{**\ -\/\ (lua\_State\ *L):\ 参数列表}}
+\DoxyCodeLine{00283\ \textcolor{comment}{**}}
+\DoxyCodeLine{00284\ \textcolor{comment}{**\ 使用示例:}}
+\DoxyCodeLine{00285\ \textcolor{comment}{**\ int\ my\_function(lua\_State\ *L)\ \{\ return\ 0;\ \}}}
+\DoxyCodeLine{00286\ \textcolor{comment}{**\ lua\_CFunction\ func\ =\ my\_function;}}
+\DoxyCodeLine{00287\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00290\ \textcolor{comment}{**\ 注册到\ Lua\ 的\ C\ 函数类型}}
+\DoxyCodeLine{00291\ \textcolor{comment}{**}}
+\DoxyCodeLine{00292\ \textcolor{comment}{**\ 参数:\ lua\_State\ *L\ -\/\ Lua\ 状态机指针}}
+\DoxyCodeLine{00293\ \textcolor{comment}{**\ 返回值:\ int\ -\/\ 返回值的个数\ (不是返回值本身)}}
+\DoxyCodeLine{00294\ \textcolor{comment}{**}}
+\DoxyCodeLine{00295\ \textcolor{comment}{**\ 工作原理:}}
+\DoxyCodeLine{00296\ \textcolor{comment}{**\ 1.\ C\ 函数从\ Lua\ 栈获取参数}}
+\DoxyCodeLine{00297\ \textcolor{comment}{**\ 2.\ 执行计算}}
+\DoxyCodeLine{00298\ \textcolor{comment}{**\ 3.\ 将结果压入栈}}
+\DoxyCodeLine{00299\ \textcolor{comment}{**\ 4.\ 返回结果的个数}}
+\DoxyCodeLine{00300\ \textcolor{comment}{**}}
+\DoxyCodeLine{00301\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00302\ \textcolor{comment}{**\ int\ add(lua\_State\ *L)\ \{}}
+\DoxyCodeLine{00303\ \textcolor{comment}{**\ \ \ \ \ double\ a\ =\ lua\_tonumber(L,\ 1);\ \ //\ 获取第一个参数}}
+\DoxyCodeLine{00304\ \textcolor{comment}{**\ \ \ \ \ double\ b\ =\ lua\_tonumber(L,\ 2);\ \ //\ 获取第二个参数}}
+\DoxyCodeLine{00305\ \textcolor{comment}{**\ \ \ \ \ lua\_pushnumber(L,\ a\ +\ b);\ \ \ \ \ \ \ //\ 压入结果}}
+\DoxyCodeLine{00306\ \textcolor{comment}{**\ \ \ \ \ return\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ 返回\ 1\ 个结果}}
+\DoxyCodeLine{00307\ \textcolor{comment}{**\ \}}}
+\DoxyCodeLine{00308\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00309\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00310\ \textcolor{comment}{**\ Type\ for\ C\ functions\ registered\ with\ Lua}}
+\DoxyCodeLine{00311\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00312\ \textcolor{keyword}{typedef}\ int\ (*\mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00315\ \textcolor{comment}{**\ 延续函数类型}}
+\DoxyCodeLine{00316\ \textcolor{comment}{**}}
+\DoxyCodeLine{00317\ \textcolor{comment}{**\ 用于协程和可恢复的函数调用}}
+\DoxyCodeLine{00318\ \textcolor{comment}{**}}
+\DoxyCodeLine{00319\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00320\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00321\ \textcolor{comment}{**\ -\/\ int\ status:\ 状态码\ (LUA\_OK,\ LUA\_YIELD\ 等)}}
+\DoxyCodeLine{00322\ \textcolor{comment}{**\ -\/\ lua\_KContext\ ctx:\ 上下文信息,用于在挂起/恢复之间传递数据}}
+\DoxyCodeLine{00323\ \textcolor{comment}{**}}
+\DoxyCodeLine{00324\ \textcolor{comment}{**\ 返回值:\ 返回值的个数}}
+\DoxyCodeLine{00325\ \textcolor{comment}{**}}
+\DoxyCodeLine{00326\ \textcolor{comment}{**\ 应用场景:\ 需要跨越\ yield\ 操作保存状态的函数}}
+\DoxyCodeLine{00327\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00328\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00329\ \textcolor{comment}{**\ Type\ for\ continuation\ functions}}
+\DoxyCodeLine{00330\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00331\ \textcolor{keyword}{typedef}\ int\ (*\mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\_KFunction}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__State_a2003a038d8a507b4a3d7180d4712fe50}{status}},\ \mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}}\ ctx);}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00334\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00335\ \textcolor{comment}{**\ 读写函数类型}}
+\DoxyCodeLine{00336\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00337\ \textcolor{comment}{**\ 用于\ lua\_load\ 和\ lua\_dump\ 的\ I/O\ 操作}}
+\DoxyCodeLine{00338\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00341\ \textcolor{comment}{**\ 读取函数类型}}
+\DoxyCodeLine{00342\ \textcolor{comment}{**}}
+\DoxyCodeLine{00343\ \textcolor{comment}{**\ 用于\ lua\_load()\ 从自定义来源加载\ Lua\ 代码}}
+\DoxyCodeLine{00344\ \textcolor{comment}{**}}
+\DoxyCodeLine{00345\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00346\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00347\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据,由调用者传入}}
+\DoxyCodeLine{00348\ \textcolor{comment}{**\ -\/\ size\_t\ *sz:\ 输出参数,返回读取的字节数}}
+\DoxyCodeLine{00349\ \textcolor{comment}{**}}
+\DoxyCodeLine{00350\ \textcolor{comment}{**\ 返回值:\ 指向数据块的指针,返回\ NULL\ 表示结束}}
+\DoxyCodeLine{00351\ \textcolor{comment}{**}}
+\DoxyCodeLine{00352\ \textcolor{comment}{**\ 工作流程:}}
+\DoxyCodeLine{00353\ \textcolor{comment}{**\ 1.\ lua\_load\ 反复调用这个函数}}
+\DoxyCodeLine{00354\ \textcolor{comment}{**\ 2.\ 每次返回一块数据}}
+\DoxyCodeLine{00355\ \textcolor{comment}{**\ 3.\ 返回\ NULL\ 表示没有更多数据}}
+\DoxyCodeLine{00356\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00357\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00358\ \textcolor{comment}{**\ Type\ for\ functions\ that\ read/write\ blocks\ when\ loading/dumping\ Lua\ chunks}}
+\DoxyCodeLine{00359\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00360\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(*lua\_Reader)(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{void}\ *ud,\ \textcolor{keywordtype}{size\_t}\ *sz);}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00363\ \textcolor{comment}{**\ 写入函数类型}}
+\DoxyCodeLine{00364\ \textcolor{comment}{**}}
+\DoxyCodeLine{00365\ \textcolor{comment}{**\ 用于\ lua\_dump()\ 将编译后的代码写到自定义目标}}
+\DoxyCodeLine{00366\ \textcolor{comment}{**}}
+\DoxyCodeLine{00367\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00368\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00369\ \textcolor{comment}{**\ -\/\ const\ void\ *p:\ 要写入的数据}}
+\DoxyCodeLine{00370\ \textcolor{comment}{**\ -\/\ size\_t\ sz:\ 数据大小}}
+\DoxyCodeLine{00371\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{00372\ \textcolor{comment}{**}}
+\DoxyCodeLine{00373\ \textcolor{comment}{**\ 返回值:\ 0\ 表示成功,非\ 0\ 表示错误}}
+\DoxyCodeLine{00374\ \textcolor{comment}{**}}
+\DoxyCodeLine{00375\ \textcolor{comment}{**\ 应用:\ 将\ Lua\ 函数序列化到文件、内存或网络}}
+\DoxyCodeLine{00376\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00377\ \textcolor{keyword}{typedef}\ int\ (*\mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\_Writer}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *p,\ \textcolor{keywordtype}{size\_t}\ sz,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00380\ \textcolor{comment}{**\ 内存分配函数类型}}
+\DoxyCodeLine{00381\ \textcolor{comment}{**}}
+\DoxyCodeLine{00382\ \textcolor{comment}{**\ Lua\ 使用这个函数进行所有的内存操作}}
+\DoxyCodeLine{00383\ \textcolor{comment}{**\ 可以自定义内存分配器,用于:}}
+\DoxyCodeLine{00384\ \textcolor{comment}{**\ -\/\ 内存使用统计}}
+\DoxyCodeLine{00385\ \textcolor{comment}{**\ -\/\ 内存池管理}}
+\DoxyCodeLine{00386\ \textcolor{comment}{**\ -\/\ 调试内存泄漏}}
+\DoxyCodeLine{00387\ \textcolor{comment}{**}}
+\DoxyCodeLine{00388\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00389\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{00390\ \textcolor{comment}{**\ -\/\ void\ *ptr:\ 要重新分配的内存块\ (NULL\ 表示新分配)}}
+\DoxyCodeLine{00391\ \textcolor{comment}{**\ -\/\ size\_t\ osize:\ 原大小}}
+\DoxyCodeLine{00392\ \textcolor{comment}{**\ -\/\ size\_t\ nsize:\ 新大小}}
+\DoxyCodeLine{00393\ \textcolor{comment}{**}}
+\DoxyCodeLine{00394\ \textcolor{comment}{**\ 返回值:\ 新内存块的指针}}
+\DoxyCodeLine{00395\ \textcolor{comment}{**}}
+\DoxyCodeLine{00396\ \textcolor{comment}{**\ 行为规范:}}
+\DoxyCodeLine{00397\ \textcolor{comment}{**\ -\/\ 当\ nsize\ ==\ 0:\ 释放内存,返回\ NULL}}
+\DoxyCodeLine{00398\ \textcolor{comment}{**\ -\/\ 当\ ptr\ ==\ NULL:\ 分配新内存}}
+\DoxyCodeLine{00399\ \textcolor{comment}{**\ -\/\ 其他情况:\ 重新分配内存}}
+\DoxyCodeLine{00400\ \textcolor{comment}{**}}
+\DoxyCodeLine{00401\ \textcolor{comment}{**\ 等价关系:}}
+\DoxyCodeLine{00402\ \textcolor{comment}{**\ -\/\ malloc(nsize)\ \ \ ≈\ alloc(ud,\ NULL,\ 0,\ nsize)}}
+\DoxyCodeLine{00403\ \textcolor{comment}{**\ -\/\ free(ptr)\ \ \ \ \ \ \ ≈\ alloc(ud,\ ptr,\ osize,\ 0)}}
+\DoxyCodeLine{00404\ \textcolor{comment}{**\ -\/\ realloc(ptr,sz)\ ≈\ alloc(ud,\ ptr,\ osize,\ nsize)}}
+\DoxyCodeLine{00405\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00406\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00407\ \textcolor{comment}{**\ Type\ for\ memory-\/allocation\ functions}}
+\DoxyCodeLine{00408\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00409\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ *(*lua\_Alloc)(\textcolor{keywordtype}{void}\ *ud,\ \textcolor{keywordtype}{void}\ *ptr,\ \textcolor{keywordtype}{size\_t}\ osize,\ \textcolor{keywordtype}{size\_t}\ nsize);}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00412\ \textcolor{comment}{**\ 警告函数类型}}
+\DoxyCodeLine{00413\ \textcolor{comment}{**}}
+\DoxyCodeLine{00414\ \textcolor{comment}{**\ 用于接收\ Lua\ 发出的警告消息}}
+\DoxyCodeLine{00415\ \textcolor{comment}{**}}
+\DoxyCodeLine{00416\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00417\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{00418\ \textcolor{comment}{**\ -\/\ const\ char\ *msg:\ 警告消息}}
+\DoxyCodeLine{00419\ \textcolor{comment}{**\ -\/\ int\ tocont:\ 是否还有后续消息\ (1=是,\ 0=否)}}
+\DoxyCodeLine{00420\ \textcolor{comment}{**}}
+\DoxyCodeLine{00421\ \textcolor{comment}{**\ 用途:\ 自定义警告处理,例如写入日志文件}}
+\DoxyCodeLine{00422\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00423\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00424\ \textcolor{comment}{**\ Type\ for\ warning\ functions}}
+\DoxyCodeLine{00425\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00426\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{lua_8h_a01be53d7e053b2703a9a0ee91aff4974}{lua\_WarnFunction}})(\textcolor{keywordtype}{void}\ *ud,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *msg,\ \textcolor{keywordtype}{int}\ tocont);}
+\DoxyCodeLine{00427\ }
+\DoxyCodeLine{00428\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00429\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00430\ \textcolor{comment}{**\ 调试相关类型}}
+\DoxyCodeLine{00431\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00432\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00435\ \textcolor{comment}{**\ 调试信息结构体\ (前向声明)}}
+\DoxyCodeLine{00436\ \textcolor{comment}{**\ 实际定义在文件末尾}}
+\DoxyCodeLine{00437\ \textcolor{comment}{**\ 用于存储函数调用、源码位置等调试信息}}
+\DoxyCodeLine{00438\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00439\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00440\ \textcolor{comment}{**\ Type\ used\ by\ the\ debug\ API\ to\ collect\ debug\ information}}
+\DoxyCodeLine{00441\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00442\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}};}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00445\ \textcolor{comment}{**\ 调试钩子函数类型}}
+\DoxyCodeLine{00446\ \textcolor{comment}{**}}
+\DoxyCodeLine{00447\ \textcolor{comment}{**\ 在特定事件发生时被调用\ (函数调用、返回、执行行等)}}
+\DoxyCodeLine{00448\ \textcolor{comment}{**}}
+\DoxyCodeLine{00449\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00450\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00451\ \textcolor{comment}{**\ -\/\ lua\_Debug\ *ar:\ 调试信息结构}}
+\DoxyCodeLine{00452\ \textcolor{comment}{**}}
+\DoxyCodeLine{00453\ \textcolor{comment}{**\ 应用:\ 实现调试器、性能分析器等}}
+\DoxyCodeLine{00454\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00455\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00456\ \textcolor{comment}{**\ Functions\ to\ be\ called\ by\ the\ debugger\ in\ specific\ events}}
+\DoxyCodeLine{00457\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00458\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{lua_8h_aa00de66eff087aef1fdd44f5b3bb9a0b}{lua\_Hook}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ *ar);}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00461\ \textcolor{comment}{**\ 用户自定义头文件包含}}
+\DoxyCodeLine{00462\ \textcolor{comment}{**\ 如果定义了\ LUA\_USER\_H,则包含该文件}}
+\DoxyCodeLine{00463\ \textcolor{comment}{**\ 用于添加自定义的声明和定义}}
+\DoxyCodeLine{00464\ \textcolor{comment}{**}}
+\DoxyCodeLine{00465\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ 条件编译:}}
+\DoxyCodeLine{00466\ \textcolor{comment}{**\ \#if\ defined(MACRO)\ 检查宏是否定义}}
+\DoxyCodeLine{00467\ \textcolor{comment}{**\ \#include\ 可以包含宏展开的结果}}
+\DoxyCodeLine{00468\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00469\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00470\ \textcolor{comment}{**\ generic\ extra\ include\ file}}
+\DoxyCodeLine{00471\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00472\ \textcolor{preprocessor}{\#if\ defined(LUA\_USER\_H)}}
+\DoxyCodeLine{00473\ \textcolor{preprocessor}{\#include\ LUA\_USER\_H}}
+\DoxyCodeLine{00474\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00477\ \textcolor{comment}{**\ RCS\ 标识字符串}}
+\DoxyCodeLine{00478\ \textcolor{comment}{**\ RCS\ (Revision\ Control\ System)\ 是版本控制系统}}
+\DoxyCodeLine{00479\ \textcolor{comment}{**\ 这个字符串用于版本跟踪}}
+\DoxyCodeLine{00480\ \textcolor{comment}{**}}
+\DoxyCodeLine{00481\ \textcolor{comment}{**\ C\ 语言知识点:}}
+\DoxyCodeLine{00482\ \textcolor{comment}{**\ extern\ const\ char\ -\/\ 声明外部常量,定义在其他编译单元}}
+\DoxyCodeLine{00483\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00484\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00485\ \textcolor{comment}{**\ RCS\ ident\ string}}
+\DoxyCodeLine{00486\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00487\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{lapi_8c_acbf4dc2e5f80547c7f54f41a179258b2}{lua\_ident}}[];}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00489\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00490\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00491\ \textcolor{comment}{**\ 状态机操作函数}}
+\DoxyCodeLine{00492\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00493\ \textcolor{comment}{**\ 这些函数用于创建、销毁和管理\ Lua\ 状态机}}
+\DoxyCodeLine{00494\ \textcolor{comment}{**}}
+\DoxyCodeLine{00495\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ LUA\_API:}}
+\DoxyCodeLine{00496\ \textcolor{comment}{**\ LUA\_API\ 是一个宏,通常定义为:}}
+\DoxyCodeLine{00497\ \textcolor{comment}{**\ -\/\ Windows:\ \_\_declspec(dllexport)\ 或\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00498\ \textcolor{comment}{**\ -\/\ Unix/Linux:\ 可能为空或\ \_\_attribute\_\_((visibility("{}default"{})))}}
+\DoxyCodeLine{00499\ \textcolor{comment}{**\ 用于控制符号的导出,支持动态链接库}}
+\DoxyCodeLine{00500\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00501\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00502\ \textcolor{comment}{**\ state\ manipulation}}
+\DoxyCodeLine{00503\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00506\ \textcolor{comment}{**\ 创建新的\ Lua\ 状态机}}
+\DoxyCodeLine{00507\ \textcolor{comment}{**}}
+\DoxyCodeLine{00508\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00509\ \textcolor{comment}{**\ -\/\ lua\_Alloc\ f:\ 内存分配函数}}
+\DoxyCodeLine{00510\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 传递给分配函数的用户数据}}
+\DoxyCodeLine{00511\ \textcolor{comment}{**\ -\/\ unsigned\ seed:\ 随机数种子,用于表的哈希等}}
+\DoxyCodeLine{00512\ \textcolor{comment}{**}}
+\DoxyCodeLine{00513\ \textcolor{comment}{**\ 返回值:\ 新创建的\ lua\_State\ 指针,失败返回\ NULL}}
+\DoxyCodeLine{00514\ \textcolor{comment}{**}}
+\DoxyCodeLine{00515\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00516\ \textcolor{comment}{**\ -\/\ 这是创建独立\ Lua\ 虚拟机的底层函数}}
+\DoxyCodeLine{00517\ \textcolor{comment}{**\ -\/\ 通常使用更高级的\ luaL\_newstate()\ (在\ lauxlib.h\ 中)}}
+\DoxyCodeLine{00518\ \textcolor{comment}{**\ -\/\ 每个状态机都是独立的,有自己的全局环境}}
+\DoxyCodeLine{00519\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00520\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *(\mbox{\hyperlink{lstate_8c_adf7e98202b690cc0131169f33a6bfac8}{lua\_newstate}})(\mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\_Alloc}}\ f,\ \textcolor{keywordtype}{void}\ *ud,\ \textcolor{keywordtype}{unsigned}\ seed);}
+\DoxyCodeLine{00521\ }
+\DoxyCodeLine{00522\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00523\ \textcolor{comment}{**\ 关闭\ Lua\ 状态机}}
+\DoxyCodeLine{00524\ \textcolor{comment}{**}}
+\DoxyCodeLine{00525\ \textcolor{comment}{**\ 参数:\ lua\_State\ *L\ -\/\ 要关闭的状态机}}
+\DoxyCodeLine{00526\ \textcolor{comment}{**}}
+\DoxyCodeLine{00527\ \textcolor{comment}{**\ 作用:}}
+\DoxyCodeLine{00528\ \textcolor{comment}{**\ -\/\ 释放所有内存}}
+\DoxyCodeLine{00529\ \textcolor{comment}{**\ -\/\ 调用所有\ \_\_gc\ 元方法}}
+\DoxyCodeLine{00530\ \textcolor{comment}{**\ -\/\ 关闭所有待关闭的值}}
+\DoxyCodeLine{00531\ \textcolor{comment}{**}}
+\DoxyCodeLine{00532\ \textcolor{comment}{**\ 注意:\ 调用后\ L\ 指针无效,不能再使用}}
+\DoxyCodeLine{00533\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00534\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lstate_8c_a5d903983f1497b2fc58fba9df09e354d}{lua\_close}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00535\ }
+\DoxyCodeLine{00536\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00537\ \textcolor{comment}{**\ 创建新线程\ (协程)}}
+\DoxyCodeLine{00538\ \textcolor{comment}{**}}
+\DoxyCodeLine{00539\ \textcolor{comment}{**\ 参数:\ lua\_State\ *L\ -\/\ 父状态机}}
+\DoxyCodeLine{00540\ \textcolor{comment}{**}}
+\DoxyCodeLine{00541\ \textcolor{comment}{**\ 返回值:\ 新线程的\ lua\_State\ 指针}}
+\DoxyCodeLine{00542\ \textcolor{comment}{**}}
+\DoxyCodeLine{00543\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00544\ \textcolor{comment}{**\ -\/\ 新线程与\ L\ 共享全局环境}}
+\DoxyCodeLine{00545\ \textcolor{comment}{**\ -\/\ 新线程被压入\ L\ 的栈顶}}
+\DoxyCodeLine{00546\ \textcolor{comment}{**\ -\/\ 用于实现协程功能}}
+\DoxyCodeLine{00547\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00548\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *(\mbox{\hyperlink{lstate_8c_a9eb2f070b3e3bceeae22abe1788cad52}{lua\_newthread}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L);}
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00550\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00551\ \textcolor{comment}{**\ 关闭线程}}
+\DoxyCodeLine{00552\ \textcolor{comment}{**}}
+\DoxyCodeLine{00553\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00554\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ 要关闭的线程}}
+\DoxyCodeLine{00555\ \textcolor{comment}{**\ -\/\ lua\_State\ *from:\ 从哪个线程关闭\ (用于错误传播)}}
+\DoxyCodeLine{00556\ \textcolor{comment}{**}}
+\DoxyCodeLine{00557\ \textcolor{comment}{**\ 返回值:\ 状态码}}
+\DoxyCodeLine{00558\ \textcolor{comment}{**}}
+\DoxyCodeLine{00559\ \textcolor{comment}{**\ 作用:\ 关闭待关闭的值,清理资源}}
+\DoxyCodeLine{00560\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00561\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lstate_8c_a95ab7e493b56dfead9aac2d2fcbcb408}{lua\_closethread}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *from);}
+\DoxyCodeLine{00562\ }
+\DoxyCodeLine{00563\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00564\ \textcolor{comment}{**\ 设置\ panic\ 函数}}
+\DoxyCodeLine{00565\ \textcolor{comment}{**}}
+\DoxyCodeLine{00566\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00567\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00568\ \textcolor{comment}{**\ -\/\ lua\_CFunction\ panicf:\ panic\ 函数}}
+\DoxyCodeLine{00569\ \textcolor{comment}{**}}
+\DoxyCodeLine{00570\ \textcolor{comment}{**\ 返回值:\ 旧的\ panic\ 函数}}
+\DoxyCodeLine{00571\ \textcolor{comment}{**}}
+\DoxyCodeLine{00572\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00573\ \textcolor{comment}{**\ -\/\ panic\ 函数在无保护的错误发生时被调用}}
+\DoxyCodeLine{00574\ \textcolor{comment}{**\ -\/\ 默认行为是调用\ exit()}}
+\DoxyCodeLine{00575\ \textcolor{comment}{**\ -\/\ 通常用于记录致命错误日志}}
+\DoxyCodeLine{00576\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00577\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}(\mbox{\hyperlink{lapi_8c_a90bf785da77985164dbe2eb0d64bf82e}{lua\_atpanic}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}\ panicf);}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00579\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00580\ \textcolor{comment}{**\ 获取\ Lua\ 版本号}}
+\DoxyCodeLine{00581\ \textcolor{comment}{**}}
+\DoxyCodeLine{00582\ \textcolor{comment}{**\ 参数:\ lua\_State\ *L\ -\/\ 可以为\ NULL}}
+\DoxyCodeLine{00583\ \textcolor{comment}{**}}
+\DoxyCodeLine{00584\ \textcolor{comment}{**\ 返回值:\ 版本号\ (lua\_Number\ 类型)}}
+\DoxyCodeLine{00585\ \textcolor{comment}{**}}
+\DoxyCodeLine{00586\ \textcolor{comment}{**\ 用途:\ 检查运行时和编译时的版本是否匹配}}
+\DoxyCodeLine{00587\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00588\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}(\mbox{\hyperlink{lapi_8c_a173602b148e6a610676e866fb7874ff1}{lua\_version}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00589\ }
+\DoxyCodeLine{00590\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00591\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00592\ \textcolor{comment}{**\ 基本栈操作}}
+\DoxyCodeLine{00593\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00594\ \textcolor{comment}{**}}
+\DoxyCodeLine{00595\ \textcolor{comment}{**\ Lua\ 栈是\ C\ API\ 的核心:}}
+\DoxyCodeLine{00596\ \textcolor{comment}{**\ -\/\ 所有数据交换都通过栈进行}}
+\DoxyCodeLine{00597\ \textcolor{comment}{**\ -\/\ 栈索引从\ 1\ 开始\ (栈底)\ 或从\ -\/1\ 开始\ (栈顶)}}
+\DoxyCodeLine{00598\ \textcolor{comment}{**\ -\/\ 正索引:\ 1,\ 2,\ 3,\ ...\ (从栈底向上)}}
+\DoxyCodeLine{00599\ \textcolor{comment}{**\ -\/\ 负索引:\ -\/1,\ -\/2,\ -\/3,\ ...\ (从栈顶向下)}}
+\DoxyCodeLine{00600\ \textcolor{comment}{**}}
+\DoxyCodeLine{00601\ \textcolor{comment}{**\ 例如,栈中有\ 3\ 个元素:}}
+\DoxyCodeLine{00602\ \textcolor{comment}{**\ 索引:\ \ 1\ \ \ \ 2\ \ \ \ 3\ \ \ \ \ (正索引)}}
+\DoxyCodeLine{00603\ \textcolor{comment}{**\ 值:\ \ \ [a]\ \ [b]\ \ [c]}}
+\DoxyCodeLine{00604\ \textcolor{comment}{**\ 索引:\ -\/3\ \ \ -\/2\ \ \ -\/1\ \ \ \ \ (负索引)}}
+\DoxyCodeLine{00605\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00606\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00607\ \textcolor{comment}{**\ basic\ stack\ manipulation}}
+\DoxyCodeLine{00608\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00609\ }
+\DoxyCodeLine{00610\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00611\ \textcolor{comment}{**\ 将索引转换为绝对索引}}
+\DoxyCodeLine{00612\ \textcolor{comment}{**}}
+\DoxyCodeLine{00613\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00614\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00615\ \textcolor{comment}{**\ -\/\ int\ idx:\ 可接受的索引\ (正、负或伪索引)}}
+\DoxyCodeLine{00616\ \textcolor{comment}{**}}
+\DoxyCodeLine{00617\ \textcolor{comment}{**\ 返回值:\ 对应的绝对\ (正)\ 索引}}
+\DoxyCodeLine{00618\ \textcolor{comment}{**}}
+\DoxyCodeLine{00619\ \textcolor{comment}{**\ 示例:\ 栈有\ 5\ 个元素}}
+\DoxyCodeLine{00620\ \textcolor{comment}{**\ -\/\ lua\_absindex(L,\ -\/1)\ 返回\ 5}}
+\DoxyCodeLine{00621\ \textcolor{comment}{**\ -\/\ lua\_absindex(L,\ 1)\ 返回\ 1}}
+\DoxyCodeLine{00622\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00623\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a32821b04960f1c1223132349d04911c1}{lua\_absindex}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00624\ }
+\DoxyCodeLine{00625\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00626\ \textcolor{comment}{**\ 获取栈顶索引\ (即栈中元素个数)}}
+\DoxyCodeLine{00627\ \textcolor{comment}{**}}
+\DoxyCodeLine{00628\ \textcolor{comment}{**\ 返回值:\ 栈中元素个数}}
+\DoxyCodeLine{00629\ \textcolor{comment}{**}}
+\DoxyCodeLine{00630\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00631\ \textcolor{comment}{**\ -\/\ 空栈:\ 返回\ 0}}
+\DoxyCodeLine{00632\ \textcolor{comment}{**\ -\/\ 有\ 3\ 个元素:\ 返回\ 3}}
+\DoxyCodeLine{00633\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00634\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_afbb08ecb69421875494105d4de68e5bf}{lua\_gettop}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00635\ }
+\DoxyCodeLine{00636\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00637\ \textcolor{comment}{**\ 设置栈顶}}
+\DoxyCodeLine{00638\ \textcolor{comment}{**}}
+\DoxyCodeLine{00639\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00640\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ Lua\ 状态机}}
+\DoxyCodeLine{00641\ \textcolor{comment}{**\ -\/\ int\ idx:\ 新的栈顶索引}}
+\DoxyCodeLine{00642\ \textcolor{comment}{**}}
+\DoxyCodeLine{00643\ \textcolor{comment}{**\ 作用:}}
+\DoxyCodeLine{00644\ \textcolor{comment}{**\ -\/\ 如果\ idx\ >\ 当前栈顶:\ 用\ nil\ 填充}}
+\DoxyCodeLine{00645\ \textcolor{comment}{**\ -\/\ 如果\ idx\ <\ 当前栈顶:\ 删除多余元素}}
+\DoxyCodeLine{00646\ \textcolor{comment}{**\ -\/\ 如果\ idx\ ==\ 0:\ 清空栈}}
+\DoxyCodeLine{00647\ \textcolor{comment}{**}}
+\DoxyCodeLine{00648\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00649\ \textcolor{comment}{**\ -\/\ lua\_settop(L,\ 0)\ 清空栈}}
+\DoxyCodeLine{00650\ \textcolor{comment}{**\ -\/\ lua\_settop(L,\ -\/2)\ 删除栈顶元素}}
+\DoxyCodeLine{00651\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00652\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_adaa30f0d34786144c94644039d1d1b6e}{lua\_settop}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00653\ }
+\DoxyCodeLine{00654\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00655\ \textcolor{comment}{**\ 将指定索引的值的副本压入栈}}
+\DoxyCodeLine{00656\ \textcolor{comment}{**}}
+\DoxyCodeLine{00657\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 要复制的元素索引}}
+\DoxyCodeLine{00658\ \textcolor{comment}{**}}
+\DoxyCodeLine{00659\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00660\ \textcolor{comment}{**\ 栈:\ [a]\ [b]\ [c]}}
+\DoxyCodeLine{00661\ \textcolor{comment}{**\ lua\_pushvalue(L,\ 1)}}
+\DoxyCodeLine{00662\ \textcolor{comment}{**\ 结果:\ [a]\ [b]\ [c]\ [a]}}
+\DoxyCodeLine{00663\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00664\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a602f61a9b583d69dc1c72c8970bd65e8}{lua\_pushvalue}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00665\ }
+\DoxyCodeLine{00666\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00667\ \textcolor{comment}{**\ 旋转栈元素}}
+\DoxyCodeLine{00668\ \textcolor{comment}{**}}
+\DoxyCodeLine{00669\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00670\ \textcolor{comment}{**\ -\/\ int\ idx:\ 旋转的起始位置}}
+\DoxyCodeLine{00671\ \textcolor{comment}{**\ -\/\ int\ n:\ 旋转步数\ (正数向栈顶,负数向栈底)}}
+\DoxyCodeLine{00672\ \textcolor{comment}{**}}
+\DoxyCodeLine{00673\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00674\ \textcolor{comment}{**\ -\/\ 将\ [idx,\ top]\ 区间的元素旋转\ n\ 个位置}}
+\DoxyCodeLine{00675\ \textcolor{comment}{**\ -\/\ 正数:\ 底部元素移到顶部}}
+\DoxyCodeLine{00676\ \textcolor{comment}{**\ -\/\ 负数:\ 顶部元素移到底部}}
+\DoxyCodeLine{00677\ \textcolor{comment}{**}}
+\DoxyCodeLine{00678\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00679\ \textcolor{comment}{**\ 栈:\ [a]\ [b]\ [c]\ [d]}}
+\DoxyCodeLine{00680\ \textcolor{comment}{**\ lua\_rotate(L,\ 1,\ 2)}}
+\DoxyCodeLine{00681\ \textcolor{comment}{**\ 结果:\ [c]\ [d]\ [a]\ [b]}}
+\DoxyCodeLine{00682\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00683\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_af680e24129c0e021b4fbb7700cf185dc}{lua\_rotate}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00684\ }
+\DoxyCodeLine{00685\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00686\ \textcolor{comment}{**\ 复制元素}}
+\DoxyCodeLine{00687\ \textcolor{comment}{**}}
+\DoxyCodeLine{00688\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00689\ \textcolor{comment}{**\ -\/\ int\ fromidx:\ 源索引}}
+\DoxyCodeLine{00690\ \textcolor{comment}{**\ -\/\ int\ toidx:\ 目标索引}}
+\DoxyCodeLine{00691\ \textcolor{comment}{**}}
+\DoxyCodeLine{00692\ \textcolor{comment}{**\ 作用:\ 将\ fromidx\ 的值复制到\ toidx,不影响其他元素}}
+\DoxyCodeLine{00693\ \textcolor{comment}{**}}
+\DoxyCodeLine{00694\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00695\ \textcolor{comment}{**\ 栈:\ [a]\ [b]\ [c]}}
+\DoxyCodeLine{00696\ \textcolor{comment}{**\ lua\_copy(L,\ 1,\ 3)}}
+\DoxyCodeLine{00697\ \textcolor{comment}{**\ 结果:\ [a]\ [b]\ [a]}}
+\DoxyCodeLine{00698\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00699\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a111bd3fa34fe656f415edae5e343e13e}{lua\_copy}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ fromidx,\ \textcolor{keywordtype}{int}\ toidx);}
+\DoxyCodeLine{00700\ }
+\DoxyCodeLine{00701\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00702\ \textcolor{comment}{**\ 检查栈空间}}
+\DoxyCodeLine{00703\ \textcolor{comment}{**}}
+\DoxyCodeLine{00704\ \textcolor{comment}{**\ 参数:\ int\ n\ -\/\ 需要的额外栈位数}}
+\DoxyCodeLine{00705\ \textcolor{comment}{**}}
+\DoxyCodeLine{00706\ \textcolor{comment}{**\ 返回值:\ 1\ 表示成功,0\ 表示无法分配}}
+\DoxyCodeLine{00707\ \textcolor{comment}{**}}
+\DoxyCodeLine{00708\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00709\ \textcolor{comment}{**\ -\/\ Lua\ 保证至少有\ LUA\_MINSTACK\ (20)\ 个栈位}}
+\DoxyCodeLine{00710\ \textcolor{comment}{**\ -\/\ 如果需要更多,必须调用此函数}}
+\DoxyCodeLine{00711\ \textcolor{comment}{**\ -\/\ 失败可能是因为内存不足}}
+\DoxyCodeLine{00712\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00713\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a1d762b92d5d82d6fa9f54ccf5c89d6a2}{lua\_checkstack}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00714\ }
+\DoxyCodeLine{00715\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00716\ \textcolor{comment}{**\ 在两个状态机之间移动元素}}
+\DoxyCodeLine{00717\ \textcolor{comment}{**}}
+\DoxyCodeLine{00718\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00719\ \textcolor{comment}{**\ -\/\ lua\_State\ *from:\ 源状态机}}
+\DoxyCodeLine{00720\ \textcolor{comment}{**\ -\/\ lua\_State\ *to:\ 目标状态机}}
+\DoxyCodeLine{00721\ \textcolor{comment}{**\ -\/\ int\ n:\ 要移动的元素个数}}
+\DoxyCodeLine{00722\ \textcolor{comment}{**}}
+\DoxyCodeLine{00723\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00724\ \textcolor{comment}{**\ -\/\ 从\ from\ 的栈顶弹出\ n\ 个元素}}
+\DoxyCodeLine{00725\ \textcolor{comment}{**\ -\/\ 压入\ to\ 的栈顶}}
+\DoxyCodeLine{00726\ \textcolor{comment}{**\ -\/\ from\ 和\ to\ 必须属于同一个全局状态}}
+\DoxyCodeLine{00727\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00728\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_ae27bb8d0218710bbbfefc1f573839d6d}{lua\_xmove}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *from,\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *to,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00729\ }
+\DoxyCodeLine{00730\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00731\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00732\ \textcolor{comment}{**\ 访问函数\ (栈\ -\/>\ C)}}
+\DoxyCodeLine{00733\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00734\ \textcolor{comment}{**\ 这些函数从\ Lua\ 栈读取值到\ C}}
+\DoxyCodeLine{00735\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00736\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00737\ \textcolor{comment}{**\ access\ functions\ (stack\ -\/>\ C)}}
+\DoxyCodeLine{00738\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00740\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00741\ \textcolor{comment}{**\ 检查是否为数值}}
+\DoxyCodeLine{00742\ \textcolor{comment}{**}}
+\DoxyCodeLine{00743\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 栈索引}}
+\DoxyCodeLine{00744\ \textcolor{comment}{**}}
+\DoxyCodeLine{00745\ \textcolor{comment}{**\ 返回值:\ 1\ 表示是数值或可转换为数值的字符串,0\ 表示不是}}
+\DoxyCodeLine{00746\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00747\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a99451f234bf085c9c46c3d17a5aef905}{lua\_isnumber}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00748\ }
+\DoxyCodeLine{00749\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00750\ \textcolor{comment}{**\ 检查是否为字符串或数值\ (数值可以转为字符串)}}
+\DoxyCodeLine{00751\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00752\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a9f20233199a414b04c1c4b43f5d040f3}{lua\_isstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00753\ }
+\DoxyCodeLine{00754\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00755\ \textcolor{comment}{**\ 检查是否为\ C\ 函数}}
+\DoxyCodeLine{00756\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00757\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a3b922032c9fe2930399186a3647cc3ad}{lua\_iscfunction}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00758\ }
+\DoxyCodeLine{00759\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00760\ \textcolor{comment}{**\ 检查是否为整数}}
+\DoxyCodeLine{00761\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00762\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aba53e83eb1fff94b5ed96203bb52d8ae}{lua\_isinteger}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00763\ }
+\DoxyCodeLine{00764\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00765\ \textcolor{comment}{**\ 检查是否为用户数据\ (包括完整和轻量)}}
+\DoxyCodeLine{00766\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00767\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aa8a1dab86cfb4e0f9a4d1f699af0041b}{lua\_isuserdata}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00768\ }
+\DoxyCodeLine{00769\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00770\ \textcolor{comment}{**\ 获取类型}}
+\DoxyCodeLine{00771\ \textcolor{comment}{**}}
+\DoxyCodeLine{00772\ \textcolor{comment}{**\ 返回值:\ LUA\_TNIL,\ LUA\_TNUMBER\ 等类型常量}}
+\DoxyCodeLine{00773\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00774\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a652b273947f0656686f998d8e90cd3ea}{lua\_type}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00775\ }
+\DoxyCodeLine{00776\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00777\ \textcolor{comment}{**\ 获取类型名称}}
+\DoxyCodeLine{00778\ \textcolor{comment}{**}}
+\DoxyCodeLine{00779\ \textcolor{comment}{**\ 参数:\ int\ tp\ -\/\ 类型常量}}
+\DoxyCodeLine{00780\ \textcolor{comment}{**}}
+\DoxyCodeLine{00781\ \textcolor{comment}{**\ 返回值:\ 类型名字符串\ ("{}nil"{},\ "{}number"{},\ "{}string"{}\ 等)}}
+\DoxyCodeLine{00782\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00783\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_ade1fd7b7ed1bd88ecdffbc025a1eaebd}{lua\_typename}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ tp);}
+\DoxyCodeLine{00784\ }
+\DoxyCodeLine{00785\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00786\ \textcolor{comment}{**\ 转换为数值}}
+\DoxyCodeLine{00787\ \textcolor{comment}{**}}
+\DoxyCodeLine{00788\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00789\ \textcolor{comment}{**\ -\/\ int\ idx:\ 栈索引}}
+\DoxyCodeLine{00790\ \textcolor{comment}{**\ -\/\ int\ *isnum:\ 输出参数,如果非\ NULL,设置是否成功转换}}
+\DoxyCodeLine{00791\ \textcolor{comment}{**}}
+\DoxyCodeLine{00792\ \textcolor{comment}{**\ 返回值:\ 转换后的数值,失败返回\ 0}}
+\DoxyCodeLine{00793\ \textcolor{comment}{**}}
+\DoxyCodeLine{00794\ \textcolor{comment}{**\ 说明:\ 可以转换数值和数值字符串}}
+\DoxyCodeLine{00795\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00796\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}(\mbox{\hyperlink{lapi_8c_a375da41304604b0cba0b8c798499e673}{lua\_tonumberx}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{int}\ *isnum);}
+\DoxyCodeLine{00797\ }
+\DoxyCodeLine{00798\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00799\ \textcolor{comment}{**\ 转换为整数}}
+\DoxyCodeLine{00800\ \textcolor{comment}{**}}
+\DoxyCodeLine{00801\ \textcolor{comment}{**\ 类似\ lua\_tonumberx,但转换为整数类型}}
+\DoxyCodeLine{00802\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00803\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}(\mbox{\hyperlink{lapi_8c_af81c9a68425546e1f8c6354728c95170}{lua\_tointegerx}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{int}\ *isnum);}
+\DoxyCodeLine{00804\ }
+\DoxyCodeLine{00805\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00806\ \textcolor{comment}{**\ 转换为布尔值}}
+\DoxyCodeLine{00807\ \textcolor{comment}{**}}
+\DoxyCodeLine{00808\ \textcolor{comment}{**\ 返回值:\ 1\ (true)\ 或\ 0\ (false)}}
+\DoxyCodeLine{00809\ \textcolor{comment}{**}}
+\DoxyCodeLine{00810\ \textcolor{comment}{**\ 规则:}}
+\DoxyCodeLine{00811\ \textcolor{comment}{**\ -\/\ nil\ 和\ false\ 为\ false}}
+\DoxyCodeLine{00812\ \textcolor{comment}{**\ -\/\ 其他所有值\ (包括\ 0\ 和空字符串)\ 为\ true}}
+\DoxyCodeLine{00813\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00814\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a444aee9aa56b0b06175ee3c7bcf7927c}{lua\_toboolean}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00815\ }
+\DoxyCodeLine{00816\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00817\ \textcolor{comment}{**\ 转换为字符串}}
+\DoxyCodeLine{00818\ \textcolor{comment}{**}}
+\DoxyCodeLine{00819\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00820\ \textcolor{comment}{**\ -\/\ int\ idx:\ 栈索引}}
+\DoxyCodeLine{00821\ \textcolor{comment}{**\ -\/\ size\_t\ *len:\ 输出参数,字符串长度\ (可为\ NULL)}}
+\DoxyCodeLine{00822\ \textcolor{comment}{**}}
+\DoxyCodeLine{00823\ \textcolor{comment}{**\ 返回值:\ 字符串指针,失败返回\ NULL}}
+\DoxyCodeLine{00824\ \textcolor{comment}{**}}
+\DoxyCodeLine{00825\ \textcolor{comment}{**\ 注意:}}
+\DoxyCodeLine{00826\ \textcolor{comment}{**\ -\/\ 返回的指针由\ Lua\ 管理,不要\ free}}
+\DoxyCodeLine{00827\ \textcolor{comment}{**\ -\/\ 字符串可能包含\ '\(\backslash\)0',使用\ len\ 获取真实长度}}
+\DoxyCodeLine{00828\ \textcolor{comment}{**\ -\/\ 会修改栈上的值\ (转换为字符串)}}
+\DoxyCodeLine{00829\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00830\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a5fbc943e3486fad9672f9a74d7cb49b4}{lua\_tolstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{size\_t}\ *len);}
+\DoxyCodeLine{00831\ }
+\DoxyCodeLine{00832\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00833\ \textcolor{comment}{**\ 获取对象长度}}
+\DoxyCodeLine{00834\ \textcolor{comment}{**}}
+\DoxyCodeLine{00835\ \textcolor{comment}{**\ 返回值:}}
+\DoxyCodeLine{00836\ \textcolor{comment}{**\ -\/\ 字符串:\ 字节数}}
+\DoxyCodeLine{00837\ \textcolor{comment}{**\ -\/\ 表:\ 数组部分长度}}
+\DoxyCodeLine{00838\ \textcolor{comment}{**\ -\/\ 用户数据:\ 内存块大小}}
+\DoxyCodeLine{00839\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00840\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}}(\mbox{\hyperlink{lapi_8c_a161e2baf3d7a6a84499f6a9010cf12c8}{lua\_rawlen}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00841\ }
+\DoxyCodeLine{00842\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00843\ \textcolor{comment}{**\ 转换为\ C\ 函数}}
+\DoxyCodeLine{00844\ \textcolor{comment}{**}}
+\DoxyCodeLine{00845\ \textcolor{comment}{**\ 返回值:\ C\ 函数指针,如果不是\ C\ 函数返回\ NULL}}
+\DoxyCodeLine{00846\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00847\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}(\mbox{\hyperlink{lapi_8c_ae790897a3311d599299895612986d850}{lua\_tocfunction}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00848\ }
+\DoxyCodeLine{00849\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00850\ \textcolor{comment}{**\ 转换为用户数据}}
+\DoxyCodeLine{00851\ \textcolor{comment}{**}}
+\DoxyCodeLine{00852\ \textcolor{comment}{**\ 返回值:\ 用户数据的指针,失败返回\ NULL}}
+\DoxyCodeLine{00853\ \textcolor{comment}{**}}
+\DoxyCodeLine{00854\ \textcolor{comment}{**\ 说明:\ 可以获取完整用户数据或轻量用户数据}}
+\DoxyCodeLine{00855\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00856\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keywordtype}{void}\ *(\mbox{\hyperlink{lapi_8c_ac3856ea479475afddd0b2b85c6da116d}{lua\_touserdata}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00857\ }
+\DoxyCodeLine{00858\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00859\ \textcolor{comment}{**\ 转换为线程}}
+\DoxyCodeLine{00860\ \textcolor{comment}{**}}
+\DoxyCodeLine{00861\ \textcolor{comment}{**\ 返回值:\ lua\_State\ 指针,失败返回\ NULL}}
+\DoxyCodeLine{00862\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00863\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *(\mbox{\hyperlink{lapi_8c_a97794d731a3c99bbb3e46715a5746414}{lua\_tothread}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00864\ }
+\DoxyCodeLine{00865\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00866\ \textcolor{comment}{**\ 转换为指针}}
+\DoxyCodeLine{00867\ \textcolor{comment}{**}}
+\DoxyCodeLine{00868\ \textcolor{comment}{**\ 返回值:\ 表示对象的唯一指针}}
+\DoxyCodeLine{00869\ \textcolor{comment}{**}}
+\DoxyCodeLine{00870\ \textcolor{comment}{**\ 用途:\ 用于比较对象身份,不能解引用}}
+\DoxyCodeLine{00871\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00872\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *(\mbox{\hyperlink{lapi_8c_aa483452c9dfdce8ca4b5d211772abec7}{lua\_topointer}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00873\ }
+\DoxyCodeLine{00874\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00875\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00876\ \textcolor{comment}{**\ 比较和算术函数}}
+\DoxyCodeLine{00877\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00878\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00879\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00880\ \textcolor{comment}{**\ Comparison\ and\ arithmetic\ functions}}
+\DoxyCodeLine{00881\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00882\ }
+\DoxyCodeLine{00883\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00884\ \textcolor{comment}{**\ 算术操作符常量}}
+\DoxyCodeLine{00885\ \textcolor{comment}{**\ ORDER\ TM,\ ORDER\ OP\ 是内部注释,表示这些常量的顺序很重要}}
+\DoxyCodeLine{00886\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00887\ \textcolor{preprocessor}{\#define\ LUA\_OPADD\ 0\ }\textcolor{comment}{/*\ 加法:\ +\ */}\textcolor{preprocessor}{\ }\textcolor{comment}{/*\ ORDER\ TM,\ ORDER\ OP\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00888\ \textcolor{preprocessor}{\#define\ LUA\_OPSUB\ 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 减法:\ -\/\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00889\ \textcolor{preprocessor}{\#define\ LUA\_OPMUL\ 2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 乘法:\ *\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00890\ \textcolor{preprocessor}{\#define\ LUA\_OPMOD\ 3\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 取模:\ \%\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00891\ \textcolor{preprocessor}{\#define\ LUA\_OPPOW\ 4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 幂运算:\ \string^\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00892\ \textcolor{preprocessor}{\#define\ LUA\_OPDIV\ 5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 除法:\ /\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00893\ \textcolor{preprocessor}{\#define\ LUA\_OPIDIV\ 6\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 整除:\ //\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00894\ \textcolor{preprocessor}{\#define\ LUA\_OPBAND\ 7\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 按位与:\ \&\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00895\ \textcolor{preprocessor}{\#define\ LUA\_OPBOR\ 8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 按位或:\ |\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00896\ \textcolor{preprocessor}{\#define\ LUA\_OPBXOR\ 9\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 按位异或:\ \string~\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00897\ \textcolor{preprocessor}{\#define\ LUA\_OPSHL\ 10\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 左移:\ <<\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00898\ \textcolor{preprocessor}{\#define\ LUA\_OPSHR\ 11\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 右移:\ >>\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00899\ \textcolor{preprocessor}{\#define\ LUA\_OPUNM\ 12\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 取负:\ -\/\ (一元)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00900\ \textcolor{preprocessor}{\#define\ LUA\_OPBNOT\ 13\ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 按位非:\ \string~\ (一元)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00901\ }
+\DoxyCodeLine{00902\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00903\ \textcolor{comment}{**\ 执行算术运算}}
+\DoxyCodeLine{00904\ \textcolor{comment}{**}}
+\DoxyCodeLine{00905\ \textcolor{comment}{**\ 参数:\ int\ op\ -\/\ 操作符\ (LUA\_OPADD\ 等)}}
+\DoxyCodeLine{00906\ \textcolor{comment}{**}}
+\DoxyCodeLine{00907\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{00908\ \textcolor{comment}{**\ -\/\ 二元操作:\ 弹出两个操作数,压入结果}}
+\DoxyCodeLine{00909\ \textcolor{comment}{**\ -\/\ 一元操作:\ 弹出一个操作数,压入结果}}
+\DoxyCodeLine{00910\ \textcolor{comment}{**}}
+\DoxyCodeLine{00911\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{00912\ \textcolor{comment}{**\ 栈:\ [3]\ [4]}}
+\DoxyCodeLine{00913\ \textcolor{comment}{**\ lua\_arith(L,\ LUA\_OPADD)}}
+\DoxyCodeLine{00914\ \textcolor{comment}{**\ 结果:\ [7]}}
+\DoxyCodeLine{00915\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00916\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a08501a34884feca01759dec174d69c88}{lua\_arith}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ op);}
+\DoxyCodeLine{00917\ }
+\DoxyCodeLine{00918\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00919\ \textcolor{comment}{**\ 比较操作符常量}}
+\DoxyCodeLine{00920\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00921\ \textcolor{preprocessor}{\#define\ LUA\_OPEQ\ 0\ }\textcolor{comment}{/*\ 等于:\ ==\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00922\ \textcolor{preprocessor}{\#define\ LUA\_OPLT\ 1\ }\textcolor{comment}{/*\ 小于:\ <\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00923\ \textcolor{preprocessor}{\#define\ LUA\_OPLE\ 2\ }\textcolor{comment}{/*\ 小于等于:\ <=\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00924\ }
+\DoxyCodeLine{00925\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00926\ \textcolor{comment}{**\ 原始相等比较}}
+\DoxyCodeLine{00927\ \textcolor{comment}{**}}
+\DoxyCodeLine{00928\ \textcolor{comment}{**\ 参数:\ int\ idx1,\ int\ idx2\ -\/\ 要比较的两个索引}}
+\DoxyCodeLine{00929\ \textcolor{comment}{**}}
+\DoxyCodeLine{00930\ \textcolor{comment}{**\ 返回值:\ 1\ 表示相等,0\ 表示不等}}
+\DoxyCodeLine{00931\ \textcolor{comment}{**}}
+\DoxyCodeLine{00932\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00933\ \textcolor{comment}{**\ -\/\ 不调用元方法}}
+\DoxyCodeLine{00934\ \textcolor{comment}{**\ -\/\ 直接比较值}}
+\DoxyCodeLine{00935\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00936\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_ace66ea78ced7fda0b367f45d09d10d83}{lua\_rawequal}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx1,\ \textcolor{keywordtype}{int}\ idx2);}
+\DoxyCodeLine{00937\ }
+\DoxyCodeLine{00938\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00939\ \textcolor{comment}{**\ 比较两个值}}
+\DoxyCodeLine{00940\ \textcolor{comment}{**}}
+\DoxyCodeLine{00941\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00942\ \textcolor{comment}{**\ -\/\ int\ idx1,\ int\ idx2:\ 要比较的索引}}
+\DoxyCodeLine{00943\ \textcolor{comment}{**\ -\/\ int\ op:\ 比较操作符\ (LUA\_OPEQ,\ LUA\_OPLT,\ LUA\_OPLE)}}
+\DoxyCodeLine{00944\ \textcolor{comment}{**}}
+\DoxyCodeLine{00945\ \textcolor{comment}{**\ 返回值:\ 1\ 表示真,0\ 表示假}}
+\DoxyCodeLine{00946\ \textcolor{comment}{**}}
+\DoxyCodeLine{00947\ \textcolor{comment}{**\ 说明:\ 会调用元方法\ (\_\_eq,\ \_\_lt,\ \_\_le)}}
+\DoxyCodeLine{00948\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00949\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a5fbae51f515549d4657d0efc676defee}{lua\_compare}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx1,\ \textcolor{keywordtype}{int}\ idx2,\ \textcolor{keywordtype}{int}\ op);}
+\DoxyCodeLine{00950\ }
+\DoxyCodeLine{00951\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00952\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00953\ \textcolor{comment}{**\ 压栈函数\ (C\ -\/>\ 栈)}}
+\DoxyCodeLine{00954\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00955\ \textcolor{comment}{**\ 这些函数将\ C\ 值压入\ Lua\ 栈}}
+\DoxyCodeLine{00956\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00957\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00958\ \textcolor{comment}{**\ push\ functions\ (C\ -\/>\ stack)}}
+\DoxyCodeLine{00959\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00960\ }
+\DoxyCodeLine{00961\ \textcolor{comment}{/*\ 压入\ nil\ */}}
+\DoxyCodeLine{00962\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a1b4cd0d80f51e5545a97ca6c28c03c50}{lua\_pushnil}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00963\ }
+\DoxyCodeLine{00964\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00965\ \textcolor{comment}{**\ 压入数值}}
+\DoxyCodeLine{00966\ \textcolor{comment}{**\ 参数:\ lua\_Number\ n\ -\/\ 要压入的数值}}
+\DoxyCodeLine{00967\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00968\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a328625a03fbb5548f27b1af10f109f6a}{lua\_pushnumber}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ n);}
+\DoxyCodeLine{00969\ }
+\DoxyCodeLine{00970\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00971\ \textcolor{comment}{**\ 压入整数}}
+\DoxyCodeLine{00972\ \textcolor{comment}{**\ 参数:\ lua\_Integer\ n\ -\/\ 要压入的整数}}
+\DoxyCodeLine{00973\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00974\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_adcec46ff05dfee9a3c4c05828b40c213}{lua\_pushinteger}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{00975\ }
+\DoxyCodeLine{00976\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00977\ \textcolor{comment}{**\ 压入字符串}}
+\DoxyCodeLine{00978\ \textcolor{comment}{**}}
+\DoxyCodeLine{00979\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00980\ \textcolor{comment}{**\ -\/\ const\ char\ *s:\ 字符串指针}}
+\DoxyCodeLine{00981\ \textcolor{comment}{**\ -\/\ size\_t\ len:\ 字符串长度}}
+\DoxyCodeLine{00982\ \textcolor{comment}{**}}
+\DoxyCodeLine{00983\ \textcolor{comment}{**\ 返回值:\ 内部字符串的指针}}
+\DoxyCodeLine{00984\ \textcolor{comment}{**}}
+\DoxyCodeLine{00985\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00986\ \textcolor{comment}{**\ -\/\ Lua\ 会复制字符串}}
+\DoxyCodeLine{00987\ \textcolor{comment}{**\ -\/\ 可以包含\ '\(\backslash\)0'}}
+\DoxyCodeLine{00988\ \textcolor{comment}{**\ -\/\ 会进行字符串内化\ (相同字符串只存一份)}}
+\DoxyCodeLine{00989\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00990\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a01ac82fa494af5e7c3e10c87a8052cf7}{lua\_pushlstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{00991\ }
+\DoxyCodeLine{00992\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00993\ \textcolor{comment}{**\ 压入外部字符串}}
+\DoxyCodeLine{00994\ \textcolor{comment}{**}}
+\DoxyCodeLine{00995\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{00996\ \textcolor{comment}{**\ -\/\ const\ char\ *s:\ 字符串指针}}
+\DoxyCodeLine{00997\ \textcolor{comment}{**\ -\/\ size\_t\ len:\ 长度}}
+\DoxyCodeLine{00998\ \textcolor{comment}{**\ -\/\ lua\_Alloc\ falloc:\ 释放函数}}
+\DoxyCodeLine{00999\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{01000\ \textcolor{comment}{**}}
+\DoxyCodeLine{01001\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01002\ \textcolor{comment}{**\ -\/\ 用于避免复制大字符串}}
+\DoxyCodeLine{01003\ \textcolor{comment}{**\ -\/\ Lua\ 接管字符串所有权}}
+\DoxyCodeLine{01004\ \textcolor{comment}{**\ -\/\ 当不再需要时,调用\ falloc\ 释放}}
+\DoxyCodeLine{01005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01006\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a5a6198638e01544060fb7edb3f77ac0b}{lua\_pushexternalstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{size\_t}\ len,\ \mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\_Alloc}}\ falloc,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{01008\ }
+\DoxyCodeLine{01009\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01010\ \textcolor{comment}{**\ 压入\ C\ 字符串}}
+\DoxyCodeLine{01011\ \textcolor{comment}{**}}
+\DoxyCodeLine{01012\ \textcolor{comment}{**\ 参数:\ const\ char\ *s\ -\/\ 以\ '\(\backslash\)0'\ 结尾的\ C\ 字符串}}
+\DoxyCodeLine{01013\ \textcolor{comment}{**}}
+\DoxyCodeLine{01014\ \textcolor{comment}{**\ 返回值:\ 内部字符串指针}}
+\DoxyCodeLine{01015\ \textcolor{comment}{**}}
+\DoxyCodeLine{01016\ \textcolor{comment}{**\ 说明:\ 等价于\ lua\_pushlstring(L,\ s,\ strlen(s))}}
+\DoxyCodeLine{01017\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01018\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a6dd1a745d08c2dd96916ff0f2f1ca9ad}{lua\_pushstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s);}
+\DoxyCodeLine{01019\ }
+\DoxyCodeLine{01020\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01021\ \textcolor{comment}{**\ 压入格式化字符串\ (va\_list\ 版本)}}
+\DoxyCodeLine{01022\ \textcolor{comment}{**}}
+\DoxyCodeLine{01023\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01024\ \textcolor{comment}{**\ -\/\ const\ char\ *fmt:\ 格式字符串\ (类似\ printf)}}
+\DoxyCodeLine{01025\ \textcolor{comment}{**\ -\/\ va\_list\ argp:\ 参数列表}}
+\DoxyCodeLine{01026\ \textcolor{comment}{**}}
+\DoxyCodeLine{01027\ \textcolor{comment}{**\ 返回值:\ 格式化后的字符串指针}}
+\DoxyCodeLine{01028\ \textcolor{comment}{**}}
+\DoxyCodeLine{01029\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ 可变参数:}}
+\DoxyCodeLine{01030\ \textcolor{comment}{**\ va\_list\ 是\ stdarg.h\ 定义的类型,用于访问可变参数}}
+\DoxyCodeLine{01031\ \textcolor{comment}{**\ 配合\ va\_start,\ va\_arg,\ va\_end\ 使用}}
+\DoxyCodeLine{01032\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01033\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a7f9a9ebb64369312e088d83cc5e3ec05}{lua\_pushvfstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,}
+\DoxyCodeLine{01034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ argp);}
+\DoxyCodeLine{01035\ }
+\DoxyCodeLine{01036\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01037\ \textcolor{comment}{**\ 压入格式化字符串}}
+\DoxyCodeLine{01038\ \textcolor{comment}{**}}
+\DoxyCodeLine{01039\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01040\ \textcolor{comment}{**\ -\/\ const\ char\ *fmt:\ 格式字符串}}
+\DoxyCodeLine{01041\ \textcolor{comment}{**\ -\/\ ...:\ 可变参数}}
+\DoxyCodeLine{01042\ \textcolor{comment}{**}}
+\DoxyCodeLine{01043\ \textcolor{comment}{**\ 返回值:\ 格式化后的字符串指针}}
+\DoxyCodeLine{01044\ \textcolor{comment}{**}}
+\DoxyCodeLine{01045\ \textcolor{comment}{**\ 支持的格式:}}
+\DoxyCodeLine{01046\ \textcolor{comment}{**\ -\/\ \%s:\ 字符串}}
+\DoxyCodeLine{01047\ \textcolor{comment}{**\ -\/\ \%d:\ 整数}}
+\DoxyCodeLine{01048\ \textcolor{comment}{**\ -\/\ \%f:\ 浮点数}}
+\DoxyCodeLine{01049\ \textcolor{comment}{**\ -\/\ \%p:\ 指针}}
+\DoxyCodeLine{01050\ \textcolor{comment}{**\ -\/\ \%\%:\ 百分号}}
+\DoxyCodeLine{01051\ \textcolor{comment}{**}}
+\DoxyCodeLine{01052\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{01053\ \textcolor{comment}{**\ lua\_pushfstring(L,\ "{}x=\%d,\ y=\%d"{},\ 10,\ 20);}}
+\DoxyCodeLine{01054\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01055\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a35a21b17f4d19eeaf59630d1dc873b1a}{lua\_pushfstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,\ ...);}
+\DoxyCodeLine{01056\ }
+\DoxyCodeLine{01057\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01058\ \textcolor{comment}{**\ 压入\ C\ 闭包}}
+\DoxyCodeLine{01059\ \textcolor{comment}{**}}
+\DoxyCodeLine{01060\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01061\ \textcolor{comment}{**\ -\/\ lua\_CFunction\ fn:\ C\ 函数}}
+\DoxyCodeLine{01062\ \textcolor{comment}{**\ -\/\ int\ n:\ upvalue\ 个数}}
+\DoxyCodeLine{01063\ \textcolor{comment}{**}}
+\DoxyCodeLine{01064\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01065\ \textcolor{comment}{**\ -\/\ 从栈顶弹出\ n\ 个值作为\ upvalue}}
+\DoxyCodeLine{01066\ \textcolor{comment}{**\ -\/\ 创建闭包并压入栈}}
+\DoxyCodeLine{01067\ \textcolor{comment}{**\ -\/\ upvalue\ 是函数的私有数据}}
+\DoxyCodeLine{01068\ \textcolor{comment}{**}}
+\DoxyCodeLine{01069\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{01070\ \textcolor{comment}{**\ lua\_pushinteger(L,\ 42);\ \ //\ upvalue}}
+\DoxyCodeLine{01071\ \textcolor{comment}{**\ lua\_pushcclosure(L,\ my\_func,\ 1);}}
+\DoxyCodeLine{01072\ \textcolor{comment}{**\ //\ my\_func\ 可以通过\ lua\_upvalueindex(1)\ 访问\ 42}}
+\DoxyCodeLine{01073\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01074\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a142802b91cdd22516b54599f51e101e4}{lua\_pushcclosure}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}\ fn,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{01075\ }
+\DoxyCodeLine{01076\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01077\ \textcolor{comment}{**\ 压入布尔值}}
+\DoxyCodeLine{01078\ \textcolor{comment}{**}}
+\DoxyCodeLine{01079\ \textcolor{comment}{**\ 参数:\ int\ b\ -\/\ 0\ 表示\ false,非\ 0\ 表示\ true}}
+\DoxyCodeLine{01080\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01081\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a56bbb7479265e38da2e2596e6ec25faa}{lua\_pushboolean}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ b);}
+\DoxyCodeLine{01082\ }
+\DoxyCodeLine{01083\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01084\ \textcolor{comment}{**\ 压入轻量用户数据}}
+\DoxyCodeLine{01085\ \textcolor{comment}{**}}
+\DoxyCodeLine{01086\ \textcolor{comment}{**\ 参数:\ void\ *p\ -\/\ C\ 指针}}
+\DoxyCodeLine{01087\ \textcolor{comment}{**}}
+\DoxyCodeLine{01088\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01089\ \textcolor{comment}{**\ -\/\ 就是一个\ C\ 指针,不受\ GC\ 管理}}
+\DoxyCodeLine{01090\ \textcolor{comment}{**\ -\/\ 没有元表}}
+\DoxyCodeLine{01091\ \textcolor{comment}{**\ -\/\ 用于传递\ C\ 数据结构的引用}}
+\DoxyCodeLine{01092\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01093\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a85e3e3d32b068aef62426828a104b561}{lua\_pushlightuserdata}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{void}\ *p);}
+\DoxyCodeLine{01094\ }
+\DoxyCodeLine{01095\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01096\ \textcolor{comment}{**\ 压入当前线程}}
+\DoxyCodeLine{01097\ \textcolor{comment}{**}}
+\DoxyCodeLine{01098\ \textcolor{comment}{**\ 返回值:\ 1\ 表示这是主线程,0\ 表示不是}}
+\DoxyCodeLine{01099\ \textcolor{comment}{**}}
+\DoxyCodeLine{01100\ \textcolor{comment}{**\ 作用:\ 将线程自身压入栈}}
+\DoxyCodeLine{01101\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01102\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a4175aeea9aa6dbf096ecfca7b190fa4a}{lua\_pushthread}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{01103\ }
+\DoxyCodeLine{01104\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01105\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01106\ \textcolor{comment}{**\ 获取函数\ (Lua\ -\/>\ 栈)}}
+\DoxyCodeLine{01107\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01108\ \textcolor{comment}{**\ 这些函数从\ Lua\ 对象获取值并压入栈}}
+\DoxyCodeLine{01109\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01110\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01111\ \textcolor{comment}{**\ get\ functions\ (Lua\ -\/>\ stack)}}
+\DoxyCodeLine{01112\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01113\ }
+\DoxyCodeLine{01114\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01115\ \textcolor{comment}{**\ 获取全局变量}}
+\DoxyCodeLine{01116\ \textcolor{comment}{**}}
+\DoxyCodeLine{01117\ \textcolor{comment}{**\ 参数:\ const\ char\ *name\ -\/\ 变量名}}
+\DoxyCodeLine{01118\ \textcolor{comment}{**}}
+\DoxyCodeLine{01119\ \textcolor{comment}{**\ 返回值:\ 获取值的类型}}
+\DoxyCodeLine{01120\ \textcolor{comment}{**}}
+\DoxyCodeLine{01121\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01122\ \textcolor{comment}{**\ -\/\ 从全局表获取\ name\ 对应的值}}
+\DoxyCodeLine{01123\ \textcolor{comment}{**\ -\/\ 将值压入栈顶}}
+\DoxyCodeLine{01124\ \textcolor{comment}{**}}
+\DoxyCodeLine{01125\ \textcolor{comment}{**\ 等价于\ Lua\ 代码:\ push(\_G[name])}}
+\DoxyCodeLine{01126\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01127\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a8185a9c46d5930205f95beee4991e9f0}{lua\_getglobal}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_a2978ab7f2ade479a003beb16d3b7a993}{name}});}
+\DoxyCodeLine{01128\ }
+\DoxyCodeLine{01129\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01130\ \textcolor{comment}{**\ 获取表字段}}
+\DoxyCodeLine{01131\ \textcolor{comment}{**}}
+\DoxyCodeLine{01132\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 表的栈索引}}
+\DoxyCodeLine{01133\ \textcolor{comment}{**}}
+\DoxyCodeLine{01134\ \textcolor{comment}{**\ 返回值:\ 获取值的类型}}
+\DoxyCodeLine{01135\ \textcolor{comment}{**}}
+\DoxyCodeLine{01136\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01137\ \textcolor{comment}{**\ -\/\ 从栈顶弹出键}}
+\DoxyCodeLine{01138\ \textcolor{comment}{**\ -\/\ 从\ idx\ 位置的表获取对应值}}
+\DoxyCodeLine{01139\ \textcolor{comment}{**\ -\/\ 将值压入栈顶}}
+\DoxyCodeLine{01140\ \textcolor{comment}{**}}
+\DoxyCodeLine{01141\ \textcolor{comment}{**\ 等价于\ Lua\ 代码:}}
+\DoxyCodeLine{01142\ \textcolor{comment}{**\ key\ =\ pop()}}
+\DoxyCodeLine{01143\ \textcolor{comment}{**\ push(table[key])}}
+\DoxyCodeLine{01144\ \textcolor{comment}{**}}
+\DoxyCodeLine{01145\ \textcolor{comment}{**\ 注意:\ 会调用\ \_\_index\ 元方法}}
+\DoxyCodeLine{01146\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01147\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aa572dbc6e86f796a3e82ffcae4478aeb}{lua\_gettable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01148\ }
+\DoxyCodeLine{01149\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01150\ \textcolor{comment}{**\ 获取表字段\ (字符串键)}}
+\DoxyCodeLine{01151\ \textcolor{comment}{**}}
+\DoxyCodeLine{01152\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01153\ \textcolor{comment}{**\ -\/\ int\ idx:\ 表的索引}}
+\DoxyCodeLine{01154\ \textcolor{comment}{**\ -\/\ const\ char\ *k:\ 字段名}}
+\DoxyCodeLine{01155\ \textcolor{comment}{**}}
+\DoxyCodeLine{01156\ \textcolor{comment}{**\ 返回值:\ 获取值的类型}}
+\DoxyCodeLine{01157\ \textcolor{comment}{**}}
+\DoxyCodeLine{01158\ \textcolor{comment}{**\ 等价于:\ push(table[k])}}
+\DoxyCodeLine{01159\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01160\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a8b47f1b5685c3f8018ba926abb99af24}{lua\_getfield}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *k);}
+\DoxyCodeLine{01161\ }
+\DoxyCodeLine{01162\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01163\ \textcolor{comment}{**\ 获取表字段\ (整数键)}}
+\DoxyCodeLine{01164\ \textcolor{comment}{**}}
+\DoxyCodeLine{01165\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01166\ \textcolor{comment}{**\ -\/\ int\ idx:\ 表的索引}}
+\DoxyCodeLine{01167\ \textcolor{comment}{**\ -\/\ lua\_Integer\ n:\ 整数键}}
+\DoxyCodeLine{01168\ \textcolor{comment}{**}}
+\DoxyCodeLine{01169\ \textcolor{comment}{**\ 返回值:\ 获取值的类型}}
+\DoxyCodeLine{01170\ \textcolor{comment}{**}}
+\DoxyCodeLine{01171\ \textcolor{comment}{**\ 等价于:\ push(table[n])}}
+\DoxyCodeLine{01172\ \textcolor{comment}{**}}
+\DoxyCodeLine{01173\ \textcolor{comment}{**\ 用途:\ 访问数组元素}}
+\DoxyCodeLine{01174\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01175\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a631ebda324b6a0f382ab6b9314917384}{lua\_geti}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{01176\ }
+\DoxyCodeLine{01177\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01178\ \textcolor{comment}{**\ 原始获取\ (不调用元方法)}}
+\DoxyCodeLine{01179\ \textcolor{comment}{**}}
+\DoxyCodeLine{01180\ \textcolor{comment}{**\ 类似\ lua\_gettable,但不触发\ \_\_index}}
+\DoxyCodeLine{01181\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01182\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a52944e714d1c64bda7b83f511c14b2d3}{lua\_rawget}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01183\ }
+\DoxyCodeLine{01184\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01185\ \textcolor{comment}{**\ 原始获取\ (整数键)}}
+\DoxyCodeLine{01186\ \textcolor{comment}{**}}
+\DoxyCodeLine{01187\ \textcolor{comment}{**\ 类似\ lua\_geti,但不触发\ \_\_index}}
+\DoxyCodeLine{01188\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01189\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_af8e4dc545cc83927d901d2f242489320}{lua\_rawgeti}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{01190\ }
+\DoxyCodeLine{01191\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01192\ \textcolor{comment}{**\ 原始获取\ (指针键)}}
+\DoxyCodeLine{01193\ \textcolor{comment}{**}}
+\DoxyCodeLine{01194\ \textcolor{comment}{**\ 参数:\ const\ void\ *p\ -\/\ 用作键的指针}}
+\DoxyCodeLine{01195\ \textcolor{comment}{**}}
+\DoxyCodeLine{01196\ \textcolor{comment}{**\ 说明:\ 使用轻量用户数据作为键}}
+\DoxyCodeLine{01197\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01198\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_acf10870c7165e0e440eb14827a52de93}{lua\_rawgetp}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *p);}
+\DoxyCodeLine{01199\ }
+\DoxyCodeLine{01200\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01201\ \textcolor{comment}{**\ 创建新表}}
+\DoxyCodeLine{01202\ \textcolor{comment}{**}}
+\DoxyCodeLine{01203\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01204\ \textcolor{comment}{**\ -\/\ int\ narr:\ 数组部分的预分配大小}}
+\DoxyCodeLine{01205\ \textcolor{comment}{**\ -\/\ int\ nrec:\ 哈希部分的预分配大小}}
+\DoxyCodeLine{01206\ \textcolor{comment}{**}}
+\DoxyCodeLine{01207\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01208\ \textcolor{comment}{**\ -\/\ 创建空表并压入栈}}
+\DoxyCodeLine{01209\ \textcolor{comment}{**\ -\/\ 预分配可以提高性能,但不是必需的}}
+\DoxyCodeLine{01210\ \textcolor{comment}{**}}
+\DoxyCodeLine{01211\ \textcolor{comment}{**\ 性能优化:}}
+\DoxyCodeLine{01212\ \textcolor{comment}{**\ 如果知道表的大小,预分配可以避免多次重新分配}}
+\DoxyCodeLine{01213\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01214\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a7f93e3baf3101cad59ec61b7744a55d8}{lua\_createtable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ narr,\ \textcolor{keywordtype}{int}\ nrec);}
+\DoxyCodeLine{01215\ }
+\DoxyCodeLine{01216\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01217\ \textcolor{comment}{**\ 创建新的完整用户数据}}
+\DoxyCodeLine{01218\ \textcolor{comment}{**}}
+\DoxyCodeLine{01219\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01220\ \textcolor{comment}{**\ -\/\ size\_t\ sz:\ 内存块大小}}
+\DoxyCodeLine{01221\ \textcolor{comment}{**\ -\/\ int\ nuvalue:\ 关联用户值的个数}}
+\DoxyCodeLine{01222\ \textcolor{comment}{**}}
+\DoxyCodeLine{01223\ \textcolor{comment}{**\ 返回值:\ 用户数据的指针}}
+\DoxyCodeLine{01224\ \textcolor{comment}{**}}
+\DoxyCodeLine{01225\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01226\ \textcolor{comment}{**\ -\/\ 分配\ sz\ 字节内存}}
+\DoxyCodeLine{01227\ \textcolor{comment}{**\ -\/\ 创建用户数据对象并压入栈}}
+\DoxyCodeLine{01228\ \textcolor{comment}{**\ -\/\ 可以设置元表和用户值}}
+\DoxyCodeLine{01229\ \textcolor{comment}{**\ -\/\ 内存由\ Lua\ GC\ 管理}}
+\DoxyCodeLine{01230\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01231\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keywordtype}{void}\ *(\mbox{\hyperlink{lapi_8c_a5782ce3bf3156b814716650f110530a3}{lua\_newuserdatauv}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{size\_t}\ sz,\ \textcolor{keywordtype}{int}\ nuvalue);}
+\DoxyCodeLine{01232\ }
+\DoxyCodeLine{01233\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01234\ \textcolor{comment}{**\ 获取元表}}
+\DoxyCodeLine{01235\ \textcolor{comment}{**}}
+\DoxyCodeLine{01236\ \textcolor{comment}{**\ 参数:\ int\ objindex\ -\/\ 对象的索引}}
+\DoxyCodeLine{01237\ \textcolor{comment}{**}}
+\DoxyCodeLine{01238\ \textcolor{comment}{**\ 返回值:\ 1\ 表示有元表,0\ 表示没有}}
+\DoxyCodeLine{01239\ \textcolor{comment}{**}}
+\DoxyCodeLine{01240\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01241\ \textcolor{comment}{**\ -\/\ 如果对象有元表,压入元表并返回\ 1}}
+\DoxyCodeLine{01242\ \textcolor{comment}{**\ -\/\ 否则不压入任何东西并返回\ 0}}
+\DoxyCodeLine{01243\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01244\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a4caa9ca5e47a30bd45e33d83bf2d6d6e}{lua\_getmetatable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ objindex);}
+\DoxyCodeLine{01245\ }
+\DoxyCodeLine{01246\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01247\ \textcolor{comment}{**\ 获取用户数据的用户值}}
+\DoxyCodeLine{01248\ \textcolor{comment}{**}}
+\DoxyCodeLine{01249\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01250\ \textcolor{comment}{**\ -\/\ int\ idx:\ 用户数据的索引}}
+\DoxyCodeLine{01251\ \textcolor{comment}{**\ -\/\ int\ n:\ 用户值的索引\ (从\ 1\ 开始)}}
+\DoxyCodeLine{01252\ \textcolor{comment}{**}}
+\DoxyCodeLine{01253\ \textcolor{comment}{**\ 返回值:\ 用户值的类型}}
+\DoxyCodeLine{01254\ \textcolor{comment}{**}}
+\DoxyCodeLine{01255\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01256\ \textcolor{comment}{**\ -\/\ 用户值是与用户数据关联的\ Lua\ 值}}
+\DoxyCodeLine{01257\ \textcolor{comment}{**\ -\/\ 可以用于存储额外的\ Lua\ 对象}}
+\DoxyCodeLine{01258\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01259\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a57c21a629f94ee0acc21a25d83bfaeba}{lua\_getiuservalue}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{01260\ }
+\DoxyCodeLine{01261\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01262\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01263\ \textcolor{comment}{**\ 设置函数\ (栈\ -\/>\ Lua)}}
+\DoxyCodeLine{01264\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01265\ \textcolor{comment}{**\ 这些函数将栈顶的值设置到\ Lua\ 对象}}
+\DoxyCodeLine{01266\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01267\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01268\ \textcolor{comment}{**\ set\ functions\ (stack\ -\/>\ Lua)}}
+\DoxyCodeLine{01269\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01270\ }
+\DoxyCodeLine{01271\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01272\ \textcolor{comment}{**\ 设置全局变量}}
+\DoxyCodeLine{01273\ \textcolor{comment}{**}}
+\DoxyCodeLine{01274\ \textcolor{comment}{**\ 参数:\ const\ char\ *name\ -\/\ 变量名}}
+\DoxyCodeLine{01275\ \textcolor{comment}{**}}
+\DoxyCodeLine{01276\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01277\ \textcolor{comment}{**\ -\/\ 从栈顶弹出值}}
+\DoxyCodeLine{01278\ \textcolor{comment}{**\ -\/\ 设置到全局表}}
+\DoxyCodeLine{01279\ \textcolor{comment}{**}}
+\DoxyCodeLine{01280\ \textcolor{comment}{**\ 等价于\ Lua\ 代码:}}
+\DoxyCodeLine{01281\ \textcolor{comment}{**\ \_G[name]\ =\ pop()}}
+\DoxyCodeLine{01282\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01283\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_aecf388efaede9d97581335998dfa243b}{lua\_setglobal}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_a2978ab7f2ade479a003beb16d3b7a993}{name}});}
+\DoxyCodeLine{01284\ }
+\DoxyCodeLine{01285\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01286\ \textcolor{comment}{**\ 设置表字段}}
+\DoxyCodeLine{01287\ \textcolor{comment}{**}}
+\DoxyCodeLine{01288\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 表的索引}}
+\DoxyCodeLine{01289\ \textcolor{comment}{**}}
+\DoxyCodeLine{01290\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01291\ \textcolor{comment}{**\ -\/\ 从栈顶弹出值\ (value)}}
+\DoxyCodeLine{01292\ \textcolor{comment}{**\ -\/\ 从栈顶弹出键\ (key)}}
+\DoxyCodeLine{01293\ \textcolor{comment}{**\ -\/\ table[key]\ =\ value}}
+\DoxyCodeLine{01294\ \textcolor{comment}{**}}
+\DoxyCodeLine{01295\ \textcolor{comment}{**\ 注意:\ 会调用\ \_\_newindex\ 元方法}}
+\DoxyCodeLine{01296\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01297\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a4ca492cf3d2194aec9a6292708bf66c8}{lua\_settable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01298\ }
+\DoxyCodeLine{01299\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01300\ \textcolor{comment}{**\ 设置表字段\ (字符串键)}}
+\DoxyCodeLine{01301\ \textcolor{comment}{**}}
+\DoxyCodeLine{01302\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01303\ \textcolor{comment}{**\ -\/\ int\ idx:\ 表的索引}}
+\DoxyCodeLine{01304\ \textcolor{comment}{**\ -\/\ const\ char\ *k:\ 字段名}}
+\DoxyCodeLine{01305\ \textcolor{comment}{**}}
+\DoxyCodeLine{01306\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01307\ \textcolor{comment}{**\ -\/\ 从栈顶弹出值}}
+\DoxyCodeLine{01308\ \textcolor{comment}{**\ -\/\ table[k]\ =\ value}}
+\DoxyCodeLine{01309\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01310\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a3f2f542ee6728d82e51b1c302f9606df}{lua\_setfield}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *k);}
+\DoxyCodeLine{01311\ }
+\DoxyCodeLine{01312\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01313\ \textcolor{comment}{**\ 设置表字段\ (整数键)}}
+\DoxyCodeLine{01314\ \textcolor{comment}{**}}
+\DoxyCodeLine{01315\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01316\ \textcolor{comment}{**\ -\/\ int\ idx:\ 表的索引}}
+\DoxyCodeLine{01317\ \textcolor{comment}{**\ -\/\ lua\_Integer\ n:\ 整数键}}
+\DoxyCodeLine{01318\ \textcolor{comment}{**}}
+\DoxyCodeLine{01319\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01320\ \textcolor{comment}{**\ -\/\ 从栈顶弹出值}}
+\DoxyCodeLine{01321\ \textcolor{comment}{**\ -\/\ table[n]\ =\ value}}
+\DoxyCodeLine{01322\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01323\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a3f995c6cbc03d4cdebb2a6fc6fa11e59}{lua\_seti}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{01324\ }
+\DoxyCodeLine{01325\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01326\ \textcolor{comment}{**\ 原始设置\ (不调用元方法)}}
+\DoxyCodeLine{01327\ \textcolor{comment}{**}}
+\DoxyCodeLine{01328\ \textcolor{comment}{**\ 类似\ lua\_settable,但不触发\ \_\_newindex}}
+\DoxyCodeLine{01329\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01330\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_afb2d27f421677ef40425f9054ae216a7}{lua\_rawset}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01331\ }
+\DoxyCodeLine{01332\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01333\ \textcolor{comment}{**\ 原始设置\ (整数键)}}
+\DoxyCodeLine{01334\ \textcolor{comment}{**}}
+\DoxyCodeLine{01335\ \textcolor{comment}{**\ 类似\ lua\_seti,但不触发\ \_\_newindex}}
+\DoxyCodeLine{01336\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01337\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a757fd16e7e09280e2d4e4f9f77ba1099}{lua\_rawseti}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{01338\ }
+\DoxyCodeLine{01339\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01340\ \textcolor{comment}{**\ 原始设置\ (指针键)}}
+\DoxyCodeLine{01341\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01342\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_aef5ff7d32a6e275fa0b8305f013bee9d}{lua\_rawsetp}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *p);}
+\DoxyCodeLine{01343\ }
+\DoxyCodeLine{01344\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01345\ \textcolor{comment}{**\ 设置元表}}
+\DoxyCodeLine{01346\ \textcolor{comment}{**}}
+\DoxyCodeLine{01347\ \textcolor{comment}{**\ 参数:\ int\ objindex\ -\/\ 对象的索引}}
+\DoxyCodeLine{01348\ \textcolor{comment}{**}}
+\DoxyCodeLine{01349\ \textcolor{comment}{**\ 返回值:\ 1\ 表示成功,0\ 表示失败}}
+\DoxyCodeLine{01350\ \textcolor{comment}{**}}
+\DoxyCodeLine{01351\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01352\ \textcolor{comment}{**\ -\/\ 从栈顶弹出表}}
+\DoxyCodeLine{01353\ \textcolor{comment}{**\ -\/\ 设置为对象的元表}}
+\DoxyCodeLine{01354\ \textcolor{comment}{**}}
+\DoxyCodeLine{01355\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01356\ \textcolor{comment}{**\ -\/\ 只有表和完整用户数据可以有独立的元表}}
+\DoxyCodeLine{01357\ \textcolor{comment}{**\ -\/\ 其他类型共享每个类型的元表}}
+\DoxyCodeLine{01358\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01359\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a15719ea4119bdf5b3f2a406534431a7e}{lua\_setmetatable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ objindex);}
+\DoxyCodeLine{01360\ }
+\DoxyCodeLine{01361\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01362\ \textcolor{comment}{**\ 设置用户数据的用户值}}
+\DoxyCodeLine{01363\ \textcolor{comment}{**}}
+\DoxyCodeLine{01364\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01365\ \textcolor{comment}{**\ -\/\ int\ idx:\ 用户数据的索引}}
+\DoxyCodeLine{01366\ \textcolor{comment}{**\ -\/\ int\ n:\ 用户值的索引}}
+\DoxyCodeLine{01367\ \textcolor{comment}{**}}
+\DoxyCodeLine{01368\ \textcolor{comment}{**\ 返回值:\ 1\ 表示成功,0\ 表示失败}}
+\DoxyCodeLine{01369\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01370\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a7383d0f43ccf69b414217a32d3947a49}{lua\_setiuservalue}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{01371\ }
+\DoxyCodeLine{01372\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01373\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01374\ \textcolor{comment}{**\ 加载和调用函数}}
+\DoxyCodeLine{01375\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01376\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01377\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01378\ \textcolor{comment}{**\ 'load'\ and\ 'call'\ functions\ (load\ and\ run\ Lua\ code)}}
+\DoxyCodeLine{01379\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01380\ }
+\DoxyCodeLine{01381\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01382\ \textcolor{comment}{**\ 调用函数\ (带延续)}}
+\DoxyCodeLine{01383\ \textcolor{comment}{**}}
+\DoxyCodeLine{01384\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01385\ \textcolor{comment}{**\ -\/\ int\ nargs:\ 参数个数}}
+\DoxyCodeLine{01386\ \textcolor{comment}{**\ -\/\ int\ nresults:\ 期望的返回值个数\ (LUA\_MULTRET\ 表示所有)}}
+\DoxyCodeLine{01387\ \textcolor{comment}{**\ -\/\ lua\_KContext\ ctx:\ 延续上下文}}
+\DoxyCodeLine{01388\ \textcolor{comment}{**\ -\/\ lua\_KFunction\ k:\ 延续函数}}
+\DoxyCodeLine{01389\ \textcolor{comment}{**}}
+\DoxyCodeLine{01390\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01391\ \textcolor{comment}{**\ -\/\ 从栈上弹出函数和参数}}
+\DoxyCodeLine{01392\ \textcolor{comment}{**\ -\/\ 调用函数}}
+\DoxyCodeLine{01393\ \textcolor{comment}{**\ -\/\ 将结果压入栈}}
+\DoxyCodeLine{01394\ \textcolor{comment}{**}}
+\DoxyCodeLine{01395\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{01396\ \textcolor{comment}{**\ lua\_getglobal(L,\ "{}print"{});\ \ //\ 函数}}
+\DoxyCodeLine{01397\ \textcolor{comment}{**\ lua\_pushstring(L,\ "{}hello"{});\ //\ 参数}}
+\DoxyCodeLine{01398\ \textcolor{comment}{**\ lua\_call(L,\ 1,\ 0);\ \ \ \ \ \ \ \ \ \ //\ 1\ 个参数,0\ 个返回值}}
+\DoxyCodeLine{01399\ \textcolor{comment}{**}}
+\DoxyCodeLine{01400\ \textcolor{comment}{**\ 注意:\ 如果发生错误,会抛出异常,不返回}}
+\DoxyCodeLine{01401\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01402\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_ac5fef99e413a94e396b70b8263704ad3}{lua\_callk}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ nargs,\ \textcolor{keywordtype}{int}\ nresults,}
+\DoxyCodeLine{01403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}}\ ctx,\ \mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\_KFunction}}\ k);}
+\DoxyCodeLine{01404\ }
+\DoxyCodeLine{01405\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01406\ \textcolor{comment}{**\ 调用函数的宏版本}}
+\DoxyCodeLine{01407\ \textcolor{comment}{**}}
+\DoxyCodeLine{01408\ \textcolor{comment}{**\ 这是最常用的调用方式,不支持延续}}
+\DoxyCodeLine{01409\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01410\ \textcolor{preprocessor}{\#define\ lua\_call(L,\ n,\ r)\ lua\_callk(L,\ (n),\ (r),\ 0,\ NULL)}}
+\DoxyCodeLine{01411\ }
+\DoxyCodeLine{01412\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01413\ \textcolor{comment}{**\ 保护模式调用\ (带延续)}}
+\DoxyCodeLine{01414\ \textcolor{comment}{**}}
+\DoxyCodeLine{01415\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01416\ \textcolor{comment}{**\ -\/\ int\ nargs:\ 参数个数}}
+\DoxyCodeLine{01417\ \textcolor{comment}{**\ -\/\ int\ nresults:\ 期望的返回值个数}}
+\DoxyCodeLine{01418\ \textcolor{comment}{**\ -\/\ int\ errfunc:\ 错误处理函数的索引\ (0\ 表示无)}}
+\DoxyCodeLine{01419\ \textcolor{comment}{**\ -\/\ lua\_KContext\ ctx:\ 延续上下文}}
+\DoxyCodeLine{01420\ \textcolor{comment}{**\ -\/\ lua\_KFunction\ k:\ 延续函数}}
+\DoxyCodeLine{01421\ \textcolor{comment}{**}}
+\DoxyCodeLine{01422\ \textcolor{comment}{**\ 返回值:}}
+\DoxyCodeLine{01423\ \textcolor{comment}{**\ -\/\ LUA\_OK:\ 成功}}
+\DoxyCodeLine{01424\ \textcolor{comment}{**\ -\/\ LUA\_ERRRUN:\ 运行时错误}}
+\DoxyCodeLine{01425\ \textcolor{comment}{**\ -\/\ LUA\_ERRMEM:\ 内存错误}}
+\DoxyCodeLine{01426\ \textcolor{comment}{**\ -\/\ LUA\_ERRERR:\ 错误处理函数出错}}
+\DoxyCodeLine{01427\ \textcolor{comment}{**}}
+\DoxyCodeLine{01428\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01429\ \textcolor{comment}{**\ -\/\ 类似\ lua\_call,但捕获错误而不是抛出}}
+\DoxyCodeLine{01430\ \textcolor{comment}{**\ -\/\ 如果有\ errfunc,发生错误时调用它}}
+\DoxyCodeLine{01431\ \textcolor{comment}{**\ -\/\ 错误对象在栈顶}}
+\DoxyCodeLine{01432\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01433\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a624df4cb2312b762c4fb528ecc889385}{lua\_pcallk}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ nargs,\ \textcolor{keywordtype}{int}\ nresults,\ \textcolor{keywordtype}{int}\ errfunc,}
+\DoxyCodeLine{01434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}}\ ctx,\ \mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\_KFunction}}\ k);}
+\DoxyCodeLine{01435\ }
+\DoxyCodeLine{01436\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01437\ \textcolor{comment}{**\ 保护模式调用的宏版本}}
+\DoxyCodeLine{01438\ \textcolor{comment}{**}}
+\DoxyCodeLine{01439\ \textcolor{comment}{**\ 这是最常用的保护调用方式}}
+\DoxyCodeLine{01440\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01441\ \textcolor{preprocessor}{\#define\ lua\_pcall(L,\ n,\ r,\ f)\ lua\_pcallk(L,\ (n),\ (r),\ (f),\ 0,\ NULL)}}
+\DoxyCodeLine{01442\ }
+\DoxyCodeLine{01443\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01444\ \textcolor{comment}{**\ 加载\ Lua\ 代码块}}
+\DoxyCodeLine{01445\ \textcolor{comment}{**}}
+\DoxyCodeLine{01446\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01447\ \textcolor{comment}{**\ -\/\ lua\_Reader\ reader:\ 读取函数}}
+\DoxyCodeLine{01448\ \textcolor{comment}{**\ -\/\ void\ *dt:\ 传递给\ reader\ 的数据}}
+\DoxyCodeLine{01449\ \textcolor{comment}{**\ -\/\ const\ char\ *chunkname:\ 代码块名称\ (用于错误消息)}}
+\DoxyCodeLine{01450\ \textcolor{comment}{**\ -\/\ const\ char\ *mode:\ "{}b"{}\ (二进制),\ "{}t"{}\ (文本),\ 或\ "{}bt"{}\ (两者)}}
+\DoxyCodeLine{01451\ \textcolor{comment}{**}}
+\DoxyCodeLine{01452\ \textcolor{comment}{**\ 返回值:}}
+\DoxyCodeLine{01453\ \textcolor{comment}{**\ -\/\ LUA\_OK:\ 成功,编译后的函数在栈顶}}
+\DoxyCodeLine{01454\ \textcolor{comment}{**\ -\/\ LUA\_ERRSYNTAX:\ 语法错误}}
+\DoxyCodeLine{01455\ \textcolor{comment}{**\ -\/\ LUA\_ERRMEM:\ 内存错误}}
+\DoxyCodeLine{01456\ \textcolor{comment}{**}}
+\DoxyCodeLine{01457\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01458\ \textcolor{comment}{**\ -\/\ 从\ reader\ 读取源代码}}
+\DoxyCodeLine{01459\ \textcolor{comment}{**\ -\/\ 编译成函数}}
+\DoxyCodeLine{01460\ \textcolor{comment}{**\ -\/\ 不执行,只是压入栈}}
+\DoxyCodeLine{01461\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01462\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aa7a94c45f3eec251e5b258d7482ffe87}{lua\_load}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a1708af7a68b7af536d43d126ca53b0f5}{lua\_Reader}}\ reader,\ \textcolor{keywordtype}{void}\ *dt,}
+\DoxyCodeLine{01463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *chunkname,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mode);}
+\DoxyCodeLine{01464\ }
+\DoxyCodeLine{01465\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01466\ \textcolor{comment}{**\ 导出函数}}
+\DoxyCodeLine{01467\ \textcolor{comment}{**}}
+\DoxyCodeLine{01468\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01469\ \textcolor{comment}{**\ -\/\ lua\_Writer\ writer:\ 写入函数}}
+\DoxyCodeLine{01470\ \textcolor{comment}{**\ -\/\ void\ *data:\ 传递给\ writer\ 的数据}}
+\DoxyCodeLine{01471\ \textcolor{comment}{**\ -\/\ int\ strip:\ 是否去除调试信息}}
+\DoxyCodeLine{01472\ \textcolor{comment}{**}}
+\DoxyCodeLine{01473\ \textcolor{comment}{**\ 返回值:\ writer\ 的返回值}}
+\DoxyCodeLine{01474\ \textcolor{comment}{**}}
+\DoxyCodeLine{01475\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01476\ \textcolor{comment}{**\ -\/\ 将栈顶的函数导出为二进制格式}}
+\DoxyCodeLine{01477\ \textcolor{comment}{**\ -\/\ 通过\ writer\ 写出}}
+\DoxyCodeLine{01478\ \textcolor{comment}{**\ -\/\ 可以用\ lua\_load\ 重新加载}}
+\DoxyCodeLine{01479\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01480\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a68295f56f04fd0d5c0adfb1793a04b4c}{lua\_dump}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\_Writer}}\ writer,\ \textcolor{keywordtype}{void}\ *data,\ \textcolor{keywordtype}{int}\ strip);}
+\DoxyCodeLine{01481\ }
+\DoxyCodeLine{01482\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01483\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01484\ \textcolor{comment}{**\ 协程函数}}
+\DoxyCodeLine{01485\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01486\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01487\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01488\ \textcolor{comment}{**\ coroutine\ functions}}
+\DoxyCodeLine{01489\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01490\ }
+\DoxyCodeLine{01491\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01492\ \textcolor{comment}{**\ 让出协程\ (带延续)}}
+\DoxyCodeLine{01493\ \textcolor{comment}{**}}
+\DoxyCodeLine{01494\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01495\ \textcolor{comment}{**\ -\/\ int\ nresults:\ 返回值个数}}
+\DoxyCodeLine{01496\ \textcolor{comment}{**\ -\/\ lua\_KContext\ ctx:\ 延续上下文}}
+\DoxyCodeLine{01497\ \textcolor{comment}{**\ -\/\ lua\_KFunction\ k:\ 延续函数}}
+\DoxyCodeLine{01498\ \textcolor{comment}{**}}
+\DoxyCodeLine{01499\ \textcolor{comment}{**\ 返回值:\ 从不返回到原调用者\ (恢复时从\ k\ 继续)}}
+\DoxyCodeLine{01500\ \textcolor{comment}{**}}
+\DoxyCodeLine{01501\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01502\ \textcolor{comment}{**\ -\/\ 挂起当前协程}}
+\DoxyCodeLine{01503\ \textcolor{comment}{**\ -\/\ 将\ nresults\ 个值返回给\ resume\ 的调用者}}
+\DoxyCodeLine{01504\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01505\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldo_8c_a40d0ec26d9da8d2913c90158a788d019}{lua\_yieldk}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ nresults,\ \mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}}\ ctx,}
+\DoxyCodeLine{01506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\_KFunction}}\ k);}
+\DoxyCodeLine{01507\ }
+\DoxyCodeLine{01508\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01509\ \textcolor{comment}{**\ 恢复协程}}
+\DoxyCodeLine{01510\ \textcolor{comment}{**}}
+\DoxyCodeLine{01511\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01512\ \textcolor{comment}{**\ -\/\ lua\_State\ *L:\ 要恢复的协程}}
+\DoxyCodeLine{01513\ \textcolor{comment}{**\ -\/\ lua\_State\ *from:\ 从哪个协程恢复\ (可为\ NULL)}}
+\DoxyCodeLine{01514\ \textcolor{comment}{**\ -\/\ int\ narg:\ 传递的参数个数}}
+\DoxyCodeLine{01515\ \textcolor{comment}{**\ -\/\ int\ *nres:\ 输出参数,返回值个数}}
+\DoxyCodeLine{01516\ \textcolor{comment}{**}}
+\DoxyCodeLine{01517\ \textcolor{comment}{**\ 返回值:}}
+\DoxyCodeLine{01518\ \textcolor{comment}{**\ -\/\ LUA\_OK:\ 协程正常结束}}
+\DoxyCodeLine{01519\ \textcolor{comment}{**\ -\/\ LUA\_YIELD:\ 协程让出}}
+\DoxyCodeLine{01520\ \textcolor{comment}{**\ -\/\ 其他:\ 错误}}
+\DoxyCodeLine{01521\ \textcolor{comment}{**}}
+\DoxyCodeLine{01522\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01523\ \textcolor{comment}{**\ -\/\ 启动或继续执行协程}}
+\DoxyCodeLine{01524\ \textcolor{comment}{**\ -\/\ 从栈传递参数}}
+\DoxyCodeLine{01525\ \textcolor{comment}{**\ -\/\ 返回值在栈上}}
+\DoxyCodeLine{01526\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01527\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldo_8c_ad07756c576e4e989a7ca417c1d691d2a}{lua\_resume}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structlua__State}{lua\_State}}\ *from,\ \textcolor{keywordtype}{int}\ narg,}
+\DoxyCodeLine{01528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ *nres);}
+\DoxyCodeLine{01529\ }
+\DoxyCodeLine{01530\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01531\ \textcolor{comment}{**\ 获取协程状态}}
+\DoxyCodeLine{01532\ \textcolor{comment}{**}}
+\DoxyCodeLine{01533\ \textcolor{comment}{**\ 返回值:}}
+\DoxyCodeLine{01534\ \textcolor{comment}{**\ -\/\ LUA\_OK:\ 正常\ (未启动或已结束)}}
+\DoxyCodeLine{01535\ \textcolor{comment}{**\ -\/\ LUA\_YIELD:\ 挂起}}
+\DoxyCodeLine{01536\ \textcolor{comment}{**\ -\/\ 其他:\ 错误状态}}
+\DoxyCodeLine{01537\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01538\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aadea4b6f60174a1334ebde560968a615}{lua\_status}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{01539\ }
+\DoxyCodeLine{01540\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01541\ \textcolor{comment}{**\ 检查是否可以让出}}
+\DoxyCodeLine{01542\ \textcolor{comment}{**}}
+\DoxyCodeLine{01543\ \textcolor{comment}{**\ 返回值:\ 1\ 表示可以\ yield,0\ 表示不可以}}
+\DoxyCodeLine{01544\ \textcolor{comment}{**}}
+\DoxyCodeLine{01545\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01546\ \textcolor{comment}{**\ -\/\ 主线程不能\ yield}}
+\DoxyCodeLine{01547\ \textcolor{comment}{**\ -\/\ C\ 函数中可能不能\ yield\ (取决于调用方式)}}
+\DoxyCodeLine{01548\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01549\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldo_8c_a490ddb801dda485ec5a94236d82477d2}{lua\_isyieldable}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{01550\ }
+\DoxyCodeLine{01551\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01552\ \textcolor{comment}{**\ 让出协程的宏版本}}
+\DoxyCodeLine{01553\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01554\ \textcolor{preprocessor}{\#define\ lua\_yield(L,\ n)\ lua\_yieldk(L,\ (n),\ 0,\ NULL)}}
+\DoxyCodeLine{01555\ }
+\DoxyCodeLine{01556\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01557\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01558\ \textcolor{comment}{**\ 警告相关函数}}
+\DoxyCodeLine{01559\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01560\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01561\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01562\ \textcolor{comment}{**\ Warning-\/related\ functions}}
+\DoxyCodeLine{01563\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01564\ }
+\DoxyCodeLine{01565\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01566\ \textcolor{comment}{**\ 设置警告函数}}
+\DoxyCodeLine{01567\ \textcolor{comment}{**}}
+\DoxyCodeLine{01568\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01569\ \textcolor{comment}{**\ -\/\ lua\_WarnFunction\ f:\ 警告函数}}
+\DoxyCodeLine{01570\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{01571\ \textcolor{comment}{**}}
+\DoxyCodeLine{01572\ \textcolor{comment}{**\ 说明:\ 设置接收警告消息的函数}}
+\DoxyCodeLine{01573\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01574\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a708d3ea569d1e7174f06281ecba5a091}{lua\_setwarnf}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a01be53d7e053b2703a9a0ee91aff4974}{lua\_WarnFunction}}\ f,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{01575\ }
+\DoxyCodeLine{01576\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01577\ \textcolor{comment}{**\ 发出警告}}
+\DoxyCodeLine{01578\ \textcolor{comment}{**}}
+\DoxyCodeLine{01579\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01580\ \textcolor{comment}{**\ -\/\ const\ char\ *msg:\ 警告消息}}
+\DoxyCodeLine{01581\ \textcolor{comment}{**\ -\/\ int\ tocont:\ 是否还有后续消息}}
+\DoxyCodeLine{01582\ \textcolor{comment}{**}}
+\DoxyCodeLine{01583\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01584\ \textcolor{comment}{**\ -\/\ 如果\ tocont\ 为\ 1,消息会与下一条拼接}}
+\DoxyCodeLine{01585\ \textcolor{comment}{**\ -\/\ 用于多行警告消息}}
+\DoxyCodeLine{01586\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01587\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a383441029934d459d9b7cd89d3c851e8}{lua\_warning}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *msg,\ \textcolor{keywordtype}{int}\ tocont);}
+\DoxyCodeLine{01588\ }
+\DoxyCodeLine{01589\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01590\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01591\ \textcolor{comment}{**\ 垃圾回收选项}}
+\DoxyCodeLine{01592\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01593\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01594\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01595\ \textcolor{comment}{**\ garbage-\/collection\ options}}
+\DoxyCodeLine{01596\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01597\ }
+\DoxyCodeLine{01598\ \textcolor{comment}{/*\ GC\ 操作常量\ */}}
+\DoxyCodeLine{01599\ \textcolor{preprocessor}{\#define\ LUA\_GCSTOP\ 0\ \ \ \ \ \ }\textcolor{comment}{/*\ 停止\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01600\ \textcolor{preprocessor}{\#define\ LUA\_GCRESTART\ 1\ \ \ }\textcolor{comment}{/*\ 重启\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01601\ \textcolor{preprocessor}{\#define\ LUA\_GCCOLLECT\ 2\ \ \ }\textcolor{comment}{/*\ 执行完整的\ GC\ 循环\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01602\ \textcolor{preprocessor}{\#define\ LUA\_GCCOUNT\ 3\ \ \ \ \ }\textcolor{comment}{/*\ 获取内存使用量\ (KB)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01603\ \textcolor{preprocessor}{\#define\ LUA\_GCCOUNTB\ 4\ \ \ \ }\textcolor{comment}{/*\ 获取内存使用量的余数\ (字节)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01604\ \textcolor{preprocessor}{\#define\ LUA\_GCSTEP\ 5\ \ \ \ \ \ }\textcolor{comment}{/*\ 执行一步增量\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01605\ \textcolor{preprocessor}{\#define\ LUA\_GCISRUNNING\ 6\ }\textcolor{comment}{/*\ 检查\ GC\ 是否运行\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01606\ \textcolor{preprocessor}{\#define\ LUA\_GCGEN\ 7\ \ \ \ \ \ \ }\textcolor{comment}{/*\ 切换到分代\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01607\ \textcolor{preprocessor}{\#define\ LUA\_GCINC\ 8\ \ \ \ \ \ \ }\textcolor{comment}{/*\ 切换到增量\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01608\ \textcolor{preprocessor}{\#define\ LUA\_GCPARAM\ 9\ \ \ \ \ }\textcolor{comment}{/*\ 获取/设置\ GC\ 参数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01609\ }
+\DoxyCodeLine{01610\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01611\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01612\ \textcolor{comment}{**\ 垃圾回收参数}}
+\DoxyCodeLine{01613\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01614\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01615\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01616\ \textcolor{comment}{**\ garbage-\/collection\ parameters}}
+\DoxyCodeLine{01617\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01618\ }
+\DoxyCodeLine{01619\ \textcolor{comment}{/*\ 分代模式参数\ */}}
+\DoxyCodeLine{01620\ \textcolor{comment}{/*\ parameters\ for\ generational\ mode\ */}}
+\DoxyCodeLine{01621\ \textcolor{preprocessor}{\#define\ LUA\_GCPMINORMUL\ 0\ \ \ }\textcolor{comment}{/*\ 控制小回收\ -\/\ minor\ collection\ 的频率\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01622\ \textcolor{preprocessor}{\#define\ LUA\_GCPMAJORMINOR\ 1\ }\textcolor{comment}{/*\ 控制从大回收切换到小回收\ -\/\ major-\/>minor\ 的阈值\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01623\ \textcolor{preprocessor}{\#define\ LUA\_GCPMINORMAJOR\ 2\ }\textcolor{comment}{/*\ 控制从小回收切换到大回收\ -\/\ minor-\/>major\ 的阈值\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01624\ }
+\DoxyCodeLine{01625\ \textcolor{comment}{/*\ 增量模式参数\ */}}
+\DoxyCodeLine{01626\ \textcolor{comment}{/*\ parameters\ for\ incremental\ mode\ */}}
+\DoxyCodeLine{01627\ \textcolor{preprocessor}{\#define\ LUA\_GCPPAUSE\ 3\ \ \ \ }\textcolor{comment}{/*\ 连续\ GC\ 之间的暂停时间\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01628\ \textcolor{preprocessor}{\#define\ LUA\_GCPSTEPMUL\ 4\ \ }\textcolor{comment}{/*\ GC\ "{}速度"{}\ -\/\ 每次分配多少内存触发\ GC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01629\ \textcolor{preprocessor}{\#define\ LUA\_GCPSTEPSIZE\ 5\ }\textcolor{comment}{/*\ GC\ 粒度\ -\/\ 每步回收多少内存\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01630\ }
+\DoxyCodeLine{01631\ \textcolor{comment}{/*\ 参数总数\ */}}
+\DoxyCodeLine{01632\ \textcolor{comment}{/*\ number\ of\ parameters\ */}}
+\DoxyCodeLine{01633\ \textcolor{preprocessor}{\#define\ LUA\_GCPN\ 6}}
+\DoxyCodeLine{01634\ }
+\DoxyCodeLine{01635\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01636\ \textcolor{comment}{**\ 垃圾回收控制}}
+\DoxyCodeLine{01637\ \textcolor{comment}{**}}
+\DoxyCodeLine{01638\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01639\ \textcolor{comment}{**\ -\/\ int\ what:\ 操作类型\ (LUA\_GCSTOP\ 等)}}
+\DoxyCodeLine{01640\ \textcolor{comment}{**\ -\/\ ...:\ 可变参数,取决于操作类型}}
+\DoxyCodeLine{01641\ \textcolor{comment}{**}}
+\DoxyCodeLine{01642\ \textcolor{comment}{**\ 返回值:\ 取决于操作类型}}
+\DoxyCodeLine{01643\ \textcolor{comment}{**}}
+\DoxyCodeLine{01644\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{01645\ \textcolor{comment}{**\ -\/\ lua\_gc(L,\ LUA\_GCCOLLECT,\ 0):\ 执行完整\ GC}}
+\DoxyCodeLine{01646\ \textcolor{comment}{**\ -\/\ lua\_gc(L,\ LUA\_GCCOUNT,\ 0):\ 获取内存使用\ (KB)}}
+\DoxyCodeLine{01647\ \textcolor{comment}{**\ -\/\ lua\_gc(L,\ LUA\_GCSTOP,\ 0):\ 停止\ GC}}
+\DoxyCodeLine{01648\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01649\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aa93573057f708d826613186a9d40c87d}{lua\_gc}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_afbf8df5f26e9c345378a7eb402eed081}{what}},\ ...);}
+\DoxyCodeLine{01650\ }
+\DoxyCodeLine{01651\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01652\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01653\ \textcolor{comment}{**\ 杂项函数}}
+\DoxyCodeLine{01654\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01655\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01656\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01657\ \textcolor{comment}{**\ miscellaneous\ functions}}
+\DoxyCodeLine{01658\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01659\ }
+\DoxyCodeLine{01660\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01661\ \textcolor{comment}{**\ 引发错误}}
+\DoxyCodeLine{01662\ \textcolor{comment}{**}}
+\DoxyCodeLine{01663\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01664\ \textcolor{comment}{**\ -\/\ 将栈顶的值作为错误对象}}
+\DoxyCodeLine{01665\ \textcolor{comment}{**\ -\/\ 抛出错误}}
+\DoxyCodeLine{01666\ \textcolor{comment}{**\ -\/\ 从不返回}}
+\DoxyCodeLine{01667\ \textcolor{comment}{**}}
+\DoxyCodeLine{01668\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01669\ \textcolor{comment}{**\ -\/\ 类似于\ Lua\ 的\ error()\ 函数}}
+\DoxyCodeLine{01670\ \textcolor{comment}{**\ -\/\ 会展开栈,调用\ \_\_close\ 元方法}}
+\DoxyCodeLine{01671\ \textcolor{comment}{**}}
+\DoxyCodeLine{01672\ \textcolor{comment}{**\ 使用场景:}}
+\DoxyCodeLine{01673\ \textcolor{comment}{**\ C\ 函数中检测到错误时调用}}
+\DoxyCodeLine{01674\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01675\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_a6ba7b91143fe8a03910420d800de8e97}{lua\_error}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{01676\ }
+\DoxyCodeLine{01677\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01678\ \textcolor{comment}{**\ 遍历表}}
+\DoxyCodeLine{01679\ \textcolor{comment}{**}}
+\DoxyCodeLine{01680\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 表的索引}}
+\DoxyCodeLine{01681\ \textcolor{comment}{**}}
+\DoxyCodeLine{01682\ \textcolor{comment}{**\ 返回值:\ 1\ 表示还有元素,0\ 表示遍历结束}}
+\DoxyCodeLine{01683\ \textcolor{comment}{**}}
+\DoxyCodeLine{01684\ \textcolor{comment}{**\ 使用方法:}}
+\DoxyCodeLine{01685\ \textcolor{comment}{**\ lua\_pushnil(L);\ \ //\ 初始键}}
+\DoxyCodeLine{01686\ \textcolor{comment}{**\ while\ (lua\_next(L,\ t))\ \{}}
+\DoxyCodeLine{01687\ \textcolor{comment}{**\ \ \ \ \ //\ 现在栈上有\ 'key'\ (在\ -\/2)\ 和\ 'value'\ (在\ -\/1)}}
+\DoxyCodeLine{01688\ \textcolor{comment}{**\ \ \ \ \ printf("{}\%s\ -\/\ \%s\(\backslash\)n"{},}}
+\DoxyCodeLine{01689\ \textcolor{comment}{**\ \ \ \ \ \ \ \ \ \ \ \ lua\_typename(L,\ lua\_type(L,\ -\/2)),}}
+\DoxyCodeLine{01690\ \textcolor{comment}{**\ \ \ \ \ \ \ \ \ \ \ \ lua\_typename(L,\ lua\_type(L,\ -\/1)));}}
+\DoxyCodeLine{01691\ \textcolor{comment}{**\ \ \ \ \ lua\_pop(L,\ 1);\ \ //\ 移除\ value,保留\ key\ 供下次迭代}}
+\DoxyCodeLine{01692\ \textcolor{comment}{**\ \}}}
+\DoxyCodeLine{01693\ \textcolor{comment}{**}}
+\DoxyCodeLine{01694\ \textcolor{comment}{**\ 注意:}}
+\DoxyCodeLine{01695\ \textcolor{comment}{**\ -\/\ 遍历时不要修改表的键}}
+\DoxyCodeLine{01696\ \textcolor{comment}{**\ -\/\ 每次迭代弹出\ value,保留\ key}}
+\DoxyCodeLine{01697\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01698\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{lapi_8c_aa8bf464b98335a075732200ad91ce1de}{lua\_next}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01699\ }
+\DoxyCodeLine{01700\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01701\ \textcolor{comment}{**\ 连接字符串}}
+\DoxyCodeLine{01702\ \textcolor{comment}{**}}
+\DoxyCodeLine{01703\ \textcolor{comment}{**\ 参数:\ int\ n\ -\/\ 要连接的值的个数}}
+\DoxyCodeLine{01704\ \textcolor{comment}{**}}
+\DoxyCodeLine{01705\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01706\ \textcolor{comment}{**\ -\/\ 从栈顶弹出\ n\ 个值}}
+\DoxyCodeLine{01707\ \textcolor{comment}{**\ -\/\ 转换为字符串并连接}}
+\DoxyCodeLine{01708\ \textcolor{comment}{**\ -\/\ 将结果压入栈}}
+\DoxyCodeLine{01709\ \textcolor{comment}{**}}
+\DoxyCodeLine{01710\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01711\ \textcolor{comment}{**\ -\/\ 调用\ \_\_concat\ 元方法}}
+\DoxyCodeLine{01712\ \textcolor{comment}{**\ -\/\ 数值会自动转换为字符串}}
+\DoxyCodeLine{01713\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01714\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a1de3afee1daece63d455f23818c883d9}{lua\_concat}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{01715\ }
+\DoxyCodeLine{01716\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01717\ \textcolor{comment}{**\ 获取长度}}
+\DoxyCodeLine{01718\ \textcolor{comment}{**}}
+\DoxyCodeLine{01719\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 对象的索引}}
+\DoxyCodeLine{01720\ \textcolor{comment}{**}}
+\DoxyCodeLine{01721\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01722\ \textcolor{comment}{**\ -\/\ 获取对象的长度}}
+\DoxyCodeLine{01723\ \textcolor{comment}{**\ -\/\ 将结果\ (数值)\ 压入栈}}
+\DoxyCodeLine{01724\ \textcolor{comment}{**}}
+\DoxyCodeLine{01725\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01726\ \textcolor{comment}{**\ -\/\ 等价于\ Lua\ 的\ \#\ 操作符}}
+\DoxyCodeLine{01727\ \textcolor{comment}{**\ -\/\ 调用\ \_\_len\ 元方法}}
+\DoxyCodeLine{01728\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01729\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a28bdc8c01771ec2524b329a409a08040}{lua\_len}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01730\ }
+\DoxyCodeLine{01731\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01732\ \textcolor{comment}{**\ 数值转字符串缓冲区大小}}
+\DoxyCodeLine{01733\ \textcolor{comment}{**\ 用于\ lua\_numbertocstring\ 函数}}
+\DoxyCodeLine{01734\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01735\ \textcolor{preprocessor}{\#define\ LUA\_N2SBUFFSZ\ 64}}
+\DoxyCodeLine{01736\ }
+\DoxyCodeLine{01737\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01738\ \textcolor{comment}{**\ 将数值转换为字符串}}
+\DoxyCodeLine{01739\ \textcolor{comment}{**}}
+\DoxyCodeLine{01740\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01741\ \textcolor{comment}{**\ -\/\ int\ idx:\ 栈索引}}
+\DoxyCodeLine{01742\ \textcolor{comment}{**\ -\/\ char\ *buff:\ 缓冲区\ (至少\ LUA\_N2SBUFFSZ\ 字节)}}
+\DoxyCodeLine{01743\ \textcolor{comment}{**}}
+\DoxyCodeLine{01744\ \textcolor{comment}{**\ 返回值:\ 字符串长度}}
+\DoxyCodeLine{01745\ \textcolor{comment}{**}}
+\DoxyCodeLine{01746\ \textcolor{comment}{**\ 说明:\ 不压入栈,直接写入缓冲区}}
+\DoxyCodeLine{01747\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01748\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ unsigned(\mbox{\hyperlink{lapi_8c_ad6cf56b58b2a6359cd495f89d3a2c75f}{lua\_numbertocstring}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx,\ \textcolor{keywordtype}{char}\ *buff);}
+\DoxyCodeLine{01749\ }
+\DoxyCodeLine{01750\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01751\ \textcolor{comment}{**\ 将字符串转换为数值}}
+\DoxyCodeLine{01752\ \textcolor{comment}{**}}
+\DoxyCodeLine{01753\ \textcolor{comment}{**\ 参数:\ const\ char\ *s\ -\/\ 字符串}}
+\DoxyCodeLine{01754\ \textcolor{comment}{**}}
+\DoxyCodeLine{01755\ \textcolor{comment}{**\ 返回值:\ 转换的字节数\ (0\ 表示失败)}}
+\DoxyCodeLine{01756\ \textcolor{comment}{**}}
+\DoxyCodeLine{01757\ \textcolor{comment}{**\ 行为:}}
+\DoxyCodeLine{01758\ \textcolor{comment}{**\ -\/\ 尝试将字符串转换为数值}}
+\DoxyCodeLine{01759\ \textcolor{comment}{**\ -\/\ 成功则压入栈}}
+\DoxyCodeLine{01760\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01761\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ size\_t(\mbox{\hyperlink{lapi_8c_ab9c2fb9e2b2c7dad7474dd4b6f1bbcd0}{lua\_stringtonumber}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s);}
+\DoxyCodeLine{01762\ }
+\DoxyCodeLine{01763\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01764\ \textcolor{comment}{**\ 获取内存分配函数}}
+\DoxyCodeLine{01765\ \textcolor{comment}{**}}
+\DoxyCodeLine{01766\ \textcolor{comment}{**\ 参数:\ void\ **ud\ -\/\ 输出参数,用户数据指针}}
+\DoxyCodeLine{01767\ \textcolor{comment}{**}}
+\DoxyCodeLine{01768\ \textcolor{comment}{**\ 返回值:\ 当前的分配函数}}
+\DoxyCodeLine{01769\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01770\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\_Alloc}}(\mbox{\hyperlink{lapi_8c_a3dbff8747b32b799cf63603c46da06cc}{lua\_getallocf}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{void}\ **ud);}
+\DoxyCodeLine{01771\ }
+\DoxyCodeLine{01772\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01773\ \textcolor{comment}{**\ 设置内存分配函数}}
+\DoxyCodeLine{01774\ \textcolor{comment}{**}}
+\DoxyCodeLine{01775\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01776\ \textcolor{comment}{**\ -\/\ lua\_Alloc\ f:\ 新的分配函数}}
+\DoxyCodeLine{01777\ \textcolor{comment}{**\ -\/\ void\ *ud:\ 用户数据}}
+\DoxyCodeLine{01778\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01779\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_ac890276f9590df6a4d6aabdad9c558f0}{lua\_setallocf}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\_Alloc}}\ f,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{01780\ }
+\DoxyCodeLine{01781\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01782\ \textcolor{comment}{**\ 标记为待关闭}}
+\DoxyCodeLine{01783\ \textcolor{comment}{**}}
+\DoxyCodeLine{01784\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 栈索引}}
+\DoxyCodeLine{01785\ \textcolor{comment}{**}}
+\DoxyCodeLine{01786\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01787\ \textcolor{comment}{**\ -\/\ 标记该值在离开作用域时调用\ \_\_close\ 元方法}}
+\DoxyCodeLine{01788\ \textcolor{comment}{**\ -\/\ 类似于\ Lua\ 的\ <close>\ 变量}}
+\DoxyCodeLine{01789\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01790\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a5101545bcd4222abe101836b7931bdf9}{lua\_toclose}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01791\ }
+\DoxyCodeLine{01792\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01793\ \textcolor{comment}{**\ 关闭栈槽}}
+\DoxyCodeLine{01794\ \textcolor{comment}{**}}
+\DoxyCodeLine{01795\ \textcolor{comment}{**\ 参数:\ int\ idx\ -\/\ 栈索引}}
+\DoxyCodeLine{01796\ \textcolor{comment}{**}}
+\DoxyCodeLine{01797\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01798\ \textcolor{comment}{**\ -\/\ 立即调用从\ idx\ 到栈顶的所有待关闭值的\ \_\_close\ 方法}}
+\DoxyCodeLine{01799\ \textcolor{comment}{**\ -\/\ 用于手动资源管理}}
+\DoxyCodeLine{01800\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01801\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a6b258ccd1dc16b90aa17eed183f283e3}{lua\_closeslot}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{01802\ }
+\DoxyCodeLine{01803\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01804\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01805\ \textcolor{comment}{**\ 实用宏定义}}
+\DoxyCodeLine{01806\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01807\ \textcolor{comment}{**\ 这些宏提供了常用操作的简写}}
+\DoxyCodeLine{01808\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01809\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01810\ \textcolor{comment}{**\ \{==============================================================}}
+\DoxyCodeLine{01811\ \textcolor{comment}{**\ some\ useful\ macros}}
+\DoxyCodeLine{01812\ \textcolor{comment}{**\ ===============================================================}}
+\DoxyCodeLine{01813\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01814\ }
+\DoxyCodeLine{01815\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01816\ \textcolor{comment}{**\ 获取额外空间}}
+\DoxyCodeLine{01817\ \textcolor{comment}{**}}
+\DoxyCodeLine{01818\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01819\ \textcolor{comment}{**\ -\/\ lua\_State\ 之前有\ LUA\_EXTRASPACE\ 字节的额外空间}}
+\DoxyCodeLine{01820\ \textcolor{comment}{**\ -\/\ 可以用于存储与状态机关联的\ C\ 数据}}
+\DoxyCodeLine{01821\ \textcolor{comment}{**\ -\/\ 通过指针运算访问:\ (char\ *)(L)\ -\/\ LUA\_EXTRASPACE}}
+\DoxyCodeLine{01822\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01823\ \textcolor{preprocessor}{\#define\ lua\_getextraspace(L)\ ((void\ *)((char\ *)(L)\ -\/\ LUA\_EXTRASPACE))}}
+\DoxyCodeLine{01824\ }
+\DoxyCodeLine{01825\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01826\ \textcolor{comment}{**\ 简化版\ tonumber\ 和\ tointeger}}
+\DoxyCodeLine{01827\ \textcolor{comment}{**\ 忽略\ isnum\ 参数}}
+\DoxyCodeLine{01828\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01829\ \textcolor{preprocessor}{\#define\ lua\_tonumber(L,\ i)\ lua\_tonumberx(L,\ (i),\ NULL)}}
+\DoxyCodeLine{01830\ \textcolor{preprocessor}{\#define\ lua\_tointeger(L,\ i)\ lua\_tointegerx(L,\ (i),\ NULL)}}
+\DoxyCodeLine{01831\ }
+\DoxyCodeLine{01832\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01833\ \textcolor{comment}{**\ 弹出\ n\ 个元素}}
+\DoxyCodeLine{01834\ \textcolor{comment}{**}}
+\DoxyCodeLine{01835\ \textcolor{comment}{**\ 实现:\ lua\_settop(L,\ -\/(n)-\/1)}}
+\DoxyCodeLine{01836\ \textcolor{comment}{**}}
+\DoxyCodeLine{01837\ \textcolor{comment}{**\ 解释:}}
+\DoxyCodeLine{01838\ \textcolor{comment}{**\ -\/\ 假设栈有\ 5\ 个元素,要弹出\ 2\ 个}}
+\DoxyCodeLine{01839\ \textcolor{comment}{**\ -\/\ -\/(2)-\/1\ =\ -\/3}}
+\DoxyCodeLine{01840\ \textcolor{comment}{**\ -\/\ lua\_settop(L,\ -\/3)\ 将栈顶设置到倒数第\ 3\ 个位置}}
+\DoxyCodeLine{01841\ \textcolor{comment}{**\ -\/\ 相当于保留\ 3\ 个元素,弹出\ 2\ 个}}
+\DoxyCodeLine{01842\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01843\ \textcolor{preprocessor}{\#define\ lua\_pop(L,\ n)\ lua\_settop(L,\ -\/(n)\ -\/\ 1)}}
+\DoxyCodeLine{01844\ }
+\DoxyCodeLine{01845\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01846\ \textcolor{comment}{**\ 创建空表}}
+\DoxyCodeLine{01847\ \textcolor{comment}{**\ 等价于:\ lua\_createtable(L,\ 0,\ 0)}}
+\DoxyCodeLine{01848\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01849\ \textcolor{preprocessor}{\#define\ lua\_newtable(L)\ lua\_createtable(L,\ 0,\ 0)}}
+\DoxyCodeLine{01850\ }
+\DoxyCodeLine{01851\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01852\ \textcolor{comment}{**\ 注册全局函数}}
+\DoxyCodeLine{01853\ \textcolor{comment}{**}}
+\DoxyCodeLine{01854\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{01855\ \textcolor{comment}{**\ -\/\ n:\ 函数名}}
+\DoxyCodeLine{01856\ \textcolor{comment}{**\ -\/\ f:\ C\ 函数}}
+\DoxyCodeLine{01857\ \textcolor{comment}{**}}
+\DoxyCodeLine{01858\ \textcolor{comment}{**\ 实现:}}
+\DoxyCodeLine{01859\ \textcolor{comment}{**\ 1.\ lua\_pushcfunction(L,\ f)\ -\/\ 压入函数}}
+\DoxyCodeLine{01860\ \textcolor{comment}{**\ 2.\ lua\_setglobal(L,\ n)\ -\/\ 设置为全局变量}}
+\DoxyCodeLine{01861\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01862\ \textcolor{preprocessor}{\#define\ lua\_register(L,\ n,\ f)\ (lua\_pushcfunction(L,\ (f)),\ lua\_setglobal(L,\ (n)))}}
+\DoxyCodeLine{01863\ }
+\DoxyCodeLine{01864\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01865\ \textcolor{comment}{**\ 压入\ C\ 函数\ (无\ upvalue)}}
+\DoxyCodeLine{01866\ \textcolor{comment}{**\ 等价于:\ lua\_pushcclosure(L,\ f,\ 0)}}
+\DoxyCodeLine{01867\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01868\ \textcolor{preprocessor}{\#define\ lua\_pushcfunction(L,\ f)\ lua\_pushcclosure(L,\ (f),\ 0)}}
+\DoxyCodeLine{01869\ }
+\DoxyCodeLine{01870\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01871\ \textcolor{comment}{**\ 类型检查宏}}
+\DoxyCodeLine{01872\ \textcolor{comment}{**\ 通过比较\ lua\_type\ 的返回值实现}}
+\DoxyCodeLine{01873\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01874\ \textcolor{preprocessor}{\#define\ lua\_isfunction(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TFUNCTION)}}
+\DoxyCodeLine{01875\ \textcolor{preprocessor}{\#define\ lua\_istable(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TTABLE)}}
+\DoxyCodeLine{01876\ \textcolor{preprocessor}{\#define\ lua\_islightuserdata(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TLIGHTUSERDATA)}}
+\DoxyCodeLine{01877\ \textcolor{preprocessor}{\#define\ lua\_isnil(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TNIL)}}
+\DoxyCodeLine{01878\ \textcolor{preprocessor}{\#define\ lua\_isboolean(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TBOOLEAN)}}
+\DoxyCodeLine{01879\ \textcolor{preprocessor}{\#define\ lua\_isthread(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TTHREAD)}}
+\DoxyCodeLine{01880\ \textcolor{preprocessor}{\#define\ lua\_isnone(L,\ n)\ (lua\_type(L,\ (n))\ ==\ LUA\_TNONE)}}
+\DoxyCodeLine{01881\ \textcolor{preprocessor}{\#define\ lua\_isnoneornil(L,\ n)\ (lua\_type(L,\ (n))\ <=\ 0)}}
+\DoxyCodeLine{01882\ }
+\DoxyCodeLine{01883\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01884\ \textcolor{comment}{**\ 压入字面字符串}}
+\DoxyCodeLine{01885\ \textcolor{comment}{**}}
+\DoxyCodeLine{01886\ \textcolor{comment}{**\ 使用\ "{}"{}\ s\ 技巧确保参数是字面字符串}}
+\DoxyCodeLine{01887\ \textcolor{comment}{**}}
+\DoxyCodeLine{01888\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ 字符串字面量拼接:}}
+\DoxyCodeLine{01889\ \textcolor{comment}{**\ C\ 编译器会自动连接相邻的字符串字面量}}
+\DoxyCodeLine{01890\ \textcolor{comment}{**\ "{}"{}\ s\ 会被编译为\ s}}
+\DoxyCodeLine{01891\ \textcolor{comment}{**\ 如果\ s\ 不是字面量,会产生编译错误}}
+\DoxyCodeLine{01892\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01893\ \textcolor{preprocessor}{\#define\ lua\_pushliteral(L,\ s)\ lua\_pushstring(L,\ "{}"{}\ s)}}
+\DoxyCodeLine{01894\ }
+\DoxyCodeLine{01895\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01896\ \textcolor{comment}{**\ 压入全局表}}
+\DoxyCodeLine{01897\ \textcolor{comment}{**}}
+\DoxyCodeLine{01898\ \textcolor{comment}{**\ 实现:\ lua\_rawgeti(L,\ LUA\_REGISTRYINDEX,\ LUA\_RIDX\_GLOBALS)}}
+\DoxyCodeLine{01899\ \textcolor{comment}{**}}
+\DoxyCodeLine{01900\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{01901\ \textcolor{comment}{**\ -\/\ 从注册表获取全局表}}
+\DoxyCodeLine{01902\ \textcolor{comment}{**\ -\/\ LUA\_RIDX\_GLOBALS\ 是全局表在注册表中的索引}}
+\DoxyCodeLine{01903\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01904\ \textcolor{preprocessor}{\#define\ lua\_pushglobaltable(L)\ \(\backslash\)}}
+\DoxyCodeLine{01905\ \textcolor{preprocessor}{\ \ ((void)lua\_rawgeti(L,\ LUA\_REGISTRYINDEX,\ LUA\_RIDX\_GLOBALS))}}
+\DoxyCodeLine{01906\ }
+\DoxyCodeLine{01907\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01908\ \textcolor{comment}{**\ 简化版\ tostring}}
+\DoxyCodeLine{01909\ \textcolor{comment}{**\ 忽略长度参数}}
+\DoxyCodeLine{01910\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01911\ \textcolor{preprocessor}{\#define\ lua\_tostring(L,\ i)\ lua\_tolstring(L,\ (i),\ NULL)}}
+\DoxyCodeLine{01912\ }
+\DoxyCodeLine{01913\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01914\ \textcolor{comment}{**\ 插入元素}}
+\DoxyCodeLine{01915\ \textcolor{comment}{**}}
+\DoxyCodeLine{01916\ \textcolor{comment}{**\ 将栈顶元素插入到\ idx\ 位置}}
+\DoxyCodeLine{01917\ \textcolor{comment}{**}}
+\DoxyCodeLine{01918\ \textcolor{comment}{**\ 实现:\ 旋转\ idx\ 到栈顶的元素,将最后一个移到\ idx}}
+\DoxyCodeLine{01919\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01920\ \textcolor{preprocessor}{\#define\ lua\_insert(L,\ idx)\ lua\_rotate(L,\ (idx),\ 1)}}
+\DoxyCodeLine{01921\ }
+\DoxyCodeLine{01922\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01923\ \textcolor{comment}{**\ 移除元素}}
+\DoxyCodeLine{01924\ \textcolor{comment}{**}}
+\DoxyCodeLine{01925\ \textcolor{comment}{**\ 移除\ idx\ 位置的元素}}
+\DoxyCodeLine{01926\ \textcolor{comment}{**}}
+\DoxyCodeLine{01927\ \textcolor{comment}{**\ 实现:}}
+\DoxyCodeLine{01928\ \textcolor{comment}{**\ 1.\ lua\_rotate(L,\ idx,\ -\/1)\ -\/\ 将\ idx\ 移到栈顶}}
+\DoxyCodeLine{01929\ \textcolor{comment}{**\ 2.\ lua\_pop(L,\ 1)\ -\/\ 弹出栈顶}}
+\DoxyCodeLine{01930\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01931\ \textcolor{preprocessor}{\#define\ lua\_remove(L,\ idx)\ (lua\_rotate(L,\ (idx),\ -\/1),\ lua\_pop(L,\ 1))}}
+\DoxyCodeLine{01932\ }
+\DoxyCodeLine{01933\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01934\ \textcolor{comment}{**\ 替换元素}}
+\DoxyCodeLine{01935\ \textcolor{comment}{**}}
+\DoxyCodeLine{01936\ \textcolor{comment}{**\ 用栈顶元素替换\ idx\ 位置的元素}}
+\DoxyCodeLine{01937\ \textcolor{comment}{**}}
+\DoxyCodeLine{01938\ \textcolor{comment}{**\ 实现:}}
+\DoxyCodeLine{01939\ \textcolor{comment}{**\ 1.\ lua\_copy(L,\ -\/1,\ idx)\ -\/\ 复制栈顶到\ idx}}
+\DoxyCodeLine{01940\ \textcolor{comment}{**\ 2.\ lua\_pop(L,\ 1)\ -\/\ 弹出栈顶}}
+\DoxyCodeLine{01941\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01942\ \textcolor{preprocessor}{\#define\ lua\_replace(L,\ idx)\ (lua\_copy(L,\ -\/1,\ (idx)),\ lua\_pop(L,\ 1))}}
+\DoxyCodeLine{01943\ }
+\DoxyCodeLine{01944\ \textcolor{comment}{/*\ \}==============================================================\ */}}
+\DoxyCodeLine{01945\ }
+\DoxyCodeLine{01946\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01947\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01948\ \textcolor{comment}{**\ 兼容性宏}}
+\DoxyCodeLine{01949\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01950\ \textcolor{comment}{**\ 这些宏提供向后兼容}}
+\DoxyCodeLine{01951\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01952\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01953\ \textcolor{comment}{**\ \{==============================================================}}
+\DoxyCodeLine{01954\ \textcolor{comment}{**\ compatibility\ macros}}
+\DoxyCodeLine{01955\ \textcolor{comment}{**\ ===============================================================}}
+\DoxyCodeLine{01956\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01957\ }
+\DoxyCodeLine{01958\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01959\ \textcolor{comment}{**\ 旧版本的\ newuserdata\ (只有一个用户值)}}
+\DoxyCodeLine{01960\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01961\ \textcolor{preprocessor}{\#define\ lua\_newuserdata(L,\ s)\ lua\_newuserdatauv(L,\ s,\ 1)}}
+\DoxyCodeLine{01962\ }
+\DoxyCodeLine{01963\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01964\ \textcolor{comment}{**\ 旧版本的用户值访问\ (只访问第一个)}}
+\DoxyCodeLine{01965\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01966\ \textcolor{preprocessor}{\#define\ lua\_getuservalue(L,\ idx)\ lua\_getiuservalue(L,\ idx,\ 1)}}
+\DoxyCodeLine{01967\ \textcolor{preprocessor}{\#define\ lua\_setuservalue(L,\ idx)\ lua\_setiuservalue(L,\ idx,\ 1)}}
+\DoxyCodeLine{01968\ }
+\DoxyCodeLine{01969\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01970\ \textcolor{comment}{**\ 重置线程\ (关闭所有待关闭的值)}}
+\DoxyCodeLine{01971\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01972\ \textcolor{preprocessor}{\#define\ lua\_resetthread(L)\ lua\_closethread(L,\ NULL)}}
+\DoxyCodeLine{01973\ }
+\DoxyCodeLine{01974\ \textcolor{comment}{/*\ \}==============================================================\ */}}
+\DoxyCodeLine{01975\ }
+\DoxyCodeLine{01976\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01977\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01978\ \textcolor{comment}{**\ 调试\ API}}
+\DoxyCodeLine{01979\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01980\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01981\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01982\ \textcolor{comment}{**\ \{======================================================================}}
+\DoxyCodeLine{01983\ \textcolor{comment}{**\ Debug\ API}}
+\DoxyCodeLine{01984\ \textcolor{comment}{**\ =======================================================================}}
+\DoxyCodeLine{01985\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01986\ }
+\DoxyCodeLine{01987\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01988\ \textcolor{comment}{**\ 事件代码}}
+\DoxyCodeLine{01989\ \textcolor{comment}{**\ 定义了钩子函数可以捕获的事件类型}}
+\DoxyCodeLine{01990\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01991\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01992\ \textcolor{comment}{**\ Event\ codes}}
+\DoxyCodeLine{01993\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01994\ \textcolor{preprocessor}{\#define\ LUA\_HOOKCALL\ 0\ \ \ \ \ }\textcolor{comment}{/*\ 函数调用事件\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01995\ \textcolor{preprocessor}{\#define\ LUA\_HOOKRET\ 1\ \ \ \ \ \ }\textcolor{comment}{/*\ 函数返回事件\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01996\ \textcolor{preprocessor}{\#define\ LUA\_HOOKLINE\ 2\ \ \ \ \ }\textcolor{comment}{/*\ 执行新行事件\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01997\ \textcolor{preprocessor}{\#define\ LUA\_HOOKCOUNT\ 3\ \ \ \ }\textcolor{comment}{/*\ 指令计数事件\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01998\ \textcolor{preprocessor}{\#define\ LUA\_HOOKTAILCALL\ 4\ }\textcolor{comment}{/*\ 尾调用事件\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01999\ }
+\DoxyCodeLine{02000\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02001\ \textcolor{comment}{**\ 事件掩码}}
+\DoxyCodeLine{02002\ \textcolor{comment}{**\ 用于设置要捕获哪些事件}}
+\DoxyCodeLine{02003\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02005\ \textcolor{comment}{**\ Event\ masks}}
+\DoxyCodeLine{02006\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02007\ \textcolor{preprocessor}{\#define\ LUA\_MASKCALL\ (1\ <<\ LUA\_HOOKCALL)\ \ \ }\textcolor{comment}{/*\ 捕获调用\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02008\ \textcolor{preprocessor}{\#define\ LUA\_MASKRET\ (1\ <<\ LUA\_HOOKRET)\ \ \ \ \ }\textcolor{comment}{/*\ 捕获返回\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02009\ \textcolor{preprocessor}{\#define\ LUA\_MASKLINE\ (1\ <<\ LUA\_HOOKLINE)\ \ \ }\textcolor{comment}{/*\ 捕获行\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02010\ \textcolor{preprocessor}{\#define\ LUA\_MASKCOUNT\ (1\ <<\ LUA\_HOOKCOUNT)\ }\textcolor{comment}{/*\ 捕获计数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02011\ }
+\DoxyCodeLine{02012\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02013\ \textcolor{comment}{**\ 获取栈信息}}
+\DoxyCodeLine{02014\ \textcolor{comment}{**}}
+\DoxyCodeLine{02015\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02016\ \textcolor{comment}{**\ -\/\ int\ level:\ 栈层级\ (0\ 是当前函数)}}
+\DoxyCodeLine{02017\ \textcolor{comment}{**\ -\/\ lua\_Debug\ *ar:\ 输出参数,调试信息结构}}
+\DoxyCodeLine{02018\ \textcolor{comment}{**}}
+\DoxyCodeLine{02019\ \textcolor{comment}{**\ 返回值:\ 1\ 表示成功,0\ 表示\ level\ 超出范围}}
+\DoxyCodeLine{02020\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02021\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldebug_8c_ac1fc03c27ee46caa4037df2d70f22110}{lua\_getstack}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ level,\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ *ar);}
+\DoxyCodeLine{02022\ }
+\DoxyCodeLine{02023\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02024\ \textcolor{comment}{**\ 获取详细信息}}
+\DoxyCodeLine{02025\ \textcolor{comment}{**}}
+\DoxyCodeLine{02026\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02027\ \textcolor{comment}{**\ -\/\ const\ char\ *what:\ 指定要获取的信息\ ("{}n"{},\ "{}S"{},\ "{}l"{}\ 等)}}
+\DoxyCodeLine{02028\ \textcolor{comment}{**\ -\/\ lua\_Debug\ *ar:\ 调试信息结构}}
+\DoxyCodeLine{02029\ \textcolor{comment}{**}}
+\DoxyCodeLine{02030\ \textcolor{comment}{**\ 返回值:\ 1\ 表示成功,0\ 表示失败}}
+\DoxyCodeLine{02031\ \textcolor{comment}{**}}
+\DoxyCodeLine{02032\ \textcolor{comment}{**\ what\ 参数:}}
+\DoxyCodeLine{02033\ \textcolor{comment}{**\ -\/\ 'n':\ 名称信息\ (name,\ namewhat)}}
+\DoxyCodeLine{02034\ \textcolor{comment}{**\ -\/\ 'S':\ 源码信息\ (source,\ linedefined\ 等)}}
+\DoxyCodeLine{02035\ \textcolor{comment}{**\ -\/\ 'l':\ 当前行号\ (currentline)}}
+\DoxyCodeLine{02036\ \textcolor{comment}{**\ -\/\ 'u':\ upvalue\ 信息\ (nups,\ nparams,\ isvararg)}}
+\DoxyCodeLine{02037\ \textcolor{comment}{**\ -\/\ 't':\ 是否尾调用\ (istailcall)}}
+\DoxyCodeLine{02038\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02039\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldebug_8c_acaafc35d8e385c4d167229486165df6d}{lua\_getinfo}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_afbf8df5f26e9c345378a7eb402eed081}{what}},\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ *ar);}
+\DoxyCodeLine{02040\ }
+\DoxyCodeLine{02041\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02042\ \textcolor{comment}{**\ 获取局部变量}}
+\DoxyCodeLine{02043\ \textcolor{comment}{**}}
+\DoxyCodeLine{02044\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02045\ \textcolor{comment}{**\ -\/\ const\ lua\_Debug\ *ar:\ 调试信息}}
+\DoxyCodeLine{02046\ \textcolor{comment}{**\ -\/\ int\ n:\ 变量索引\ (从\ 1\ 开始)}}
+\DoxyCodeLine{02047\ \textcolor{comment}{**}}
+\DoxyCodeLine{02048\ \textcolor{comment}{**\ 返回值:\ 变量名,NULL\ 表示没有更多变量}}
+\DoxyCodeLine{02049\ \textcolor{comment}{**}}
+\DoxyCodeLine{02050\ \textcolor{comment}{**\ 行为:\ 将变量值压入栈}}
+\DoxyCodeLine{02051\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02052\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{ldebug_8c_ad05c165647a55fed809438fed34f5ef6}{lua\_getlocal}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ *ar,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{02053\ }
+\DoxyCodeLine{02054\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02055\ \textcolor{comment}{**\ 设置局部变量}}
+\DoxyCodeLine{02056\ \textcolor{comment}{**}}
+\DoxyCodeLine{02057\ \textcolor{comment}{**\ 参数同\ lua\_getlocal}}
+\DoxyCodeLine{02058\ \textcolor{comment}{**}}
+\DoxyCodeLine{02059\ \textcolor{comment}{**\ 行为:\ 从栈顶弹出值并赋给变量}}
+\DoxyCodeLine{02060\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02061\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{ldebug_8c_adadc4e77711b622605ac0f2787c6a5b8}{lua\_setlocal}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structlua__Debug}{lua\_Debug}}\ *ar,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{02062\ }
+\DoxyCodeLine{02063\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02064\ \textcolor{comment}{**\ 获取\ upvalue}}
+\DoxyCodeLine{02065\ \textcolor{comment}{**}}
+\DoxyCodeLine{02066\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02067\ \textcolor{comment}{**\ -\/\ int\ funcindex:\ 函数的栈索引}}
+\DoxyCodeLine{02068\ \textcolor{comment}{**\ -\/\ int\ n:\ upvalue\ 索引\ (从\ 1\ 开始)}}
+\DoxyCodeLine{02069\ \textcolor{comment}{**}}
+\DoxyCodeLine{02070\ \textcolor{comment}{**\ 返回值:\ upvalue\ 名称,NULL\ 表示没有}}
+\DoxyCodeLine{02071\ \textcolor{comment}{**}}
+\DoxyCodeLine{02072\ \textcolor{comment}{**\ 行为:\ 将\ upvalue\ 值压入栈}}
+\DoxyCodeLine{02073\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02074\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_a38b2185b6db1dcaf18fc2d240ee1b749}{lua\_getupvalue}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ funcindex,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{02075\ }
+\DoxyCodeLine{02076\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02077\ \textcolor{comment}{**\ 设置\ upvalue}}
+\DoxyCodeLine{02078\ \textcolor{comment}{**}}
+\DoxyCodeLine{02079\ \textcolor{comment}{**\ 参数同\ lua\_getupvalue}}
+\DoxyCodeLine{02080\ \textcolor{comment}{**}}
+\DoxyCodeLine{02081\ \textcolor{comment}{**\ 行为:\ 从栈顶弹出值并赋给\ upvalue}}
+\DoxyCodeLine{02082\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02083\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *(\mbox{\hyperlink{lapi_8c_ad7873a64b0cf88bb0c22a158bd787007}{lua\_setupvalue}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ funcindex,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{02084\ }
+\DoxyCodeLine{02085\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02086\ \textcolor{comment}{**\ 获取\ upvalue\ 的唯一标识}}
+\DoxyCodeLine{02087\ \textcolor{comment}{**}}
+\DoxyCodeLine{02088\ \textcolor{comment}{**\ 返回值:\ 指针,相同的\ upvalue\ 返回相同的指针}}
+\DoxyCodeLine{02089\ \textcolor{comment}{**}}
+\DoxyCodeLine{02090\ \textcolor{comment}{**\ 用途:\ 检查两个闭包是否共享\ upvalue}}
+\DoxyCodeLine{02091\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02092\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \textcolor{keywordtype}{void}\ *(\mbox{\hyperlink{lapi_8c_ab4051dd78d060726b49988a7b2238f16}{lua\_upvalueid}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *\ L,\ \textcolor{keywordtype}{int}\ fidx,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{02093\ }
+\DoxyCodeLine{02094\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02095\ \textcolor{comment}{**\ 共享\ upvalue}}
+\DoxyCodeLine{02096\ \textcolor{comment}{**}}
+\DoxyCodeLine{02097\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02098\ \textcolor{comment}{**\ -\/\ int\ fidx1,\ int\ n1:\ 第一个函数和\ upvalue\ 索引}}
+\DoxyCodeLine{02099\ \textcolor{comment}{**\ -\/\ int\ fidx2,\ int\ n2:\ 第二个函数和\ upvalue\ 索引}}
+\DoxyCodeLine{02100\ \textcolor{comment}{**}}
+\DoxyCodeLine{02101\ \textcolor{comment}{**\ 作用:\ 让两个闭包共享同一个\ upvalue}}
+\DoxyCodeLine{02102\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02103\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{lapi_8c_a9ce27da3bd8232ac4a0d383e924a0c7a}{lua\_upvaluejoin}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ fidx1,\ \textcolor{keywordtype}{int}\ n1,}
+\DoxyCodeLine{02104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fidx2,\ \textcolor{keywordtype}{int}\ n2);}
+\DoxyCodeLine{02105\ }
+\DoxyCodeLine{02106\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02107\ \textcolor{comment}{**\ 设置钩子函数}}
+\DoxyCodeLine{02108\ \textcolor{comment}{**}}
+\DoxyCodeLine{02109\ \textcolor{comment}{**\ 参数:}}
+\DoxyCodeLine{02110\ \textcolor{comment}{**\ -\/\ lua\_Hook\ func:\ 钩子函数}}
+\DoxyCodeLine{02111\ \textcolor{comment}{**\ -\/\ int\ mask:\ 事件掩码\ (LUA\_MASKCALL\ 等的组合)}}
+\DoxyCodeLine{02112\ \textcolor{comment}{**\ -\/\ int\ count:\ 指令计数间隔\ (0\ 表示不计数)}}
+\DoxyCodeLine{02113\ \textcolor{comment}{**}}
+\DoxyCodeLine{02114\ \textcolor{comment}{**\ 示例:}}
+\DoxyCodeLine{02115\ \textcolor{comment}{**\ lua\_sethook(L,\ my\_hook,\ LUA\_MASKCALL\ |\ LUA\_MASKRET,\ 0);}}
+\DoxyCodeLine{02116\ \textcolor{comment}{**\ //\ 在每次函数调用和返回时调用\ my\_hook}}
+\DoxyCodeLine{02117\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02118\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ void(\mbox{\hyperlink{ldebug_8c_ac9d3d168561f5c1a747a3ab198f0f092}{lua\_sethook}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_aa00de66eff087aef1fdd44f5b3bb9a0b}{lua\_Hook}}\ func,\ \textcolor{keywordtype}{int}\ mask,\ \textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{02119\ }
+\DoxyCodeLine{02120\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02121\ \textcolor{comment}{**\ 获取当前钩子函数}}
+\DoxyCodeLine{02122\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02123\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ \mbox{\hyperlink{lua_8h_aa00de66eff087aef1fdd44f5b3bb9a0b}{lua\_Hook}}(\mbox{\hyperlink{ldebug_8c_a44b9923035977dcfa57279761f7379b4}{lua\_gethook}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{02124\ }
+\DoxyCodeLine{02125\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02126\ \textcolor{comment}{**\ 获取钩子掩码}}
+\DoxyCodeLine{02127\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02128\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldebug_8c_a0b41dd9ab46652c8433b861f679fadb8}{lua\_gethookmask}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{02129\ }
+\DoxyCodeLine{02130\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02131\ \textcolor{comment}{**\ 获取钩子计数}}
+\DoxyCodeLine{02132\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02133\ \mbox{\hyperlink{luaconf_8h_af88575eb79fdd88b1cce4533ab5cbe69}{LUA\_API}}\ int(\mbox{\hyperlink{ldebug_8c_a18f065f752cfa08eefd338b4cbd7254b}{lua\_gethookcount}})(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{02134\ }
+\DoxyCodeLine{02135\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02136\ \textcolor{comment}{**\ lua\_Debug\ 结构体定义}}
+\DoxyCodeLine{02137\ \textcolor{comment}{**}}
+\DoxyCodeLine{02138\ \textcolor{comment}{**\ 这个结构体包含了函数调用的详细调试信息}}
+\DoxyCodeLine{02139\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02140\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structlua__Debug}{lua\_Debug}}}
+\DoxyCodeLine{02141\ \{}
+\DoxyCodeLine{02142\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_a6578d385d2322429a0fe87b79f1ddec0}{event}};\ \textcolor{comment}{/*\ 触发的事件类型\ (LUA\_HOOKCALL\ 等)\ */}}
+\DoxyCodeLine{02143\ }
+\DoxyCodeLine{02144\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_a2978ab7f2ade479a003beb16d3b7a993}{name}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (n)\ 函数名\ */}}
+\DoxyCodeLine{02145\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_a7e8c201950ea4dd3f2c7df9e1201019a}{namewhat}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ (n)\ 名称类型:\ 'global',\ 'local',\ 'field',\ 'method'\ */}}
+\DoxyCodeLine{02146\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_afbf8df5f26e9c345378a7eb402eed081}{what}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (S)\ 函数类型:\ 'Lua'\ (Lua\ 函数),\ 'C'\ (C\ 函数),\ 'main'\ (主程序),\ 'tail'\ (尾调用)\ */}}
+\DoxyCodeLine{02147\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structlua__Debug_a422bceba8605d96bce4d19ce801a62e4}{source}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (S)\ 源文件名或代码\ */}}
+\DoxyCodeLine{02148\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structlua__Debug_aace8e6efdb999325e7a77452c849293b}{srclen}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (S)\ source\ 的长度\ */}}
+\DoxyCodeLine{02149\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_a97b3ed36cdfdc6f2c694b253a3d96da6}{currentline}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (l)\ 当前行号\ */}}
+\DoxyCodeLine{02150\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_a97cb69b18daa46d20fb1a13eec78661b}{linedefined}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (S)\ 函数定义的起始行\ */}}
+\DoxyCodeLine{02151\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_a4c69b9d30e54cf9071cd2987ede128eb}{lastlinedefined}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (S)\ 函数定义的结束行\ */}}
+\DoxyCodeLine{02152\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_ab87c2a6ef686abf10da683f7e9af1b23}{nups}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (u)\ upvalue\ 的个数\ */}}
+\DoxyCodeLine{02153\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_adb5efd1576224ce9d14f42f8bfee7a1a}{nparams}};\ \ \ \ \ \ \textcolor{comment}{/*\ (u)\ 参数个数\ */}}
+\DoxyCodeLine{02154\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_a943220c57a4dd46dcc1bcd1198cfea88}{isvararg}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (u)\ 是否是可变参数函数\ */}}
+\DoxyCodeLine{02155\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_a6d1b973ebbf25da89b1d637bec435ce5}{extraargs}};\ \ \ \ \textcolor{comment}{/*\ (t)\ 额外参数的个数\ */}}
+\DoxyCodeLine{02156\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_a08e9cf647790ffeb068db293c7572260}{istailcall}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (t)\ 是否是尾调用\ */}}
+\DoxyCodeLine{02157\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_a472f04b46b9a76e4b7b2b13bc06f2b7d}{ftransfer}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (r)\ 第一个传输值的索引\ */}}
+\DoxyCodeLine{02158\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structlua__Debug_ad76fcbbe403a26d349a76052ffa26558}{ntransfer}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (r)\ 传输值的个数\ */}}
+\DoxyCodeLine{02159\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structlua__Debug_a9b953c2fa9ef95a72a9ffc423744e1a4}{short\_src}}[\mbox{\hyperlink{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb}{LUA\_IDSIZE}}];\ \textcolor{comment}{/*\ (S)\ 简短的源文件名\ (用于显示)\ */}}
+\DoxyCodeLine{02160\ }
+\DoxyCodeLine{02161\ \ \ \textcolor{comment}{/*\ 私有部分\ */}}
+\DoxyCodeLine{02162\ \ \ \textcolor{comment}{/*\ private\ part\ */}}
+\DoxyCodeLine{02163\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structCallInfo}{CallInfo}}\ *\mbox{\hyperlink{structlua__Debug_a6cfa3d2272ea187b08164b0a2081d59d}{i\_ci}};\ \textcolor{comment}{/*\ 活动函数的调用信息\ (内部使用)\ */}}
+\DoxyCodeLine{02164\ \};}
+\DoxyCodeLine{02165\ }
+\DoxyCodeLine{02166\ \textcolor{comment}{/*\ \}======================================================================\ */}}
+\DoxyCodeLine{02167\ }
+\DoxyCodeLine{02168\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02169\ \textcolor{comment}{**\ 版本字符串宏}}
+\DoxyCodeLine{02170\ \textcolor{comment}{**}}
+\DoxyCodeLine{02171\ \textcolor{comment}{**\ C\ 语言知识点\ -\/\ 字符串化:}}
+\DoxyCodeLine{02172\ \textcolor{comment}{**\ \#x\ 将宏参数转换为字符串}}
+\DoxyCodeLine{02173\ \textcolor{comment}{**\ LUAI\_TOSTR\ 是一个辅助宏,确保宏展开后再字符串化}}
+\DoxyCodeLine{02174\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02175\ \textcolor{preprocessor}{\#define\ LUAI\_TOSTRAUX(x)\ \#x\ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ 辅助宏:\ 将\ x\ 转为字符串\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02176\ \textcolor{preprocessor}{\#define\ LUAI\_TOSTR(x)\ LUAI\_TOSTRAUX(x)\ }\textcolor{comment}{/*\ 确保\ x\ 先展开再字符串化\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02177\ }
+\DoxyCodeLine{02178\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02179\ \textcolor{comment}{**\ 版本号的字符串形式}}
+\DoxyCodeLine{02180\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02181\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_MAJOR\ LUAI\_TOSTR(LUA\_VERSION\_MAJOR\_N)\ \ \ \ \ }\textcolor{comment}{/*\ "{}5"{}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02182\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_MINOR\ LUAI\_TOSTR(LUA\_VERSION\_MINOR\_N)\ \ \ \ \ }\textcolor{comment}{/*\ "{}5"{}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02183\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\_RELEASE\ LUAI\_TOSTR(LUA\_VERSION\_RELEASE\_N)\ }\textcolor{comment}{/*\ "{}0"{}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02184\ }
+\DoxyCodeLine{02185\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02186\ \textcolor{comment}{**\ 完整版本字符串}}
+\DoxyCodeLine{02187\ \textcolor{comment}{**}}
+\DoxyCodeLine{02188\ \textcolor{comment}{**\ LUA\_VERSION:\ "{}Lua\ 5.5"{}}}
+\DoxyCodeLine{02189\ \textcolor{comment}{**\ LUA\_RELEASE:\ "{}Lua\ 5.5.0"{}}}
+\DoxyCodeLine{02190\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02191\ \textcolor{preprocessor}{\#define\ LUA\_VERSION\ "{}Lua\ "{}\ LUA\_VERSION\_MAJOR\ "{}."{}\ LUA\_VERSION\_MINOR}}
+\DoxyCodeLine{02192\ \textcolor{preprocessor}{\#define\ LUA\_RELEASE\ LUA\_VERSION\ "{}."{}\ LUA\_VERSION\_RELEASE}}
+\DoxyCodeLine{02193\ }
+\DoxyCodeLine{02194\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02195\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{02196\ \textcolor{comment}{**\ 版权声明}}
+\DoxyCodeLine{02197\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{02198\ \textcolor{comment}{**}}
+\DoxyCodeLine{02199\ \textcolor{comment}{**\ Lua\ 使用\ MIT\ 许可证,这是一个非常宽松的开源许可证:}}
+\DoxyCodeLine{02200\ \textcolor{comment}{**}}
+\DoxyCodeLine{02201\ \textcolor{comment}{**\ 主要权利:}}
+\DoxyCodeLine{02202\ \textcolor{comment}{**\ -\/\ 可以自由使用、复制、修改、合并、发布、分发、再许可和销售}}
+\DoxyCodeLine{02203\ \textcolor{comment}{**\ -\/\ 可以用于商业项目}}
+\DoxyCodeLine{02204\ \textcolor{comment}{**\ -\/\ 可以修改源代码}}
+\DoxyCodeLine{02205\ \textcolor{comment}{**}}
+\DoxyCodeLine{02206\ \textcolor{comment}{**\ 主要义务:}}
+\DoxyCodeLine{02207\ \textcolor{comment}{**\ -\/\ 必须在所有副本中包含版权声明和许可声明}}
+\DoxyCodeLine{02208\ \textcolor{comment}{**}}
+\DoxyCodeLine{02209\ \textcolor{comment}{**\ 免责声明:}}
+\DoxyCodeLine{02210\ \textcolor{comment}{**\ -\/\ 软件按"{}原样"{}提供,不提供任何形式的保证}}
+\DoxyCodeLine{02211\ \textcolor{comment}{**\ -\/\ 作者不对任何索赔、损害或其他责任负责}}
+\DoxyCodeLine{02212\ \textcolor{comment}{*/}}
+\DoxyCodeLine{02213\ \textcolor{comment}{/******************************************************************************}}
+\DoxyCodeLine{02214\ \textcolor{comment}{\ *\ Copyright\ (C)\ 1994-\/2025\ Lua.org,\ PUC-\/Rio.}}
+\DoxyCodeLine{02215\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{02216\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining}}
+\DoxyCodeLine{02217\ \textcolor{comment}{\ *\ a\ copy\ of\ this\ software\ and\ associated\ documentation\ files\ (the}}
+\DoxyCodeLine{02218\ \textcolor{comment}{\ *\ "{}Software"{}),\ to\ deal\ in\ the\ Software\ without\ restriction,\ including}}
+\DoxyCodeLine{02219\ \textcolor{comment}{\ *\ without\ limitation\ the\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,}}
+\DoxyCodeLine{02220\ \textcolor{comment}{\ *\ distribute,\ sublicense,\ and/or\ sell\ copies\ of\ the\ Software,\ and\ to}}
+\DoxyCodeLine{02221\ \textcolor{comment}{\ *\ permit\ persons\ to\ whom\ the\ Software\ is\ furnished\ to\ do\ so,\ subject\ to}}
+\DoxyCodeLine{02222\ \textcolor{comment}{\ *\ the\ following\ conditions:}}
+\DoxyCodeLine{02223\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{02224\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be}}
+\DoxyCodeLine{02225\ \textcolor{comment}{\ *\ included\ in\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{02226\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{02227\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{02228\ \textcolor{comment}{\ *\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF}}
+\DoxyCodeLine{02229\ \textcolor{comment}{\ *\ MERCHANTABILITY,\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.}}
+\DoxyCodeLine{02230\ \textcolor{comment}{\ *\ IN\ NO\ EVENT\ SHALL\ THE\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{02231\ \textcolor{comment}{\ *\ CLAIM,\ DAMAGES\ OR\ OTHER\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,}}
+\DoxyCodeLine{02232\ \textcolor{comment}{\ *\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE}}
+\DoxyCodeLine{02233\ \textcolor{comment}{\ *\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{02234\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{02235\ }
+\DoxyCodeLine{02236\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ 结束头文件保护\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{02237\ }
+\DoxyCodeLine{02238\ \textcolor{comment}{/*}}
+\DoxyCodeLine{02239\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{02240\ \textcolor{comment}{**\ 文件总结}}
+\DoxyCodeLine{02241\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{02242\ \textcolor{comment}{**}}
+\DoxyCodeLine{02243\ \textcolor{comment}{**\ 这个头文件是\ Lua\ C\ API\ 的核心,定义了\ C\ 程序与\ Lua\ 交互的所有接口。}}
+\DoxyCodeLine{02244\ \textcolor{comment}{**}}
+\DoxyCodeLine{02245\ \textcolor{comment}{**}}
+\DoxyCodeLine{02246\ \textcolor{comment}{**\ 主要内容回顾:}}
+\DoxyCodeLine{02247\ \textcolor{comment}{**}}
+\DoxyCodeLine{02248\ \textcolor{comment}{**\ 1.\ 基本类型系统\ (40-\/100\ 行)}}
+\DoxyCodeLine{02249\ \textcolor{comment}{**\ \ \ \ -\/\ 定义了\ Lua\ 的\ 9\ 种基本类型}}
+\DoxyCodeLine{02250\ \textcolor{comment}{**\ \ \ \ -\/\ 提供了类型常量和检查宏}}
+\DoxyCodeLine{02251\ \textcolor{comment}{**\ \ \ \ -\/\ 支持数值、字符串、表、函数等}}
+\DoxyCodeLine{02252\ \textcolor{comment}{**}}
+\DoxyCodeLine{02253\ \textcolor{comment}{**\ 2.\ 虚拟栈机制\ (200-\/300\ 行)}}
+\DoxyCodeLine{02254\ \textcolor{comment}{**\ \ \ \ -\/\ Lua\ 与\ C\ 交互的核心机制}}
+\DoxyCodeLine{02255\ \textcolor{comment}{**\ \ \ \ -\/\ 提供压栈、弹栈、索引等操作}}
+\DoxyCodeLine{02256\ \textcolor{comment}{**\ \ \ \ -\/\ 支持正负索引和伪索引}}
+\DoxyCodeLine{02257\ \textcolor{comment}{**}}
+\DoxyCodeLine{02258\ \textcolor{comment}{**\ 3.\ 状态机管理\ (120-\/150\ 行)}}
+\DoxyCodeLine{02259\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_State\ 的创建和销毁}}
+\DoxyCodeLine{02260\ \textcolor{comment}{**\ \ \ \ -\/\ 线程(协程)管理}}
+\DoxyCodeLine{02261\ \textcolor{comment}{**\ \ \ \ -\/\ panic\ 函数设置}}
+\DoxyCodeLine{02262\ \textcolor{comment}{**}}
+\DoxyCodeLine{02263\ \textcolor{comment}{**\ 4.\ 数据访问函数\ (300-\/400\ 行)}}
+\DoxyCodeLine{02264\ \textcolor{comment}{**\ \ \ \ -\/\ 类型检查:\ lua\_is*\ 系列}}
+\DoxyCodeLine{02265\ \textcolor{comment}{**\ \ \ \ -\/\ 类型转换:\ lua\_to*\ 系列}}
+\DoxyCodeLine{02266\ \textcolor{comment}{**\ \ \ \ -\/\ 表操作:\ get/set\ 系列}}
+\DoxyCodeLine{02267\ \textcolor{comment}{**}}
+\DoxyCodeLine{02268\ \textcolor{comment}{**\ 5.\ 函数调用机制\ (150-\/200\ 行)}}
+\DoxyCodeLine{02269\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_call:\ 普通调用}}
+\DoxyCodeLine{02270\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_pcall:\ 保护模式调用}}
+\DoxyCodeLine{02271\ \textcolor{comment}{**\ \ \ \ -\/\ 支持可变参数和多返回值}}
+\DoxyCodeLine{02272\ \textcolor{comment}{**}}
+\DoxyCodeLine{02273\ \textcolor{comment}{**\ 6.\ 协程支持\ (100-\/150\ 行)}}
+\DoxyCodeLine{02274\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_yield:\ 让出执行}}
+\DoxyCodeLine{02275\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_resume:\ 恢复执行}}
+\DoxyCodeLine{02276\ \textcolor{comment}{**\ \ \ \ -\/\ 状态查询}}
+\DoxyCodeLine{02277\ \textcolor{comment}{**}}
+\DoxyCodeLine{02278\ \textcolor{comment}{**\ 7.\ 垃圾回收控制\ (80-\/120\ 行)}}
+\DoxyCodeLine{02279\ \textcolor{comment}{**\ \ \ \ -\/\ 两种\ GC\ 模式:\ 增量和分代}}
+\DoxyCodeLine{02280\ \textcolor{comment}{**\ \ \ \ -\/\ 详细的参数调优}}
+\DoxyCodeLine{02281\ \textcolor{comment}{**\ \ \ \ -\/\ 手动触发和控制}}
+\DoxyCodeLine{02282\ \textcolor{comment}{**}}
+\DoxyCodeLine{02283\ \textcolor{comment}{**\ 8.\ 调试接口\ (150-\/250\ 行)}}
+\DoxyCodeLine{02284\ \textcolor{comment}{**\ \ \ \ -\/\ 钩子函数机制}}
+\DoxyCodeLine{02285\ \textcolor{comment}{**\ \ \ \ -\/\ 栈帧遍历}}
+\DoxyCodeLine{02286\ \textcolor{comment}{**\ \ \ \ -\/\ 变量和\ upvalue\ 访问}}
+\DoxyCodeLine{02287\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_Debug\ 结构}}
+\DoxyCodeLine{02288\ \textcolor{comment}{**}}
+\DoxyCodeLine{02289\ \textcolor{comment}{**}}
+\DoxyCodeLine{02290\ \textcolor{comment}{**\ 设计特点:}}
+\DoxyCodeLine{02291\ \textcolor{comment}{**}}
+\DoxyCodeLine{02292\ \textcolor{comment}{**\ 1.\ 基于栈的\ API}}
+\DoxyCodeLine{02293\ \textcolor{comment}{**\ \ \ \ -\/\ 所有数据交换通过栈进行}}
+\DoxyCodeLine{02294\ \textcolor{comment}{**\ \ \ \ -\/\ 避免了复杂的内存管理}}
+\DoxyCodeLine{02295\ \textcolor{comment}{**\ \ \ \ -\/\ 类型安全由\ Lua\ 保证}}
+\DoxyCodeLine{02296\ \textcolor{comment}{**}}
+\DoxyCodeLine{02297\ \textcolor{comment}{**\ 2.\ 一致的命名规范}}
+\DoxyCodeLine{02298\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_*:\ 核心\ API}}
+\DoxyCodeLine{02299\ \textcolor{comment}{**\ \ \ \ -\/\ LUA\_*:\ 常量}}
+\DoxyCodeLine{02300\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_is*:\ 类型检查}}
+\DoxyCodeLine{02301\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_to*:\ 类型转换}}
+\DoxyCodeLine{02302\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_push*:\ 压栈}}
+\DoxyCodeLine{02303\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_get*|lua\_set*:\ 访问/设置}}
+\DoxyCodeLine{02304\ \textcolor{comment}{**}}
+\DoxyCodeLine{02305\ \textcolor{comment}{**\ 3.\ 错误处理}}
+\DoxyCodeLine{02306\ \textcolor{comment}{**\ \ \ \ -\/\ 保护模式调用捕获错误}}
+\DoxyCodeLine{02307\ \textcolor{comment}{**\ \ \ \ -\/\ panic\ 函数处理致命错误}}
+\DoxyCodeLine{02308\ \textcolor{comment}{**\ \ \ \ -\/\ 错误传播机制}}
+\DoxyCodeLine{02309\ \textcolor{comment}{**}}
+\DoxyCodeLine{02310\ \textcolor{comment}{**\ 4.\ 内存管理}}
+\DoxyCodeLine{02311\ \textcolor{comment}{**\ \ \ \ -\/\ 自定义分配器支持}}
+\DoxyCodeLine{02312\ \textcolor{comment}{**\ \ \ \ -\/\ 垃圾回收自动管理}}
+\DoxyCodeLine{02313\ \textcolor{comment}{**\ \ \ \ -\/\ 资源生命周期明确}}
+\DoxyCodeLine{02314\ \textcolor{comment}{**}}
+\DoxyCodeLine{02315\ \textcolor{comment}{**\ 5.\ 扩展性}}
+\DoxyCodeLine{02316\ \textcolor{comment}{**\ \ \ \ -\/\ 支持用户数据}}
+\DoxyCodeLine{02317\ \textcolor{comment}{**\ \ \ \ -\/\ 元表机制}}
+\DoxyCodeLine{02318\ \textcolor{comment}{**\ \ \ \ -\/\ 钩子和回调}}
+\DoxyCodeLine{02319\ \textcolor{comment}{**}}
+\DoxyCodeLine{02320\ \textcolor{comment}{**}}
+\DoxyCodeLine{02321\ \textcolor{comment}{**\ C\ 语言高级特性使用:}}
+\DoxyCodeLine{02322\ \textcolor{comment}{**}}
+\DoxyCodeLine{02323\ \textcolor{comment}{**\ 1.\ 函数指针}}
+\DoxyCodeLine{02324\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_CFunction:\ C\ 函数注册}}
+\DoxyCodeLine{02325\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_Alloc:\ 自定义内存分配}}
+\DoxyCodeLine{02326\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_Hook:\ 调试钩子}}
+\DoxyCodeLine{02327\ \textcolor{comment}{**}}
+\DoxyCodeLine{02328\ \textcolor{comment}{**\ 2.\ 可变参数}}
+\DoxyCodeLine{02329\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_pushfstring:\ 格式化输出}}
+\DoxyCodeLine{02330\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_gc:\ 多态操作}}
+\DoxyCodeLine{02331\ \textcolor{comment}{**}}
+\DoxyCodeLine{02332\ \textcolor{comment}{**\ 3.\ 宏技巧}}
+\DoxyCodeLine{02333\ \textcolor{comment}{**\ \ \ \ -\/\ 头文件保护}}
+\DoxyCodeLine{02334\ \textcolor{comment}{**\ \ \ \ -\/\ 字符串化\ (\#)}}
+\DoxyCodeLine{02335\ \textcolor{comment}{**\ \ \ \ -\/\ 类型检查宏}}
+\DoxyCodeLine{02336\ \textcolor{comment}{**\ \ \ \ -\/\ 便利宏封装}}
+\DoxyCodeLine{02337\ \textcolor{comment}{**}}
+\DoxyCodeLine{02338\ \textcolor{comment}{**\ 4.\ 结构体}}
+\DoxyCodeLine{02339\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_Debug:\ 调试信息}}
+\DoxyCodeLine{02340\ \textcolor{comment}{**\ \ \ \ -\/\ lua\_State:\ 前向声明}}
+\DoxyCodeLine{02341\ \textcolor{comment}{**}}
+\DoxyCodeLine{02342\ \textcolor{comment}{**\ 5.\ typedef}}
+\DoxyCodeLine{02343\ \textcolor{comment}{**\ \ \ \ -\/\ 类型别名简化}}
+\DoxyCodeLine{02344\ \textcolor{comment}{**\ \ \ \ -\/\ 跨平台兼容}}
+\DoxyCodeLine{02345\ \textcolor{comment}{**}}
+\DoxyCodeLine{02346\ \textcolor{comment}{**}}
+\DoxyCodeLine{02347\ \textcolor{comment}{**\ 使用建议:}}
+\DoxyCodeLine{02348\ \textcolor{comment}{**}}
+\DoxyCodeLine{02349\ \textcolor{comment}{**\ 1.\ 初学者}}
+\DoxyCodeLine{02350\ \textcolor{comment}{**\ \ \ \ -\/\ 从简单的压栈、弹栈开始}}
+\DoxyCodeLine{02351\ \textcolor{comment}{**\ \ \ \ -\/\ 理解栈索引机制}}
+\DoxyCodeLine{02352\ \textcolor{comment}{**\ \ \ \ -\/\ 练习基本的函数调用}}
+\DoxyCodeLine{02353\ \textcolor{comment}{**}}
+\DoxyCodeLine{02354\ \textcolor{comment}{**\ 2.\ 进阶使用}}
+\DoxyCodeLine{02355\ \textcolor{comment}{**\ \ \ \ -\/\ 掌握错误处理}}
+\DoxyCodeLine{02356\ \textcolor{comment}{**\ \ \ \ -\/\ 理解元表和元方法}}
+\DoxyCodeLine{02357\ \textcolor{comment}{**\ \ \ \ -\/\ 使用用户数据绑定\ C\ 对象}}
+\DoxyCodeLine{02358\ \textcolor{comment}{**}}
+\DoxyCodeLine{02359\ \textcolor{comment}{**\ 3.\ 高级应用}}
+\DoxyCodeLine{02360\ \textcolor{comment}{**\ \ \ \ -\/\ 自定义内存分配器}}
+\DoxyCodeLine{02361\ \textcolor{comment}{**\ \ \ \ -\/\ 实现调试器}}
+\DoxyCodeLine{02362\ \textcolor{comment}{**\ \ \ \ -\/\ 性能优化和\ GC\ 调优}}
+\DoxyCodeLine{02363\ \textcolor{comment}{**}}
+\DoxyCodeLine{02364\ \textcolor{comment}{**}}
+\DoxyCodeLine{02365\ \textcolor{comment}{**\ 常见陷阱:}}
+\DoxyCodeLine{02366\ \textcolor{comment}{**}}
+\DoxyCodeLine{02367\ \textcolor{comment}{**\ 1.\ 栈溢出}}
+\DoxyCodeLine{02368\ \textcolor{comment}{**\ \ \ \ -\/\ 忘记检查栈空间}}
+\DoxyCodeLine{02369\ \textcolor{comment}{**\ \ \ \ -\/\ 使用\ lua\_checkstack}}
+\DoxyCodeLine{02370\ \textcolor{comment}{**}}
+\DoxyCodeLine{02371\ \textcolor{comment}{**\ 2.\ 索引错误}}
+\DoxyCodeLine{02372\ \textcolor{comment}{**\ \ \ \ -\/\ 混淆正负索引}}
+\DoxyCodeLine{02373\ \textcolor{comment}{**\ \ \ \ -\/\ 使用无效索引}}
+\DoxyCodeLine{02374\ \textcolor{comment}{**}}
+\DoxyCodeLine{02375\ \textcolor{comment}{**\ 3.\ 内存泄漏}}
+\DoxyCodeLine{02376\ \textcolor{comment}{**\ \ \ \ -\/\ 忘记弹出值}}
+\DoxyCodeLine{02377\ \textcolor{comment}{**\ \ \ \ -\/\ 循环引用}}
+\DoxyCodeLine{02378\ \textcolor{comment}{**}}
+\DoxyCodeLine{02379\ \textcolor{comment}{**\ 4.\ 生命周期}}
+\DoxyCodeLine{02380\ \textcolor{comment}{**\ \ \ \ -\/\ 使用已释放的\ lua\_State}}
+\DoxyCodeLine{02381\ \textcolor{comment}{**\ \ \ \ -\/\ 持有\ Lua\ 字符串指针过久}}
+\DoxyCodeLine{02382\ \textcolor{comment}{**}}
+\DoxyCodeLine{02383\ \textcolor{comment}{**}}
+\DoxyCodeLine{02384\ \textcolor{comment}{**\ 学习资源:}}
+\DoxyCodeLine{02385\ \textcolor{comment}{**}}
+\DoxyCodeLine{02386\ \textcolor{comment}{**\ 1.\ 官方文档:\ www.lua.org/manual/5.5/}}
+\DoxyCodeLine{02387\ \textcolor{comment}{**\ 2.\ Programming\ in\ Lua\ (PIL)\ 书籍}}
+\DoxyCodeLine{02388\ \textcolor{comment}{**\ 3.\ Lua\ 源代码:\ 最好的学习材料}}
+\DoxyCodeLine{02389\ \textcolor{comment}{**}}
+\DoxyCodeLine{02390\ \textcolor{comment}{**}}
+\DoxyCodeLine{02391\ \textcolor{comment}{**\ 下一步学习:}}
+\DoxyCodeLine{02392\ \textcolor{comment}{**}}
+\DoxyCodeLine{02393\ \textcolor{comment}{**\ 1.\ lauxlib.h:\ 辅助库,提供更高级的封装}}
+\DoxyCodeLine{02394\ \textcolor{comment}{**\ 2.\ lualib.h:\ 标准库的\ API}}
+\DoxyCodeLine{02395\ \textcolor{comment}{**\ 3.\ 实际项目:\ 尝试嵌入\ Lua\ 或编写\ Lua\ 扩展}}
+\DoxyCodeLine{02396\ \textcolor{comment}{**}}
+\DoxyCodeLine{02397\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{02398\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

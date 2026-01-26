@@ -1,0 +1,15 @@
+<map id="lua_pushlightuserdata" name="lua_pushlightuserdata">
+<area shape="rect" id="Node000001" title=" " alt="" coords="306,107,453,133"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#a0830ef75e335f6d7590b0e058f82a5eb" title=" " alt="" coords="168,56,258,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="318,104,257,85,259,80,320,99"/>
+<area shape="rect" id="Node000006" href="$lua_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="188,107,238,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="290,123,238,123,238,117,290,117"/>
+<area shape="rect" id="Node000007" href="$luac_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="188,157,238,184"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="319,141,239,166,237,161,318,136"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a392923321d3058f7cdd17b60dfcfab41" title=" " alt="" coords="5,5,120,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="156,53,104,35,105,30,158,48"/>
+<area shape="rect" id="Node000004" href="$lauxlib_8c.html#ac3eedb8425d056c08d479393ff14ad89" title=" " alt="" coords="22,56,103,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="152,72,103,72,103,67,152,67"/>
+<area shape="rect" id="Node000005" href="$lauxlib_8c.html#a67bf3728d34d2c9badb2bd2f57c75233" title=" " alt="" coords="8,107,117,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="158,91,105,109,104,104,156,86"/>
+</map>

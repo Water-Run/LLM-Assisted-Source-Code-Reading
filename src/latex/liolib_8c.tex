@@ -1,0 +1,278 @@
+\doxysection{liolib.\+c File Reference}
+\hypertarget{liolib_8c}{}\label{liolib_8c}\index{liolib.c@{liolib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for liolib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{liolib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structRN}{RN}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a4fa96ecbbecfabf0003fa4163c5029e0}{liolib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a56a6e062eb06243c32928d1cfefba4f5}{L\+\_\+\+MODEEXT}}~"{}b"{}
+\item 
+\#define \mbox{\hyperlink{liolib_8c_abb5b1c7bfa0e31613ed25ca2bb648381}{l\+\_\+popen}}(L,  c,  m)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a2ab03e50e416477fb612dc808c6e2951}{l\+\_\+pclose}}(L,  file)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_aa3d5752e1676a0c9559b617972d90360}{l\+\_\+checkmodep}}(m)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a039d3e5509ea3a88809269f400f58ba5}{l\+\_\+getc}}(f)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_ac0ab419b6e0666a091b66d7948fd4e2d}{l\+\_\+lockfile}}(f)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a4fb31ed5e0fc117ce51bc6e5391bb789}{l\+\_\+unlockfile}}(f)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a62de3640998d6fbb4148ee251244bf85}{l\+\_\+fseek}}(f,  o,  w)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_afa9a1643bfb6b1928c256f818d8ee8d4}{l\+\_\+ftell}}(f)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a0cbd6f87dda88adaa6e189c8490319a3}{l\+\_\+seeknum}}~long
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}}~"{}\+\_\+\+IO\+\_\+"{}
+\item 
+\#define \mbox{\hyperlink{liolib_8c_ac6ca58c960165047c3bf20e9546951b3}{IOPREF\+\_\+\+LEN}}~(sizeof(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}})/sizeof(char) -\/ 1)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a3c1a27aacf1dd33edffa2422da638d0f}{IO\+\_\+\+INPUT}}~(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}} "{}input"{})
+\item 
+\#define \mbox{\hyperlink{liolib_8c_aae48313230e7f773bf495ada1171c506}{IO\+\_\+\+OUTPUT}}~(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}} "{}output"{})
+\item 
+\#define \mbox{\hyperlink{liolib_8c_aa4a3ca333e58733b833a0395c5742fc2}{tolstream}}(L)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a933df16f547e59062271f306675f599c}{isclosed}}(p)
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a71cbd8e6a0b23499a1aef7e03eedf400}{MAXARGLINE}}~250
+\item 
+\#define \mbox{\hyperlink{liolib_8c_a98d71ac135df4047b2f051fcc7a1f40f}{L\+\_\+\+MAXLENNUM}}~200
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structluaL__Stream}{lua\+L\+\_\+\+Stream}} \mbox{\hyperlink{liolib_8c_afdee2306a2ebaf7fd48d13fa65714054}{LStream}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{liolib_8c_a2d3f245e532f3d582a4ff62bbd567149}{luaopen\+\_\+io}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{liolib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{liolib_8c_a3c1a27aacf1dd33edffa2422da638d0f}\index{liolib.c@{liolib.c}!IO\_INPUT@{IO\_INPUT}}
+\index{IO\_INPUT@{IO\_INPUT}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{IO\_INPUT}{IO\_INPUT}}
+{\footnotesize\ttfamily \label{liolib_8c_a3c1a27aacf1dd33edffa2422da638d0f} 
+\#define IO\+\_\+\+INPUT~(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}} "{}input"{})}
+
+\Hypertarget{liolib_8c_aae48313230e7f773bf495ada1171c506}\index{liolib.c@{liolib.c}!IO\_OUTPUT@{IO\_OUTPUT}}
+\index{IO\_OUTPUT@{IO\_OUTPUT}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{IO\_OUTPUT}{IO\_OUTPUT}}
+{\footnotesize\ttfamily \label{liolib_8c_aae48313230e7f773bf495ada1171c506} 
+\#define IO\+\_\+\+OUTPUT~(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}} "{}output"{})}
+
+\Hypertarget{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}\index{liolib.c@{liolib.c}!IO\_PREFIX@{IO\_PREFIX}}
+\index{IO\_PREFIX@{IO\_PREFIX}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{IO\_PREFIX}{IO\_PREFIX}}
+{\footnotesize\ttfamily \label{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830} 
+\#define IO\+\_\+\+PREFIX~"{}\+\_\+\+IO\+\_\+"{}}
+
+\Hypertarget{liolib_8c_ac6ca58c960165047c3bf20e9546951b3}\index{liolib.c@{liolib.c}!IOPREF\_LEN@{IOPREF\_LEN}}
+\index{IOPREF\_LEN@{IOPREF\_LEN}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{IOPREF\_LEN}{IOPREF\_LEN}}
+{\footnotesize\ttfamily \label{liolib_8c_ac6ca58c960165047c3bf20e9546951b3} 
+\#define IOPREF\+\_\+\+LEN~(sizeof(\mbox{\hyperlink{liolib_8c_a181a699d5111b8d79a423a9bbcaf6830}{IO\+\_\+\+PREFIX}})/sizeof(char) -\/ 1)}
+
+\Hypertarget{liolib_8c_a933df16f547e59062271f306675f599c}\index{liolib.c@{liolib.c}!isclosed@{isclosed}}
+\index{isclosed@{isclosed}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{isclosed}{isclosed}}
+{\footnotesize\ttfamily \label{liolib_8c_a933df16f547e59062271f306675f599c} 
+\#define isclosed(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((p)-\/>closef\ ==\ NULL)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_aa3d5752e1676a0c9559b617972d90360}\index{liolib.c@{liolib.c}!l\_checkmodep@{l\_checkmodep}}
+\index{l\_checkmodep@{l\_checkmodep}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_checkmodep}{l\_checkmodep}}
+{\footnotesize\ttfamily \label{liolib_8c_aa3d5752e1676a0c9559b617972d90360} 
+\#define l\+\_\+checkmodep(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((m[0]\ ==\ \textcolor{charliteral}{'r'}\ ||\ m[0]\ ==\ \textcolor{charliteral}{'w'})\ \&\&\ m[1]\ ==\ \textcolor{charliteral}{'\(\backslash\)0'})}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_a62de3640998d6fbb4148ee251244bf85}\index{liolib.c@{liolib.c}!l\_fseek@{l\_fseek}}
+\index{l\_fseek@{l\_fseek}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_fseek}{l\_fseek}}
+{\footnotesize\ttfamily \label{liolib_8c_a62de3640998d6fbb4148ee251244bf85} 
+\#define l\+\_\+fseek(\begin{DoxyParamCaption}\item[{}]{f}{, }\item[{}]{o}{, }\item[{}]{w}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{fseek(f,o,w)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_afa9a1643bfb6b1928c256f818d8ee8d4}\index{liolib.c@{liolib.c}!l\_ftell@{l\_ftell}}
+\index{l\_ftell@{l\_ftell}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_ftell}{l\_ftell}}
+{\footnotesize\ttfamily \label{liolib_8c_afa9a1643bfb6b1928c256f818d8ee8d4} 
+\#define l\+\_\+ftell(\begin{DoxyParamCaption}\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ftell(f)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_a039d3e5509ea3a88809269f400f58ba5}\index{liolib.c@{liolib.c}!l\_getc@{l\_getc}}
+\index{l\_getc@{l\_getc}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_getc}{l\_getc}}
+{\footnotesize\ttfamily \label{liolib_8c_a039d3e5509ea3a88809269f400f58ba5} 
+\#define l\+\_\+getc(\begin{DoxyParamCaption}\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{getc(f)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_ac0ab419b6e0666a091b66d7948fd4e2d}\index{liolib.c@{liolib.c}!l\_lockfile@{l\_lockfile}}
+\index{l\_lockfile@{l\_lockfile}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_lockfile}{l\_lockfile}}
+{\footnotesize\ttfamily \label{liolib_8c_ac0ab419b6e0666a091b66d7948fd4e2d} 
+\#define l\+\_\+lockfile(\begin{DoxyParamCaption}\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_a98d71ac135df4047b2f051fcc7a1f40f}\index{liolib.c@{liolib.c}!L\_MAXLENNUM@{L\_MAXLENNUM}}
+\index{L\_MAXLENNUM@{L\_MAXLENNUM}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{L\_MAXLENNUM}{L\_MAXLENNUM}}
+{\footnotesize\ttfamily \label{liolib_8c_a98d71ac135df4047b2f051fcc7a1f40f} 
+\#define L\+\_\+\+MAXLENNUM~200}
+
+\Hypertarget{liolib_8c_a56a6e062eb06243c32928d1cfefba4f5}\index{liolib.c@{liolib.c}!L\_MODEEXT@{L\_MODEEXT}}
+\index{L\_MODEEXT@{L\_MODEEXT}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{L\_MODEEXT}{L\_MODEEXT}}
+{\footnotesize\ttfamily \label{liolib_8c_a56a6e062eb06243c32928d1cfefba4f5} 
+\#define L\+\_\+\+MODEEXT~"{}b"{}}
+
+\Hypertarget{liolib_8c_a2ab03e50e416477fb612dc808c6e2951}\index{liolib.c@{liolib.c}!l\_pclose@{l\_pclose}}
+\index{l\_pclose@{l\_pclose}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_pclose}{l\_pclose}}
+{\footnotesize\ttfamily \label{liolib_8c_a2ab03e50e416477fb612dc808c6e2951} 
+\#define l\+\_\+pclose(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{file}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)L,\ (void)file,\ -\/1)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_abb5b1c7bfa0e31613ed25ca2bb648381}\index{liolib.c@{liolib.c}!l\_popen@{l\_popen}}
+\index{l\_popen@{l\_popen}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_popen}{l\_popen}}
+{\footnotesize\ttfamily \label{liolib_8c_abb5b1c7bfa0e31613ed25ca2bb648381} 
+\#define l\+\_\+popen(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{c}{, }\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ ((void)c,\ (void)m,\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ luaL\_error(L,\ \textcolor{stringliteral}{"{}'popen'\ not\ supported"{}}),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ (FILE*)0)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_a0cbd6f87dda88adaa6e189c8490319a3}\index{liolib.c@{liolib.c}!l\_seeknum@{l\_seeknum}}
+\index{l\_seeknum@{l\_seeknum}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_seeknum}{l\_seeknum}}
+{\footnotesize\ttfamily \label{liolib_8c_a0cbd6f87dda88adaa6e189c8490319a3} 
+\#define l\+\_\+seeknum~long}
+
+\Hypertarget{liolib_8c_a4fb31ed5e0fc117ce51bc6e5391bb789}\index{liolib.c@{liolib.c}!l\_unlockfile@{l\_unlockfile}}
+\index{l\_unlockfile@{l\_unlockfile}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{l\_unlockfile}{l\_unlockfile}}
+{\footnotesize\ttfamily \label{liolib_8c_a4fb31ed5e0fc117ce51bc6e5391bb789} 
+\#define l\+\_\+unlockfile(\begin{DoxyParamCaption}\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+\Hypertarget{liolib_8c_a4fa96ecbbecfabf0003fa4163c5029e0}\index{liolib.c@{liolib.c}!liolib\_c@{liolib\_c}}
+\index{liolib\_c@{liolib\_c}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{liolib\_c}{liolib\_c}}
+{\footnotesize\ttfamily \label{liolib_8c_a4fa96ecbbecfabf0003fa4163c5029e0} 
+\#define liolib\+\_\+c}
+
+\Hypertarget{liolib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{liolib.c@{liolib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{liolib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{liolib_8c_a71cbd8e6a0b23499a1aef7e03eedf400}\index{liolib.c@{liolib.c}!MAXARGLINE@{MAXARGLINE}}
+\index{MAXARGLINE@{MAXARGLINE}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{MAXARGLINE}{MAXARGLINE}}
+{\footnotesize\ttfamily \label{liolib_8c_a71cbd8e6a0b23499a1aef7e03eedf400} 
+\#define MAXARGLINE~250}
+
+\Hypertarget{liolib_8c_aa4a3ca333e58733b833a0395c5742fc2}\index{liolib.c@{liolib.c}!tolstream@{tolstream}}
+\index{tolstream@{tolstream}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{tolstream}{tolstream}}
+{\footnotesize\ttfamily \label{liolib_8c_aa4a3ca333e58733b833a0395c5742fc2} 
+\#define tolstream(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\mbox{\hyperlink{liolib_8c_afdee2306a2ebaf7fd48d13fa65714054}{LStream}}\ *)\mbox{\hyperlink{lauxlib_8c_a4be5678b50e3688ce06f874b5bb14bce}{luaL\_checkudata}}(L,\ 1,\ \mbox{\hyperlink{lauxlib_8h_a36f3babeb54bee1ebba63fe4fa94189a}{LUA\_FILEHANDLE}}))}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{liolib_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{liolib_8c_afdee2306a2ebaf7fd48d13fa65714054}\index{liolib.c@{liolib.c}!LStream@{LStream}}
+\index{LStream@{LStream}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{LStream}{LStream}}
+{\footnotesize\ttfamily \label{liolib_8c_afdee2306a2ebaf7fd48d13fa65714054} 
+typedef \mbox{\hyperlink{structluaL__Stream}{lua\+L\+\_\+\+Stream}} \mbox{\hyperlink{liolib_8c_afdee2306a2ebaf7fd48d13fa65714054}{LStream}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{liolib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{liolib_8c_a2d3f245e532f3d582a4ff62bbd567149}\index{liolib.c@{liolib.c}!luaopen\_io@{luaopen\_io}}
+\index{luaopen\_io@{luaopen\_io}!liolib.c@{liolib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_io()}{luaopen\_io()}}
+{\footnotesize\ttfamily \label{liolib_8c_a2d3f245e532f3d582a4ff62bbd567149} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+io (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+

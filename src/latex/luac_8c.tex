@@ -1,0 +1,228 @@
+\doxysection{luac.\+c File Reference}
+\hypertarget{luac_8c}{}\label{luac_8c}\index{luac.c@{luac.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lapi.\+h"{}}\newline
+{\ttfamily \#include "{}ldebug.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lopcodes.\+h"{}}\newline
+{\ttfamily \#include "{}lopnames.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+{\ttfamily \#include "{}lundump.\+h"{}}\newline
+Include dependency graph for luac.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{luac_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{luac_8c_ac70e1c4c97135b89ba757fb14b14951b}{luac\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{luac_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{luac_8c_a84271d27ce329c7c6ca946c1a776461b}{lua\+U\+\_\+print}}~Print\+Function
+\item 
+\#define \mbox{\hyperlink{luac_8c_a8c9afb758de9a0355c93fc926b8ce6b1}{PROGNAME}}~"{}luac"{}  /\texorpdfstring{$\ast$}{*} default program name \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{luac_8c_a61a3c9a18380aafb6e430e79bf596557}{OUTPUT}}~\mbox{\hyperlink{luac_8c_a8c9afb758de9a0355c93fc926b8ce6b1}{PROGNAME}} "{}.out"{} /\texorpdfstring{$\ast$}{*} default output file \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{luac_8c_aa34c724b8aa48c2379fe48ecdb26927b}{IS}}(s)
+\item 
+\#define \mbox{\hyperlink{luac_8c_aee0cf83ee6d754df700e396da8987f1f}{FUNCTION}}~"{}(function()end)();\textbackslash{}n"{}
+\item 
+\#define \mbox{\hyperlink{luac_8c_a395e76b71aa94b35fda84c1edaf01d06}{toproto}}(L,  i)
+\item 
+\#define \mbox{\hyperlink{luac_8c_a16edb7a847ec8518180e4cf618832587}{UPVALNAME}}(x)
+\item 
+\#define \mbox{\hyperlink{luac_8c_a24af9b8ebca3f5db5c15aee49899691d}{VOID}}(p)
+\item 
+\#define \mbox{\hyperlink{luac_8c_a2b8b155976e308f69b0252c947f570fa}{eventname}}(i)
+\item 
+\#define \mbox{\hyperlink{luac_8c_a180f5b3835bdbfc11b353fd2af5c8659}{COMMENT}}~"{}\textbackslash{}t; "{}
+\item 
+\#define \mbox{\hyperlink{luac_8c_a328931eb747b663edea30597406578b6}{EXTRAARG}}~\mbox{\hyperlink{lopcodes_8h_acfd578bba038b6682b924cf48012d80a}{GETARG\+\_\+\+Ax}}(code\mbox{[}pc+1\mbox{]})
+\item 
+\#define \mbox{\hyperlink{luac_8c_a1b08231ae114cf55d2e313612fe93eb8}{EXTRAARGC}}~(\mbox{\hyperlink{luac_8c_a328931eb747b663edea30597406578b6}{EXTRAARG}}\texorpdfstring{$\ast$}{*}(\mbox{\hyperlink{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}{MAXARG\+\_\+C}}+1))
+\item 
+\#define \mbox{\hyperlink{luac_8c_a790dc09cb0f496719f6791e449137a61}{ISK}}~(isk ? "{}k"{} \+: "{}"{})
+\item 
+\#define \mbox{\hyperlink{luac_8c_a6c01cbe06c1d312c5f95b3a9d3a23cef}{SS}}(x)
+\item 
+\#define \mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}}(x)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{luac_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{luac_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{luac_8c_a180f5b3835bdbfc11b353fd2af5c8659}\index{luac.c@{luac.c}!COMMENT@{COMMENT}}
+\index{COMMENT@{COMMENT}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{COMMENT}{COMMENT}}
+{\footnotesize\ttfamily \label{luac_8c_a180f5b3835bdbfc11b353fd2af5c8659} 
+\#define COMMENT~"{}\textbackslash{}t; "{}}
+
+\Hypertarget{luac_8c_a2b8b155976e308f69b0252c947f570fa}\index{luac.c@{luac.c}!eventname@{eventname}}
+\index{eventname@{eventname}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{eventname}{eventname}}
+{\footnotesize\ttfamily \label{luac_8c_a2b8b155976e308f69b0252c947f570fa} 
+\#define eventname(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lobject_8h_acb05d3ab238923581a9c629b8e11a6ac}{getstr}}(tmname[i]))}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a328931eb747b663edea30597406578b6}\index{luac.c@{luac.c}!EXTRAARG@{EXTRAARG}}
+\index{EXTRAARG@{EXTRAARG}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{EXTRAARG}{EXTRAARG}}
+{\footnotesize\ttfamily \label{luac_8c_a328931eb747b663edea30597406578b6} 
+\#define EXTRAARG~\mbox{\hyperlink{lopcodes_8h_acfd578bba038b6682b924cf48012d80a}{GETARG\+\_\+\+Ax}}(code\mbox{[}pc+1\mbox{]})}
+
+\Hypertarget{luac_8c_a1b08231ae114cf55d2e313612fe93eb8}\index{luac.c@{luac.c}!EXTRAARGC@{EXTRAARGC}}
+\index{EXTRAARGC@{EXTRAARGC}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{EXTRAARGC}{EXTRAARGC}}
+{\footnotesize\ttfamily \label{luac_8c_a1b08231ae114cf55d2e313612fe93eb8} 
+\#define EXTRAARGC~(\mbox{\hyperlink{luac_8c_a328931eb747b663edea30597406578b6}{EXTRAARG}}\texorpdfstring{$\ast$}{*}(\mbox{\hyperlink{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}{MAXARG\+\_\+C}}+1))}
+
+\Hypertarget{luac_8c_aee0cf83ee6d754df700e396da8987f1f}\index{luac.c@{luac.c}!FUNCTION@{FUNCTION}}
+\index{FUNCTION@{FUNCTION}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{FUNCTION}{FUNCTION}}
+{\footnotesize\ttfamily \label{luac_8c_aee0cf83ee6d754df700e396da8987f1f} 
+\#define FUNCTION~"{}(function()end)();\textbackslash{}n"{}}
+
+\Hypertarget{luac_8c_aa34c724b8aa48c2379fe48ecdb26927b}\index{luac.c@{luac.c}!IS@{IS}}
+\index{IS@{IS}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{IS}{IS}}
+{\footnotesize\ttfamily \label{luac_8c_aa34c724b8aa48c2379fe48ecdb26927b} 
+\#define IS(\begin{DoxyParamCaption}\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(strcmp(argv[i],s)==0)}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a790dc09cb0f496719f6791e449137a61}\index{luac.c@{luac.c}!ISK@{ISK}}
+\index{ISK@{ISK}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{ISK}{ISK}}
+{\footnotesize\ttfamily \label{luac_8c_a790dc09cb0f496719f6791e449137a61} 
+\#define ISK~(isk ? "{}k"{} \+: "{}"{})}
+
+\Hypertarget{luac_8c_abf0b3947b59218777a8e928a10be205b}\index{luac.c@{luac.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{luac_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+\Hypertarget{luac_8c_ac70e1c4c97135b89ba757fb14b14951b}\index{luac.c@{luac.c}!luac\_c@{luac\_c}}
+\index{luac\_c@{luac\_c}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{luac\_c}{luac\_c}}
+{\footnotesize\ttfamily \label{luac_8c_ac70e1c4c97135b89ba757fb14b14951b} 
+\#define luac\+\_\+c}
+
+\Hypertarget{luac_8c_a84271d27ce329c7c6ca946c1a776461b}\index{luac.c@{luac.c}!luaU\_print@{luaU\_print}}
+\index{luaU\_print@{luaU\_print}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{luaU\_print}{luaU\_print}}
+{\footnotesize\ttfamily \label{luac_8c_a84271d27ce329c7c6ca946c1a776461b} 
+\#define lua\+U\+\_\+print~Print\+Function}
+
+\Hypertarget{luac_8c_a61a3c9a18380aafb6e430e79bf596557}\index{luac.c@{luac.c}!OUTPUT@{OUTPUT}}
+\index{OUTPUT@{OUTPUT}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{OUTPUT}{OUTPUT}}
+{\footnotesize\ttfamily \label{luac_8c_a61a3c9a18380aafb6e430e79bf596557} 
+\#define OUTPUT~\mbox{\hyperlink{luac_8c_a8c9afb758de9a0355c93fc926b8ce6b1}{PROGNAME}} "{}.out"{} /\texorpdfstring{$\ast$}{*} default output file \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{luac_8c_a8c9afb758de9a0355c93fc926b8ce6b1}\index{luac.c@{luac.c}!PROGNAME@{PROGNAME}}
+\index{PROGNAME@{PROGNAME}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{PROGNAME}{PROGNAME}}
+{\footnotesize\ttfamily \label{luac_8c_a8c9afb758de9a0355c93fc926b8ce6b1} 
+\#define PROGNAME~"{}luac"{}  /\texorpdfstring{$\ast$}{*} default program name \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{luac_8c_ac4a3ed3432929804c708f7760fb79e28}\index{luac.c@{luac.c}!S@{S}}
+\index{S@{S}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily \label{luac_8c_ac4a3ed3432929804c708f7760fb79e28} 
+\#define S(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(int)(x),\mbox{\hyperlink{luac_8c_a6c01cbe06c1d312c5f95b3a9d3a23cef}{SS}}(x)}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a6c01cbe06c1d312c5f95b3a9d3a23cef}\index{luac.c@{luac.c}!SS@{SS}}
+\index{SS@{SS}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{SS}{SS}}
+{\footnotesize\ttfamily \label{luac_8c_a6c01cbe06c1d312c5f95b3a9d3a23cef} 
+\#define SS(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((x==1)?\textcolor{stringliteral}{"{}"{}}:\textcolor{stringliteral}{"{}s"{}})}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a395e76b71aa94b35fda84c1edaf01d06}\index{luac.c@{luac.c}!toproto@{toproto}}
+\index{toproto@{toproto}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{toproto}{toproto}}
+{\footnotesize\ttfamily \label{luac_8c_a395e76b71aa94b35fda84c1edaf01d06} 
+\#define toproto(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lobject_8h_a36095400a8ca3ad1e6120f507b421331}{getproto}}(\mbox{\hyperlink{lobject_8h_a8c21cbb67def90b23342840cd08a5cfd}{s2v}}(L-\/>top.p+(i)))}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a16edb7a847ec8518180e4cf618832587}\index{luac.c@{luac.c}!UPVALNAME@{UPVALNAME}}
+\index{UPVALNAME@{UPVALNAME}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{UPVALNAME}{UPVALNAME}}
+{\footnotesize\ttfamily \label{luac_8c_a16edb7a847ec8518180e4cf618832587} 
+\#define UPVALNAME(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((f-\/>upvalues[x].name)\ ?\ \mbox{\hyperlink{lobject_8h_acb05d3ab238923581a9c629b8e11a6ac}{getstr}}(f-\/>upvalues[x].name)\ :\ \textcolor{stringliteral}{"{}-\/"{}})}
+
+\end{DoxyCode}
+\Hypertarget{luac_8c_a24af9b8ebca3f5db5c15aee49899691d}\index{luac.c@{luac.c}!VOID@{VOID}}
+\index{VOID@{VOID}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{VOID}{VOID}}
+{\footnotesize\ttfamily \label{luac_8c_a24af9b8ebca3f5db5c15aee49899691d} 
+\#define VOID(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)(p))}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{luac_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{luac_8c_a0ddf1224851353fc92bfbff6f499fa97}\index{luac.c@{luac.c}!main@{main}}
+\index{main@{main}!luac.c@{luac.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{luac_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{luac_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

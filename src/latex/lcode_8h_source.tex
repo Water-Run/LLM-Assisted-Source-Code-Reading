@@ -1,0 +1,110 @@
+\doxysection{lcode.\+h}
+\hypertarget{lcode_8h_source}{}\label{lcode_8h_source}\mbox{\hyperlink{lcode_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lcode.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Code\ generator\ for\ Lua}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lcode\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lcode\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llex_8h}{llex.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lopcodes_8h}{lopcodes.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lparser_8h}{lparser.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**\ Marks\ the\ end\ of\ a\ patch\ list.\ It\ is\ an\ invalid\ value\ both\ as\ an\ absolute}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ address,\ and\ as\ a\ list\ link\ (would\ link\ an\ element\ to\ itself).}}
+\DoxyCodeLine{00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ NO\_JUMP\ (-\/1)}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ grep\ "{}ORDER\ OPR"{}\ if\ you\ change\ these\ enums\ \ (ORDER\ OP)}}
+\DoxyCodeLine{00025\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83}{BinOpr}}\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{comment}{/*\ arithmetic\ operators\ */}}
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a6a040b1b3b8cc217942b40bdcfd89a12}{OPR\_ADD}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a9af57e8c20b32a5bae4e7d5b94015a0d}{OPR\_SUB}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a3b374e6db04a6e4645e113fc82c873e2}{OPR\_MUL}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83abc6e1524cbf3d8a2b2a6689d5c40bc57}{OPR\_MOD}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83af06a2e29452e38eb8ed02812a1aa1083}{OPR\_POW}},}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83aa0b20b22c1a53d0fb294bd15993fd4d8}{OPR\_DIV}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83ac91ab547f0844521654b0e8924085d1e}{OPR\_IDIV}},}
+\DoxyCodeLine{00030\ \ \ \textcolor{comment}{/*\ bitwise\ operators\ */}}
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a83d1f111c407b2a4ce3ecdf5fc588e4d}{OPR\_BAND}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83aee42d0b535e2a8f6686dde348f113210}{OPR\_BOR}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83aba9d6ec8db62deeab8b731a973023156}{OPR\_BXOR}},}
+\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83aea58586b669bfc9483fa17069e7f3602}{OPR\_SHL}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a53468a69eae492aec03a799f02754411}{OPR\_SHR}},}
+\DoxyCodeLine{00033\ \ \ \textcolor{comment}{/*\ string\ operator\ */}}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a5f601beb91f937ddb7a1835f93016fdc}{OPR\_CONCAT}},}
+\DoxyCodeLine{00035\ \ \ \textcolor{comment}{/*\ comparison\ operators\ */}}
+\DoxyCodeLine{00036\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a1c53aacbc69d7058b240be92b134a7eb}{OPR\_EQ}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a15e3bd67027d90471048ea39abfd32fa}{OPR\_LT}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a96f2a6272233d80a19b4f4482cf121a5}{OPR\_LE}},}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a1f56f30f2368c0f93c9aeeea7e72ac55}{OPR\_NE}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a3c68b5b6ad04299cc50ef1c4611441b0}{OPR\_GT}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a5a35f1c08acd1e14156d32e04d8b9806}{OPR\_GE}},}
+\DoxyCodeLine{00038\ \ \ \textcolor{comment}{/*\ logical\ operators\ */}}
+\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a3dbbb7b8ec103877916a8a4c4671a3ef}{OPR\_AND}},\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83ae104a7612eb80ee5d9ff5715a938a2c1}{OPR\_OR}},}
+\DoxyCodeLine{00040\ \ \ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83a1b1f5234efa3ff41b9898c76c8ee6f68}{OPR\_NOBINOPR}}}
+\DoxyCodeLine{00041\ \}\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83}{BinOpr}};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{/*\ true\ if\ operation\ is\ foldable\ (that\ is,\ it\ is\ arithmetic\ or\ bitwise)\ */}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ foldbinop(op)\ \ \ ((op)\ <=\ OPR\_SHR)}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ luaK\_codeABC(fs,o,a,b,c)\ \ \ \ luaK\_codeABCk(fs,o,a,b,c,0)}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534}{UnOpr}}\ \{\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534ad7aef0de1fbf580a7d03635a3e4058f3}{OPR\_MINUS}},\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534a692243c52fe8a114bce557d05a198c68}{OPR\_BNOT}},\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534a238495588717191ca92bb9f8a5c80b59}{OPR\_NOT}},\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534a09eeed48a27b90460bab6d8ba33e620e}{OPR\_LEN}},\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534ae72bf1249ed8649f7ed837b537ed928d}{OPR\_NOUNOPR}}\ \}\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534}{UnOpr}};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{/*\ get\ (pointer\ to)\ instruction\ of\ given\ 'expdesc'\ */}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ getinstruction(fs,e)\ \ \ \ ((fs)-\/>f-\/>code[(e)-\/>u.info])}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ luaK\_setmultret(fs,e)\ \ \ luaK\_setreturns(fs,\ e,\ LUA\_MULTRET)}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ luaK\_jumpto(fs,t)\ \ \ luaK\_patchlist(fs,\ luaK\_jump(fs),\ t)}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_a96c5e0e67ce8d9bb5d7b32ce5dd587b2}{luaK\_code}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}\ i);}
+\DoxyCodeLine{00063\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_acb79d743dbd8dd054c3e6438725451ca}{luaK\_codeABx}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{OpCode}}\ o,\ \textcolor{keywordtype}{int}\ A,\ \textcolor{keywordtype}{int}\ Bx);}
+\DoxyCodeLine{00064\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_ace0ce2d50b1423a5b4b2234ca90f4794}{luaK\_codeABCk}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{OpCode}}\ o,\ \textcolor{keywordtype}{int}\ A,\ \textcolor{keywordtype}{int}\ B,\ \textcolor{keywordtype}{int}\ C,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k);}
+\DoxyCodeLine{00066\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_a442d20f52208c6b06af86d2947cdb4e1}{luaK\_codevABCk}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{OpCode}}\ o,\ \textcolor{keywordtype}{int}\ A,\ \textcolor{keywordtype}{int}\ B,\ \textcolor{keywordtype}{int}\ C,}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k);}
+\DoxyCodeLine{00068\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_a76fcfd2cbf5cf9decaefb29f24411455}{luaK\_exp2const}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e,\ \mbox{\hyperlink{structTValue}{TValue}}\ *v);}
+\DoxyCodeLine{00069\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a87c903709e739068e361dd59788a486f}{luaK\_fixline}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ line);}
+\DoxyCodeLine{00070\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a0b4caf213c4d4697d63ad22fedda0d1f}{luaK\_nil}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ from,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00071\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a2d28e2fd1a283bca9afbb9af4170f31b}{luaK\_codecheckglobal}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *var,\ \textcolor{keywordtype}{int}\ k,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ line);}
+\DoxyCodeLine{00073\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_abd5365c0b65143b55552bff3a9e6d681}{luaK\_reserveregs}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00074\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_ade83373047ab7254868bfd06bb8089b5}{luaK\_checkstack}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00075\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a511cc8052e9f5ffc7a9ac616825efa0d}{luaK\_int}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ reg,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ n);}
+\DoxyCodeLine{00076\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_aee040ae733633375d423d6d87ed758c6}{luaK\_vapar2local}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *var);}
+\DoxyCodeLine{00077\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a4722275409ea90ad0cfc56723b8f21bb}{luaK\_dischargevars}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00078\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_a219ca12ddb52437285a46bddfc4feeb8}{luaK\_exp2anyreg}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00079\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a2d79e7835a757a0bace8b3f01eba161b}{luaK\_exp2anyregup}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00080\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a61926f09ebafc501840e6cac1bebb16d}{luaK\_exp2nextreg}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00081\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_abbb8eb20146165d70bbda57068685f1e}{luaK\_exp2val}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00082\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_aeaf22c625b86a7b63ec83cf8b6036815}{luaK\_self}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *key);}
+\DoxyCodeLine{00083\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_aef9f69dd75331c1ad4ad55329fe5a1d9}{luaK\_indexed}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *t,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *k);}
+\DoxyCodeLine{00084\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_afff58a79c5fb3e56811bcf9a4315bfda}{luaK\_goiftrue}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00085\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a84aa56cf92c9d61e65101d54c6300b96}{luaK\_storevar}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *var,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00086\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_acae0354c40f684d990fd3aa73bbcd770}{luaK\_setreturns}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e,\ \textcolor{keywordtype}{int}\ nresults);}
+\DoxyCodeLine{00087\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a890dbdb46581586862dbcf56b077f97f}{luaK\_setoneret}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *e);}
+\DoxyCodeLine{00088\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_a67cd7ce15260791b3348dfe0af04a444}{luaK\_jump}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs);}
+\DoxyCodeLine{00089\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_aa7c34b815a59b7ed4b5d585825cad475}{luaK\_ret}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ first,\ \textcolor{keywordtype}{int}\ nret);}
+\DoxyCodeLine{00090\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a8efbcf17cf978cc2bac3e08f755677bd}{luaK\_patchlist}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ list,\ \textcolor{keywordtype}{int}\ target);}
+\DoxyCodeLine{00091\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a46bd7bbdf259cca73b0b0b833880df51}{luaK\_patchtohere}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ list);}
+\DoxyCodeLine{00092\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a0abd5e7a52c17bcf3ffe02ebaa771ff2}{luaK\_concat}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ *l1,\ \textcolor{keywordtype}{int}\ l2);}
+\DoxyCodeLine{00093\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lcode_8h_aab3ec26384fa706960da17c9a3ed5057}{luaK\_getlabel}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs);}
+\DoxyCodeLine{00094\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a108f48cde9af08a87347aa6380a4a015}{luaK\_prefix}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lcode_8h_a36fd1054d39d6fc3373303522a7ef534}{UnOpr}}\ op,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *v,\ \textcolor{keywordtype}{int}\ line);}
+\DoxyCodeLine{00095\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_ad66fe8cd73e03e0d604d8c9572011ee7}{luaK\_infix}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83}{BinOpr}}\ op,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *v);}
+\DoxyCodeLine{00096\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a2a87516e72f08e1b692331de96a6d8d6}{luaK\_posfix}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \mbox{\hyperlink{lcode_8h_ae9a305c1104efedfc54af8d08b942c83}{BinOpr}}\ op,\ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *v1,}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structexpdesc}{expdesc}}\ *v2,\ \textcolor{keywordtype}{int}\ line);}
+\DoxyCodeLine{00098\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a661f2e8d150a8878e016813a1616d7f0}{luaK\_settablesize}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ pc,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ra,\ \textcolor{keywordtype}{int}\ asize,\ \textcolor{keywordtype}{int}\ hsize);}
+\DoxyCodeLine{00100\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a88808415ff9297023fb19b4e84a19033}{luaK\_setlist}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs,\ \textcolor{keywordtype}{int}\ base,\ \textcolor{keywordtype}{int}\ nelems,\ \textcolor{keywordtype}{int}\ tostore);}
+\DoxyCodeLine{00101\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lcode_8h_a04b29cadb9bd98c501fa20e416d2ae5b}{luaK\_finish}}\ (\mbox{\hyperlink{structFuncState}{FuncState}}\ *fs);}
+\DoxyCodeLine{00102\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\_noret}}\ \mbox{\hyperlink{lcode_8h_a4290952aac1956f4ca686c8bea0b2392}{luaK\_semerror}}\ (\mbox{\hyperlink{structLexState}{LexState}}\ *ls,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,\ ...);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

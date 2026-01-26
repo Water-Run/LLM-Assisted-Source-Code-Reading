@@ -1,0 +1,172 @@
+\doxysection{Call\+Info Struct Reference}
+\hypertarget{structCallInfo}{}\label{structCallInfo}\index{CallInfo@{CallInfo}}
+
+
+{\ttfamily \#include $<$lstate.\+h$>$}
+
+
+
+Collaboration diagram for Call\+Info\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structCallInfo__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structCallInfo_a3307de33f6da067897418f5e98e63167}{func}}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structCallInfo_a896b6484f4e0c4f76768913ffb91e88b}{top}}
+\item 
+struct \mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structCallInfo_a1b3e7558ecf4218dd0e3b367c077733b}{previous}}
+\item 
+struct \mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structCallInfo_a71b69e9acba8caa2d8e833d8a79fdf9d}{next}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>const \mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structCallInfo_a4f8b835724037f01569452eab143948f}{savedpc}}\\
+\>\>volatile \mbox{\hyperlink{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}{l\_signalT}} \mbox{\hyperlink{structCallInfo_a0034f1ca11027b0a66adacb28dd64618}{trap}}\\
+\>\>int \mbox{\hyperlink{structCallInfo_a14e42d92bc824c3f470152b2ba3ac334}{nextraargs}}\\
+\>\} \mbox{\hyperlink{structCallInfo_a8d957fd32997b59b7173dc824ec959af}{l}}\\
+\>struct \{\\
+\>\>\mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\_KFunction}} \mbox{\hyperlink{structCallInfo_a861d3b2fbd9d287c22b0d9324f578e7b}{k}}\\
+\>\>ptrdiff\_t \mbox{\hyperlink{structCallInfo_ae18597139d0d00b65683efed8ccd3c64}{old\_errfunc}}\\
+\>\>\mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\_KContext}} \mbox{\hyperlink{structCallInfo_a7c410e045297e80c91e9737f959e7ef9}{ctx}}\\
+\>\} \mbox{\hyperlink{structCallInfo_ab9cf4b7b870572bff16dc325f90bbc9d}{c}}\\
+\} \mbox{\hyperlink{structCallInfo_a99500911e7681b13bb85a5da701bbaff}{u}}\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>int \mbox{\hyperlink{structCallInfo_adebb7e3602965a04deda09fcaf8fefc1}{funcidx}}\\
+\>int \mbox{\hyperlink{structCallInfo_a1de818b3a003fcf25f1db6e294fa5b58}{nyield}}\\
+\>int \mbox{\hyperlink{structCallInfo_a1235c5fa93cd02162d842c6385af1c5c}{nres}}\\
+\} \mbox{\hyperlink{structCallInfo_a16f43e1f906787ff204d821fcbe53ad4}{u2}}\\
+
+\end{tabbing}\item 
+\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}} \mbox{\hyperlink{structCallInfo_a813d3c0353b43dc28bdd13447fd3412a}{callstatus}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structCallInfo_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structCallInfo_ab9cf4b7b870572bff16dc325f90bbc9d}\index{CallInfo@{CallInfo}!c@{c}}
+\index{c@{c}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structCallInfo_ab9cf4b7b870572bff16dc325f90bbc9d} 
+struct  \{ ... \}  Call\+Info\+::c}
+
+\Hypertarget{structCallInfo_a813d3c0353b43dc28bdd13447fd3412a}\index{CallInfo@{CallInfo}!callstatus@{callstatus}}
+\index{callstatus@{callstatus}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{callstatus}{callstatus}}
+{\footnotesize\ttfamily \label{structCallInfo_a813d3c0353b43dc28bdd13447fd3412a} 
+\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}} Call\+Info\+::callstatus}
+
+\Hypertarget{structCallInfo_a7c410e045297e80c91e9737f959e7ef9}\index{CallInfo@{CallInfo}!ctx@{ctx}}
+\index{ctx@{ctx}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{ctx}{ctx}}
+{\footnotesize\ttfamily \label{structCallInfo_a7c410e045297e80c91e9737f959e7ef9} 
+\mbox{\hyperlink{lua_8h_a0c565e13b66764da08aa2c68fe4365f0}{lua\+\_\+\+KContext}} Call\+Info\+::ctx}
+
+\Hypertarget{structCallInfo_a3307de33f6da067897418f5e98e63167}\index{CallInfo@{CallInfo}!func@{func}}
+\index{func@{func}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{func}{func}}
+{\footnotesize\ttfamily \label{structCallInfo_a3307de33f6da067897418f5e98e63167} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} Call\+Info\+::func}
+
+\Hypertarget{structCallInfo_adebb7e3602965a04deda09fcaf8fefc1}\index{CallInfo@{CallInfo}!funcidx@{funcidx}}
+\index{funcidx@{funcidx}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{funcidx}{funcidx}}
+{\footnotesize\ttfamily \label{structCallInfo_adebb7e3602965a04deda09fcaf8fefc1} 
+int Call\+Info\+::funcidx}
+
+\Hypertarget{structCallInfo_a861d3b2fbd9d287c22b0d9324f578e7b}\index{CallInfo@{CallInfo}!k@{k}}
+\index{k@{k}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{k}{k}}
+{\footnotesize\ttfamily \label{structCallInfo_a861d3b2fbd9d287c22b0d9324f578e7b} 
+\mbox{\hyperlink{lua_8h_a4bfd58d9192edfdcb7238de00bd0202c}{lua\+\_\+\+KFunction}} Call\+Info\+::k}
+
+\Hypertarget{structCallInfo_a8d957fd32997b59b7173dc824ec959af}\index{CallInfo@{CallInfo}!l@{l}}
+\index{l@{l}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structCallInfo_a8d957fd32997b59b7173dc824ec959af} 
+struct  \{ ... \}  Call\+Info\+::l}
+
+\Hypertarget{structCallInfo_a71b69e9acba8caa2d8e833d8a79fdf9d}\index{CallInfo@{CallInfo}!next@{next}}
+\index{next@{next}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily \label{structCallInfo_a71b69e9acba8caa2d8e833d8a79fdf9d} 
+struct \mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} Call\+Info\+::next}
+
+\Hypertarget{structCallInfo_a14e42d92bc824c3f470152b2ba3ac334}\index{CallInfo@{CallInfo}!nextraargs@{nextraargs}}
+\index{nextraargs@{nextraargs}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{nextraargs}{nextraargs}}
+{\footnotesize\ttfamily \label{structCallInfo_a14e42d92bc824c3f470152b2ba3ac334} 
+int Call\+Info\+::nextraargs}
+
+\Hypertarget{structCallInfo_a1235c5fa93cd02162d842c6385af1c5c}\index{CallInfo@{CallInfo}!nres@{nres}}
+\index{nres@{nres}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{nres}{nres}}
+{\footnotesize\ttfamily \label{structCallInfo_a1235c5fa93cd02162d842c6385af1c5c} 
+int Call\+Info\+::nres}
+
+\Hypertarget{structCallInfo_a1de818b3a003fcf25f1db6e294fa5b58}\index{CallInfo@{CallInfo}!nyield@{nyield}}
+\index{nyield@{nyield}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{nyield}{nyield}}
+{\footnotesize\ttfamily \label{structCallInfo_a1de818b3a003fcf25f1db6e294fa5b58} 
+int Call\+Info\+::nyield}
+
+\Hypertarget{structCallInfo_ae18597139d0d00b65683efed8ccd3c64}\index{CallInfo@{CallInfo}!old\_errfunc@{old\_errfunc}}
+\index{old\_errfunc@{old\_errfunc}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{old\_errfunc}{old\_errfunc}}
+{\footnotesize\ttfamily \label{structCallInfo_ae18597139d0d00b65683efed8ccd3c64} 
+ptrdiff\+\_\+t Call\+Info\+::old\+\_\+errfunc}
+
+\Hypertarget{structCallInfo_a1b3e7558ecf4218dd0e3b367c077733b}\index{CallInfo@{CallInfo}!previous@{previous}}
+\index{previous@{previous}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{previous}{previous}}
+{\footnotesize\ttfamily \label{structCallInfo_a1b3e7558ecf4218dd0e3b367c077733b} 
+struct \mbox{\hyperlink{structCallInfo}{Call\+Info}}\texorpdfstring{$\ast$}{*} Call\+Info\+::previous}
+
+\Hypertarget{structCallInfo_a4f8b835724037f01569452eab143948f}\index{CallInfo@{CallInfo}!savedpc@{savedpc}}
+\index{savedpc@{savedpc}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{savedpc}{savedpc}}
+{\footnotesize\ttfamily \label{structCallInfo_a4f8b835724037f01569452eab143948f} 
+const \mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}\texorpdfstring{$\ast$}{*} Call\+Info\+::savedpc}
+
+\Hypertarget{structCallInfo_a896b6484f4e0c4f76768913ffb91e88b}\index{CallInfo@{CallInfo}!top@{top}}
+\index{top@{top}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{top}{top}}
+{\footnotesize\ttfamily \label{structCallInfo_a896b6484f4e0c4f76768913ffb91e88b} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} Call\+Info\+::top}
+
+\Hypertarget{structCallInfo_a0034f1ca11027b0a66adacb28dd64618}\index{CallInfo@{CallInfo}!trap@{trap}}
+\index{trap@{trap}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{trap}{trap}}
+{\footnotesize\ttfamily \label{structCallInfo_a0034f1ca11027b0a66adacb28dd64618} 
+volatile \mbox{\hyperlink{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}{l\+\_\+signalT}} Call\+Info\+::trap}
+
+\Hypertarget{structCallInfo_a99500911e7681b13bb85a5da701bbaff}\index{CallInfo@{CallInfo}!u@{u}}
+\index{u@{u}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structCallInfo_a99500911e7681b13bb85a5da701bbaff} 
+union  \{ ... \}  Call\+Info\+::u}
+
+\Hypertarget{structCallInfo_a16f43e1f906787ff204d821fcbe53ad4}\index{CallInfo@{CallInfo}!u2@{u2}}
+\index{u2@{u2}!CallInfo@{CallInfo}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structCallInfo_a16f43e1f906787ff204d821fcbe53ad4} 
+union  \{ ... \}  Call\+Info\+::u2}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lstate_8h}{lstate.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,403 @@
+\doxysection{lparser.\+h File Reference}
+\hypertarget{lparser_8h}{}\label{lparser_8h}\index{lparser.h@{lparser.h}}
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lzio.\+h"{}}\newline
+Include dependency graph for lparser.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{lparser_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{lparser_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structexpdesc}{expdesc}}
+\item 
+union \mbox{\hyperlink{unionVardesc}{Vardesc}}
+\item 
+struct \mbox{\hyperlink{structLabeldesc}{Labeldesc}}
+\item 
+struct \mbox{\hyperlink{structLabellist}{Labellist}}
+\item 
+struct \mbox{\hyperlink{structDyndata}{Dyndata}}
+\item 
+struct \mbox{\hyperlink{structFuncState}{Func\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a51778fbd65fc02656cb2731b5e9c7d06}{vkisvar}}(k)
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a461494027b4038753f03ee04f4753d0f}{vkisindexed}}(k)
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a5def61221e8337c622aaede33e79e7ea}{VDKREG}}~0   /\texorpdfstring{$\ast$}{*} regular local \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a6edb3863e15fbe2a86f0da27cd40dd36}{RDKCONST}}~1   /\texorpdfstring{$\ast$}{*} local constant \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_ac1b16f12acac377d1e010792ec1c5463}{RDKVAVAR}}~2   /\texorpdfstring{$\ast$}{*} vararg parameter \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_aff76bd46e696b6c05c8ebcacbff3e436}{RDKTOCLOSE}}~3   /\texorpdfstring{$\ast$}{*} to-\/be-\/closed \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_ae37149486c77ebc6d130a3a1d1b5942d}{RDKCTC}}~4   /\texorpdfstring{$\ast$}{*} local compile-\/time constant \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_afda116dee5baf6e49ba6500ff9bfe1b5}{GDKREG}}~5   /\texorpdfstring{$\ast$}{*} regular global \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a5d5528b55210afb7e76416ad944d06ce}{GDKCONST}}~6   /\texorpdfstring{$\ast$}{*} global constant \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a636c4ea464d692c45325d6be24c97981}{varinreg}}(v)
+\item 
+\#define \mbox{\hyperlink{lparser_8h_a67e7eadd9abaf57e3086e4fd5a48ca7f}{varglobal}}(v)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct expdesc \mbox{\hyperlink{lparser_8h_a5dd0cc7fac1ea8a3cacefb7cf322cd7a}{expdesc}}
+\item 
+typedef union Vardesc \mbox{\hyperlink{lparser_8h_a213230d7919520e54d776ec5a50903dc}{Vardesc}}
+\item 
+typedef struct Labeldesc \mbox{\hyperlink{lparser_8h_ab135786bb87517f9f774754b91b72374}{Labeldesc}}
+\item 
+typedef struct Labellist \mbox{\hyperlink{lparser_8h_ad15a88bb9fe7b666c688c37ce5a9a07a}{Labellist}}
+\item 
+typedef struct Dyndata \mbox{\hyperlink{lparser_8h_aecb808d1d218e15537c9ff5b72bfd1e5}{Dyndata}}
+\item 
+typedef struct Func\+State \mbox{\hyperlink{lparser_8h_a365e467fb166b7359e63492250ceb49f}{Func\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4e}{expkind}} \{ \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae4dbae7b833ca72c63360ec7be904fa6}{VVOID}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea47eb055b6420db339de283cef27ad5d8}{VNIL}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea1228eca4fdc8e7643d18155507942482}{VTRUE}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea21820bf1e2c58882ffeb34849972ecaa}{VFALSE}}
+, \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaf926040fb3c22e9456f27b78e4ad19d2}{VK}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea425f6de3ad910f1c4c56cbf16711a967}{VKFLT}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4d24e28198fe684b7237e57bd8a0070f}{VKINT}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab06fcbc55fc36e7552634eef34375124}{VKSTR}}
+, \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaa7be620e4921ca3142b792f4bb0a98be}{VNONRELOC}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead8fc7331fa6e500f522f9f3334f14567}{VLOCAL}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4fe161377d9dafb20e579ba02678257f}{VVARGVAR}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea0abe25efc118cf90d3c5c7ce4404a650}{VGLOBAL}}
+, \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8ebb62b5889a955b7e4dd1c5b169b38f}{VUPVAL}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea45b9027634b5e43ca50f4d6efbbe4220}{VCONST}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab1cb541b6c8f3a5f03b17184a2facc85}{VINDEXED}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea7a4fe0f22a4e65a7ab67bb5851afcb36}{VVARGIND}}
+, \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea83132d11273ccae411b61430023e4be0}{VINDEXUP}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8007ab33287e6ed71b323366234b532a}{VINDEXI}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea16545cc6f945dda467b1418b80a35876}{VINDEXSTR}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead1066918edd602fb0577c9f58ced173c}{VJMP}}
+, \newline
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea50c55cd86f50851c8861fb827cff6073}{VRELOC}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae61a8c04cfeabd756694cd13774e47b7}{VCALL}}
+, \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea3f5f58de0fa9e69449d4e2362ddbfaa1}{VVARARG}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{lparser_8h_a2f12e1a31d781c068555e21fb7bacc05}{lua\+Y\+\_\+nvarstack}} (\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}fs)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lparser_8h_a6f046f4c2d3575ef07cf0147016bc65a}{lua\+Y\+\_\+checklimit}} (\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}fs, int v, int l, const char \texorpdfstring{$\ast$}{*}what)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lparser_8h_a5970b5cbbac35cf0e512db9e9dba0ecc}{lua\+Y\+\_\+parser}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, \mbox{\hyperlink{structMbuffer}{Mbuffer}} \texorpdfstring{$\ast$}{*}buff, \mbox{\hyperlink{structDyndata}{Dyndata}} \texorpdfstring{$\ast$}{*}dyd, const char \texorpdfstring{$\ast$}{*}name, int firstchar)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lparser_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lparser_8h_a5d5528b55210afb7e76416ad944d06ce}\index{lparser.h@{lparser.h}!GDKCONST@{GDKCONST}}
+\index{GDKCONST@{GDKCONST}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{GDKCONST}{GDKCONST}}
+{\footnotesize\ttfamily \label{lparser_8h_a5d5528b55210afb7e76416ad944d06ce} 
+\#define GDKCONST~6   /\texorpdfstring{$\ast$}{*} global constant \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_afda116dee5baf6e49ba6500ff9bfe1b5}\index{lparser.h@{lparser.h}!GDKREG@{GDKREG}}
+\index{GDKREG@{GDKREG}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{GDKREG}{GDKREG}}
+{\footnotesize\ttfamily \label{lparser_8h_afda116dee5baf6e49ba6500ff9bfe1b5} 
+\#define GDKREG~5   /\texorpdfstring{$\ast$}{*} regular global \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_a6edb3863e15fbe2a86f0da27cd40dd36}\index{lparser.h@{lparser.h}!RDKCONST@{RDKCONST}}
+\index{RDKCONST@{RDKCONST}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{RDKCONST}{RDKCONST}}
+{\footnotesize\ttfamily \label{lparser_8h_a6edb3863e15fbe2a86f0da27cd40dd36} 
+\#define RDKCONST~1   /\texorpdfstring{$\ast$}{*} local constant \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_ae37149486c77ebc6d130a3a1d1b5942d}\index{lparser.h@{lparser.h}!RDKCTC@{RDKCTC}}
+\index{RDKCTC@{RDKCTC}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{RDKCTC}{RDKCTC}}
+{\footnotesize\ttfamily \label{lparser_8h_ae37149486c77ebc6d130a3a1d1b5942d} 
+\#define RDKCTC~4   /\texorpdfstring{$\ast$}{*} local compile-\/time constant \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_aff76bd46e696b6c05c8ebcacbff3e436}\index{lparser.h@{lparser.h}!RDKTOCLOSE@{RDKTOCLOSE}}
+\index{RDKTOCLOSE@{RDKTOCLOSE}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{RDKTOCLOSE}{RDKTOCLOSE}}
+{\footnotesize\ttfamily \label{lparser_8h_aff76bd46e696b6c05c8ebcacbff3e436} 
+\#define RDKTOCLOSE~3   /\texorpdfstring{$\ast$}{*} to-\/be-\/closed \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_ac1b16f12acac377d1e010792ec1c5463}\index{lparser.h@{lparser.h}!RDKVAVAR@{RDKVAVAR}}
+\index{RDKVAVAR@{RDKVAVAR}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{RDKVAVAR}{RDKVAVAR}}
+{\footnotesize\ttfamily \label{lparser_8h_ac1b16f12acac377d1e010792ec1c5463} 
+\#define RDKVAVAR~2   /\texorpdfstring{$\ast$}{*} vararg parameter \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_a67e7eadd9abaf57e3086e4fd5a48ca7f}\index{lparser.h@{lparser.h}!varglobal@{varglobal}}
+\index{varglobal@{varglobal}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{varglobal}{varglobal}}
+{\footnotesize\ttfamily \label{lparser_8h_a67e7eadd9abaf57e3086e4fd5a48ca7f} 
+\#define varglobal(\begin{DoxyParamCaption}\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((v)-\/>vd.kind\ >=\ \mbox{\hyperlink{lparser_8h_afda116dee5baf6e49ba6500ff9bfe1b5}{GDKREG}})}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8h_a636c4ea464d692c45325d6be24c97981}\index{lparser.h@{lparser.h}!varinreg@{varinreg}}
+\index{varinreg@{varinreg}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{varinreg}{varinreg}}
+{\footnotesize\ttfamily \label{lparser_8h_a636c4ea464d692c45325d6be24c97981} 
+\#define varinreg(\begin{DoxyParamCaption}\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((v)-\/>vd.kind\ <=\ \mbox{\hyperlink{lparser_8h_aff76bd46e696b6c05c8ebcacbff3e436}{RDKTOCLOSE}})}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8h_a5def61221e8337c622aaede33e79e7ea}\index{lparser.h@{lparser.h}!VDKREG@{VDKREG}}
+\index{VDKREG@{VDKREG}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{VDKREG}{VDKREG}}
+{\footnotesize\ttfamily \label{lparser_8h_a5def61221e8337c622aaede33e79e7ea} 
+\#define VDKREG~0   /\texorpdfstring{$\ast$}{*} regular local \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lparser_8h_a461494027b4038753f03ee04f4753d0f}\index{lparser.h@{lparser.h}!vkisindexed@{vkisindexed}}
+\index{vkisindexed@{vkisindexed}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{vkisindexed}{vkisindexed}}
+{\footnotesize\ttfamily \label{lparser_8h_a461494027b4038753f03ee04f4753d0f} 
+\#define vkisindexed(\begin{DoxyParamCaption}\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab1cb541b6c8f3a5f03b17184a2facc85}{VINDEXED}}\ <=\ (k)\ \&\&\ (k)\ <=\ \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea16545cc6f945dda467b1418b80a35876}{VINDEXSTR}})}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8h_a51778fbd65fc02656cb2731b5e9c7d06}\index{lparser.h@{lparser.h}!vkisvar@{vkisvar}}
+\index{vkisvar@{vkisvar}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{vkisvar}{vkisvar}}
+{\footnotesize\ttfamily \label{lparser_8h_a51778fbd65fc02656cb2731b5e9c7d06} 
+\#define vkisvar(\begin{DoxyParamCaption}\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead8fc7331fa6e500f522f9f3334f14567}{VLOCAL}}\ <=\ (k)\ \&\&\ (k)\ <=\ \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea16545cc6f945dda467b1418b80a35876}{VINDEXSTR}})}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{lparser_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lparser_8h_aecb808d1d218e15537c9ff5b72bfd1e5}\index{lparser.h@{lparser.h}!Dyndata@{Dyndata}}
+\index{Dyndata@{Dyndata}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{Dyndata}{Dyndata}}
+{\footnotesize\ttfamily \label{lparser_8h_aecb808d1d218e15537c9ff5b72bfd1e5} 
+typedef struct Dyndata Dyndata}
+
+\Hypertarget{lparser_8h_a5dd0cc7fac1ea8a3cacefb7cf322cd7a}\index{lparser.h@{lparser.h}!expdesc@{expdesc}}
+\index{expdesc@{expdesc}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{expdesc}{expdesc}}
+{\footnotesize\ttfamily \label{lparser_8h_a5dd0cc7fac1ea8a3cacefb7cf322cd7a} 
+typedef struct expdesc expdesc}
+
+\Hypertarget{lparser_8h_a365e467fb166b7359e63492250ceb49f}\index{lparser.h@{lparser.h}!FuncState@{FuncState}}
+\index{FuncState@{FuncState}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{FuncState}{FuncState}}
+{\footnotesize\ttfamily \label{lparser_8h_a365e467fb166b7359e63492250ceb49f} 
+typedef struct Func\+State Func\+State}
+
+\Hypertarget{lparser_8h_ab135786bb87517f9f774754b91b72374}\index{lparser.h@{lparser.h}!Labeldesc@{Labeldesc}}
+\index{Labeldesc@{Labeldesc}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{Labeldesc}{Labeldesc}}
+{\footnotesize\ttfamily \label{lparser_8h_ab135786bb87517f9f774754b91b72374} 
+typedef struct Labeldesc Labeldesc}
+
+\Hypertarget{lparser_8h_ad15a88bb9fe7b666c688c37ce5a9a07a}\index{lparser.h@{lparser.h}!Labellist@{Labellist}}
+\index{Labellist@{Labellist}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{Labellist}{Labellist}}
+{\footnotesize\ttfamily \label{lparser_8h_ad15a88bb9fe7b666c688c37ce5a9a07a} 
+typedef struct Labellist Labellist}
+
+\Hypertarget{lparser_8h_a213230d7919520e54d776ec5a50903dc}\index{lparser.h@{lparser.h}!Vardesc@{Vardesc}}
+\index{Vardesc@{Vardesc}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{Vardesc}{Vardesc}}
+{\footnotesize\ttfamily \label{lparser_8h_a213230d7919520e54d776ec5a50903dc} 
+typedef union Vardesc Vardesc}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{lparser_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4e}\index{lparser.h@{lparser.h}!expkind@{expkind}}
+\index{expkind@{expkind}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{expkind}{expkind}}
+{\footnotesize\ttfamily \label{lparser_8h_aecced501a9387ab3e6e50a9834615d4e} 
+enum \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4e}{expkind}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VVOID@{VVOID}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VVOID@{VVOID}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae4dbae7b833ca72c63360ec7be904fa6}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae4dbae7b833ca72c63360ec7be904fa6} 
+VVOID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VNIL@{VNIL}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VNIL@{VNIL}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea47eb055b6420db339de283cef27ad5d8}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea47eb055b6420db339de283cef27ad5d8} 
+VNIL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VTRUE@{VTRUE}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VTRUE@{VTRUE}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea1228eca4fdc8e7643d18155507942482}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea1228eca4fdc8e7643d18155507942482} 
+VTRUE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VFALSE@{VFALSE}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VFALSE@{VFALSE}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea21820bf1e2c58882ffeb34849972ecaa}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea21820bf1e2c58882ffeb34849972ecaa} 
+VFALSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VK@{VK}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VK@{VK}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaf926040fb3c22e9456f27b78e4ad19d2}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaf926040fb3c22e9456f27b78e4ad19d2} 
+VK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VKFLT@{VKFLT}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VKFLT@{VKFLT}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea425f6de3ad910f1c4c56cbf16711a967}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea425f6de3ad910f1c4c56cbf16711a967} 
+VKFLT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VKINT@{VKINT}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VKINT@{VKINT}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4d24e28198fe684b7237e57bd8a0070f}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4d24e28198fe684b7237e57bd8a0070f} 
+VKINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VKSTR@{VKSTR}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VKSTR@{VKSTR}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab06fcbc55fc36e7552634eef34375124}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab06fcbc55fc36e7552634eef34375124} 
+VKSTR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VNONRELOC@{VNONRELOC}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VNONRELOC@{VNONRELOC}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaa7be620e4921ca3142b792f4bb0a98be}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eaa7be620e4921ca3142b792f4bb0a98be} 
+VNONRELOC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VLOCAL@{VLOCAL}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VLOCAL@{VLOCAL}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead8fc7331fa6e500f522f9f3334f14567}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead8fc7331fa6e500f522f9f3334f14567} 
+VLOCAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VVARGVAR@{VVARGVAR}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VVARGVAR@{VVARGVAR}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4fe161377d9dafb20e579ba02678257f}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea4fe161377d9dafb20e579ba02678257f} 
+VVARGVAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VGLOBAL@{VGLOBAL}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VGLOBAL@{VGLOBAL}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea0abe25efc118cf90d3c5c7ce4404a650}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea0abe25efc118cf90d3c5c7ce4404a650} 
+VGLOBAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VUPVAL@{VUPVAL}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VUPVAL@{VUPVAL}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8ebb62b5889a955b7e4dd1c5b169b38f}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8ebb62b5889a955b7e4dd1c5b169b38f} 
+VUPVAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VCONST@{VCONST}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VCONST@{VCONST}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea45b9027634b5e43ca50f4d6efbbe4220}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea45b9027634b5e43ca50f4d6efbbe4220} 
+VCONST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VINDEXED@{VINDEXED}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VINDEXED@{VINDEXED}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab1cb541b6c8f3a5f03b17184a2facc85}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eab1cb541b6c8f3a5f03b17184a2facc85} 
+VINDEXED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VVARGIND@{VVARGIND}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VVARGIND@{VVARGIND}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea7a4fe0f22a4e65a7ab67bb5851afcb36}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea7a4fe0f22a4e65a7ab67bb5851afcb36} 
+VVARGIND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VINDEXUP@{VINDEXUP}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VINDEXUP@{VINDEXUP}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea83132d11273ccae411b61430023e4be0}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea83132d11273ccae411b61430023e4be0} 
+VINDEXUP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VINDEXI@{VINDEXI}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VINDEXI@{VINDEXI}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8007ab33287e6ed71b323366234b532a}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea8007ab33287e6ed71b323366234b532a} 
+VINDEXI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VINDEXSTR@{VINDEXSTR}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VINDEXSTR@{VINDEXSTR}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea16545cc6f945dda467b1418b80a35876}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea16545cc6f945dda467b1418b80a35876} 
+VINDEXSTR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VJMP@{VJMP}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VJMP@{VJMP}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead1066918edd602fb0577c9f58ced173c}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ead1066918edd602fb0577c9f58ced173c} 
+VJMP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VRELOC@{VRELOC}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VRELOC@{VRELOC}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea50c55cd86f50851c8861fb827cff6073}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea50c55cd86f50851c8861fb827cff6073} 
+VRELOC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VCALL@{VCALL}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VCALL@{VCALL}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae61a8c04cfeabd756694cd13774e47b7}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae61a8c04cfeabd756694cd13774e47b7} 
+VCALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VVARARG@{VVARARG}!lparser.h@{lparser.h}}\index{lparser.h@{lparser.h}!VVARARG@{VVARARG}}}\Hypertarget{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea3f5f58de0fa9e69449d4e2362ddbfaa1}\label{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea3f5f58de0fa9e69449d4e2362ddbfaa1} 
+VVARARG&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{lparser_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lparser_8h_a6f046f4c2d3575ef07cf0147016bc65a}\index{lparser.h@{lparser.h}!luaY\_checklimit@{luaY\_checklimit}}
+\index{luaY\_checklimit@{luaY\_checklimit}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{luaY\_checklimit()}{luaY\_checklimit()}}
+{\footnotesize\ttfamily \label{lparser_8h_a6f046f4c2d3575ef07cf0147016bc65a} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+Y\+\_\+checklimit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}}]{fs}{, }\item[{int}]{v}{, }\item[{int}]{l}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{what}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8h_a6f046f4c2d3575ef07cf0147016bc65a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lparser_8h_a2f12e1a31d781c068555e21fb7bacc05}\index{lparser.h@{lparser.h}!luaY\_nvarstack@{luaY\_nvarstack}}
+\index{luaY\_nvarstack@{luaY\_nvarstack}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{luaY\_nvarstack()}{luaY\_nvarstack()}}
+{\footnotesize\ttfamily \label{lparser_8h_a2f12e1a31d781c068555e21fb7bacc05} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+Y\+\_\+nvarstack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}}]{fs}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8h_a2f12e1a31d781c068555e21fb7bacc05_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lparser_8h_a5970b5cbbac35cf0e512db9e9dba0ecc}\index{lparser.h@{lparser.h}!luaY\_parser@{luaY\_parser}}
+\index{luaY\_parser@{luaY\_parser}!lparser.h@{lparser.h}}
+\doxysubsubsection{\texorpdfstring{luaY\_parser()}{luaY\_parser()}}
+{\footnotesize\ttfamily \label{lparser_8h_a5970b5cbbac35cf0e512db9e9dba0ecc} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} lua\+Y\+\_\+parser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{\mbox{\hyperlink{structMbuffer}{Mbuffer}} \texorpdfstring{$\ast$}{*}}]{buff}{, }\item[{\mbox{\hyperlink{structDyndata}{Dyndata}} \texorpdfstring{$\ast$}{*}}]{dyd}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{int}]{firstchar}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8h_a5970b5cbbac35cf0e512db9e9dba0ecc_cgraph}
+\end{center}
+\end{figure}

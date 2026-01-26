@@ -1,0 +1,231 @@
+\doxysection{lua\+\_\+\+State Struct Reference}
+\hypertarget{structlua__State}{}\label{structlua__State}\index{lua\_State@{lua\_State}}
+
+
+{\ttfamily \#include $<$lstate.\+h$>$}
+
+
+
+Collaboration diagram for lua\+\_\+\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structlua__State__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structlua__State_ad5311df12c1bfa3c4e11b7a1dbecaeda}{Common\+Header}}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{structlua__State_ac2903d4a712ca1c2d114f541636490f5}{allowhook}}
+\item 
+\mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}} \mbox{\hyperlink{structlua__State_a2003a038d8a507b4a3d7180d4712fe50}{status}}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structlua__State_a1312e4b6f80531820b4765080a33fbfe}{top}}
+\item 
+struct \mbox{\hyperlink{structglobal__State}{global\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_a5e52aec2ed9950737dd97ca4dc920c6d}{l\+\_\+G}}
+\item 
+\mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_a7fbb5727050853f411ad64b4be9ab5c8}{ci}}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structlua__State_aa1066a873c21da51aa79ceb237e0f695}{stack\+\_\+last}}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structlua__State_a775b09c37c4d784e9f9c621634d5522b}{stack}}
+\item 
+\mbox{\hyperlink{structUpVal}{Up\+Val}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_aa1f4a24dc6645e10ba8d6f2713e446bc}{openupval}}
+\item 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} \mbox{\hyperlink{structlua__State_ac681fa46e5bac21b87c8d01a97113af9}{tbclist}}
+\item 
+\mbox{\hyperlink{structGCObject}{GCObject}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_a0d446661e92287c8409076c970771217}{gclist}}
+\item 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_ae1da80ba9fa9d9adad4deb8ae5b42ba0}{twups}}
+\item 
+struct \mbox{\hyperlink{structlua__longjmp}{lua\+\_\+longjmp}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlua__State_ae4bbd2199ffd804fe64142c3d5ecb249}{error\+Jmp}}
+\item 
+\mbox{\hyperlink{structCallInfo}{Call\+Info}} \mbox{\hyperlink{structlua__State_a8c707493c7e45c7e0467381f5a80175d}{base\+\_\+ci}}
+\item 
+volatile \mbox{\hyperlink{lua_8h_aa00de66eff087aef1fdd44f5b3bb9a0b}{lua\+\_\+\+Hook}} \mbox{\hyperlink{structlua__State_ad4c84ca6425b0073ab2d83f05a05e788}{hook}}
+\item 
+ptrdiff\+\_\+t \mbox{\hyperlink{structlua__State_a09de3a7c6d3bcb6c2b0d26a81bb8d44b}{errfunc}}
+\item 
+\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}} \mbox{\hyperlink{structlua__State_a9c4a565a35bed2d76dd84d9fb628853b}{n\+Ccalls}}
+\item 
+int \mbox{\hyperlink{structlua__State_adfbafe57a78fbff8df33ba008315fb92}{oldpc}}
+\item 
+int \mbox{\hyperlink{structlua__State_a05dc175b2cf3769c2b362e6a9e29540e}{nci}}
+\item 
+int \mbox{\hyperlink{structlua__State_a5d760c922e94390cd270ebb4ca4bc848}{basehookcount}}
+\item 
+int \mbox{\hyperlink{structlua__State_a8824aded162dcdb9d3a142a90819e372}{hookcount}}
+\item 
+volatile \mbox{\hyperlink{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}{l\+\_\+signalT}} \mbox{\hyperlink{structlua__State_a4f5ccabdfc6b9eb66eb5534c85270f2b}{hookmask}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>int \mbox{\hyperlink{structlua__State_a3ec9bceb8da79881bdd9715d7e7da34d}{ftransfer}}\\
+\>int \mbox{\hyperlink{structlua__State_af5a5b577120fa80442479a02e7afe343}{ntransfer}}\\
+\} \mbox{\hyperlink{structlua__State_a1820452e72dae40e87a5163a5ee1e408}{transferinfo}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structlua__State_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structlua__State_ac2903d4a712ca1c2d114f541636490f5}\index{lua\_State@{lua\_State}!allowhook@{allowhook}}
+\index{allowhook@{allowhook}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{allowhook}{allowhook}}
+{\footnotesize\ttfamily \label{structlua__State_ac2903d4a712ca1c2d114f541636490f5} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+\_\+\+State\+::allowhook}
+
+\Hypertarget{structlua__State_a8c707493c7e45c7e0467381f5a80175d}\index{lua\_State@{lua\_State}!base\_ci@{base\_ci}}
+\index{base\_ci@{base\_ci}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{base\_ci}{base\_ci}}
+{\footnotesize\ttfamily \label{structlua__State_a8c707493c7e45c7e0467381f5a80175d} 
+\mbox{\hyperlink{structCallInfo}{Call\+Info}} lua\+\_\+\+State\+::base\+\_\+ci}
+
+\Hypertarget{structlua__State_a5d760c922e94390cd270ebb4ca4bc848}\index{lua\_State@{lua\_State}!basehookcount@{basehookcount}}
+\index{basehookcount@{basehookcount}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{basehookcount}{basehookcount}}
+{\footnotesize\ttfamily \label{structlua__State_a5d760c922e94390cd270ebb4ca4bc848} 
+int lua\+\_\+\+State\+::basehookcount}
+
+\Hypertarget{structlua__State_a7fbb5727050853f411ad64b4be9ab5c8}\index{lua\_State@{lua\_State}!ci@{ci}}
+\index{ci@{ci}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{ci}{ci}}
+{\footnotesize\ttfamily \label{structlua__State_a7fbb5727050853f411ad64b4be9ab5c8} 
+\mbox{\hyperlink{structCallInfo}{Call\+Info}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::ci}
+
+\Hypertarget{structlua__State_ad5311df12c1bfa3c4e11b7a1dbecaeda}\index{lua\_State@{lua\_State}!CommonHeader@{CommonHeader}}
+\index{CommonHeader@{CommonHeader}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{CommonHeader}{CommonHeader}}
+{\footnotesize\ttfamily \label{structlua__State_ad5311df12c1bfa3c4e11b7a1dbecaeda} 
+lua\+\_\+\+State\+::\+Common\+Header}
+
+\Hypertarget{structlua__State_a09de3a7c6d3bcb6c2b0d26a81bb8d44b}\index{lua\_State@{lua\_State}!errfunc@{errfunc}}
+\index{errfunc@{errfunc}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{errfunc}{errfunc}}
+{\footnotesize\ttfamily \label{structlua__State_a09de3a7c6d3bcb6c2b0d26a81bb8d44b} 
+ptrdiff\+\_\+t lua\+\_\+\+State\+::errfunc}
+
+\Hypertarget{structlua__State_ae4bbd2199ffd804fe64142c3d5ecb249}\index{lua\_State@{lua\_State}!errorJmp@{errorJmp}}
+\index{errorJmp@{errorJmp}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{errorJmp}{errorJmp}}
+{\footnotesize\ttfamily \label{structlua__State_ae4bbd2199ffd804fe64142c3d5ecb249} 
+struct \mbox{\hyperlink{structlua__longjmp}{lua\+\_\+longjmp}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::error\+Jmp}
+
+\Hypertarget{structlua__State_a3ec9bceb8da79881bdd9715d7e7da34d}\index{lua\_State@{lua\_State}!ftransfer@{ftransfer}}
+\index{ftransfer@{ftransfer}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{ftransfer}{ftransfer}}
+{\footnotesize\ttfamily \label{structlua__State_a3ec9bceb8da79881bdd9715d7e7da34d} 
+int lua\+\_\+\+State\+::ftransfer}
+
+\Hypertarget{structlua__State_a0d446661e92287c8409076c970771217}\index{lua\_State@{lua\_State}!gclist@{gclist}}
+\index{gclist@{gclist}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{gclist}{gclist}}
+{\footnotesize\ttfamily \label{structlua__State_a0d446661e92287c8409076c970771217} 
+\mbox{\hyperlink{structGCObject}{GCObject}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::gclist}
+
+\Hypertarget{structlua__State_ad4c84ca6425b0073ab2d83f05a05e788}\index{lua\_State@{lua\_State}!hook@{hook}}
+\index{hook@{hook}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{hook}{hook}}
+{\footnotesize\ttfamily \label{structlua__State_ad4c84ca6425b0073ab2d83f05a05e788} 
+volatile \mbox{\hyperlink{lua_8h_aa00de66eff087aef1fdd44f5b3bb9a0b}{lua\+\_\+\+Hook}} lua\+\_\+\+State\+::hook}
+
+\Hypertarget{structlua__State_a8824aded162dcdb9d3a142a90819e372}\index{lua\_State@{lua\_State}!hookcount@{hookcount}}
+\index{hookcount@{hookcount}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{hookcount}{hookcount}}
+{\footnotesize\ttfamily \label{structlua__State_a8824aded162dcdb9d3a142a90819e372} 
+int lua\+\_\+\+State\+::hookcount}
+
+\Hypertarget{structlua__State_a4f5ccabdfc6b9eb66eb5534c85270f2b}\index{lua\_State@{lua\_State}!hookmask@{hookmask}}
+\index{hookmask@{hookmask}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{hookmask}{hookmask}}
+{\footnotesize\ttfamily \label{structlua__State_a4f5ccabdfc6b9eb66eb5534c85270f2b} 
+volatile \mbox{\hyperlink{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}{l\+\_\+signalT}} lua\+\_\+\+State\+::hookmask}
+
+\Hypertarget{structlua__State_a5e52aec2ed9950737dd97ca4dc920c6d}\index{lua\_State@{lua\_State}!l\_G@{l\_G}}
+\index{l\_G@{l\_G}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{l\_G}{l\_G}}
+{\footnotesize\ttfamily \label{structlua__State_a5e52aec2ed9950737dd97ca4dc920c6d} 
+struct \mbox{\hyperlink{structglobal__State}{global\+\_\+\+State}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::l\+\_\+G}
+
+\Hypertarget{structlua__State_a9c4a565a35bed2d76dd84d9fb628853b}\index{lua\_State@{lua\_State}!nCcalls@{nCcalls}}
+\index{nCcalls@{nCcalls}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{nCcalls}{nCcalls}}
+{\footnotesize\ttfamily \label{structlua__State_a9c4a565a35bed2d76dd84d9fb628853b} 
+\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}} lua\+\_\+\+State\+::n\+Ccalls}
+
+\Hypertarget{structlua__State_a05dc175b2cf3769c2b362e6a9e29540e}\index{lua\_State@{lua\_State}!nci@{nci}}
+\index{nci@{nci}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{nci}{nci}}
+{\footnotesize\ttfamily \label{structlua__State_a05dc175b2cf3769c2b362e6a9e29540e} 
+int lua\+\_\+\+State\+::nci}
+
+\Hypertarget{structlua__State_af5a5b577120fa80442479a02e7afe343}\index{lua\_State@{lua\_State}!ntransfer@{ntransfer}}
+\index{ntransfer@{ntransfer}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{ntransfer}{ntransfer}}
+{\footnotesize\ttfamily \label{structlua__State_af5a5b577120fa80442479a02e7afe343} 
+int lua\+\_\+\+State\+::ntransfer}
+
+\Hypertarget{structlua__State_adfbafe57a78fbff8df33ba008315fb92}\index{lua\_State@{lua\_State}!oldpc@{oldpc}}
+\index{oldpc@{oldpc}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{oldpc}{oldpc}}
+{\footnotesize\ttfamily \label{structlua__State_adfbafe57a78fbff8df33ba008315fb92} 
+int lua\+\_\+\+State\+::oldpc}
+
+\Hypertarget{structlua__State_aa1f4a24dc6645e10ba8d6f2713e446bc}\index{lua\_State@{lua\_State}!openupval@{openupval}}
+\index{openupval@{openupval}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{openupval}{openupval}}
+{\footnotesize\ttfamily \label{structlua__State_aa1f4a24dc6645e10ba8d6f2713e446bc} 
+\mbox{\hyperlink{structUpVal}{Up\+Val}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::openupval}
+
+\Hypertarget{structlua__State_a775b09c37c4d784e9f9c621634d5522b}\index{lua\_State@{lua\_State}!stack@{stack}}
+\index{stack@{stack}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{stack}{stack}}
+{\footnotesize\ttfamily \label{structlua__State_a775b09c37c4d784e9f9c621634d5522b} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} lua\+\_\+\+State\+::stack}
+
+\Hypertarget{structlua__State_aa1066a873c21da51aa79ceb237e0f695}\index{lua\_State@{lua\_State}!stack\_last@{stack\_last}}
+\index{stack\_last@{stack\_last}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{stack\_last}{stack\_last}}
+{\footnotesize\ttfamily \label{structlua__State_aa1066a873c21da51aa79ceb237e0f695} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} lua\+\_\+\+State\+::stack\+\_\+last}
+
+\Hypertarget{structlua__State_a2003a038d8a507b4a3d7180d4712fe50}\index{lua\_State@{lua\_State}!status@{status}}
+\index{status@{status}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \label{structlua__State_a2003a038d8a507b4a3d7180d4712fe50} 
+\mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}} lua\+\_\+\+State\+::status}
+
+\Hypertarget{structlua__State_ac681fa46e5bac21b87c8d01a97113af9}\index{lua\_State@{lua\_State}!tbclist@{tbclist}}
+\index{tbclist@{tbclist}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{tbclist}{tbclist}}
+{\footnotesize\ttfamily \label{structlua__State_ac681fa46e5bac21b87c8d01a97113af9} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} lua\+\_\+\+State\+::tbclist}
+
+\Hypertarget{structlua__State_a1312e4b6f80531820b4765080a33fbfe}\index{lua\_State@{lua\_State}!top@{top}}
+\index{top@{top}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{top}{top}}
+{\footnotesize\ttfamily \label{structlua__State_a1312e4b6f80531820b4765080a33fbfe} 
+\mbox{\hyperlink{unionStkIdRel}{Stk\+Id\+Rel}} lua\+\_\+\+State\+::top}
+
+\Hypertarget{structlua__State_a1820452e72dae40e87a5163a5ee1e408}\index{lua\_State@{lua\_State}!transferinfo@{transferinfo}}
+\index{transferinfo@{transferinfo}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structlua__State_a1820452e72dae40e87a5163a5ee1e408} 
+struct  \{ ... \}  lua\+\_\+\+State\+::transferinfo}
+
+\Hypertarget{structlua__State_ae1da80ba9fa9d9adad4deb8ae5b42ba0}\index{lua\_State@{lua\_State}!twups@{twups}}
+\index{twups@{twups}!lua\_State@{lua\_State}}
+\doxysubsubsection{\texorpdfstring{twups}{twups}}
+{\footnotesize\ttfamily \label{structlua__State_ae1da80ba9fa9d9adad4deb8ae5b42ba0} 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}\texorpdfstring{$\ast$}{*} lua\+\_\+\+State\+::twups}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lstate_8h}{lstate.\+h}}\end{DoxyCompactItemize}

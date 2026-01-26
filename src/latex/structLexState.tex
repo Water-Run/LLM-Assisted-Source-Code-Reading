@@ -1,0 +1,149 @@
+\doxysection{Lex\+State Struct Reference}
+\hypertarget{structLexState}{}\label{structLexState}\index{LexState@{LexState}}
+
+
+{\ttfamily \#include $<$llex.\+h$>$}
+
+
+
+Collaboration diagram for Lex\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structLexState__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structLexState_ad31cc4568332a48d22d37a13c8eae006}{current}}
+\item 
+int \mbox{\hyperlink{structLexState_a9047632ca93c760b66b6303c819099d5}{linenumber}}
+\item 
+int \mbox{\hyperlink{structLexState_aaadb237d4fc6b81d2242e666de885bf7}{lastline}}
+\item 
+\mbox{\hyperlink{structToken}{Token}} \mbox{\hyperlink{structLexState_a597c734626136f4ddb8232e8fc3abfc4}{t}}
+\item 
+\mbox{\hyperlink{structToken}{Token}} \mbox{\hyperlink{structLexState_ad3c75c11dbbdae006057cb4b847a4f91}{lookahead}}
+\item 
+struct \mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a01999e4f68cc6a3bd0b9eb6ebd241f7b}{fs}}
+\item 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_af1ffd91f6684eee85e707a4b9927019b}{L}}
+\item 
+\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a591ffaffa1f3c21653904dccf81a4377}{z}}
+\item 
+\mbox{\hyperlink{structMbuffer}{Mbuffer}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_aab00ebdc0eaf42caa098ecb6ca3c8389}{buff}}
+\item 
+\mbox{\hyperlink{structTable}{Table}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a0fcd03e58c52d100bc9dcd52787724f4}{h}}
+\item 
+struct \mbox{\hyperlink{structDyndata}{Dyndata}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a3275102e0a909a24d21e8dd183847a2b}{dyd}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a054af516711cc3d173a73a301497ff27}{source}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a1f3368576038a65ab629da91de3edfaf}{envn}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a857e26bd0a34d69d72e98193f068be57}{brkn}}
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structLexState_a13134d7e5b4ef8430baee3284bd41068}{glbn}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structLexState_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structLexState_a857e26bd0a34d69d72e98193f068be57}\index{LexState@{LexState}!brkn@{brkn}}
+\index{brkn@{brkn}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{brkn}{brkn}}
+{\footnotesize\ttfamily \label{structLexState_a857e26bd0a34d69d72e98193f068be57} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} Lex\+State\+::brkn}
+
+\Hypertarget{structLexState_aab00ebdc0eaf42caa098ecb6ca3c8389}\index{LexState@{LexState}!buff@{buff}}
+\index{buff@{buff}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{buff}{buff}}
+{\footnotesize\ttfamily \label{structLexState_aab00ebdc0eaf42caa098ecb6ca3c8389} 
+\mbox{\hyperlink{structMbuffer}{Mbuffer}}\texorpdfstring{$\ast$}{*} Lex\+State\+::buff}
+
+\Hypertarget{structLexState_ad31cc4568332a48d22d37a13c8eae006}\index{LexState@{LexState}!current@{current}}
+\index{current@{current}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{current}{current}}
+{\footnotesize\ttfamily \label{structLexState_ad31cc4568332a48d22d37a13c8eae006} 
+int Lex\+State\+::current}
+
+\Hypertarget{structLexState_a3275102e0a909a24d21e8dd183847a2b}\index{LexState@{LexState}!dyd@{dyd}}
+\index{dyd@{dyd}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{dyd}{dyd}}
+{\footnotesize\ttfamily \label{structLexState_a3275102e0a909a24d21e8dd183847a2b} 
+struct \mbox{\hyperlink{structDyndata}{Dyndata}}\texorpdfstring{$\ast$}{*} Lex\+State\+::dyd}
+
+\Hypertarget{structLexState_a1f3368576038a65ab629da91de3edfaf}\index{LexState@{LexState}!envn@{envn}}
+\index{envn@{envn}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{envn}{envn}}
+{\footnotesize\ttfamily \label{structLexState_a1f3368576038a65ab629da91de3edfaf} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} Lex\+State\+::envn}
+
+\Hypertarget{structLexState_a01999e4f68cc6a3bd0b9eb6ebd241f7b}\index{LexState@{LexState}!fs@{fs}}
+\index{fs@{fs}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{fs}{fs}}
+{\footnotesize\ttfamily \label{structLexState_a01999e4f68cc6a3bd0b9eb6ebd241f7b} 
+struct \mbox{\hyperlink{structFuncState}{Func\+State}}\texorpdfstring{$\ast$}{*} Lex\+State\+::fs}
+
+\Hypertarget{structLexState_a13134d7e5b4ef8430baee3284bd41068}\index{LexState@{LexState}!glbn@{glbn}}
+\index{glbn@{glbn}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{glbn}{glbn}}
+{\footnotesize\ttfamily \label{structLexState_a13134d7e5b4ef8430baee3284bd41068} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} Lex\+State\+::glbn}
+
+\Hypertarget{structLexState_a0fcd03e58c52d100bc9dcd52787724f4}\index{LexState@{LexState}!h@{h}}
+\index{h@{h}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{h}{h}}
+{\footnotesize\ttfamily \label{structLexState_a0fcd03e58c52d100bc9dcd52787724f4} 
+\mbox{\hyperlink{structTable}{Table}}\texorpdfstring{$\ast$}{*} Lex\+State\+::h}
+
+\Hypertarget{structLexState_af1ffd91f6684eee85e707a4b9927019b}\index{LexState@{LexState}!L@{L}}
+\index{L@{L}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{L}{L}}
+{\footnotesize\ttfamily \label{structLexState_af1ffd91f6684eee85e707a4b9927019b} 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}\texorpdfstring{$\ast$}{*} Lex\+State\+::L}
+
+\Hypertarget{structLexState_aaadb237d4fc6b81d2242e666de885bf7}\index{LexState@{LexState}!lastline@{lastline}}
+\index{lastline@{lastline}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{lastline}{lastline}}
+{\footnotesize\ttfamily \label{structLexState_aaadb237d4fc6b81d2242e666de885bf7} 
+int Lex\+State\+::lastline}
+
+\Hypertarget{structLexState_a9047632ca93c760b66b6303c819099d5}\index{LexState@{LexState}!linenumber@{linenumber}}
+\index{linenumber@{linenumber}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{linenumber}{linenumber}}
+{\footnotesize\ttfamily \label{structLexState_a9047632ca93c760b66b6303c819099d5} 
+int Lex\+State\+::linenumber}
+
+\Hypertarget{structLexState_ad3c75c11dbbdae006057cb4b847a4f91}\index{LexState@{LexState}!lookahead@{lookahead}}
+\index{lookahead@{lookahead}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{lookahead}{lookahead}}
+{\footnotesize\ttfamily \label{structLexState_ad3c75c11dbbdae006057cb4b847a4f91} 
+\mbox{\hyperlink{structToken}{Token}} Lex\+State\+::lookahead}
+
+\Hypertarget{structLexState_a054af516711cc3d173a73a301497ff27}\index{LexState@{LexState}!source@{source}}
+\index{source@{source}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{source}{source}}
+{\footnotesize\ttfamily \label{structLexState_a054af516711cc3d173a73a301497ff27} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} Lex\+State\+::source}
+
+\Hypertarget{structLexState_a597c734626136f4ddb8232e8fc3abfc4}\index{LexState@{LexState}!t@{t}}
+\index{t@{t}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{t}{t}}
+{\footnotesize\ttfamily \label{structLexState_a597c734626136f4ddb8232e8fc3abfc4} 
+\mbox{\hyperlink{structToken}{Token}} Lex\+State\+::t}
+
+\Hypertarget{structLexState_a591ffaffa1f3c21653904dccf81a4377}\index{LexState@{LexState}!z@{z}}
+\index{z@{z}!LexState@{LexState}}
+\doxysubsubsection{\texorpdfstring{z}{z}}
+{\footnotesize\ttfamily \label{structLexState_a591ffaffa1f3c21653904dccf81a4377} 
+\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\texorpdfstring{$\ast$}{*} Lex\+State\+::z}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llex_8h}{llex.\+h}}\end{DoxyCompactItemize}

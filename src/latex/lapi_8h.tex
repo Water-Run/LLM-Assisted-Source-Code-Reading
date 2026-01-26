@@ -1,0 +1,124 @@
+\doxysection{lapi.\+h File Reference}
+\hypertarget{lapi_8h}{}\label{lapi_8h}\index{lapi.h@{lapi.h}}
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+Include dependency graph for lapi.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lapi_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lapi_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606}{api\+\_\+check}}(l,  e,  msg)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_afe4a5994dd3704ec53de77f9fd121915}{api\+\_\+incr\+\_\+top}}(L)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_aa68a48b9104aeadf4842c25c12a9b8c9}{lua\+\_\+lock}}(L)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_a1781f2a7d9161848a246d475a9171875}{lua\+\_\+unlock}}(L)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_afd1f4a36958642707b7598a48c507599}{adjustresults}}(L,  nres)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_a9785915283c3f0a0ec90f1b6be32b2c2}{api\+\_\+checknelems}}(L,  n)
+\item 
+\#define \mbox{\hyperlink{lapi_8h_ad266a3111b058356ccf99610e4fb56cc}{api\+\_\+checkpop}}(L,  n)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lapi_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lapi_8h_afd1f4a36958642707b7598a48c507599}\index{lapi.h@{lapi.h}!adjustresults@{adjustresults}}
+\index{adjustresults@{adjustresults}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{adjustresults}{adjustresults}}
+{\footnotesize\ttfamily \label{lapi_8h_afd1f4a36958642707b7598a48c507599} 
+\#define adjustresults(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{nres}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ ((nres)\ <=\ \mbox{\hyperlink{lua_8h_ace3545adc11664c2f2b152fbe8b6283c}{LUA\_MULTRET}}\ \&\&\ L-\/>ci-\/>top.p\ <\ L-\/>top.p)\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ L-\/>ci-\/>top.p\ =\ L-\/>top.p;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606}\index{lapi.h@{lapi.h}!api\_check@{api\_check}}
+\index{api\_check@{api\_check}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{api\_check}{api\_check}}
+{\footnotesize\ttfamily \label{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606} 
+\#define api\+\_\+check(\begin{DoxyParamCaption}\item[{}]{l}{, }\item[{}]{e}{, }\item[{}]{msg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)(l),\ \mbox{\hyperlink{llimits_8h_a5978f5fda715bd80e845df1e16ad7780}{lua\_assert}}((e)\ \&\&\ msg))}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_a9785915283c3f0a0ec90f1b6be32b2c2}\index{lapi.h@{lapi.h}!api\_checknelems@{api\_checknelems}}
+\index{api\_checknelems@{api\_checknelems}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{api\_checknelems}{api\_checknelems}}
+{\footnotesize\ttfamily \label{lapi_8h_a9785915283c3f0a0ec90f1b6be32b2c2} 
+\#define api\+\_\+checknelems(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606}{api\_check}}(L,\ (n)\ <\ (L-\/>top.p\ -\/\ L-\/>ci-\/>func.p),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}not\ enough\ elements\ in\ the\ stack"{}})}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_ad266a3111b058356ccf99610e4fb56cc}\index{lapi.h@{lapi.h}!api\_checkpop@{api\_checkpop}}
+\index{api\_checkpop@{api\_checkpop}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{api\_checkpop}{api\_checkpop}}
+{\footnotesize\ttfamily \label{lapi_8h_ad266a3111b058356ccf99610e4fb56cc} 
+\#define api\+\_\+checkpop(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606}{api\_check}}(L,\ (n)\ <\ L-\/>top.p\ -\/\ L-\/>ci-\/>func.p\ \&\&\ L-\/>tbclist.p\ <\ L-\/>top.p\ -\/\ (n),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}not\ enough\ free\ elements\ in\ the\ stack"{}})}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_afe4a5994dd3704ec53de77f9fd121915}\index{lapi.h@{lapi.h}!api\_incr\_top@{api\_incr\_top}}
+\index{api\_incr\_top@{api\_incr\_top}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{api\_incr\_top}{api\_incr\_top}}
+{\footnotesize\ttfamily \label{lapi_8h_afe4a5994dd3704ec53de77f9fd121915} 
+\#define api\+\_\+incr\+\_\+top(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (L-\/>top.p++,\ \mbox{\hyperlink{lapi_8h_ad7a42e1cc11f94e1f06ed80814fcb606}{api\_check}}(L,\ L-\/>top.p\ <=\ L-\/>ci-\/>top.p,\ \textcolor{stringliteral}{"{}stack\ overflow"{}}))}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_aa68a48b9104aeadf4842c25c12a9b8c9}\index{lapi.h@{lapi.h}!lua\_lock@{lua\_lock}}
+\index{lua\_lock@{lua\_lock}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{lua\_lock}{lua\_lock}}
+{\footnotesize\ttfamily \label{lapi_8h_aa68a48b9104aeadf4842c25c12a9b8c9} 
+\#define lua\+\_\+lock(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+\Hypertarget{lapi_8h_a1781f2a7d9161848a246d475a9171875}\index{lapi.h@{lapi.h}!lua\_unlock@{lua\_unlock}}
+\index{lua\_unlock@{lua\_unlock}!lapi.h@{lapi.h}}
+\doxysubsubsection{\texorpdfstring{lua\_unlock}{lua\_unlock}}
+{\footnotesize\ttfamily \label{lapi_8h_a1781f2a7d9161848a246d475a9171875} 
+\#define lua\+\_\+unlock(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}

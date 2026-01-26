@@ -1,0 +1,15 @@
+<map id="luaK_exp2nextreg" name="luaK_exp2nextreg">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,81,131,108"/>
+<area shape="rect" id="Node000002" href="$lcode_8c.html#a982df0963fcf2227c3a5c96163d8ef03" title=" " alt="" coords="179,56,314,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,83,163,78,164,84,132,88"/>
+<area shape="rect" id="Node000005" href="$lcode_8c.html#af1190942fb7a557b056ac8bbaa0024a1" title=" " alt="" coords="185,107,308,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="132,101,170,107,170,112,131,106"/>
+<area shape="rect" id="Node000003" href="$lcode_8c.html#a80466f0e006b20a0c0c04f6bcc5b656d" title=" " alt="" coords="368,5,477,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="295,53,358,34,360,39,296,58"/>
+<area shape="rect" id="Node000004" href="$lcode_8c.html#aee2f2ea13e892ab834135c1cc84ee179" title=" " alt="" coords="362,56,483,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="314,67,347,67,347,72,314,72"/>
+<area shape="rect" id="Node000006" href="$lcode_8c.html#afd941e61245bcb4d05bd3ba5b4ffec3b" title=" " alt="" coords="362,107,483,133"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="308,117,347,117,347,123,308,123"/>
+<area shape="rect" id="Node000007" href="$lparser_8c.html#a824424fa1d3f3295fc105d2d1c803f5b" title=" " alt="" coords="531,107,645,133"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="484,117,515,117,515,123,484,123"/>
+</map>

@@ -1,0 +1,1953 @@
+\doxysection{luaconf.\+h}
+\hypertarget{luaconf_8h_source}{}\label{luaconf_8h_source}\mbox{\hyperlink{luaconf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ luaconf.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Configuration\ file\ for\ Lua\ (Lua的配置文件)}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h\ (版权声明见lua.h)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00008\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{00009\ \textcolor{comment}{文件概要说明}}
+\DoxyCodeLine{00010\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{【文件名称】luaconf.h}}
+\DoxyCodeLine{00013\ \textcolor{comment}{【文件作用】Lua解释器的核心配置文件,控制Lua的编译时行为和特性}}
+\DoxyCodeLine{00014\ \textcolor{comment}{}}
+\DoxyCodeLine{00015\ \textcolor{comment}{【主要功能】}}
+\DoxyCodeLine{00016\ \textcolor{comment}{1.\ 系统平台适配配置(Windows/POSIX/macOS/iOS等)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{2.\ 数值类型配置(整数和浮点数的类型选择)}}
+\DoxyCodeLine{00018\ \textcolor{comment}{3.\ 路径配置(Lua库和C库的搜索路径)}}
+\DoxyCodeLine{00019\ \textcolor{comment}{4.\ API导出标记(DLL导出/导入控制)}}
+\DoxyCodeLine{00020\ \textcolor{comment}{5.\ 兼容性设置(与旧版本Lua的兼容性)}}
+\DoxyCodeLine{00021\ \textcolor{comment}{6.\ 底层实现细节配置(格式化、数值转换等)}}
+\DoxyCodeLine{00022\ \textcolor{comment}{}}
+\DoxyCodeLine{00023\ \textcolor{comment}{【关键概念】}}
+\DoxyCodeLine{00024\ \textcolor{comment}{-\/\ 这个文件通过宏定义(\#define)来控制Lua的编译选项}}
+\DoxyCodeLine{00025\ \textcolor{comment}{-\/\ 某些定义可以通过编译器参数(-\/D选项)外部修改}}
+\DoxyCodeLine{00026\ \textcolor{comment}{-\/\ 某些定义必须在此文件中直接修改,因为它们影响Lua\ ABI(应用程序二进制接口)}}
+\DoxyCodeLine{00027\ \textcolor{comment}{-\/\ 搜索"{}@@"{}可以找到所有可配置的定义}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{【阅读提示】}}
+\DoxyCodeLine{00030\ \textcolor{comment}{-\/\ 本文件大量使用C预处理器指令(\#define,\ \#if,\ \#ifdef等)}}
+\DoxyCodeLine{00031\ \textcolor{comment}{-\/\ 条件编译用于根据不同平台和需求选择不同的实现}}
+\DoxyCodeLine{00032\ \textcolor{comment}{-\/\ 理解本文件有助于了解Lua如何适配不同的平台和使用场景}}
+\DoxyCodeLine{00033\ \textcolor{comment}{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ luaconf\_h}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ luaconf\_h}}
+\DoxyCodeLine{00040\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ 头文件保护(Header\ Guard):}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *\ -\/\ 防止头文件被重复包含,这是C语言的标准做法}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ -\/\ \#ifndef检查luaconf\_h是否未定义}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ -\/\ 如果未定义,则定义它并包含下面的内容}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ -\/\ \#endif结束条件编译块}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <limits.h>}}
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ <limits.h>\ 标准C库头文件:}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *\ -\/\ 定义了各种整数类型的限制值}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ -\/\ 例如:INT\_MAX(int的最大值),\ UINT\_MAX(unsigned\ int的最大值)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ *\ -\/\ LONG\_MAX,\ LLONG\_MAX等}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ *\ -\/\ 本文件中用于确定整数类型的大小和范围}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00058\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ <stddef.h>\ 标准C库头文件:}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ -\/\ 定义了一些标准类型和宏}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ *\ -\/\ ptrdiff\_t:\ 两个指针相减的结果类型}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ -\/\ size\_t:\ sizeof运算符的结果类型}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *\ -\/\ NULL:\ 空指针常量}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ *\ -\/\ 本文件中主要用到ptrdiff\_t作为上下文类型}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00068\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00069\ \textcolor{comment}{**\ General\ Configuration\ File\ for\ Lua\ (Lua通用配置文件)}}
+\DoxyCodeLine{00070\ \textcolor{comment}{**}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ Some\ definitions\ here\ can\ be\ changed\ externally,\ through\ the\ compiler}}
+\DoxyCodeLine{00072\ \textcolor{comment}{**\ (某些定义可以通过编译器外部修改)}}
+\DoxyCodeLine{00073\ \textcolor{comment}{**\ (e.g.,\ with\ '-\/D'\ options):\ They\ are\ commented\ out\ or\ protected}}
+\DoxyCodeLine{00074\ \textcolor{comment}{**\ (例如,使用'-\/D'选项):它们被注释掉或受到保护)}}
+\DoxyCodeLine{00075\ \textcolor{comment}{**\ by\ '\#if\ !defined'\ guards.\ However,\ several\ other\ definitions}}
+\DoxyCodeLine{00076\ \textcolor{comment}{**\ (通过'\#if\ !defined'保护。然而,其他几个定义)}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ should\ be\ changed\ directly\ here,\ either\ because\ they\ affect\ the}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**\ (应该直接在这里修改,要么因为它们影响)}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ Lua\ ABI\ (by\ making\ the\ changes\ here,\ you\ ensure\ that\ all\ software}}
+\DoxyCodeLine{00080\ \textcolor{comment}{**\ (Lua\ ABI(通过在这里修改,你确保所有软件)}}
+\DoxyCodeLine{00081\ \textcolor{comment}{**\ connected\ to\ Lua,\ such\ as\ C\ libraries,\ will\ be\ compiled\ with\ the\ same}}
+\DoxyCodeLine{00082\ \textcolor{comment}{**\ (连接到Lua的软件,如C库,将使用相同的)}}
+\DoxyCodeLine{00083\ \textcolor{comment}{**\ configuration);\ or\ because\ they\ are\ seldom\ changed.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{**\ (配置编译);要么因为它们很少改变。)}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**\ Search\ for\ "{}@@"{}\ to\ find\ all\ configurable\ definitions.}}
+\DoxyCodeLine{00087\ \textcolor{comment}{**\ (搜索"{}@@"{}以找到所有可配置的定义。)}}
+\DoxyCodeLine{00088\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00089\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00092\ \textcolor{comment}{**\ \{====================================================================}}
+\DoxyCodeLine{00093\ \textcolor{comment}{**\ System\ Configuration:\ macros\ to\ adapt\ (if\ needed)\ Lua\ to\ some}}
+\DoxyCodeLine{00094\ \textcolor{comment}{**\ (系统配置:宏定义用于(如果需要)将Lua适配到某些)}}
+\DoxyCodeLine{00095\ \textcolor{comment}{**\ particular\ platform,\ for\ instance\ restricting\ it\ to\ C89.}}
+\DoxyCodeLine{00096\ \textcolor{comment}{**\ (特定平台,例如限制它为C89标准。)}}
+\DoxyCodeLine{00097\ \textcolor{comment}{**\ =====================================================================}}
+\DoxyCodeLine{00098\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00101\ \textcolor{comment}{@@\ LUA\_USE\_C89\ controls\ the\ use\ of\ non-\/ISO-\/C89\ features.}}
+\DoxyCodeLine{00102\ \textcolor{comment}{**\ (LUA\_USE\_C89\ 控制非ISO-\/C89特性的使用。)}}
+\DoxyCodeLine{00103\ \textcolor{comment}{**\ Define\ it\ if\ you\ want\ Lua\ to\ avoid\ the\ use\ of\ a\ few\ C99\ features}}
+\DoxyCodeLine{00104\ \textcolor{comment}{**\ (如果你想让Lua避免使用一些C99特性,请定义它)}}
+\DoxyCodeLine{00105\ \textcolor{comment}{**\ or\ Windows-\/specific\ features\ on\ Windows.}}
+\DoxyCodeLine{00106\ \textcolor{comment}{**\ (或Windows上的Windows特定特性。)}}
+\DoxyCodeLine{00107\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00108\ \textcolor{comment}{/*\ \#define\ LUA\_USE\_C89\ */}}
+\DoxyCodeLine{00109\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00110\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ *\ -\/\ 这个宏被注释掉了,意味着默认不启用}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ *\ -\/\ C89:\ 1989年的C标准(也称ANSI\ C),功能较少但兼容性最好}}
+\DoxyCodeLine{00113\ \textcolor{comment}{\ *\ -\/\ C99:\ 1999年的C标准,增加了许多新特性(如long\ long类型)}}
+\DoxyCodeLine{00114\ \textcolor{comment}{\ *\ -\/\ 如果定义此宏,Lua将只使用C89标准的特性,提高在老旧编译器上的兼容性}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ *\ -\/\ 但这会限制某些功能,例如不能使用long\ long整数类型}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00119\ \textcolor{comment}{**\ By\ default,\ Lua\ on\ Windows\ use\ (some)\ specific\ Windows\ features}}
+\DoxyCodeLine{00120\ \textcolor{comment}{**\ (默认情况下,Windows上的Lua使用(一些)特定的Windows特性)}}
+\DoxyCodeLine{00121\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)\ \&\&\ defined(\_WIN32)\ \&\&\ !defined(\_WIN32\_WCE)}}
+\DoxyCodeLine{00123\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ *\ 条件判断解析:}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ *\ -\/\ !defined(LUA\_USE\_C89):\ 没有定义LUA\_USE\_C89}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ *\ -\/\ defined(\_WIN32):\ 在Windows平台上编译(\_WIN32是编译器预定义的宏)}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ *\ -\/\ !defined(\_WIN32\_WCE):\ 不是Windows\ CE(嵌入式Windows)}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ *\ -\/\ 三个条件都满足时,启用Windows特性}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#define\ LUA\_USE\_WINDOWS\ }\textcolor{comment}{/*\ enable\ goodies\ for\ regular\ Windows\ (为常规Windows启用好功能)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00131\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00132\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00133\ \textcolor{comment}{\ *\ -\/\ 在普通Windows平台上(非C89模式,非WinCE),定义LUA\_USE\_WINDOWS}}
+\DoxyCodeLine{00134\ \textcolor{comment}{\ *\ -\/\ 这将启用Windows特定的功能,如DLL支持、特定的路径处理等}}
+\DoxyCodeLine{00135\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_WINDOWS)}}
+\DoxyCodeLine{00139\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00140\ \textcolor{comment}{\ *\ 如果定义了LUA\_USE\_WINDOWS(即在Windows平台上)}}
+\DoxyCodeLine{00141\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#define\ LUA\_DL\_DLL\ }\textcolor{comment}{/*\ enable\ support\ for\ DLL\ (启用DLL支持)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00143\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\ *\ LUA\_DL\_DLL说明:}}
+\DoxyCodeLine{00145\ \textcolor{comment}{\ *\ -\/\ DLL:\ Dynamic\ Link\ Library(动态链接库),Windows上的共享库格式}}
+\DoxyCodeLine{00146\ \textcolor{comment}{\ *\ -\/\ 启用此选项后,Lua可以动态加载DLL格式的C模块}}
+\DoxyCodeLine{00147\ \textcolor{comment}{\ *\ -\/\ 对应的加载函数会使用Windows\ API(LoadLibrary等)}}
+\DoxyCodeLine{00148\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#define\ LUA\_USE\_C89\ }\textcolor{comment}{/*\ broadly,\ Windows\ is\ C89\ (广义上,Windows是C89)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00150\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ *\ -\/\ Windows编译器通常对C99支持不完整}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ *\ -\/\ 因此在Windows上,Lua采用更保守的C89兼容模式}}
+\DoxyCodeLine{00154\ \textcolor{comment}{\ *\ -\/\ 这确保在各种Windows编译器上都能正常编译}}
+\DoxyCodeLine{00155\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00159\ \textcolor{comment}{**\ When\ POSIX\ DLL\ ('LUA\_USE\_DLOPEN')\ is\ enabled,\ the\ Lua\ stand-\/alone}}
+\DoxyCodeLine{00160\ \textcolor{comment}{**\ (当启用POSIX\ DLL('LUA\_USE\_DLOPEN')时,Lua独立)}}
+\DoxyCodeLine{00161\ \textcolor{comment}{**\ application\ will\ try\ to\ dynamically\ link\ a\ 'readline'\ facility}}
+\DoxyCodeLine{00162\ \textcolor{comment}{**\ (应用程序将尝试动态链接'readline'功能)}}
+\DoxyCodeLine{00163\ \textcolor{comment}{**\ for\ its\ REPL.\ \ In\ that\ case,\ LUA\_READLINELIB\ is\ the\ name\ of\ the}}
+\DoxyCodeLine{00164\ \textcolor{comment}{**\ (用于其REPL。在这种情况下,LUA\_READLINELIB是)}}
+\DoxyCodeLine{00165\ \textcolor{comment}{**\ library\ it\ will\ look\ for\ those\ facilities.\ \ If\ lua.c\ cannot\ open}}
+\DoxyCodeLine{00166\ \textcolor{comment}{**\ (将查找这些功能的库名称。如果lua.c无法打开)}}
+\DoxyCodeLine{00167\ \textcolor{comment}{**\ the\ specified\ library,\ it\ will\ generate\ a\ warning\ and\ then\ run}}
+\DoxyCodeLine{00168\ \textcolor{comment}{**\ (指定的库,它将生成警告然后运行)}}
+\DoxyCodeLine{00169\ \textcolor{comment}{**\ without\ 'readline'.\ \ If\ that\ macro\ is\ not\ defined,\ lua.c\ will\ not}}
+\DoxyCodeLine{00170\ \textcolor{comment}{**\ (不带'readline'。如果未定义该宏,lua.c将不会)}}
+\DoxyCodeLine{00171\ \textcolor{comment}{**\ use\ 'readline'.}}
+\DoxyCodeLine{00172\ \textcolor{comment}{**\ (使用'readline'。)}}
+\DoxyCodeLine{00173\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_LINUX)}}
+\DoxyCodeLine{00175\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00176\ \textcolor{comment}{\ *\ Linux平台配置}}
+\DoxyCodeLine{00177\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\#define\ LUA\_USE\_POSIX}}
+\DoxyCodeLine{00179\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00180\ \textcolor{comment}{\ *\ POSIX:\ Portable\ Operating\ System\ Interface(可移植操作系统接口)}}
+\DoxyCodeLine{00181\ \textcolor{comment}{\ *\ -\/\ POSIX是Unix系统的标准API规范}}
+\DoxyCodeLine{00182\ \textcolor{comment}{\ *\ -\/\ Linux实现了POSIX标准}}
+\DoxyCodeLine{00183\ \textcolor{comment}{\ *\ -\/\ 定义此宏后,Lua将使用POSIX\ API}}
+\DoxyCodeLine{00184\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\#define\ LUA\_USE\_DLOPEN\ }\textcolor{comment}{/*\ needs\ an\ extra\ library:\ -\/ldl\ (需要额外的库:-\/ldl)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00186\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00187\ \textcolor{comment}{\ *\ dlopen相关说明:}}
+\DoxyCodeLine{00188\ \textcolor{comment}{\ *\ -\/\ dlopen是POSIX标准的动态加载库的函数}}
+\DoxyCodeLine{00189\ \textcolor{comment}{\ *\ -\/\ 用于在运行时加载共享库(.so文件)}}
+\DoxyCodeLine{00190\ \textcolor{comment}{\ *\ -\/\ Linux上需要链接libdl库(编译时加\ -\/ldl\ 参数)}}
+\DoxyCodeLine{00191\ \textcolor{comment}{\ *\ -\/\ dlopen/dlsym/dlclose等函数在<dlfcn.h>中声明}}
+\DoxyCodeLine{00192\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\#define\ LUA\_READLINELIB\ "{}libreadline.so"{}}}
+\DoxyCodeLine{00194\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00195\ \textcolor{comment}{\ *\ readline库说明:}}
+\DoxyCodeLine{00196\ \textcolor{comment}{\ *\ -\/\ readline是一个提供命令行编辑功能的库}}
+\DoxyCodeLine{00197\ \textcolor{comment}{\ *\ -\/\ 提供历史记录、自动补全、行编辑等功能}}
+\DoxyCodeLine{00198\ \textcolor{comment}{\ *\ -\/\ 增强Lua交互式解释器(REPL)的用户体验}}
+\DoxyCodeLine{00199\ \textcolor{comment}{\ *\ -\/\ "{}libreadline.so"{}是Linux上readline库的文件名}}
+\DoxyCodeLine{00200\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_MACOSX)}}
+\DoxyCodeLine{00204\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00205\ \textcolor{comment}{\ *\ macOS(苹果Mac操作系统)平台配置}}
+\DoxyCodeLine{00206\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00207\ \textcolor{preprocessor}{\#define\ LUA\_USE\_POSIX}}
+\DoxyCodeLine{00208\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00209\ \textcolor{comment}{\ *\ macOS也是类Unix系统,实现了POSIX标准}}
+\DoxyCodeLine{00210\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\#define\ LUA\_USE\_DLOPEN\ }\textcolor{comment}{/*\ macOS\ does\ not\ need\ -\/ldl\ (macOS不需要-\/ldl)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00212\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00213\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00214\ \textcolor{comment}{\ *\ -\/\ macOS也支持dlopen动态加载}}
+\DoxyCodeLine{00215\ \textcolor{comment}{\ *\ -\/\ 但与Linux不同,macOS的dlopen函数在系统库中,不需要额外链接libdl}}
+\DoxyCodeLine{00216\ \textcolor{comment}{\ *\ -\/\ 编译时不需要\ -\/ldl\ 参数}}
+\DoxyCodeLine{00217\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\#define\ LUA\_READLINELIB\ "{}libedit.dylib"{}}}
+\DoxyCodeLine{00219\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00220\ \textcolor{comment}{\ *\ libedit说明:}}
+\DoxyCodeLine{00221\ \textcolor{comment}{\ *\ -\/\ macOS使用libedit而不是readline(许可证原因)}}
+\DoxyCodeLine{00222\ \textcolor{comment}{\ *\ -\/\ libedit提供与readline兼容的接口}}
+\DoxyCodeLine{00223\ \textcolor{comment}{\ *\ -\/\ .dylib是macOS的动态库扩展名(相当于Linux的.so)}}
+\DoxyCodeLine{00224\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_IOS)}}
+\DoxyCodeLine{00228\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00229\ \textcolor{comment}{\ *\ iOS(苹果移动操作系统)平台配置}}
+\DoxyCodeLine{00230\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\#define\ LUA\_USE\_POSIX}}
+\DoxyCodeLine{00232\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00233\ \textcolor{comment}{\ *\ iOS基于macOS,也实现了POSIX标准}}
+\DoxyCodeLine{00234\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00235\ \textcolor{preprocessor}{\#define\ LUA\_USE\_DLOPEN}}
+\DoxyCodeLine{00236\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00237\ \textcolor{comment}{\ *\ iOS也支持动态加载,但受到更多限制(App\ Store应用不能使用)}}
+\DoxyCodeLine{00238\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_C89)\ \&\&\ defined(LUA\_USE\_POSIX)}}
+\DoxyCodeLine{00242\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00243\ \textcolor{comment}{\ *\ 兼容性检查:C89和POSIX不兼容}}
+\DoxyCodeLine{00244\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00245\ \textcolor{preprocessor}{\#error\ "{}POSIX\ is\ not\ compatible\ with\ C89"{}}}
+\DoxyCodeLine{00246\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00247\ \textcolor{comment}{\ *\ \#error指令说明:}}
+\DoxyCodeLine{00248\ \textcolor{comment}{\ *\ -\/\ 这是预处理器错误指令}}
+\DoxyCodeLine{00249\ \textcolor{comment}{\ *\ -\/\ 如果代码执行到这里,编译会立即失败并显示错误消息}}
+\DoxyCodeLine{00250\ \textcolor{comment}{\ *\ -\/\ POSIX使用了许多C99特性,与C89模式不兼容}}
+\DoxyCodeLine{00251\ \textcolor{comment}{\ *\ -\/\ 例如:POSIX定义的某些类型和函数需要C99标准}}
+\DoxyCodeLine{00252\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00253\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00256\ \textcolor{comment}{@@\ LUAI\_IS32INT\ is\ true\ iff\ 'int'\ has\ (at\ least)\ 32\ bits.}}
+\DoxyCodeLine{00257\ \textcolor{comment}{**\ (LUAI\_IS32INT为真当且仅当'int'有(至少)32位。)}}
+\DoxyCodeLine{00258\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00259\ \textcolor{preprocessor}{\#define\ LUAI\_IS32INT\ ((UINT\_MAX\ >>\ 30)\ >=\ 3)}}
+\DoxyCodeLine{00260\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00261\ \textcolor{comment}{\ *\ 这个宏的巧妙判断逻辑:}}
+\DoxyCodeLine{00262\ \textcolor{comment}{\ *\ -\/\ UINT\_MAX是unsigned\ int的最大值(来自<limits.h>)}}
+\DoxyCodeLine{00263\ \textcolor{comment}{\ *\ -\/\ 如果int是32位,UINT\_MAX\ =\ 0xFFFFFFFF(4,294,967,295)}}
+\DoxyCodeLine{00264\ \textcolor{comment}{\ *\ -\/\ UINT\_MAX\ >>\ 30\ 表示右移30位}}
+\DoxyCodeLine{00265\ \textcolor{comment}{\ *\ -\/\ 如果是32位:0xFFFFFFFF\ >>\ 30\ =\ 0b11\ =\ 3}}
+\DoxyCodeLine{00266\ \textcolor{comment}{\ *\ -\/\ 如果是16位:0xFFFF\ >>\ 30\ =\ 0(因为只有16位)}}
+\DoxyCodeLine{00267\ \textcolor{comment}{\ *\ -\/\ 所以\ >=\ 3\ 就能判断至少是32位}}
+\DoxyCodeLine{00268\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00269\ \textcolor{comment}{\ *\ 用途:}}
+\DoxyCodeLine{00270\ \textcolor{comment}{\ *\ -\/\ 后续代码中用于决定是否可以使用int作为Lua整数类型}}
+\DoxyCodeLine{00271\ \textcolor{comment}{\ *\ -\/\ 在32位整数配置下,如果系统的int是32位,就可以直接使用}}
+\DoxyCodeLine{00272\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00277\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{00278\ \textcolor{comment}{**\ Configuration\ for\ Number\ types.\ These\ options\ should\ not\ be}}
+\DoxyCodeLine{00279\ \textcolor{comment}{**\ (数值类型配置。这些选项不应该)}}
+\DoxyCodeLine{00280\ \textcolor{comment}{**\ set\ externally,\ because\ any\ other\ code\ connected\ to\ Lua\ must}}
+\DoxyCodeLine{00281\ \textcolor{comment}{**\ (外部设置,因为任何连接到Lua的其他代码必须)}}
+\DoxyCodeLine{00282\ \textcolor{comment}{**\ use\ the\ same\ configuration.}}
+\DoxyCodeLine{00283\ \textcolor{comment}{**\ (使用相同的配置。)}}
+\DoxyCodeLine{00284\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00285\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00288\ \textcolor{comment}{@@\ LUA\_INT\_TYPE\ defines\ the\ type\ for\ Lua\ integers.}}
+\DoxyCodeLine{00289\ \textcolor{comment}{**\ (LUA\_INT\_TYPE定义Lua整数的类型。)}}
+\DoxyCodeLine{00290\ \textcolor{comment}{@@\ LUA\_FLOAT\_TYPE\ defines\ the\ type\ for\ Lua\ floats.}}
+\DoxyCodeLine{00291\ \textcolor{comment}{**\ (LUA\_FLOAT\_TYPE定义Lua浮点数的类型。)}}
+\DoxyCodeLine{00292\ \textcolor{comment}{**\ Lua\ should\ work\ fine\ with\ any\ mix\ of\ these\ options\ supported}}
+\DoxyCodeLine{00293\ \textcolor{comment}{**\ (Lua应该可以很好地使用这些选项的任何组合)}}
+\DoxyCodeLine{00294\ \textcolor{comment}{**\ by\ your\ C\ compiler.\ The\ usual\ configurations\ are\ 64-\/bit\ integers}}
+\DoxyCodeLine{00295\ \textcolor{comment}{**\ (只要你的C编译器支持。通常的配置是64位整数)}}
+\DoxyCodeLine{00296\ \textcolor{comment}{**\ and\ 'double'\ (the\ default),\ 32-\/bit\ integers\ and\ 'float'\ (for}}
+\DoxyCodeLine{00297\ \textcolor{comment}{**\ (和'double'(默认),32位整数和'float'(对于)}}
+\DoxyCodeLine{00298\ \textcolor{comment}{**\ restricted\ platforms),\ and\ 'long'/'double'\ (for\ C\ compilers\ not}}
+\DoxyCodeLine{00299\ \textcolor{comment}{**\ (受限平台),以及'long'/'double'(对于不)}}
+\DoxyCodeLine{00300\ \textcolor{comment}{**\ compliant\ with\ C99,\ which\ may\ not\ have\ support\ for\ 'long\ long').}}
+\DoxyCodeLine{00301\ \textcolor{comment}{**\ (符合C99的C编译器,它们可能不支持'long\ long')。)}}
+\DoxyCodeLine{00302\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00304\ \textcolor{comment}{/*\ predefined\ options\ for\ LUA\_INT\_TYPE\ (LUA\_INT\_TYPE的预定义选项)\ */}}
+\DoxyCodeLine{00305\ \textcolor{preprocessor}{\#define\ LUA\_INT\_INT\ 1}}
+\DoxyCodeLine{00306\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00307\ \textcolor{comment}{\ *\ 选项1:\ 使用int作为Lua整数类型}}
+\DoxyCodeLine{00308\ \textcolor{comment}{\ *\ -\/\ 通常是32位(在大多数现代平台上)}}
+\DoxyCodeLine{00309\ \textcolor{comment}{\ *\ -\/\ 适合内存受限的嵌入式系统}}
+\DoxyCodeLine{00310\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00311\ \textcolor{preprocessor}{\#define\ LUA\_INT\_LONG\ 2}}
+\DoxyCodeLine{00312\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00313\ \textcolor{comment}{\ *\ 选项2:\ 使用long作为Lua整数类型}}
+\DoxyCodeLine{00314\ \textcolor{comment}{\ *\ -\/\ 在32位系统上通常是32位}}
+\DoxyCodeLine{00315\ \textcolor{comment}{\ *\ -\/\ 在64位Unix/Linux系统上通常是64位}}
+\DoxyCodeLine{00316\ \textcolor{comment}{\ *\ -\/\ C89兼容的选择}}
+\DoxyCodeLine{00317\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00318\ \textcolor{preprocessor}{\#define\ LUA\_INT\_LONGLONG\ 3}}
+\DoxyCodeLine{00319\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00320\ \textcolor{comment}{\ *\ 选项3:\ 使用long\ long作为Lua整数类型}}
+\DoxyCodeLine{00321\ \textcolor{comment}{\ *\ -\/\ C99引入的类型,至少64位}}
+\DoxyCodeLine{00322\ \textcolor{comment}{\ *\ -\/\ 现代Lua的默认选择,提供更大的整数范围}}
+\DoxyCodeLine{00323\ \textcolor{comment}{\ *\ -\/\ 可以表示更大的整数而不会溢出}}
+\DoxyCodeLine{00324\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \textcolor{comment}{/*\ predefined\ options\ for\ LUA\_FLOAT\_TYPE\ (LUA\_FLOAT\_TYPE的预定义选项)\ */}}
+\DoxyCodeLine{00327\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_FLOAT\ 1}}
+\DoxyCodeLine{00328\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00329\ \textcolor{comment}{\ *\ 选项1:\ 使用float作为Lua浮点数类型}}
+\DoxyCodeLine{00330\ \textcolor{comment}{\ *\ -\/\ 32位单精度浮点数}}
+\DoxyCodeLine{00331\ \textcolor{comment}{\ *\ -\/\ 精度约7位十进制数字}}
+\DoxyCodeLine{00332\ \textcolor{comment}{\ *\ -\/\ 节省内存,适合嵌入式系统}}
+\DoxyCodeLine{00333\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00334\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_DOUBLE\ 2}}
+\DoxyCodeLine{00335\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00336\ \textcolor{comment}{\ *\ 选项2:\ 使用double作为Lua浮点数类型}}
+\DoxyCodeLine{00337\ \textcolor{comment}{\ *\ -\/\ 64位双精度浮点数}}
+\DoxyCodeLine{00338\ \textcolor{comment}{\ *\ -\/\ 精度约15-\/17位十进制数字}}
+\DoxyCodeLine{00339\ \textcolor{comment}{\ *\ -\/\ 现代Lua的默认选择,精度和范围更好}}
+\DoxyCodeLine{00340\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00341\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_LONGDOUBLE\ 3}}
+\DoxyCodeLine{00342\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00343\ \textcolor{comment}{\ *\ 选项3:\ 使用long\ double作为Lua浮点数类型}}
+\DoxyCodeLine{00344\ \textcolor{comment}{\ *\ -\/\ 扩展精度浮点数(通常80位或128位,取决于平台)}}
+\DoxyCodeLine{00345\ \textcolor{comment}{\ *\ -\/\ 最高精度,但不是所有平台都很好支持}}
+\DoxyCodeLine{00346\ \textcolor{comment}{\ *\ -\/\ 性能可能较慢}}
+\DoxyCodeLine{00347\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \textcolor{comment}{/*\ Default\ configuration\ ('long\ long'\ and\ 'double',\ for\ 64-\/bit\ Lua)}}
+\DoxyCodeLine{00350\ \textcolor{comment}{\ \ \ (默认配置('long\ long'和'double',用于64位Lua))\ */}}
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\#define\ LUA\_INT\_DEFAULT\ LUA\_INT\_LONGLONG}}
+\DoxyCodeLine{00352\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00353\ \textcolor{comment}{\ *\ 默认整数类型:\ long\ long}}
+\DoxyCodeLine{00354\ \textcolor{comment}{\ *\ -\/\ 提供64位整数,范围约-\/9223372036854775808到9223372036854775807}}
+\DoxyCodeLine{00355\ \textcolor{comment}{\ *\ -\/\ 这是现代Lua(5.3+)的标准配置}}
+\DoxyCodeLine{00356\ \textcolor{comment}{\ *\ -\/\ 5.3之前的版本只有浮点数,没有独立的整数类型}}
+\DoxyCodeLine{00357\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00358\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_DEFAULT\ LUA\_FLOAT\_DOUBLE}}
+\DoxyCodeLine{00359\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00360\ \textcolor{comment}{\ *\ 默认浮点类型:\ double}}
+\DoxyCodeLine{00361\ \textcolor{comment}{\ *\ -\/\ 提供良好的精度和范围}}
+\DoxyCodeLine{00362\ \textcolor{comment}{\ *\ -\/\ 几乎所有现代平台都很好地支持double}}
+\DoxyCodeLine{00363\ \textcolor{comment}{\ *\ -\/\ 是精度、性能和兼容性的最佳平衡}}
+\DoxyCodeLine{00364\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00367\ \textcolor{comment}{@@\ LUA\_32BITS\ enables\ Lua\ with\ 32-\/bit\ integers\ and\ 32-\/bit\ floats.}}
+\DoxyCodeLine{00368\ \textcolor{comment}{**\ (LUA\_32BITS启用32位整数和32位浮点数的Lua。)}}
+\DoxyCodeLine{00369\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00370\ \textcolor{comment}{/*\ \#define\ LUA\_32BITS\ */}}
+\DoxyCodeLine{00371\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00372\ \textcolor{comment}{\ *\ 32位Lua配置:}}
+\DoxyCodeLine{00373\ \textcolor{comment}{\ *\ -\/\ 同时使用32位整数(int)和32位浮点数(float)}}
+\DoxyCodeLine{00374\ \textcolor{comment}{\ *\ -\/\ 适合内存非常受限的嵌入式系统}}
+\DoxyCodeLine{00375\ \textcolor{comment}{\ *\ -\/\ 精度和范围都会降低,但内存占用减半}}
+\DoxyCodeLine{00376\ \textcolor{comment}{\ *\ -\/\ 默认不启用,因为现代系统通常有足够的资源}}
+\DoxyCodeLine{00377\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00380\ \textcolor{comment}{@@\ LUA\_C89\_NUMBERS\ ensures\ that\ Lua\ uses\ the\ largest\ types\ available\ for}}
+\DoxyCodeLine{00381\ \textcolor{comment}{**\ (LUA\_C89\_NUMBERS确保Lua使用可用的最大类型)}}
+\DoxyCodeLine{00382\ \textcolor{comment}{**\ C89\ ('long'\ and\ 'double');\ Windows\ always\ has\ '\_\_int64',\ so\ it\ does}}
+\DoxyCodeLine{00383\ \textcolor{comment}{**\ (对于C89('long'和'double');Windows总是有'\_\_int64',所以它)}}
+\DoxyCodeLine{00384\ \textcolor{comment}{**\ not\ need\ to\ use\ this\ case.}}
+\DoxyCodeLine{00385\ \textcolor{comment}{**\ (不需要使用这种情况。)}}
+\DoxyCodeLine{00386\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00387\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_C89)\ \&\&\ !defined(LUA\_USE\_WINDOWS)}}
+\DoxyCodeLine{00388\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00389\ \textcolor{comment}{\ *\ 条件:使用C89模式且不在Windows上}}
+\DoxyCodeLine{00390\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00391\ \textcolor{preprocessor}{\#define\ LUA\_C89\_NUMBERS\ 1}}
+\DoxyCodeLine{00392\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00393\ \textcolor{comment}{\ *\ C89数值配置:}}
+\DoxyCodeLine{00394\ \textcolor{comment}{\ *\ -\/\ C89标准没有long\ long类型}}
+\DoxyCodeLine{00395\ \textcolor{comment}{\ *\ -\/\ 所以只能使用long和double}}
+\DoxyCodeLine{00396\ \textcolor{comment}{\ *\ -\/\ long的大小取决于平台(32位或64位)}}
+\DoxyCodeLine{00397\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00398\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00399\ \textcolor{preprocessor}{\#define\ LUA\_C89\_NUMBERS\ 0}}
+\DoxyCodeLine{00400\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00401\ \textcolor{comment}{\ *\ 不使用C89数值配置}}
+\DoxyCodeLine{00402\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00403\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00404\ }
+\DoxyCodeLine{00405\ \textcolor{preprocessor}{\#if\ defined(LUA\_32BITS)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00406\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00407\ \textcolor{comment}{\ *\ 如果定义了LUA\_32BITS,配置32位Lua}}
+\DoxyCodeLine{00408\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00409\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00410\ \textcolor{comment}{**\ 32-\/bit\ integers\ and\ 'float'}}
+\DoxyCodeLine{00411\ \textcolor{comment}{**\ (32位整数和'float')}}
+\DoxyCodeLine{00412\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00413\ \textcolor{preprocessor}{\#if\ LUAI\_IS32INT\ }\textcolor{comment}{/*\ use\ 'int'\ if\ big\ enough\ (如果足够大,使用'int')\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00414\ \textcolor{preprocessor}{\#define\ LUA\_INT\_TYPE\ LUA\_INT\_INT}}
+\DoxyCodeLine{00415\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00416\ \textcolor{comment}{\ *\ 如果系统的int是32位,直接使用int}}
+\DoxyCodeLine{00417\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00418\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ otherwise\ use\ 'long'\ (否则使用'long')\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00419\ \textcolor{preprocessor}{\#define\ LUA\_INT\_TYPE\ LUA\_INT\_LONG}}
+\DoxyCodeLine{00420\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00421\ \textcolor{comment}{\ *\ 如果int不是32位(例如16位),则使用long}}
+\DoxyCodeLine{00422\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00423\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00424\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_TYPE\ LUA\_FLOAT\_FLOAT}}
+\DoxyCodeLine{00425\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00426\ \textcolor{comment}{\ *\ 浮点类型使用float(32位)}}
+\DoxyCodeLine{00427\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ \textcolor{preprocessor}{\#elif\ LUA\_C89\_NUMBERS\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00430\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00431\ \textcolor{comment}{\ *\ 如果使用C89数值配置}}
+\DoxyCodeLine{00432\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00433\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00434\ \textcolor{comment}{**\ largest\ types\ available\ for\ C89\ ('long'\ and\ 'double')}}
+\DoxyCodeLine{00435\ \textcolor{comment}{**\ (C89可用的最大类型('long'和'double'))}}
+\DoxyCodeLine{00436\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00437\ \textcolor{preprocessor}{\#define\ LUA\_INT\_TYPE\ LUA\_INT\_LONG}}
+\DoxyCodeLine{00438\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00439\ \textcolor{comment}{\ *\ C89模式下整数使用long}}
+\DoxyCodeLine{00440\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00441\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_TYPE\ LUA\_FLOAT\_DOUBLE}}
+\DoxyCodeLine{00442\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00443\ \textcolor{comment}{\ *\ C89模式下浮点使用double}}
+\DoxyCodeLine{00444\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00447\ \textcolor{comment}{/*\ use\ defaults\ (使用默认值)\ */}}
+\DoxyCodeLine{00448\ }
+\DoxyCodeLine{00449\ \textcolor{preprocessor}{\#define\ LUA\_INT\_TYPE\ LUA\_INT\_DEFAULT}}
+\DoxyCodeLine{00450\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00451\ \textcolor{comment}{\ *\ 默认情况:整数使用long\ long}}
+\DoxyCodeLine{00452\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00453\ \textcolor{preprocessor}{\#define\ LUA\_FLOAT\_TYPE\ LUA\_FLOAT\_DEFAULT}}
+\DoxyCodeLine{00454\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00455\ \textcolor{comment}{\ *\ 默认情况:浮点使用double}}
+\DoxyCodeLine{00456\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00457\ }
+\DoxyCodeLine{00458\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00463\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{00464\ \textcolor{comment}{**\ Configuration\ for\ Paths.\ (路径配置。)}}
+\DoxyCodeLine{00465\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00466\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00468\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00469\ \textcolor{comment}{**\ LUA\_PATH\_SEP\ is\ the\ character\ that\ separates\ templates\ in\ a\ path.}}
+\DoxyCodeLine{00470\ \textcolor{comment}{**\ (LUA\_PATH\_SEP是路径中分隔模板的字符。)}}
+\DoxyCodeLine{00471\ \textcolor{comment}{**\ LUA\_PATH\_MARK\ is\ the\ string\ that\ marks\ the\ substitution\ points\ in\ a}}
+\DoxyCodeLine{00472\ \textcolor{comment}{**\ (LUA\_PATH\_MARK是标记替换点的字符串)}}
+\DoxyCodeLine{00473\ \textcolor{comment}{**\ template.}}
+\DoxyCodeLine{00474\ \textcolor{comment}{**\ (在模板中。)}}
+\DoxyCodeLine{00475\ \textcolor{comment}{**\ LUA\_EXEC\_DIR\ in\ a\ Windows\ path\ is\ replaced\ by\ the\ executable's}}
+\DoxyCodeLine{00476\ \textcolor{comment}{**\ (Windows路径中的LUA\_EXEC\_DIR被可执行文件的)}}
+\DoxyCodeLine{00477\ \textcolor{comment}{**\ directory.}}
+\DoxyCodeLine{00478\ \textcolor{comment}{**\ (目录替换。)}}
+\DoxyCodeLine{00479\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00480\ \textcolor{preprocessor}{\#define\ LUA\_PATH\_SEP\ "{};"{}}}
+\DoxyCodeLine{00481\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00482\ \textcolor{comment}{\ *\ 路径分隔符:}}
+\DoxyCodeLine{00483\ \textcolor{comment}{\ *\ -\/\ 在LUA\_PATH中分隔多个搜索路径}}
+\DoxyCodeLine{00484\ \textcolor{comment}{\ *\ -\/\ 类似于操作系统的PATH环境变量}}
+\DoxyCodeLine{00485\ \textcolor{comment}{\ *\ -\/\ Windows和Unix都使用分号}}
+\DoxyCodeLine{00486\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00487\ \textcolor{preprocessor}{\#define\ LUA\_PATH\_MARK\ "{}?"{}}}
+\DoxyCodeLine{00488\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00489\ \textcolor{comment}{\ *\ 路径标记:}}
+\DoxyCodeLine{00490\ \textcolor{comment}{\ *\ -\/\ 在路径模板中标记模块名称的位置}}
+\DoxyCodeLine{00491\ \textcolor{comment}{\ *\ -\/\ 例如:"{}./?.lua"{}\ 中的?会被替换为模块名}}
+\DoxyCodeLine{00492\ \textcolor{comment}{\ *\ -\/\ 如果模块名是"{}mymod"{},则变为"{}./mymod.lua"{}}}
+\DoxyCodeLine{00493\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00494\ \textcolor{preprocessor}{\#define\ LUA\_EXEC\_DIR\ "{}!"{}}}
+\DoxyCodeLine{00495\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00496\ \textcolor{comment}{\ *\ 可执行文件目录标记(仅Windows):}}
+\DoxyCodeLine{00497\ \textcolor{comment}{\ *\ -\/\ 在Windows路径中,!会被替换为lua.exe所在的目录}}
+\DoxyCodeLine{00498\ \textcolor{comment}{\ *\ -\/\ 允许相对于Lua可执行文件的位置查找模块}}
+\DoxyCodeLine{00499\ \textcolor{comment}{\ *\ -\/\ 便于Lua的便携式部署}}
+\DoxyCodeLine{00500\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00501\ }
+\DoxyCodeLine{00502\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00503\ \textcolor{comment}{@@\ LUA\_PATH\_DEFAULT\ is\ the\ default\ path\ that\ Lua\ uses\ to\ look\ for}}
+\DoxyCodeLine{00504\ \textcolor{comment}{**\ (LUA\_PATH\_DEFAULT是Lua用于查找的默认路径)}}
+\DoxyCodeLine{00505\ \textcolor{comment}{**\ Lua\ libraries.}}
+\DoxyCodeLine{00506\ \textcolor{comment}{**\ (Lua库。)}}
+\DoxyCodeLine{00507\ \textcolor{comment}{@@\ LUA\_CPATH\_DEFAULT\ is\ the\ default\ path\ that\ Lua\ uses\ to\ look\ for}}
+\DoxyCodeLine{00508\ \textcolor{comment}{**\ (LUA\_CPATH\_DEFAULT是Lua用于查找的默认路径)}}
+\DoxyCodeLine{00509\ \textcolor{comment}{**\ C\ libraries.}}
+\DoxyCodeLine{00510\ \textcolor{comment}{**\ (C库。)}}
+\DoxyCodeLine{00511\ \textcolor{comment}{**\ CHANGE\ them\ if\ your\ machine\ has\ a\ non-\/conventional\ directory}}
+\DoxyCodeLine{00512\ \textcolor{comment}{**\ (如果你的机器有非常规的目录)}}
+\DoxyCodeLine{00513\ \textcolor{comment}{**\ hierarchy\ or\ if\ you\ want\ to\ install\ your\ libraries\ in}}
+\DoxyCodeLine{00514\ \textcolor{comment}{**\ (层次结构或如果你想安装你的库在)}}
+\DoxyCodeLine{00515\ \textcolor{comment}{**\ non-\/conventional\ directories.}}
+\DoxyCodeLine{00516\ \textcolor{comment}{**\ (非常规目录,请修改它们。)}}
+\DoxyCodeLine{00517\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00518\ }
+\DoxyCodeLine{00519\ \textcolor{preprocessor}{\#define\ LUA\_VDIR\ LUA\_VERSION\_MAJOR\ "{}."{}\ LUA\_VERSION\_MINOR}}
+\DoxyCodeLine{00520\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00521\ \textcolor{comment}{\ *\ 版本目录:}}
+\DoxyCodeLine{00522\ \textcolor{comment}{\ *\ -\/\ 连接主版本号和次版本号}}
+\DoxyCodeLine{00523\ \textcolor{comment}{\ *\ -\/\ 例如:Lua\ 5.4则为"{}5.4"{}}}
+\DoxyCodeLine{00524\ \textcolor{comment}{\ *\ -\/\ 用于构建版本相关的路径}}
+\DoxyCodeLine{00525\ \textcolor{comment}{\ *\ -\/\ LUA\_VERSION\_MAJOR和LUA\_VERSION\_MINOR在lua.h中定义}}
+\DoxyCodeLine{00526\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00527\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00528\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00529\ \textcolor{comment}{\ *\ Windows平台的路径配置}}
+\DoxyCodeLine{00530\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00531\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00532\ \textcolor{comment}{**\ In\ Windows,\ any\ exclamation\ mark\ ('!')\ in\ the\ path\ is\ replaced\ by\ the}}
+\DoxyCodeLine{00533\ \textcolor{comment}{**\ (在Windows中,路径中的任何感叹号('!')被替换为)}}
+\DoxyCodeLine{00534\ \textcolor{comment}{**\ path\ of\ the\ directory\ of\ the\ executable\ file\ of\ the\ current\ process.}}
+\DoxyCodeLine{00535\ \textcolor{comment}{**\ (当前进程的可执行文件的目录路径。)}}
+\DoxyCodeLine{00536\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00537\ \textcolor{preprocessor}{\#define\ LUA\_LDIR\ "{}!\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)"{}}}
+\DoxyCodeLine{00538\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00539\ \textcolor{comment}{\ *\ Lua库目录:}}
+\DoxyCodeLine{00540\ \textcolor{comment}{\ *\ -\/\ !\ =\ 可执行文件目录}}
+\DoxyCodeLine{00541\ \textcolor{comment}{\ *\ -\/\ 完整路径示例:C:\(\backslash\)Program\ Files\(\backslash\)Lua\(\backslash\)lua\(\backslash\)}}
+\DoxyCodeLine{00542\ \textcolor{comment}{\ *\ -\/\ \(\backslash\)\(\backslash\)是转义的反斜杠(Windows路径分隔符)}}
+\DoxyCodeLine{00543\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00544\ \textcolor{preprocessor}{\#define\ LUA\_CDIR\ "{}!\(\backslash\)\(\backslash\)"{}}}
+\DoxyCodeLine{00545\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00546\ \textcolor{comment}{\ *\ C库目录:}}
+\DoxyCodeLine{00547\ \textcolor{comment}{\ *\ -\/\ 直接在可执行文件目录下}}
+\DoxyCodeLine{00548\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00549\ \textcolor{preprocessor}{\#define\ LUA\_SHRDIR\ "{}!\(\backslash\)\(\backslash\)..\(\backslash\)\(\backslash\)share\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)"{}\ LUA\_VDIR\ "{}\(\backslash\)\(\backslash\)"{}}}
+\DoxyCodeLine{00550\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00551\ \textcolor{comment}{\ *\ 共享目录:}}
+\DoxyCodeLine{00552\ \textcolor{comment}{\ *\ -\/\ ..表示上级目录}}
+\DoxyCodeLine{00553\ \textcolor{comment}{\ *\ -\/\ 完整路径示例:C:\(\backslash\)Program\ Files\(\backslash\)Lua\(\backslash\)..\(\backslash\)share\(\backslash\)lua\(\backslash\)5.4\(\backslash\)}}
+\DoxyCodeLine{00554\ \textcolor{comment}{\ *\ -\/\ 即:C:\(\backslash\)Program\ Files\(\backslash\)share\(\backslash\)lua\(\backslash\)5.4\(\backslash\)}}
+\DoxyCodeLine{00555\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \textcolor{preprocessor}{\#if\ !defined(LUA\_PATH\_DEFAULT)}}
+\DoxyCodeLine{00558\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00559\ \textcolor{comment}{\ *\ 如果没有外部定义LUA\_PATH\_DEFAULT}}
+\DoxyCodeLine{00560\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00561\ \textcolor{preprocessor}{\#define\ LUA\_PATH\_DEFAULT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00562\ \textcolor{preprocessor}{\ \ \ \ LUA\_LDIR\ "{}?.lua;"{}\ LUA\_LDIR\ "{}?\(\backslash\)\(\backslash\)init.lua;"{}\ LUA\_CDIR\ "{}?.lua;"{}\ LUA\_CDIR\ "{}?\(\backslash\)\(\backslash\)init.lua;"{}\ LUA\_SHRDIR\ "{}?.lua;"{}\ LUA\_SHRDIR\ "{}?\(\backslash\)\(\backslash\)init.lua;"{}\ \(\backslash\)}}
+\DoxyCodeLine{00563\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}.\(\backslash\)\(\backslash\)?.lua;"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00564\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}.\(\backslash\)\(\backslash\)?\(\backslash\)\(\backslash\)init.lua"{}}}
+\DoxyCodeLine{00565\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00566\ \textcolor{comment}{\ *\ Lua库搜索路径(Windows):}}
+\DoxyCodeLine{00567\ \textcolor{comment}{\ *\ 按顺序搜索以下位置(假设require\ "{}mymod"{}):}}
+\DoxyCodeLine{00568\ \textcolor{comment}{\ *\ 1.\ !\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)mymod.lua}}
+\DoxyCodeLine{00569\ \textcolor{comment}{\ *\ 2.\ !\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)mymod\(\backslash\)\(\backslash\)init.lua}}
+\DoxyCodeLine{00570\ \textcolor{comment}{\ *\ 3.\ !\(\backslash\)\(\backslash\)mymod.lua}}
+\DoxyCodeLine{00571\ \textcolor{comment}{\ *\ 4.\ !\(\backslash\)\(\backslash\)mymod\(\backslash\)\(\backslash\)init.lua}}
+\DoxyCodeLine{00572\ \textcolor{comment}{\ *\ 5.\ !\(\backslash\)\(\backslash\)..\(\backslash\)\(\backslash\)share\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)5.4\(\backslash\)\(\backslash\)mymod.lua}}
+\DoxyCodeLine{00573\ \textcolor{comment}{\ *\ 6.\ !\(\backslash\)\(\backslash\)..\(\backslash\)\(\backslash\)share\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)5.4\(\backslash\)\(\backslash\)mymod\(\backslash\)\(\backslash\)init.lua}}
+\DoxyCodeLine{00574\ \textcolor{comment}{\ *\ 7.\ .\(\backslash\)\(\backslash\)mymod.lua\ (当前目录)}}
+\DoxyCodeLine{00575\ \textcolor{comment}{\ *\ 8.\ .\(\backslash\)\(\backslash\)mymod\(\backslash\)\(\backslash\)init.lua}}
+\DoxyCodeLine{00576\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00577\ \textcolor{comment}{\ *\ 解释:}}
+\DoxyCodeLine{00578\ \textcolor{comment}{\ *\ -\/\ 反斜杠\(\backslash\)是续行符,表示定义跨多行}}
+\DoxyCodeLine{00579\ \textcolor{comment}{\ *\ -\/\ 分号;分隔不同的路径模板}}
+\DoxyCodeLine{00580\ \textcolor{comment}{\ *\ -\/\ ?会被模块名替换}}
+\DoxyCodeLine{00581\ \textcolor{comment}{\ *\ -\/\ init.lua是包(package)的约定入口文件}}
+\DoxyCodeLine{00582\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00583\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \textcolor{preprocessor}{\#if\ !defined(LUA\_CPATH\_DEFAULT)}}
+\DoxyCodeLine{00586\ \textcolor{preprocessor}{\#define\ LUA\_CPATH\_DEFAULT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00587\ \textcolor{preprocessor}{\ \ \ \ LUA\_CDIR\ "{}?.dll;"{}\ LUA\_CDIR\ "{}..\(\backslash\)\(\backslash\)lib\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)"{}\ LUA\_VDIR\ "{}\(\backslash\)\(\backslash\)?.dll;"{}\ LUA\_CDIR\ "{}loadall.dll;"{}\ \(\backslash\)}}
+\DoxyCodeLine{00588\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}.\(\backslash\)\(\backslash\)?.dll"{}}}
+\DoxyCodeLine{00589\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00590\ \textcolor{comment}{\ *\ C库搜索路径(Windows):}}
+\DoxyCodeLine{00591\ \textcolor{comment}{\ *\ 按顺序搜索以下位置(假设require\ "{}mymod"{}):}}
+\DoxyCodeLine{00592\ \textcolor{comment}{\ *\ 1.\ !\(\backslash\)\(\backslash\)mymod.dll}}
+\DoxyCodeLine{00593\ \textcolor{comment}{\ *\ 2.\ !\(\backslash\)\(\backslash\)..\(\backslash\)\(\backslash\)lib\(\backslash\)\(\backslash\)lua\(\backslash\)\(\backslash\)5.4\(\backslash\)\(\backslash\)mymod.dll}}
+\DoxyCodeLine{00594\ \textcolor{comment}{\ *\ 3.\ !\(\backslash\)\(\backslash\)loadall.dll\ (特殊:加载所有符号)}}
+\DoxyCodeLine{00595\ \textcolor{comment}{\ *\ 4.\ .\(\backslash\)\(\backslash\)mymod.dll\ (当前目录)}}
+\DoxyCodeLine{00596\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00597\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00598\ \textcolor{comment}{\ *\ -\/\ .dll是Windows的动态链接库扩展名}}
+\DoxyCodeLine{00599\ \textcolor{comment}{\ *\ -\/\ loadall.dll是一个特殊机制,可以包含多个模块}}
+\DoxyCodeLine{00600\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00601\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00602\ }
+\DoxyCodeLine{00603\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00604\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00605\ \textcolor{comment}{\ *\ Unix/Linux/macOS平台的路径配置}}
+\DoxyCodeLine{00606\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00607\ }
+\DoxyCodeLine{00608\ \textcolor{preprocessor}{\#define\ LUA\_ROOT\ "{}/usr/local/"{}}}
+\DoxyCodeLine{00609\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00610\ \textcolor{comment}{\ *\ Unix根目录:}}
+\DoxyCodeLine{00611\ \textcolor{comment}{\ *\ -\/\ 标准Unix软件安装位置}}
+\DoxyCodeLine{00612\ \textcolor{comment}{\ *\ -\/\ 系统级安装通常在/usr/local}}
+\DoxyCodeLine{00613\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00614\ \textcolor{preprocessor}{\#define\ LUA\_LDIR\ LUA\_ROOT\ "{}share/lua/"{}\ LUA\_VDIR\ "{}/"{}}}
+\DoxyCodeLine{00615\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00616\ \textcolor{comment}{\ *\ Lua库目录:}}
+\DoxyCodeLine{00617\ \textcolor{comment}{\ *\ -\/\ 例如:/usr/local/share/lua/5.4/}}
+\DoxyCodeLine{00618\ \textcolor{comment}{\ *\ -\/\ share目录存放架构无关的文件}}
+\DoxyCodeLine{00619\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00620\ \textcolor{preprocessor}{\#define\ LUA\_CDIR\ LUA\_ROOT\ "{}lib/lua/"{}\ LUA\_VDIR\ "{}/"{}}}
+\DoxyCodeLine{00621\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00622\ \textcolor{comment}{\ *\ C库目录:}}
+\DoxyCodeLine{00623\ \textcolor{comment}{\ *\ -\/\ 例如:/usr/local/lib/lua/5.4/}}
+\DoxyCodeLine{00624\ \textcolor{comment}{\ *\ -\/\ lib目录存放二进制库文件}}
+\DoxyCodeLine{00625\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00626\ }
+\DoxyCodeLine{00627\ \textcolor{preprocessor}{\#if\ !defined(LUA\_PATH\_DEFAULT)}}
+\DoxyCodeLine{00628\ \textcolor{preprocessor}{\#define\ LUA\_PATH\_DEFAULT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00629\ \textcolor{preprocessor}{\ \ \ \ LUA\_LDIR\ "{}?.lua;"{}\ LUA\_LDIR\ "{}?/init.lua;"{}\ LUA\_CDIR\ "{}?.lua;"{}\ LUA\_CDIR\ "{}?/init.lua;"{}\ \(\backslash\)}}
+\DoxyCodeLine{00630\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}./?.lua;"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00631\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}./?/init.lua"{}}}
+\DoxyCodeLine{00632\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00633\ \textcolor{comment}{\ *\ Lua库搜索路径(Unix):}}
+\DoxyCodeLine{00634\ \textcolor{comment}{\ *\ 按顺序搜索以下位置(假设require\ "{}mymod"{}):}}
+\DoxyCodeLine{00635\ \textcolor{comment}{\ *\ 1.\ /usr/local/share/lua/5.4/mymod.lua}}
+\DoxyCodeLine{00636\ \textcolor{comment}{\ *\ 2.\ /usr/local/share/lua/5.4/mymod/init.lua}}
+\DoxyCodeLine{00637\ \textcolor{comment}{\ *\ 3.\ /usr/local/lib/lua/5.4/mymod.lua}}
+\DoxyCodeLine{00638\ \textcolor{comment}{\ *\ 4.\ /usr/local/lib/lua/5.4/mymod/init.lua}}
+\DoxyCodeLine{00639\ \textcolor{comment}{\ *\ 5.\ ./mymod.lua}}
+\DoxyCodeLine{00640\ \textcolor{comment}{\ *\ 6.\ ./mymod/init.lua}}
+\DoxyCodeLine{00641\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00642\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00643\ \textcolor{comment}{\ *\ -\/\ Unix使用正斜杠/作为路径分隔符}}
+\DoxyCodeLine{00644\ \textcolor{comment}{\ *\ -\/\ 相比Windows路径,结构更清晰简洁}}
+\DoxyCodeLine{00645\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00646\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00647\ }
+\DoxyCodeLine{00648\ \textcolor{preprocessor}{\#if\ !defined(LUA\_CPATH\_DEFAULT)}}
+\DoxyCodeLine{00649\ \textcolor{preprocessor}{\#define\ LUA\_CPATH\_DEFAULT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00650\ \textcolor{preprocessor}{\ \ \ \ LUA\_CDIR\ "{}?.so;"{}\ LUA\_CDIR\ "{}loadall.so;"{}\ \(\backslash\)}}
+\DoxyCodeLine{00651\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ "{}./?.so"{}}}
+\DoxyCodeLine{00652\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00653\ \textcolor{comment}{\ *\ C库搜索路径(Unix):}}
+\DoxyCodeLine{00654\ \textcolor{comment}{\ *\ 按顺序搜索以下位置(假设require\ "{}mymod"{}):}}
+\DoxyCodeLine{00655\ \textcolor{comment}{\ *\ 1.\ /usr/local/lib/lua/5.4/mymod.so}}
+\DoxyCodeLine{00656\ \textcolor{comment}{\ *\ 2.\ /usr/local/lib/lua/5.4/loadall.so}}
+\DoxyCodeLine{00657\ \textcolor{comment}{\ *\ 3.\ ./mymod.so}}
+\DoxyCodeLine{00658\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00659\ \textcolor{comment}{\ *\ 说明:}}
+\DoxyCodeLine{00660\ \textcolor{comment}{\ *\ -\/\ .so是Unix/Linux的共享对象(共享库)扩展名}}
+\DoxyCodeLine{00661\ \textcolor{comment}{\ *\ -\/\ macOS使用.dylib或.so都可以}}
+\DoxyCodeLine{00662\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00663\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00664\ }
+\DoxyCodeLine{00665\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00666\ }
+\DoxyCodeLine{00667\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00668\ \textcolor{comment}{@@\ LUA\_DIRSEP\ is\ the\ directory\ separator\ (for\ submodules).}}
+\DoxyCodeLine{00669\ \textcolor{comment}{**\ (LUA\_DIRSEP是目录分隔符(用于子模块)。)}}
+\DoxyCodeLine{00670\ \textcolor{comment}{**\ CHANGE\ it\ if\ your\ machine\ does\ not\ use\ "{}/"{}\ as\ the\ directory\ separator}}
+\DoxyCodeLine{00671\ \textcolor{comment}{**\ (如果你的机器不使用"{}/"{}作为目录分隔符)}}
+\DoxyCodeLine{00672\ \textcolor{comment}{**\ and\ is\ not\ Windows.\ (On\ Windows\ Lua\ automatically\ uses\ "{}\(\backslash\)"{}.)}}
+\DoxyCodeLine{00673\ \textcolor{comment}{**\ (并且不是Windows,请修改它。(在Windows上Lua自动使用"{}\(\backslash\)"{}。))}}
+\DoxyCodeLine{00674\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00675\ \textcolor{preprocessor}{\#if\ !defined(LUA\_DIRSEP)}}
+\DoxyCodeLine{00676\ }
+\DoxyCodeLine{00677\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)}}
+\DoxyCodeLine{00678\ \textcolor{preprocessor}{\#define\ LUA\_DIRSEP\ "{}\(\backslash\)\(\backslash\)"{}}}
+\DoxyCodeLine{00679\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00680\ \textcolor{comment}{\ *\ Windows目录分隔符:反斜杠}}
+\DoxyCodeLine{00681\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00682\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00683\ \textcolor{preprocessor}{\#define\ LUA\_DIRSEP\ "{}/"{}}}
+\DoxyCodeLine{00684\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00685\ \textcolor{comment}{\ *\ Unix/Linux/macOS目录分隔符:正斜杠}}
+\DoxyCodeLine{00686\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00687\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00688\ }
+\DoxyCodeLine{00689\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00690\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00691\ \textcolor{comment}{\ *\ LUA\_DIRSEP用于处理子模块:}}
+\DoxyCodeLine{00692\ \textcolor{comment}{\ *\ -\/\ 例如:require\ "{}a.b.c"{}}}
+\DoxyCodeLine{00693\ \textcolor{comment}{\ *\ -\/\ 在Unix上会查找文件:a/b/c.lua}}
+\DoxyCodeLine{00694\ \textcolor{comment}{\ *\ -\/\ 在Windows上会查找文件:a\(\backslash\)b\(\backslash\)c.lua}}
+\DoxyCodeLine{00695\ \textcolor{comment}{\ *\ -\/\ 点号.在模块名中被转换为目录分隔符}}
+\DoxyCodeLine{00696\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00698\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00699\ \textcolor{comment}{**\ LUA\_IGMARK\ is\ a\ mark\ to\ ignore\ all\ after\ it\ when\ building\ the}}
+\DoxyCodeLine{00700\ \textcolor{comment}{**\ (LUA\_IGMARK是一个标记,在构建时忽略其后的所有内容)}}
+\DoxyCodeLine{00701\ \textcolor{comment}{**\ module\ name\ (e.g.,\ used\ to\ build\ the\ luaopen\_\ function\ name).}}
+\DoxyCodeLine{00702\ \textcolor{comment}{**\ (模块名称(例如,用于构建luaopen\_函数名称)。)}}
+\DoxyCodeLine{00703\ \textcolor{comment}{**\ Typically,\ the\ suffix\ after\ the\ mark\ is\ the\ module\ version,}}
+\DoxyCodeLine{00704\ \textcolor{comment}{**\ (通常,标记后的后缀是模块版本,)}}
+\DoxyCodeLine{00705\ \textcolor{comment}{**\ as\ in\ "{}mod-\/v1.2.so"{}.}}
+\DoxyCodeLine{00706\ \textcolor{comment}{**\ (如"{}mod-\/v1.2.so"{}。)}}
+\DoxyCodeLine{00707\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00708\ \textcolor{preprocessor}{\#define\ LUA\_IGMARK\ "{}-\/"{}}}
+\DoxyCodeLine{00709\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00710\ \textcolor{comment}{\ *\ 忽略标记:}}
+\DoxyCodeLine{00711\ \textcolor{comment}{\ *\ -\/\ 用于从文件名中提取模块名}}
+\DoxyCodeLine{00712\ \textcolor{comment}{\ *\ -\/\ 例如:加载"{}mymod-\/v1.2.so"{}时}}
+\DoxyCodeLine{00713\ \textcolor{comment}{\ *\ -\/\ 模块名被识别为"{}mymod"{}(-\/v1.2被忽略)}}
+\DoxyCodeLine{00714\ \textcolor{comment}{\ *\ -\/\ 对应的初始化函数名为luaopen\_mymod}}
+\DoxyCodeLine{00715\ \textcolor{comment}{\ *\ -\/\ 这允许同一模块有多个版本的库文件}}
+\DoxyCodeLine{00716\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00717\ }
+\DoxyCodeLine{00718\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00721\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{00722\ \textcolor{comment}{**\ Marks\ for\ exported\ symbols\ in\ the\ C\ code}}
+\DoxyCodeLine{00723\ \textcolor{comment}{**\ (C代码中导出符号的标记)}}
+\DoxyCodeLine{00724\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00725\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00726\ }
+\DoxyCodeLine{00727\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00728\ \textcolor{comment}{@@\ LUA\_API\ is\ a\ mark\ for\ all\ core\ API\ functions.}}
+\DoxyCodeLine{00729\ \textcolor{comment}{**\ (LUA\_API是所有核心API函数的标记。)}}
+\DoxyCodeLine{00730\ \textcolor{comment}{@@\ LUALIB\_API\ is\ a\ mark\ for\ all\ auxiliary\ library\ functions.}}
+\DoxyCodeLine{00731\ \textcolor{comment}{**\ (LUALIB\_API是所有辅助库函数的标记。)}}
+\DoxyCodeLine{00732\ \textcolor{comment}{@@\ LUAMOD\_API\ is\ a\ mark\ for\ all\ standard\ library\ opening\ functions.}}
+\DoxyCodeLine{00733\ \textcolor{comment}{**\ (LUAMOD\_API是所有标准库打开函数的标记。)}}
+\DoxyCodeLine{00734\ \textcolor{comment}{**\ CHANGE\ them\ if\ you\ need\ to\ define\ those\ functions\ in\ some\ special\ way.}}
+\DoxyCodeLine{00735\ \textcolor{comment}{**\ (如果你需要以某种特殊方式定义这些函数,请修改它们。)}}
+\DoxyCodeLine{00736\ \textcolor{comment}{**\ For\ instance,\ if\ you\ want\ to\ create\ one\ Windows\ DLL\ with\ the\ core\ and}}
+\DoxyCodeLine{00737\ \textcolor{comment}{**\ (例如,如果你想创建一个包含核心和)}}
+\DoxyCodeLine{00738\ \textcolor{comment}{**\ the\ libraries,\ you\ may\ want\ to\ use\ the\ following\ definition\ (define}}
+\DoxyCodeLine{00739\ \textcolor{comment}{**\ (库的Windows\ DLL,你可能想使用以下定义(定义)}}
+\DoxyCodeLine{00740\ \textcolor{comment}{**\ LUA\_BUILD\_AS\_DLL\ to\ get\ it).}}
+\DoxyCodeLine{00741\ \textcolor{comment}{**\ (LUA\_BUILD\_AS\_DLL来获得它)。)}}
+\DoxyCodeLine{00742\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00743\ \textcolor{preprocessor}{\#if\ defined(LUA\_BUILD\_AS\_DLL)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00744\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00745\ \textcolor{comment}{\ *\ 如果定义了LUA\_BUILD\_AS\_DLL,表示将Lua编译为Windows\ DLL}}
+\DoxyCodeLine{00746\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00747\ }
+\DoxyCodeLine{00748\ \textcolor{preprocessor}{\#if\ defined(LUA\_CORE)\ ||\ defined(LUA\_LIB)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00749\ \textcolor{preprocessor}{\#define\ LUA\_API\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00750\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00751\ \textcolor{comment}{\ *\ \_\_declspec(dllexport)说明:}}
+\DoxyCodeLine{00752\ \textcolor{comment}{\ *\ -\/\ 这是Microsoft\ Visual\ C++的扩展语法}}
+\DoxyCodeLine{00753\ \textcolor{comment}{\ *\ -\/\ 用于从DLL中导出函数或变量}}
+\DoxyCodeLine{00754\ \textcolor{comment}{\ *\ -\/\ 当编译Lua核心或库时(定义了LUA\_CORE或LUA\_LIB)}}
+\DoxyCodeLine{00755\ \textcolor{comment}{\ *\ -\/\ 函数被标记为导出,可以被其他模块使用}}
+\DoxyCodeLine{00756\ \textcolor{comment}{\ *\ -\/\ 相当于告诉链接器:"{}这个符号要放到DLL的导出表中"{}}}
+\DoxyCodeLine{00757\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00758\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00759\ \textcolor{preprocessor}{\#define\ LUA\_API\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00760\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00761\ \textcolor{comment}{\ *\ \_\_declspec(dllimport)说明:}}
+\DoxyCodeLine{00762\ \textcolor{comment}{\ *\ -\/\ 用于从DLL中导入函数或变量}}
+\DoxyCodeLine{00763\ \textcolor{comment}{\ *\ -\/\ 当使用Lua\ DLL时(没有定义LUA\_CORE或LUA\_LIB)}}
+\DoxyCodeLine{00764\ \textcolor{comment}{\ *\ -\/\ 函数被标记为导入,链接到DLL中的实现}}
+\DoxyCodeLine{00765\ \textcolor{comment}{\ *\ -\/\ 这样编译器生成更高效的代码}}
+\DoxyCodeLine{00766\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00767\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00768\ }
+\DoxyCodeLine{00769\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00770\ }
+\DoxyCodeLine{00771\ \textcolor{preprocessor}{\#define\ LUA\_API\ extern}}
+\DoxyCodeLine{00772\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00773\ \textcolor{comment}{\ *\ extern关键字说明:}}
+\DoxyCodeLine{00774\ \textcolor{comment}{\ *\ -\/\ C语言标准的外部链接声明}}
+\DoxyCodeLine{00775\ \textcolor{comment}{\ *\ -\/\ 表示函数或变量在其他编译单元中定义}}
+\DoxyCodeLine{00776\ \textcolor{comment}{\ *\ -\/\ 默认情况(非DLL构建)下使用}}
+\DoxyCodeLine{00777\ \textcolor{comment}{\ *\ -\/\ 适用于静态链接的情况}}
+\DoxyCodeLine{00778\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00779\ }
+\DoxyCodeLine{00780\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00781\ }
+\DoxyCodeLine{00782\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00783\ \textcolor{comment}{**\ More\ often\ than\ not\ the\ libs\ go\ together\ with\ the\ core.}}
+\DoxyCodeLine{00784\ \textcolor{comment}{**\ (通常情况下库和核心一起。)}}
+\DoxyCodeLine{00785\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00786\ \textcolor{preprocessor}{\#define\ LUALIB\_API\ LUA\_API}}
+\DoxyCodeLine{00787\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00788\ \textcolor{comment}{\ *\ 辅助库API使用与核心API相同的定义}}
+\DoxyCodeLine{00789\ \textcolor{comment}{\ *\ -\/\ 辅助库(lauxlib)提供便利函数}}
+\DoxyCodeLine{00790\ \textcolor{comment}{\ *\ -\/\ 通常与核心一起编译和链接}}
+\DoxyCodeLine{00791\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00792\ }
+\DoxyCodeLine{00793\ \textcolor{preprocessor}{\#if\ defined(\_\_cplusplus)}}
+\DoxyCodeLine{00794\ \textcolor{comment}{/*\ Lua\ uses\ the\ "{}C\ name"{}\ when\ calling\ open\ functions}}
+\DoxyCodeLine{00795\ \textcolor{comment}{\ \ \ (Lua在调用打开函数时使用"{}C名称"{})\ */}}
+\DoxyCodeLine{00796\ \textcolor{preprocessor}{\#define\ LUAMOD\_API\ extern\ "{}C"{}}}
+\DoxyCodeLine{00797\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00798\ \textcolor{comment}{\ *\ extern\ "{}C"{}说明:}}
+\DoxyCodeLine{00799\ \textcolor{comment}{\ *\ -\/\ 用于C++环境}}
+\DoxyCodeLine{00800\ \textcolor{comment}{\ *\ -\/\ 告诉C++编译器使用C链接约定,不进行名称修饰(name\ mangling)}}
+\DoxyCodeLine{00801\ \textcolor{comment}{\ *\ -\/\ C++编译器会修改函数名以支持重载,如foo()变成\_Z3foov}}
+\DoxyCodeLine{00802\ \textcolor{comment}{\ *\ -\/\ extern\ "{}C"{}保持函数名为foo,这样C代码可以找到它}}
+\DoxyCodeLine{00803\ \textcolor{comment}{\ *\ -\/\ Lua的模块加载需要找到luaopen\_xxx函数,必须使用C名称}}
+\DoxyCodeLine{00804\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00805\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00806\ \textcolor{preprocessor}{\#define\ LUAMOD\_API\ LUA\_API}}
+\DoxyCodeLine{00807\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00808\ \textcolor{comment}{\ *\ 在C环境下,使用标准的LUA\_API}}
+\DoxyCodeLine{00809\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00810\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00811\ }
+\DoxyCodeLine{00812\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{00813\ }
+\DoxyCodeLine{00814\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00815\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{00816\ \textcolor{comment}{**\ Compatibility\ with\ previous\ versions}}
+\DoxyCodeLine{00817\ \textcolor{comment}{**\ (与以前版本的兼容性)}}
+\DoxyCodeLine{00818\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00819\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00820\ }
+\DoxyCodeLine{00821\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00822\ \textcolor{comment}{@@\ LUA\_COMPAT\_GLOBAL\ avoids\ 'global'\ being\ a\ reserved\ word}}
+\DoxyCodeLine{00823\ \textcolor{comment}{**\ (LUA\_COMPAT\_GLOBAL避免'global'成为保留字)}}
+\DoxyCodeLine{00824\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00825\ \textcolor{preprocessor}{\#define\ LUA\_COMPAT\_GLOBAL}}
+\DoxyCodeLine{00826\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00827\ \textcolor{comment}{\ *\ 兼容性选项:}}
+\DoxyCodeLine{00828\ \textcolor{comment}{\ *\ -\/\ 在某些旧版本中,'global'可能被用作标识符}}
+\DoxyCodeLine{00829\ \textcolor{comment}{\ *\ -\/\ 定义此宏可以避免将其视为保留字}}
+\DoxyCodeLine{00830\ \textcolor{comment}{\ *\ -\/\ 保持向后兼容性}}
+\DoxyCodeLine{00831\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00832\ }
+\DoxyCodeLine{00833\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00834\ \textcolor{comment}{@@\ LUA\_COMPAT\_MATHLIB\ controls\ the\ presence\ of\ several\ deprecated}}
+\DoxyCodeLine{00835\ \textcolor{comment}{**\ (LUA\_COMPAT\_MATHLIB控制几个已弃用的存在)}}
+\DoxyCodeLine{00836\ \textcolor{comment}{**\ functions\ in\ the\ mathematical\ library.}}
+\DoxyCodeLine{00837\ \textcolor{comment}{**\ (数学库中的函数。)}}
+\DoxyCodeLine{00838\ \textcolor{comment}{**\ (These\ functions\ were\ already\ officially\ removed\ in\ 5.3;}}
+\DoxyCodeLine{00839\ \textcolor{comment}{**\ (这些函数已在5.3中正式删除;)}}
+\DoxyCodeLine{00840\ \textcolor{comment}{**\ nevertheless\ they\ are\ still\ available\ here.)}}
+\DoxyCodeLine{00841\ \textcolor{comment}{**\ (然而它们在这里仍然可用。))}}
+\DoxyCodeLine{00842\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00843\ \textcolor{comment}{/*\ \#define\ LUA\_COMPAT\_MATHLIB\ */}}
+\DoxyCodeLine{00844\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00845\ \textcolor{comment}{\ *\ 数学库兼容性:}}
+\DoxyCodeLine{00846\ \textcolor{comment}{\ *\ -\/\ 默认不启用(被注释掉)}}
+\DoxyCodeLine{00847\ \textcolor{comment}{\ *\ -\/\ 如果启用,会包含一些Lua\ 5.3中删除的数学函数}}
+\DoxyCodeLine{00848\ \textcolor{comment}{\ *\ -\/\ 例如:math.log10,\ math.pow等}}
+\DoxyCodeLine{00849\ \textcolor{comment}{\ *\ -\/\ 这些函数已有替代方案(如math.log(x,\ 10))}}
+\DoxyCodeLine{00850\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00851\ }
+\DoxyCodeLine{00852\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00853\ \textcolor{comment}{@@\ The\ following\ macros\ supply\ trivial\ compatibility\ for\ some}}
+\DoxyCodeLine{00854\ \textcolor{comment}{**\ (以下宏为一些提供简单的兼容性)}}
+\DoxyCodeLine{00855\ \textcolor{comment}{**\ changes\ in\ the\ API.\ The\ macros\ themselves\ document\ how\ to}}
+\DoxyCodeLine{00856\ \textcolor{comment}{**\ (API的更改。宏本身记录了如何)}}
+\DoxyCodeLine{00857\ \textcolor{comment}{**\ change\ your\ code\ to\ avoid\ using\ them.}}
+\DoxyCodeLine{00858\ \textcolor{comment}{**\ (修改你的代码以避免使用它们。)}}
+\DoxyCodeLine{00859\ \textcolor{comment}{**\ (Once\ more,\ these\ macros\ were\ officially\ removed\ in\ 5.3,\ but\ they\ are}}
+\DoxyCodeLine{00860\ \textcolor{comment}{**\ (再次说明,这些宏在5.3中已正式删除,但它们)}}
+\DoxyCodeLine{00861\ \textcolor{comment}{**\ still\ available\ here.)}}
+\DoxyCodeLine{00862\ \textcolor{comment}{**\ (在这里仍然可用。))}}
+\DoxyCodeLine{00863\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00864\ \textcolor{preprocessor}{\#define\ lua\_strlen(L,\ i)\ lua\_rawlen(L,\ (i))}}
+\DoxyCodeLine{00865\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00866\ \textcolor{comment}{\ *\ 兼容宏:字符串长度}}
+\DoxyCodeLine{00867\ \textcolor{comment}{\ *\ -\/\ lua\_strlen在Lua\ 5.2中被lua\_rawlen替代}}
+\DoxyCodeLine{00868\ \textcolor{comment}{\ *\ -\/\ lua\_rawlen返回字符串、表或用户数据的原始长度}}
+\DoxyCodeLine{00869\ \textcolor{comment}{\ *\ -\/\ 不会触发\_\_len元方法}}
+\DoxyCodeLine{00870\ \textcolor{comment}{\ *\ -\/\ 参数:(L)Lua状态机,(i)栈索引}}
+\DoxyCodeLine{00871\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00872\ }
+\DoxyCodeLine{00873\ \textcolor{preprocessor}{\#define\ lua\_objlen(L,\ i)\ lua\_rawlen(L,\ (i))}}
+\DoxyCodeLine{00874\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00875\ \textcolor{comment}{\ *\ 兼容宏:对象长度}}
+\DoxyCodeLine{00876\ \textcolor{comment}{\ *\ -\/\ lua\_objlen也被lua\_rawlen替代}}
+\DoxyCodeLine{00877\ \textcolor{comment}{\ *\ -\/\ 功能相同,只是名称更改}}
+\DoxyCodeLine{00878\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00879\ }
+\DoxyCodeLine{00880\ \textcolor{preprocessor}{\#define\ lua\_equal(L,\ idx1,\ idx2)\ lua\_compare(L,\ (idx1),\ (idx2),\ LUA\_OPEQ)}}
+\DoxyCodeLine{00881\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00882\ \textcolor{comment}{\ *\ 兼容宏:相等比较}}
+\DoxyCodeLine{00883\ \textcolor{comment}{\ *\ -\/\ lua\_equal在Lua\ 5.2中被lua\_compare替代}}
+\DoxyCodeLine{00884\ \textcolor{comment}{\ *\ -\/\ lua\_compare是更通用的比较函数}}
+\DoxyCodeLine{00885\ \textcolor{comment}{\ *\ -\/\ LUA\_OPEQ是相等操作符常量}}
+\DoxyCodeLine{00886\ \textcolor{comment}{\ *\ -\/\ 等价于Lua中的\ ==}}
+\DoxyCodeLine{00887\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00888\ \textcolor{preprocessor}{\#define\ lua\_lessthan(L,\ idx1,\ idx2)\ lua\_compare(L,\ (idx1),\ (idx2),\ LUA\_OPLT)}}
+\DoxyCodeLine{00889\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00890\ \textcolor{comment}{\ *\ 兼容宏:小于比较}}
+\DoxyCodeLine{00891\ \textcolor{comment}{\ *\ -\/\ lua\_lessthan也被lua\_compare替代}}
+\DoxyCodeLine{00892\ \textcolor{comment}{\ *\ -\/\ LUA\_OPLT是小于操作符常量}}
+\DoxyCodeLine{00893\ \textcolor{comment}{\ *\ -\/\ 等价于Lua中的\ <}}
+\DoxyCodeLine{00894\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00895\ }
+\DoxyCodeLine{00896\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{00897\ }
+\DoxyCodeLine{00898\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00899\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{00900\ \textcolor{comment}{**\ Configuration\ for\ Numbers\ (low-\/level\ part).}}
+\DoxyCodeLine{00901\ \textcolor{comment}{**\ (数值配置(底层部分)。)}}
+\DoxyCodeLine{00902\ \textcolor{comment}{**\ Change\ these\ definitions\ if\ no\ predefined\ LUA\_FLOAT\_*\ /\ LUA\_INT\_*}}
+\DoxyCodeLine{00903\ \textcolor{comment}{**\ (如果没有预定义的LUA\_FLOAT\_*\ /\ LUA\_INT\_*)}}
+\DoxyCodeLine{00904\ \textcolor{comment}{**\ satisfy\ your\ needs.}}
+\DoxyCodeLine{00905\ \textcolor{comment}{**\ (满足你的需求,请修改这些定义。)}}
+\DoxyCodeLine{00906\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{00907\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00908\ }
+\DoxyCodeLine{00909\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00910\ \textcolor{comment}{@@\ LUAI\_UACNUMBER\ is\ the\ result\ of\ a\ 'default\ argument\ promotion'}}
+\DoxyCodeLine{00911\ \textcolor{comment}{**\ (LUAI\_UACNUMBER是'默认参数提升'的结果)}}
+\DoxyCodeLine{00912\ \textcolor{comment}{@@\ over\ a\ floating\ number.}}
+\DoxyCodeLine{00913\ \textcolor{comment}{**\ (对浮点数。)}}
+\DoxyCodeLine{00914\ \textcolor{comment}{@@\ l\_floatatt(x)\ corrects\ float\ attribute\ 'x'\ to\ the\ proper\ float\ type}}
+\DoxyCodeLine{00915\ \textcolor{comment}{**\ (l\_floatatt(x)将浮点属性'x'纠正为正确的浮点类型)}}
+\DoxyCodeLine{00916\ \textcolor{comment}{**\ by\ prefixing\ it\ with\ one\ of\ FLT/DBL/LDBL.}}
+\DoxyCodeLine{00917\ \textcolor{comment}{**\ (通过为其添加FLT/DBL/LDBL之一的前缀。)}}
+\DoxyCodeLine{00918\ \textcolor{comment}{@@\ LUA\_NUMBER\_FRMLEN\ is\ the\ length\ modifier\ for\ writing\ floats.}}
+\DoxyCodeLine{00919\ \textcolor{comment}{**\ (LUA\_NUMBER\_FRMLEN是写入浮点数的长度修饰符。)}}
+\DoxyCodeLine{00920\ \textcolor{comment}{@@\ LUA\_NUMBER\_FMT\ is\ the\ format\ for\ writing\ floats\ with\ the\ maximum}}
+\DoxyCodeLine{00921\ \textcolor{comment}{**\ (LUA\_NUMBER\_FMT是写入浮点数的格式,使用最大)}}
+\DoxyCodeLine{00922\ \textcolor{comment}{**\ number\ of\ digits\ that\ respects\ tostring(tonumber(numeral))\ ==\ numeral.}}
+\DoxyCodeLine{00923\ \textcolor{comment}{**\ (尊重tostring(tonumber(numeral))\ ==\ numeral的数字位数。)}}
+\DoxyCodeLine{00924\ \textcolor{comment}{**\ (That\ would\ be\ floor(log10(2\string^n)),\ where\ n\ is\ the\ number\ of\ bits\ in}}
+\DoxyCodeLine{00925\ \textcolor{comment}{**\ (那将是floor(log10(2\string^n)),其中n是位数)}}
+\DoxyCodeLine{00926\ \textcolor{comment}{**\ the\ float\ mantissa.)}}
+\DoxyCodeLine{00927\ \textcolor{comment}{**\ (浮点尾数中。))}}
+\DoxyCodeLine{00928\ \textcolor{comment}{@@\ LUA\_NUMBER\_FMT\_N\ is\ the\ format\ for\ writing\ floats\ with\ the\ minimum}}
+\DoxyCodeLine{00929\ \textcolor{comment}{**\ (LUA\_NUMBER\_FMT\_N是写入浮点数的格式,使用最小)}}
+\DoxyCodeLine{00930\ \textcolor{comment}{**\ number\ of\ digits\ that\ ensures\ tonumber(tostring(number))\ ==\ number.}}
+\DoxyCodeLine{00931\ \textcolor{comment}{**\ (确保tonumber(tostring(number))\ ==\ number的数字位数。)}}
+\DoxyCodeLine{00932\ \textcolor{comment}{**\ (That\ would\ be\ LUA\_NUMBER\_FMT+2.)}}
+\DoxyCodeLine{00933\ \textcolor{comment}{**\ (那将是LUA\_NUMBER\_FMT+2。)}}
+\DoxyCodeLine{00934\ \textcolor{comment}{@@\ l\_mathop\ allows\ the\ addition\ of\ an\ 'l'\ or\ 'f'\ to\ all\ math\ operations.}}
+\DoxyCodeLine{00935\ \textcolor{comment}{**\ (l\_mathop允许为所有数学运算添加'l'或'f'。)}}
+\DoxyCodeLine{00936\ \textcolor{comment}{@@\ l\_floor\ takes\ the\ floor\ of\ a\ float.}}
+\DoxyCodeLine{00937\ \textcolor{comment}{**\ (l\_floor取浮点数的floor。)}}
+\DoxyCodeLine{00938\ \textcolor{comment}{@@\ lua\_str2number\ converts\ a\ decimal\ numeral\ to\ a\ number.}}
+\DoxyCodeLine{00939\ \textcolor{comment}{**\ (lua\_str2number将十进制数字转换为数字。)}}
+\DoxyCodeLine{00940\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00941\ }
+\DoxyCodeLine{00942\ \textcolor{comment}{/*\ The\ following\ definition\ is\ good\ for\ most\ cases\ here}}
+\DoxyCodeLine{00943\ \textcolor{comment}{\ \ \ (以下定义对这里的大多数情况都适用)\ */}}
+\DoxyCodeLine{00944\ }
+\DoxyCodeLine{00945\ \textcolor{preprocessor}{\#define\ l\_floor(x)\ (l\_mathop(floor)(x))}}
+\DoxyCodeLine{00946\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00947\ \textcolor{comment}{\ *\ floor函数:}}
+\DoxyCodeLine{00948\ \textcolor{comment}{\ *\ -\/\ 数学函数,返回不大于参数的最大整数}}
+\DoxyCodeLine{00949\ \textcolor{comment}{\ *\ -\/\ 例如:floor(3.7)\ =\ 3,\ floor(-\/2.3)\ =\ -\/3}}
+\DoxyCodeLine{00950\ \textcolor{comment}{\ *\ -\/\ l\_mathop会根据浮点类型添加适当的后缀}}
+\DoxyCodeLine{00951\ \textcolor{comment}{\ *\ -\/\ float用floorf,\ double用floor,\ long\ double用floorl}}
+\DoxyCodeLine{00952\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00953\ }
+\DoxyCodeLine{00954\ \textcolor{comment}{/*\ now\ the\ variable\ definitions\ (现在是变量定义)\ */}}
+\DoxyCodeLine{00955\ }
+\DoxyCodeLine{00956\ \textcolor{preprocessor}{\#if\ LUA\_FLOAT\_TYPE\ ==\ LUA\_FLOAT\_FLOAT\ }\textcolor{comment}{/*\ \{\ single\ float\ (单精度浮点)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00957\ }
+\DoxyCodeLine{00958\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\ float}}
+\DoxyCodeLine{00959\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00960\ \textcolor{comment}{\ *\ Lua数值类型定义为float}}
+\DoxyCodeLine{00961\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00962\ }
+\DoxyCodeLine{00963\ \textcolor{preprocessor}{\#define\ l\_floatatt(n)\ (FLT\_\#\#n)}}
+\DoxyCodeLine{00964\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00965\ \textcolor{comment}{\ *\ 浮点属性宏:}}
+\DoxyCodeLine{00966\ \textcolor{comment}{\ *\ -\/\ \#\#是预处理器的连接操作符}}
+\DoxyCodeLine{00967\ \textcolor{comment}{\ *\ -\/\ 例如:l\_floatatt(MAX)\ 展开为\ FLT\_MAX}}
+\DoxyCodeLine{00968\ \textcolor{comment}{\ *\ -\/\ FLT\_MAX,\ FLT\_MIN等定义在<float.h>中}}
+\DoxyCodeLine{00969\ \textcolor{comment}{\ *\ -\/\ 这些是float类型的限制值}}
+\DoxyCodeLine{00970\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00971\ }
+\DoxyCodeLine{00972\ \textcolor{preprocessor}{\#define\ LUAI\_UACNUMBER\ double}}
+\DoxyCodeLine{00973\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00974\ \textcolor{comment}{\ *\ 默认参数提升:}}
+\DoxyCodeLine{00975\ \textcolor{comment}{\ *\ -\/\ C语言中,float参数会自动提升为double}}
+\DoxyCodeLine{00976\ \textcolor{comment}{\ *\ -\/\ 这是C的"{}默认参数提升"{}规则}}
+\DoxyCodeLine{00977\ \textcolor{comment}{\ *\ -\/\ 在可变参数函数(如printf)中尤其重要}}
+\DoxyCodeLine{00978\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00979\ }
+\DoxyCodeLine{00980\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FRMLEN\ "{}"{}}}
+\DoxyCodeLine{00981\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00982\ \textcolor{comment}{\ *\ 格式长度修饰符:}}
+\DoxyCodeLine{00983\ \textcolor{comment}{\ *\ -\/\ float使用标准格式,无需修饰符}}
+\DoxyCodeLine{00984\ \textcolor{comment}{\ *\ -\/\ 在printf格式字符串中使用,如"{}\%f"{}}}
+\DoxyCodeLine{00985\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00986\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\ "{}\%.7g"{}}}
+\DoxyCodeLine{00987\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00988\ \textcolor{comment}{\ *\ 浮点数格式化字符串:}}
+\DoxyCodeLine{00989\ \textcolor{comment}{\ *\ -\/\ \%.7g:\ 7位有效数字的通用格式}}
+\DoxyCodeLine{00990\ \textcolor{comment}{\ *\ -\/\ g格式自动选择\%e或\%f,去除尾随零}}
+\DoxyCodeLine{00991\ \textcolor{comment}{\ *\ -\/\ 7位足以保证float的精度往返转换}}
+\DoxyCodeLine{00992\ \textcolor{comment}{\ *\ -\/\ 即:tostring(tonumber(s))\ ==\ s}}
+\DoxyCodeLine{00993\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00994\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\_N\ "{}\%.9g"{}}}
+\DoxyCodeLine{00995\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00996\ \textcolor{comment}{\ *\ 扩展精度格式:}}
+\DoxyCodeLine{00997\ \textcolor{comment}{\ *\ -\/\ 9位有效数字,保证tonumber(tostring(n))\ ==\ n}}
+\DoxyCodeLine{00998\ \textcolor{comment}{\ *\ -\/\ 多2位确保任何float都能精确表示}}
+\DoxyCodeLine{00999\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01000\ }
+\DoxyCodeLine{01001\ \textcolor{preprocessor}{\#define\ l\_mathop(op)\ op\#\#f}}
+\DoxyCodeLine{01002\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01003\ \textcolor{comment}{\ *\ 数学运算宏:}}
+\DoxyCodeLine{01004\ \textcolor{comment}{\ *\ -\/\ 为数学函数添加f后缀}}
+\DoxyCodeLine{01005\ \textcolor{comment}{\ *\ -\/\ 例如:l\_mathop(sin)\ 展开为\ sinf}}
+\DoxyCodeLine{01006\ \textcolor{comment}{\ *\ -\/\ sinf是float版本的sin函数}}
+\DoxyCodeLine{01007\ \textcolor{comment}{\ *\ -\/\ 使用float版本可以提高性能,减少类型转换}}
+\DoxyCodeLine{01008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01009\ }
+\DoxyCodeLine{01010\ \textcolor{preprocessor}{\#define\ lua\_str2number(s,\ p)\ strtof((s),\ (p))}}
+\DoxyCodeLine{01011\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01012\ \textcolor{comment}{\ *\ 字符串转数值:}}
+\DoxyCodeLine{01013\ \textcolor{comment}{\ *\ -\/\ strtof:\ C99标准库函数,将字符串转换为float}}
+\DoxyCodeLine{01014\ \textcolor{comment}{\ *\ -\/\ (s):\ 要转换的字符串}}
+\DoxyCodeLine{01015\ \textcolor{comment}{\ *\ -\/\ (p):\ 指针,用于存储转换结束位置}}
+\DoxyCodeLine{01016\ \textcolor{comment}{\ *\ -\/\ 返回转换后的float值}}
+\DoxyCodeLine{01017\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01018\ }
+\DoxyCodeLine{01019\ \textcolor{preprocessor}{\#elif\ LUA\_FLOAT\_TYPE\ ==\ LUA\_FLOAT\_LONGDOUBLE\ }\textcolor{comment}{/*\ \}\{\ long\ double\ (长双精度浮点)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01020\ }
+\DoxyCodeLine{01021\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\ long\ double}}
+\DoxyCodeLine{01022\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01023\ \textcolor{comment}{\ *\ Lua数值类型定义为long\ double}}
+\DoxyCodeLine{01024\ \textcolor{comment}{\ *\ -\/\ 扩展精度浮点数}}
+\DoxyCodeLine{01025\ \textcolor{comment}{\ *\ -\/\ 通常是80位(Intel)或128位(某些RISC架构)}}
+\DoxyCodeLine{01026\ \textcolor{comment}{\ *\ -\/\ 提供最高精度,但性能可能较慢}}
+\DoxyCodeLine{01027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01028\ }
+\DoxyCodeLine{01029\ \textcolor{preprocessor}{\#define\ l\_floatatt(n)\ (LDBL\_\#\#n)}}
+\DoxyCodeLine{01030\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01031\ \textcolor{comment}{\ *\ 使用long\ double的限制值}}
+\DoxyCodeLine{01032\ \textcolor{comment}{\ *\ -\/\ LDBL\_MAX,\ LDBL\_MIN等}}
+\DoxyCodeLine{01033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01034\ }
+\DoxyCodeLine{01035\ \textcolor{preprocessor}{\#define\ LUAI\_UACNUMBER\ long\ double}}
+\DoxyCodeLine{01036\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01037\ \textcolor{comment}{\ *\ long\ double不会自动提升}}
+\DoxyCodeLine{01038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01039\ }
+\DoxyCodeLine{01040\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FRMLEN\ "{}L"{}}}
+\DoxyCodeLine{01041\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01042\ \textcolor{comment}{\ *\ 格式长度修饰符:}}
+\DoxyCodeLine{01043\ \textcolor{comment}{\ *\ -\/\ long\ double使用L修饰符}}
+\DoxyCodeLine{01044\ \textcolor{comment}{\ *\ -\/\ 在printf中使用,如"{}\%Lf"{}}}
+\DoxyCodeLine{01045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01046\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\ "{}\%.19Lg"{}}}
+\DoxyCodeLine{01047\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01048\ \textcolor{comment}{\ *\ 19位有效数字:}}
+\DoxyCodeLine{01049\ \textcolor{comment}{\ *\ -\/\ 足以表示long\ double的精度}}
+\DoxyCodeLine{01050\ \textcolor{comment}{\ *\ -\/\ 具体位数取决于long\ double的实现}}
+\DoxyCodeLine{01051\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01052\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\_N\ "{}\%.21Lg"{}}}
+\DoxyCodeLine{01053\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01054\ \textcolor{comment}{\ *\ 21位有效数字:}}
+\DoxyCodeLine{01055\ \textcolor{comment}{\ *\ -\/\ 保证往返转换的精度}}
+\DoxyCodeLine{01056\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01057\ }
+\DoxyCodeLine{01058\ \textcolor{preprocessor}{\#define\ l\_mathop(op)\ op\#\#l}}
+\DoxyCodeLine{01059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01060\ \textcolor{comment}{\ *\ 数学运算宏:}}
+\DoxyCodeLine{01061\ \textcolor{comment}{\ *\ -\/\ 添加l后缀}}
+\DoxyCodeLine{01062\ \textcolor{comment}{\ *\ -\/\ 例如:sinl,\ cosl等}}
+\DoxyCodeLine{01063\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01064\ }
+\DoxyCodeLine{01065\ \textcolor{preprocessor}{\#define\ lua\_str2number(s,\ p)\ strtold((s),\ (p))}}
+\DoxyCodeLine{01066\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01067\ \textcolor{comment}{\ *\ 字符串转long\ double:}}
+\DoxyCodeLine{01068\ \textcolor{comment}{\ *\ -\/\ strtold:\ C99标准库函数}}
+\DoxyCodeLine{01069\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01070\ }
+\DoxyCodeLine{01071\ \textcolor{preprocessor}{\#elif\ LUA\_FLOAT\_TYPE\ ==\ LUA\_FLOAT\_DOUBLE\ }\textcolor{comment}{/*\ \}\{\ double\ (双精度浮点)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01072\ }
+\DoxyCodeLine{01073\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\ double}}
+\DoxyCodeLine{01074\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01075\ \textcolor{comment}{\ *\ Lua数值类型定义为double}}
+\DoxyCodeLine{01076\ \textcolor{comment}{\ *\ -\/\ 这是默认和最常用的配置}}
+\DoxyCodeLine{01077\ \textcolor{comment}{\ *\ -\/\ 64位双精度浮点数}}
+\DoxyCodeLine{01078\ \textcolor{comment}{\ *\ -\/\ 良好的精度和性能平衡}}
+\DoxyCodeLine{01079\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01080\ }
+\DoxyCodeLine{01081\ \textcolor{preprocessor}{\#define\ l\_floatatt(n)\ (DBL\_\#\#n)}}
+\DoxyCodeLine{01082\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01083\ \textcolor{comment}{\ *\ 使用double的限制值}}
+\DoxyCodeLine{01084\ \textcolor{comment}{\ *\ -\/\ DBL\_MAX,\ DBL\_MIN等}}
+\DoxyCodeLine{01085\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01086\ }
+\DoxyCodeLine{01087\ \textcolor{preprocessor}{\#define\ LUAI\_UACNUMBER\ double}}
+\DoxyCodeLine{01088\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01089\ \textcolor{comment}{\ *\ double在参数传递中保持不变}}
+\DoxyCodeLine{01090\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01091\ }
+\DoxyCodeLine{01092\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FRMLEN\ "{}"{}}}
+\DoxyCodeLine{01093\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01094\ \textcolor{comment}{\ *\ double是标准格式,无需修饰符}}
+\DoxyCodeLine{01095\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01096\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\ "{}\%.15g"{}}}
+\DoxyCodeLine{01097\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01098\ \textcolor{comment}{\ *\ 15位有效数字:}}
+\DoxyCodeLine{01099\ \textcolor{comment}{\ *\ -\/\ double的标准精度}}
+\DoxyCodeLine{01100\ \textcolor{comment}{\ *\ -\/\ 足以表示大多数double值}}
+\DoxyCodeLine{01101\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01102\ \textcolor{preprocessor}{\#define\ LUA\_NUMBER\_FMT\_N\ "{}\%.17g"{}}}
+\DoxyCodeLine{01103\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01104\ \textcolor{comment}{\ *\ 17位有效数字:}}
+\DoxyCodeLine{01105\ \textcolor{comment}{\ *\ -\/\ 保证double的完整精度往返转换}}
+\DoxyCodeLine{01106\ \textcolor{comment}{\ *\ -\/\ IEEE\ 754双精度有约15-\/17位十进制精度}}
+\DoxyCodeLine{01107\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01108\ }
+\DoxyCodeLine{01109\ \textcolor{preprocessor}{\#define\ l\_mathop(op)\ op}}
+\DoxyCodeLine{01110\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01111\ \textcolor{comment}{\ *\ 数学运算宏:}}
+\DoxyCodeLine{01112\ \textcolor{comment}{\ *\ -\/\ double是标准版本,无需后缀}}
+\DoxyCodeLine{01113\ \textcolor{comment}{\ *\ -\/\ 直接使用sin,\ cos等}}
+\DoxyCodeLine{01114\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01115\ }
+\DoxyCodeLine{01116\ \textcolor{preprocessor}{\#define\ lua\_str2number(s,\ p)\ strtod((s),\ (p))}}
+\DoxyCodeLine{01117\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01118\ \textcolor{comment}{\ *\ 字符串转double:}}
+\DoxyCodeLine{01119\ \textcolor{comment}{\ *\ -\/\ strtod:\ C89标准库函数}}
+\DoxyCodeLine{01120\ \textcolor{comment}{\ *\ -\/\ 所有C编译器都支持}}
+\DoxyCodeLine{01121\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01122\ }
+\DoxyCodeLine{01123\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01124\ }
+\DoxyCodeLine{01125\ \textcolor{preprocessor}{\#error\ "{}numeric\ float\ type\ not\ defined"{}}}
+\DoxyCodeLine{01126\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01127\ \textcolor{comment}{\ *\ 错误检查:}}
+\DoxyCodeLine{01128\ \textcolor{comment}{\ *\ -\/\ 如果LUA\_FLOAT\_TYPE不是上述三个值之一}}
+\DoxyCodeLine{01129\ \textcolor{comment}{\ *\ -\/\ 编译会失败并显示此错误消息}}
+\DoxyCodeLine{01130\ \textcolor{comment}{\ *\ -\/\ 确保必须选择一个有效的浮点类型}}
+\DoxyCodeLine{01131\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01132\ }
+\DoxyCodeLine{01133\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01134\ }
+\DoxyCodeLine{01135\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01136\ \textcolor{comment}{@@\ LUA\_UNSIGNED\ is\ the\ unsigned\ version\ of\ LUA\_INTEGER.}}
+\DoxyCodeLine{01137\ \textcolor{comment}{**\ (LUA\_UNSIGNED是LUA\_INTEGER的无符号版本。)}}
+\DoxyCodeLine{01138\ \textcolor{comment}{@@\ LUAI\_UACINT\ is\ the\ result\ of\ a\ 'default\ argument\ promotion'}}
+\DoxyCodeLine{01139\ \textcolor{comment}{**\ (LUAI\_UACINT是'默认参数提升'的结果)}}
+\DoxyCodeLine{01140\ \textcolor{comment}{@@\ over\ a\ LUA\_INTEGER.}}
+\DoxyCodeLine{01141\ \textcolor{comment}{**\ (对LUA\_INTEGER。)}}
+\DoxyCodeLine{01142\ \textcolor{comment}{@@\ LUA\_INTEGER\_FRMLEN\ is\ the\ length\ modifier\ for\ reading/writing\ integers.}}
+\DoxyCodeLine{01143\ \textcolor{comment}{**\ (LUA\_INTEGER\_FRMLEN是读/写整数的长度修饰符。)}}
+\DoxyCodeLine{01144\ \textcolor{comment}{@@\ LUA\_INTEGER\_FMT\ is\ the\ format\ for\ writing\ integers.}}
+\DoxyCodeLine{01145\ \textcolor{comment}{**\ (LUA\_INTEGER\_FMT是写入整数的格式。)}}
+\DoxyCodeLine{01146\ \textcolor{comment}{@@\ LUA\_MAXINTEGER\ is\ the\ maximum\ value\ for\ a\ LUA\_INTEGER.}}
+\DoxyCodeLine{01147\ \textcolor{comment}{**\ (LUA\_MAXINTEGER是LUA\_INTEGER的最大值。)}}
+\DoxyCodeLine{01148\ \textcolor{comment}{@@\ LUA\_MININTEGER\ is\ the\ minimum\ value\ for\ a\ LUA\_INTEGER.}}
+\DoxyCodeLine{01149\ \textcolor{comment}{**\ (LUA\_MININTEGER是LUA\_INTEGER的最小值。)}}
+\DoxyCodeLine{01150\ \textcolor{comment}{@@\ LUA\_MAXUNSIGNED\ is\ the\ maximum\ value\ for\ a\ LUA\_UNSIGNED.}}
+\DoxyCodeLine{01151\ \textcolor{comment}{**\ (LUA\_MAXUNSIGNED是LUA\_UNSIGNED的最大值。)}}
+\DoxyCodeLine{01152\ \textcolor{comment}{@@\ lua\_integer2str\ converts\ an\ integer\ to\ a\ string.}}
+\DoxyCodeLine{01153\ \textcolor{comment}{**\ (lua\_integer2str将整数转换为字符串。)}}
+\DoxyCodeLine{01154\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01155\ }
+\DoxyCodeLine{01156\ \textcolor{comment}{/*\ The\ following\ definitions\ are\ good\ for\ most\ cases\ here}}
+\DoxyCodeLine{01157\ \textcolor{comment}{\ \ \ (以下定义对这里的大多数情况都适用)\ */}}
+\DoxyCodeLine{01158\ }
+\DoxyCodeLine{01159\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\_FMT\ "{}\%"{}\ LUA\_INTEGER\_FRMLEN\ "{}d"{}}}
+\DoxyCodeLine{01160\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01161\ \textcolor{comment}{\ *\ 整数格式字符串构造:}}
+\DoxyCodeLine{01162\ \textcolor{comment}{\ *\ -\/\ 使用字符串连接组合格式}}
+\DoxyCodeLine{01163\ \textcolor{comment}{\ *\ -\/\ 例如:如果FRMLEN是"{}ll"{},则结果是"{}\%lld"{}}}
+\DoxyCodeLine{01164\ \textcolor{comment}{\ *\ -\/\ \%d是有符号十进制整数格式}}
+\DoxyCodeLine{01165\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01166\ }
+\DoxyCodeLine{01167\ \textcolor{preprocessor}{\#define\ LUAI\_UACINT\ LUA\_INTEGER}}
+\DoxyCodeLine{01168\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01169\ \textcolor{comment}{\ *\ 整数的默认参数提升:}}
+\DoxyCodeLine{01170\ \textcolor{comment}{\ *\ -\/\ 现代平台上,整数通常不会提升}}
+\DoxyCodeLine{01171\ \textcolor{comment}{\ *\ -\/\ 除非是小于int的类型(如short)}}
+\DoxyCodeLine{01172\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01173\ }
+\DoxyCodeLine{01174\ \textcolor{preprocessor}{\#define\ lua\_integer2str(s,\ sz,\ n)\ \(\backslash\)}}
+\DoxyCodeLine{01175\ \textcolor{preprocessor}{\ \ \ \ l\_sprintf((s),\ sz,\ LUA\_INTEGER\_FMT,\ (LUAI\_UACINT)(n))}}
+\DoxyCodeLine{01176\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01177\ \textcolor{comment}{\ *\ 整数转字符串宏:}}
+\DoxyCodeLine{01178\ \textcolor{comment}{\ *\ -\/\ (s):\ 目标缓冲区}}
+\DoxyCodeLine{01179\ \textcolor{comment}{\ *\ -\/\ sz:\ 缓冲区大小}}
+\DoxyCodeLine{01180\ \textcolor{comment}{\ *\ -\/\ (n):\ 要转换的整数}}
+\DoxyCodeLine{01181\ \textcolor{comment}{\ *\ -\/\ (LUAI\_UACINT)(n):\ 类型转换,应对参数提升}}
+\DoxyCodeLine{01182\ \textcolor{comment}{\ *\ -\/\ 使用sprintf或snprintf格式化整数}}
+\DoxyCodeLine{01183\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01184\ }
+\DoxyCodeLine{01185\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01186\ \textcolor{comment}{**\ use\ LUAI\_UACINT\ here\ to\ avoid\ problems\ with\ promotions\ (which}}
+\DoxyCodeLine{01187\ \textcolor{comment}{**\ (在这里使用LUAI\_UACINT以避免提升问题(这)}}
+\DoxyCodeLine{01188\ \textcolor{comment}{**\ can\ turn\ a\ comparison\ between\ unsigneds\ into\ a\ signed\ comparison)}}
+\DoxyCodeLine{01189\ \textcolor{comment}{**\ (可能将无符号数之间的比较变成有符号比较))}}
+\DoxyCodeLine{01190\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01191\ \textcolor{preprocessor}{\#define\ LUA\_UNSIGNED\ unsigned\ LUAI\_UACINT}}
+\DoxyCodeLine{01192\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01193\ \textcolor{comment}{\ *\ 无符号整数类型:}}
+\DoxyCodeLine{01194\ \textcolor{comment}{\ *\ -\/\ 使用LUAI\_UACINT的无符号版本}}
+\DoxyCodeLine{01195\ \textcolor{comment}{\ *\ -\/\ 避免类型提升导致的比较问题}}
+\DoxyCodeLine{01196\ \textcolor{comment}{\ *\ -\/\ 例如:如果LUAI\_UACINT是long\ long,}}
+\DoxyCodeLine{01197\ \textcolor{comment}{\ *\ \ \ 则LUA\_UNSIGNED是unsigned\ long\ long}}
+\DoxyCodeLine{01198\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01199\ }
+\DoxyCodeLine{01200\ \textcolor{comment}{/*\ now\ the\ variable\ definitions\ (现在是变量定义)\ */}}
+\DoxyCodeLine{01201\ }
+\DoxyCodeLine{01202\ \textcolor{preprocessor}{\#if\ LUA\_INT\_TYPE\ ==\ LUA\_INT\_INT\ }\textcolor{comment}{/*\ \{\ int\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01203\ }
+\DoxyCodeLine{01204\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\ int}}
+\DoxyCodeLine{01205\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01206\ \textcolor{comment}{\ *\ Lua整数类型定义为int}}
+\DoxyCodeLine{01207\ \textcolor{comment}{\ *\ -\/\ 通常是32位}}
+\DoxyCodeLine{01208\ \textcolor{comment}{\ *\ -\/\ 范围约-\/21亿到+21亿}}
+\DoxyCodeLine{01209\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01210\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\_FRMLEN\ "{}"{}}}
+\DoxyCodeLine{01211\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01212\ \textcolor{comment}{\ *\ int的格式修饰符为空}}
+\DoxyCodeLine{01213\ \textcolor{comment}{\ *\ -\/\ 直接使用\%d}}
+\DoxyCodeLine{01214\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01215\ }
+\DoxyCodeLine{01216\ \textcolor{preprocessor}{\#define\ LUA\_MAXINTEGER\ INT\_MAX}}
+\DoxyCodeLine{01217\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01218\ \textcolor{comment}{\ *\ int的最大值}}
+\DoxyCodeLine{01219\ \textcolor{comment}{\ *\ -\/\ 来自<limits.h>}}
+\DoxyCodeLine{01220\ \textcolor{comment}{\ *\ -\/\ 通常是2147483647(2\string^31\ -\/\ 1)}}
+\DoxyCodeLine{01221\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01222\ \textcolor{preprocessor}{\#define\ LUA\_MININTEGER\ INT\_MIN}}
+\DoxyCodeLine{01223\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01224\ \textcolor{comment}{\ *\ int的最小值}}
+\DoxyCodeLine{01225\ \textcolor{comment}{\ *\ -\/\ 通常是-\/2147483648(-\/2\string^31)}}
+\DoxyCodeLine{01226\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01227\ }
+\DoxyCodeLine{01228\ \textcolor{preprocessor}{\#define\ LUA\_MAXUNSIGNED\ UINT\_MAX}}
+\DoxyCodeLine{01229\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01230\ \textcolor{comment}{\ *\ unsigned\ int的最大值}}
+\DoxyCodeLine{01231\ \textcolor{comment}{\ *\ -\/\ 通常是4294967295(2\string^32\ -\/\ 1)}}
+\DoxyCodeLine{01232\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01233\ }
+\DoxyCodeLine{01234\ \textcolor{preprocessor}{\#elif\ LUA\_INT\_TYPE\ ==\ LUA\_INT\_LONG\ }\textcolor{comment}{/*\ \}\{\ long\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01235\ }
+\DoxyCodeLine{01236\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\ long}}
+\DoxyCodeLine{01237\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01238\ \textcolor{comment}{\ *\ Lua整数类型定义为long}}
+\DoxyCodeLine{01239\ \textcolor{comment}{\ *\ -\/\ 32位系统上通常是32位}}
+\DoxyCodeLine{01240\ \textcolor{comment}{\ *\ -\/\ 64位Unix/Linux系统上通常是64位}}
+\DoxyCodeLine{01241\ \textcolor{comment}{\ *\ -\/\ Windows上即使64位系统也是32位}}
+\DoxyCodeLine{01242\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01243\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\_FRMLEN\ "{}l"{}}}
+\DoxyCodeLine{01244\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01245\ \textcolor{comment}{\ *\ long的格式修饰符}}
+\DoxyCodeLine{01246\ \textcolor{comment}{\ *\ -\/\ 使用\%ld}}
+\DoxyCodeLine{01247\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01248\ }
+\DoxyCodeLine{01249\ \textcolor{preprocessor}{\#define\ LUA\_MAXINTEGER\ LONG\_MAX}}
+\DoxyCodeLine{01250\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01251\ \textcolor{comment}{\ *\ long的最大值}}
+\DoxyCodeLine{01252\ \textcolor{comment}{\ *\ -\/\ 取决于平台}}
+\DoxyCodeLine{01253\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01254\ \textcolor{preprocessor}{\#define\ LUA\_MININTEGER\ LONG\_MIN}}
+\DoxyCodeLine{01255\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01256\ \textcolor{comment}{\ *\ long的最小值}}
+\DoxyCodeLine{01257\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01258\ }
+\DoxyCodeLine{01259\ \textcolor{preprocessor}{\#define\ LUA\_MAXUNSIGNED\ ULONG\_MAX}}
+\DoxyCodeLine{01260\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01261\ \textcolor{comment}{\ *\ unsigned\ long的最大值}}
+\DoxyCodeLine{01262\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01263\ }
+\DoxyCodeLine{01264\ \textcolor{preprocessor}{\#elif\ LUA\_INT\_TYPE\ ==\ LUA\_INT\_LONGLONG\ }\textcolor{comment}{/*\ \}\{\ long\ long\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01265\ }
+\DoxyCodeLine{01266\ \textcolor{comment}{/*\ use\ presence\ of\ macro\ LLONG\_MAX\ as\ proxy\ for\ C99\ compliance}}
+\DoxyCodeLine{01267\ \textcolor{comment}{\ \ \ (使用宏LLONG\_MAX的存在作为C99兼容性的代理)\ */}}
+\DoxyCodeLine{01268\ \textcolor{preprocessor}{\#if\ defined(LLONG\_MAX)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01269\ \textcolor{comment}{/*\ use\ ISO\ C99\ stuff\ (使用ISO\ C99特性)\ */}}
+\DoxyCodeLine{01270\ }
+\DoxyCodeLine{01271\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\ long\ long}}
+\DoxyCodeLine{01272\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01273\ \textcolor{comment}{\ *\ Lua整数类型定义为long\ long}}
+\DoxyCodeLine{01274\ \textcolor{comment}{\ *\ -\/\ C99引入的类型}}
+\DoxyCodeLine{01275\ \textcolor{comment}{\ *\ -\/\ 至少64位}}
+\DoxyCodeLine{01276\ \textcolor{comment}{\ *\ -\/\ 范围约-\/9223372036854775808到9223372036854775807}}
+\DoxyCodeLine{01277\ \textcolor{comment}{\ *\ -\/\ 这是现代Lua的默认整数类型}}
+\DoxyCodeLine{01278\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01279\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\_FRMLEN\ "{}ll"{}}}
+\DoxyCodeLine{01280\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01281\ \textcolor{comment}{\ *\ long\ long的格式修饰符}}
+\DoxyCodeLine{01282\ \textcolor{comment}{\ *\ -\/\ 使用\%lld}}
+\DoxyCodeLine{01283\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01284\ }
+\DoxyCodeLine{01285\ \textcolor{preprocessor}{\#define\ LUA\_MAXINTEGER\ LLONG\_MAX}}
+\DoxyCodeLine{01286\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01287\ \textcolor{comment}{\ *\ long\ long的最大值}}
+\DoxyCodeLine{01288\ \textcolor{comment}{\ *\ -\/\ 通常是9223372036854775807(2\string^63\ -\/\ 1)}}
+\DoxyCodeLine{01289\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01290\ \textcolor{preprocessor}{\#define\ LUA\_MININTEGER\ LLONG\_MIN}}
+\DoxyCodeLine{01291\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01292\ \textcolor{comment}{\ *\ long\ long的最小值}}
+\DoxyCodeLine{01293\ \textcolor{comment}{\ *\ -\/\ 通常是-\/9223372036854775808(-\/2\string^63)}}
+\DoxyCodeLine{01294\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01295\ }
+\DoxyCodeLine{01296\ \textcolor{preprocessor}{\#define\ LUA\_MAXUNSIGNED\ ULLONG\_MAX}}
+\DoxyCodeLine{01297\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01298\ \textcolor{comment}{\ *\ unsigned\ long\ long的最大值}}
+\DoxyCodeLine{01299\ \textcolor{comment}{\ *\ -\/\ 通常是18446744073709551615(2\string^64\ -\/\ 1)}}
+\DoxyCodeLine{01300\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01301\ }
+\DoxyCodeLine{01302\ \textcolor{preprocessor}{\#elif\ defined(LUA\_USE\_WINDOWS)\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01303\ \textcolor{comment}{/*\ in\ Windows,\ can\ use\ specific\ Windows\ types}}
+\DoxyCodeLine{01304\ \textcolor{comment}{\ \ \ (在Windows中,可以使用特定的Windows类型)\ */}}
+\DoxyCodeLine{01305\ }
+\DoxyCodeLine{01306\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\ \_\_int64}}
+\DoxyCodeLine{01307\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01308\ \textcolor{comment}{\ *\ Windows特定的64位整数类型}}
+\DoxyCodeLine{01309\ \textcolor{comment}{\ *\ -\/\ \_\_int64是Microsoft的扩展}}
+\DoxyCodeLine{01310\ \textcolor{comment}{\ *\ -\/\ 在C99之前的Windows编译器上可用}}
+\DoxyCodeLine{01311\ \textcolor{comment}{\ *\ -\/\ 等价于long\ long}}
+\DoxyCodeLine{01312\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01313\ \textcolor{preprocessor}{\#define\ LUA\_INTEGER\_FRMLEN\ "{}I64"{}}}
+\DoxyCodeLine{01314\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01315\ \textcolor{comment}{\ *\ Windows的64位整数格式修饰符}}
+\DoxyCodeLine{01316\ \textcolor{comment}{\ *\ -\/\ 使用\%I64d}}
+\DoxyCodeLine{01317\ \textcolor{comment}{\ *\ -\/\ 这是Microsoft的扩展格式}}
+\DoxyCodeLine{01318\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01319\ }
+\DoxyCodeLine{01320\ \textcolor{preprocessor}{\#define\ LUA\_MAXINTEGER\ \_I64\_MAX}}
+\DoxyCodeLine{01321\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01322\ \textcolor{comment}{\ *\ \_\_int64的最大值}}
+\DoxyCodeLine{01323\ \textcolor{comment}{\ *\ -\/\ Windows定义的常量}}
+\DoxyCodeLine{01324\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01325\ \textcolor{preprocessor}{\#define\ LUA\_MININTEGER\ \_I64\_MIN}}
+\DoxyCodeLine{01326\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01327\ \textcolor{comment}{\ *\ \_\_int64的最小值}}
+\DoxyCodeLine{01328\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01329\ }
+\DoxyCodeLine{01330\ \textcolor{preprocessor}{\#define\ LUA\_MAXUNSIGNED\ \_UI64\_MAX}}
+\DoxyCodeLine{01331\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01332\ \textcolor{comment}{\ *\ unsigned\ \_\_int64的最大值}}
+\DoxyCodeLine{01333\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01334\ }
+\DoxyCodeLine{01335\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01336\ }
+\DoxyCodeLine{01337\ \textcolor{preprocessor}{\#error\ "{}Compiler\ does\ not\ support\ 'long\ long'.\ Use\ option\ '-\/DLUA\_32BITS'\ \(\backslash\)}}
+\DoxyCodeLine{01338\ \textcolor{preprocessor}{\ \ or\ '-\/DLUA\_C89\_NUMBERS'\ (see\ file\ 'luaconf.h'\ for\ details)"{}}}
+\DoxyCodeLine{01339\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01340\ \textcolor{comment}{\ *\ 错误消息:}}
+\DoxyCodeLine{01341\ \textcolor{comment}{\ *\ -\/\ 如果编译器既不支持C99的long\ long}}
+\DoxyCodeLine{01342\ \textcolor{comment}{\ *\ -\/\ 也不是Windows环境}}
+\DoxyCodeLine{01343\ \textcolor{comment}{\ *\ -\/\ 则无法使用64位整数}}
+\DoxyCodeLine{01344\ \textcolor{comment}{\ *\ -\/\ 提示用户使用32位配置或C89数值配置}}
+\DoxyCodeLine{01345\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01346\ }
+\DoxyCodeLine{01347\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01348\ }
+\DoxyCodeLine{01349\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{/*\ \}\{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01350\ }
+\DoxyCodeLine{01351\ \textcolor{preprocessor}{\#error\ "{}numeric\ integer\ type\ not\ defined"{}}}
+\DoxyCodeLine{01352\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01353\ \textcolor{comment}{\ *\ 错误检查:}}
+\DoxyCodeLine{01354\ \textcolor{comment}{\ *\ -\/\ 确保LUA\_INT\_TYPE被正确设置}}
+\DoxyCodeLine{01355\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01356\ }
+\DoxyCodeLine{01357\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01358\ }
+\DoxyCodeLine{01359\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{01360\ }
+\DoxyCodeLine{01361\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01362\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{01363\ \textcolor{comment}{**\ Dependencies\ with\ C99\ and\ other\ C\ details}}
+\DoxyCodeLine{01364\ \textcolor{comment}{**\ (与C99和其他C细节的依赖关系)}}
+\DoxyCodeLine{01365\ \textcolor{comment}{**\ ===================================================================}}
+\DoxyCodeLine{01366\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01367\ }
+\DoxyCodeLine{01368\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01369\ \textcolor{comment}{@@\ l\_sprintf\ is\ equivalent\ to\ 'snprintf'\ or\ 'sprintf'\ in\ C89.}}
+\DoxyCodeLine{01370\ \textcolor{comment}{**\ (l\_sprintf等价于C89中的'snprintf'或'sprintf'。)}}
+\DoxyCodeLine{01371\ \textcolor{comment}{**\ (All\ uses\ in\ Lua\ have\ only\ one\ format\ item.)}}
+\DoxyCodeLine{01372\ \textcolor{comment}{**\ (Lua中的所有使用都只有一个格式项。)}}
+\DoxyCodeLine{01373\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01374\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)}}
+\DoxyCodeLine{01375\ \textcolor{preprocessor}{\#define\ l\_sprintf(s,\ sz,\ f,\ i)\ snprintf(s,\ sz,\ f,\ i)}}
+\DoxyCodeLine{01376\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01377\ \textcolor{comment}{\ *\ snprintf函数(C99):}}
+\DoxyCodeLine{01378\ \textcolor{comment}{\ *\ -\/\ 安全的格式化字符串函数}}
+\DoxyCodeLine{01379\ \textcolor{comment}{\ *\ -\/\ (s):\ 目标缓冲区}}
+\DoxyCodeLine{01380\ \textcolor{comment}{\ *\ -\/\ sz:\ 缓冲区大小,防止缓冲区溢出}}
+\DoxyCodeLine{01381\ \textcolor{comment}{\ *\ -\/\ (f):\ 格式字符串}}
+\DoxyCodeLine{01382\ \textcolor{comment}{\ *\ -\/\ (i):\ 要格式化的值}}
+\DoxyCodeLine{01383\ \textcolor{comment}{\ *\ -\/\ 返回写入的字符数(不包括'\(\backslash\)0')}}
+\DoxyCodeLine{01384\ \textcolor{comment}{\ *\ -\/\ 如果缓冲区太小,会截断但保证以'\(\backslash\)0'结尾}}
+\DoxyCodeLine{01385\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01386\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01387\ \textcolor{preprocessor}{\#define\ l\_sprintf(s,\ sz,\ f,\ i)\ ((void)(sz),\ sprintf(s,\ f,\ i))}}
+\DoxyCodeLine{01388\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01389\ \textcolor{comment}{\ *\ sprintf函数(C89):}}
+\DoxyCodeLine{01390\ \textcolor{comment}{\ *\ -\/\ 不安全的格式化字符串函数}}
+\DoxyCodeLine{01391\ \textcolor{comment}{\ *\ -\/\ 不检查缓冲区大小,可能导致溢出}}
+\DoxyCodeLine{01392\ \textcolor{comment}{\ *\ -\/\ (void)(sz):\ 忽略sz参数,避免未使用参数警告}}
+\DoxyCodeLine{01393\ \textcolor{comment}{\ *\ -\/\ C89模式下只能使用这个版本}}
+\DoxyCodeLine{01394\ \textcolor{comment}{\ *\ -\/\ Lua确保所有使用都是安全的(缓冲区足够大)}}
+\DoxyCodeLine{01395\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01396\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01397\ }
+\DoxyCodeLine{01398\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01399\ \textcolor{comment}{@@\ lua\_strx2number\ converts\ a\ hexadecimal\ numeral\ to\ a\ number.}}
+\DoxyCodeLine{01400\ \textcolor{comment}{**\ (lua\_strx2number将十六进制数字转换为数字。)}}
+\DoxyCodeLine{01401\ \textcolor{comment}{**\ In\ C99,\ 'strtod'\ does\ that\ conversion.\ Otherwise,\ you\ can}}
+\DoxyCodeLine{01402\ \textcolor{comment}{**\ (在C99中,'strtod'执行该转换。否则,你可以)}}
+\DoxyCodeLine{01403\ \textcolor{comment}{**\ leave\ 'lua\_strx2number'\ undefined\ and\ Lua\ will\ provide\ its\ own}}
+\DoxyCodeLine{01404\ \textcolor{comment}{**\ (不定义'lua\_strx2number',Lua将提供其自己的)}}
+\DoxyCodeLine{01405\ \textcolor{comment}{**\ implementation.}}
+\DoxyCodeLine{01406\ \textcolor{comment}{**\ (实现。)}}
+\DoxyCodeLine{01407\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01408\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)}}
+\DoxyCodeLine{01409\ \textcolor{preprocessor}{\#define\ lua\_strx2number(s,\ p)\ lua\_str2number(s,\ p)}}
+\DoxyCodeLine{01410\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01411\ \textcolor{comment}{\ *\ 十六进制字符串转数值:}}
+\DoxyCodeLine{01412\ \textcolor{comment}{\ *\ -\/\ C99的strtod支持十六进制格式(如"{}0x1.8p+3"{})}}
+\DoxyCodeLine{01413\ \textcolor{comment}{\ *\ -\/\ 可以直接使用lua\_str2number(即strtod)}}
+\DoxyCodeLine{01414\ \textcolor{comment}{\ *\ -\/\ 十六进制浮点格式:0x[整数部分].[小数部分]p[指数]}}
+\DoxyCodeLine{01415\ \textcolor{comment}{\ *\ -\/\ 例如:0x1.8p+3\ =\ 1.5\ *\ 2\string^3\ =\ 12.0}}
+\DoxyCodeLine{01416\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01417\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01418\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01419\ \textcolor{comment}{\ *\ C89模式下:}}
+\DoxyCodeLine{01420\ \textcolor{comment}{\ *\ -\/\ 不定义此宏}}
+\DoxyCodeLine{01421\ \textcolor{comment}{\ *\ -\/\ Lua会在其他地方提供自己的实现}}
+\DoxyCodeLine{01422\ \textcolor{comment}{\ *\ -\/\ 因为C89的strtod不支持十六进制}}
+\DoxyCodeLine{01423\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01424\ }
+\DoxyCodeLine{01425\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01426\ \textcolor{comment}{@@\ lua\_pointer2str\ converts\ a\ pointer\ to\ a\ readable\ string\ in\ a}}
+\DoxyCodeLine{01427\ \textcolor{comment}{**\ (lua\_pointer2str将指针转换为可读字符串)}}
+\DoxyCodeLine{01428\ \textcolor{comment}{**\ non-\/specified\ way.}}
+\DoxyCodeLine{01429\ \textcolor{comment}{**\ (以非指定的方式。)}}
+\DoxyCodeLine{01430\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01431\ \textcolor{preprocessor}{\#define\ lua\_pointer2str(buff,\ sz,\ p)\ l\_sprintf(buff,\ sz,\ "{}\%p"{},\ p)}}
+\DoxyCodeLine{01432\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01433\ \textcolor{comment}{\ *\ 指针转字符串:}}
+\DoxyCodeLine{01434\ \textcolor{comment}{\ *\ -\/\ \%p是printf的指针格式}}
+\DoxyCodeLine{01435\ \textcolor{comment}{\ *\ -\/\ 输出格式取决于实现(通常是十六进制地址)}}
+\DoxyCodeLine{01436\ \textcolor{comment}{\ *\ -\/\ 例如:"{}0x7fff5fbff8a0"{}}}
+\DoxyCodeLine{01437\ \textcolor{comment}{\ *\ -\/\ 用于调试和错误消息}}
+\DoxyCodeLine{01438\ \textcolor{comment}{\ *\ -\/\ buff:\ 缓冲区}}
+\DoxyCodeLine{01439\ \textcolor{comment}{\ *\ -\/\ sz:\ 缓冲区大小}}
+\DoxyCodeLine{01440\ \textcolor{comment}{\ *\ -\/\ p:\ 要转换的指针}}
+\DoxyCodeLine{01441\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01442\ }
+\DoxyCodeLine{01443\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01444\ \textcolor{comment}{@@\ lua\_number2strx\ converts\ a\ float\ to\ a\ hexadecimal\ numeral.}}
+\DoxyCodeLine{01445\ \textcolor{comment}{**\ (lua\_number2strx将浮点数转换为十六进制数字。)}}
+\DoxyCodeLine{01446\ \textcolor{comment}{**\ In\ C99,\ 'sprintf'\ (with\ format\ specifiers\ '\%a'/'\%A')\ does\ that.}}
+\DoxyCodeLine{01447\ \textcolor{comment}{**\ (在C99中,'sprintf'(使用格式说明符'\%a'/'\%A')执行此操作。)}}
+\DoxyCodeLine{01448\ \textcolor{comment}{**\ Otherwise,\ you\ can\ leave\ 'lua\_number2strx'\ undefined\ and\ Lua\ will}}
+\DoxyCodeLine{01449\ \textcolor{comment}{**\ (否则,你可以不定义'lua\_number2strx',Lua将)}}
+\DoxyCodeLine{01450\ \textcolor{comment}{**\ provide\ its\ own\ implementation.}}
+\DoxyCodeLine{01451\ \textcolor{comment}{**\ (提供其自己的实现。)}}
+\DoxyCodeLine{01452\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01453\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)}}
+\DoxyCodeLine{01454\ \textcolor{preprocessor}{\#define\ lua\_number2strx(L,\ b,\ sz,\ f,\ n)\ \(\backslash\)}}
+\DoxyCodeLine{01455\ \textcolor{preprocessor}{\ \ \ \ ((void)L,\ l\_sprintf(b,\ sz,\ f,\ (LUAI\_UACNUMBER)(n)))}}
+\DoxyCodeLine{01456\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01457\ \textcolor{comment}{\ *\ 数值转十六进制字符串:}}
+\DoxyCodeLine{01458\ \textcolor{comment}{\ *\ -\/\ C99的\%a格式输出十六进制浮点表示}}
+\DoxyCodeLine{01459\ \textcolor{comment}{\ *\ -\/\ L:\ Lua状态(这里未使用,用(void)L忽略)}}
+\DoxyCodeLine{01460\ \textcolor{comment}{\ *\ -\/\ b:\ 缓冲区}}
+\DoxyCodeLine{01461\ \textcolor{comment}{\ *\ -\/\ sz:\ 缓冲区大小}}
+\DoxyCodeLine{01462\ \textcolor{comment}{\ *\ -\/\ f:\ 格式字符串(通常是"{}\%a"{}或"{}\%A"{})}}
+\DoxyCodeLine{01463\ \textcolor{comment}{\ *\ -\/\ (n):\ 要转换的数值}}
+\DoxyCodeLine{01464\ \textcolor{comment}{\ *\ -\/\ (LUAI\_UACNUMBER)(n):\ 类型转换}}
+\DoxyCodeLine{01465\ \textcolor{comment}{\ *\ -\/\ 十六进制浮点便于精确表示浮点数}}
+\DoxyCodeLine{01466\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01467\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01468\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01469\ \textcolor{comment}{\ *\ C89模式下:}}
+\DoxyCodeLine{01470\ \textcolor{comment}{\ *\ -\/\ 不定义此宏}}
+\DoxyCodeLine{01471\ \textcolor{comment}{\ *\ -\/\ Lua提供自己的实现}}
+\DoxyCodeLine{01472\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01473\ }
+\DoxyCodeLine{01474\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01475\ \textcolor{comment}{**\ 'strtof'\ and\ 'opf'\ variants\ for\ math\ functions\ are\ not\ valid\ in}}
+\DoxyCodeLine{01476\ \textcolor{comment}{**\ ('strtof'和数学函数的'opf'变体在)}}
+\DoxyCodeLine{01477\ \textcolor{comment}{**\ C89.\ Otherwise,\ the\ macro\ 'HUGE\_VALF'\ is\ a\ good\ proxy\ for\ testing\ the}}
+\DoxyCodeLine{01478\ \textcolor{comment}{**\ (C89中无效。否则,宏'HUGE\_VALF'是测试)}}
+\DoxyCodeLine{01479\ \textcolor{comment}{**\ availability\ of\ these\ variants.\ ('math.h'\ is\ already\ included\ in}}
+\DoxyCodeLine{01480\ \textcolor{comment}{**\ (这些变体可用性的良好代理。('math.h'已包含在)}}
+\DoxyCodeLine{01481\ \textcolor{comment}{**\ all\ files\ that\ use\ these\ macros.)}}
+\DoxyCodeLine{01482\ \textcolor{comment}{**\ (所有使用这些宏的文件中。))}}
+\DoxyCodeLine{01483\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01484\ \textcolor{preprocessor}{\#if\ defined(LUA\_USE\_C89)\ ||\ (defined(HUGE\_VAL)\ \&\&\ !defined(HUGE\_VALF))}}
+\DoxyCodeLine{01485\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01486\ \textcolor{comment}{\ *\ 条件:C89模式\ 或\ 有HUGE\_VAL但没有HUGE\_VALF}}
+\DoxyCodeLine{01487\ \textcolor{comment}{\ *\ -\/\ HUGE\_VAL是double的无穷大表示}}
+\DoxyCodeLine{01488\ \textcolor{comment}{\ *\ -\/\ HUGE\_VALF是float的无穷大表示(C99)}}
+\DoxyCodeLine{01489\ \textcolor{comment}{\ *\ -\/\ 如果没有HUGE\_VALF,说明不支持float变体函数}}
+\DoxyCodeLine{01490\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01491\ \textcolor{preprocessor}{\#undef\ l\_mathop\ }\textcolor{comment}{/*\ variants\ not\ available\ (变体不可用)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01492\ \textcolor{preprocessor}{\#undef\ lua\_str2number}}
+\DoxyCodeLine{01493\ \textcolor{preprocessor}{\#define\ l\_mathop(op)\ (lua\_Number)\ op\ }\textcolor{comment}{/*\ no\ variant\ (无变体)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01494\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01495\ \textcolor{comment}{\ *\ 数学运算回退:}}
+\DoxyCodeLine{01496\ \textcolor{comment}{\ *\ -\/\ 不使用float或long\ double变体}}
+\DoxyCodeLine{01497\ \textcolor{comment}{\ *\ -\/\ 使用标准double版本,然后转换为lua\_Number}}
+\DoxyCodeLine{01498\ \textcolor{comment}{\ *\ -\/\ 例如:如果lua\_Number是float,}}
+\DoxyCodeLine{01499\ \textcolor{comment}{\ *\ \ \ l\_mathop(sin)展开为(float)sin}}
+\DoxyCodeLine{01500\ \textcolor{comment}{\ *\ \ \ 实际调用double版本的sin,然后转换为float}}
+\DoxyCodeLine{01501\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01502\ \textcolor{preprocessor}{\#define\ lua\_str2number(s,\ p)\ ((lua\_Number)strtod((s),\ (p)))}}
+\DoxyCodeLine{01503\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01504\ \textcolor{comment}{\ *\ 字符串转数值回退:}}
+\DoxyCodeLine{01505\ \textcolor{comment}{\ *\ -\/\ 只使用strtod(C89标准)}}
+\DoxyCodeLine{01506\ \textcolor{comment}{\ *\ -\/\ 然后转换为lua\_Number}}
+\DoxyCodeLine{01507\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01508\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01509\ }
+\DoxyCodeLine{01510\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01511\ \textcolor{comment}{@@\ LUA\_KCONTEXT\ is\ the\ type\ of\ the\ context\ ('ctx')\ for\ continuation}}
+\DoxyCodeLine{01512\ \textcolor{comment}{**\ (LUA\_KCONTEXT是延续的上下文('ctx')的类型)}}
+\DoxyCodeLine{01513\ \textcolor{comment}{**\ functions.\ \ It\ must\ be\ a\ numerical\ type;\ Lua\ will\ use\ 'intptr\_t'\ if}}
+\DoxyCodeLine{01514\ \textcolor{comment}{**\ (函数。它必须是数值类型;如果)}}
+\DoxyCodeLine{01515\ \textcolor{comment}{**\ available,\ otherwise\ it\ will\ use\ 'ptrdiff\_t'\ (the\ nearest\ thing\ to}}
+\DoxyCodeLine{01516\ \textcolor{comment}{**\ (可用,Lua将使用'intptr\_t',否则它将使用'ptrdiff\_t'(最接近)}}
+\DoxyCodeLine{01517\ \textcolor{comment}{**\ 'intptr\_t'\ in\ C89)}}
+\DoxyCodeLine{01518\ \textcolor{comment}{**\ (C89中的'intptr\_t'))}}
+\DoxyCodeLine{01519\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01520\ \textcolor{preprocessor}{\#define\ LUA\_KCONTEXT\ ptrdiff\_t}}
+\DoxyCodeLine{01521\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01522\ \textcolor{comment}{\ *\ 延续上下文类型默认值:}}
+\DoxyCodeLine{01523\ \textcolor{comment}{\ *\ -\/\ ptrdiff\_t:\ 两个指针相减的结果类型(<stddef.h>)}}
+\DoxyCodeLine{01524\ \textcolor{comment}{\ *\ -\/\ 足够大以存储指针差值}}
+\DoxyCodeLine{01525\ \textcolor{comment}{\ *\ -\/\ C89标准的安全选择}}
+\DoxyCodeLine{01526\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01527\ }
+\DoxyCodeLine{01528\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)\ \&\&\ defined(\_\_STDC\_VERSION\_\_)\ \&\&\ \(\backslash\)}}
+\DoxyCodeLine{01529\ \textcolor{preprocessor}{\ \ \ \ \_\_STDC\_VERSION\_\_\ >=\ 199901L}}
+\DoxyCodeLine{01530\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01531\ \textcolor{comment}{\ *\ 条件检查C99支持:}}
+\DoxyCodeLine{01532\ \textcolor{comment}{\ *\ -\/\ !defined(LUA\_USE\_C89):\ 不是C89模式}}
+\DoxyCodeLine{01533\ \textcolor{comment}{\ *\ -\/\ defined(\_\_STDC\_VERSION\_\_):\ 编译器定义了标准版本宏}}
+\DoxyCodeLine{01534\ \textcolor{comment}{\ *\ -\/\ \_\_STDC\_VERSION\_\_\ >=\ 199901L:\ 版本号>=1999年1月(C99)}}
+\DoxyCodeLine{01535\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01536\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{01537\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01538\ \textcolor{comment}{\ *\ <stdint.h>是C99头文件:}}
+\DoxyCodeLine{01539\ \textcolor{comment}{\ *\ -\/\ 定义了固定宽度整数类型}}
+\DoxyCodeLine{01540\ \textcolor{comment}{\ *\ -\/\ int8\_t,\ int16\_t,\ int32\_t,\ int64\_t等}}
+\DoxyCodeLine{01541\ \textcolor{comment}{\ *\ -\/\ intptr\_t:\ 能够容纳指针值的整数类型}}
+\DoxyCodeLine{01542\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01543\ \textcolor{preprocessor}{\#if\ defined(INTPTR\_MAX)\ }\textcolor{comment}{/*\ even\ in\ C99\ this\ type\ is\ optional\ (即使在C99中这个类型也是可选的)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{01544\ \textcolor{preprocessor}{\#undef\ LUA\_KCONTEXT}}
+\DoxyCodeLine{01545\ \textcolor{preprocessor}{\#define\ LUA\_KCONTEXT\ intptr\_t}}
+\DoxyCodeLine{01546\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01547\ \textcolor{comment}{\ *\ intptr\_t类型:}}
+\DoxyCodeLine{01548\ \textcolor{comment}{\ *\ -\/\ 专门设计用于存储指针值的整数类型}}
+\DoxyCodeLine{01549\ \textcolor{comment}{\ *\ -\/\ 可以在指针和整数之间安全转换}}
+\DoxyCodeLine{01550\ \textcolor{comment}{\ *\ -\/\ (void*)p\ ==\ (void*)(intptr\_t)p\ 总是成立}}
+\DoxyCodeLine{01551\ \textcolor{comment}{\ *\ -\/\ 比ptrdiff\_t更适合存储指针相关的上下文}}
+\DoxyCodeLine{01552\ \textcolor{comment}{\ *\ -\/\ 即使在C99中也是可选的,所以检查INTPTR\_MAX}}
+\DoxyCodeLine{01553\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01554\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01555\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01556\ }
+\DoxyCodeLine{01557\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01558\ \textcolor{comment}{@@\ lua\_getlocaledecpoint\ gets\ the\ locale\ "{}radix\ character"{}\ (decimal\ point).}}
+\DoxyCodeLine{01559\ \textcolor{comment}{**\ (lua\_getlocaledecpoint获取区域设置的"{}基数字符"{}(小数点)。)}}
+\DoxyCodeLine{01560\ \textcolor{comment}{**\ Change\ that\ if\ you\ do\ not\ want\ to\ use\ C\ locales.\ (Code\ using\ this}}
+\DoxyCodeLine{01561\ \textcolor{comment}{**\ (如果你不想使用C区域设置,请修改它。(使用此)}}
+\DoxyCodeLine{01562\ \textcolor{comment}{**\ macro\ must\ include\ the\ header\ 'locale.h'.)}}
+\DoxyCodeLine{01563\ \textcolor{comment}{**\ (宏的代码必须包含头文件'locale.h'。))}}
+\DoxyCodeLine{01564\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01565\ \textcolor{preprocessor}{\#if\ !defined(lua\_getlocaledecpoint)}}
+\DoxyCodeLine{01566\ \textcolor{preprocessor}{\#define\ lua\_getlocaledecpoint()\ (localeconv()-\/>decimal\_point[0])}}
+\DoxyCodeLine{01567\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01568\ \textcolor{comment}{\ *\ 获取本地化小数点:}}
+\DoxyCodeLine{01569\ \textcolor{comment}{\ *\ -\/\ localeconv():\ C标准库函数,返回本地化信息结构}}
+\DoxyCodeLine{01570\ \textcolor{comment}{\ *\ -\/\ decimal\_point:\ 小数点字符串(通常是"{}."{}或"{},"{})}}
+\DoxyCodeLine{01571\ \textcolor{comment}{\ *\ -\/\ [0]:\ 取第一个字符}}
+\DoxyCodeLine{01572\ \textcolor{comment}{\ *\ -\/\ 不同国家使用不同的小数点(如德国用逗号)}}
+\DoxyCodeLine{01573\ \textcolor{comment}{\ *\ -\/\ 这确保Lua正确解析本地化的数字格式}}
+\DoxyCodeLine{01574\ \textcolor{comment}{\ *\ -\/\ 需要\#include\ <locale.h>}}
+\DoxyCodeLine{01575\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01576\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01577\ }
+\DoxyCodeLine{01578\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01579\ \textcolor{comment}{**\ macros\ to\ improve\ jump\ prediction,\ used\ mostly\ for\ error\ handling}}
+\DoxyCodeLine{01580\ \textcolor{comment}{**\ (宏用于改进跳转预测,主要用于错误处理)}}
+\DoxyCodeLine{01581\ \textcolor{comment}{**\ and\ debug\ facilities.\ (Some\ macros\ in\ the\ Lua\ API\ use\ these\ macros.}}
+\DoxyCodeLine{01582\ \textcolor{comment}{**\ (和调试功能。(Lua\ API中的某些宏使用这些宏。)}}
+\DoxyCodeLine{01583\ \textcolor{comment}{**\ Define\ LUA\_NOBUILTIN\ if\ you\ do\ not\ want\ '\_\_builtin\_expect'\ in\ your}}
+\DoxyCodeLine{01584\ \textcolor{comment}{**\ (如果你不想在你的代码中使用'\_\_builtin\_expect',请定义LUA\_NOBUILTIN)}}
+\DoxyCodeLine{01585\ \textcolor{comment}{**\ code.)}}
+\DoxyCodeLine{01586\ \textcolor{comment}{**\ (代码。))}}
+\DoxyCodeLine{01587\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01588\ \textcolor{preprocessor}{\#if\ !defined(luai\_likely)}}
+\DoxyCodeLine{01589\ }
+\DoxyCodeLine{01590\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ \&\&\ !defined(LUA\_NOBUILTIN)}}
+\DoxyCodeLine{01591\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01592\ \textcolor{comment}{\ *\ GCC编译器优化:}}
+\DoxyCodeLine{01593\ \textcolor{comment}{\ *\ -\/\ \_\_GNUC\_\_:\ GCC编译器预定义的宏}}
+\DoxyCodeLine{01594\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01595\ \textcolor{preprocessor}{\#define\ luai\_likely(x)\ (\_\_builtin\_expect(((x)\ !=\ 0),\ 1))}}
+\DoxyCodeLine{01596\ \textcolor{preprocessor}{\#define\ luai\_unlikely(x)\ (\_\_builtin\_expect(((x)\ !=\ 0),\ 0))}}
+\DoxyCodeLine{01597\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01598\ \textcolor{comment}{\ *\ \_\_builtin\_expect说明:}}
+\DoxyCodeLine{01599\ \textcolor{comment}{\ *\ -\/\ GCC内建函数,提供分支预测提示}}
+\DoxyCodeLine{01600\ \textcolor{comment}{\ *\ -\/\ \_\_builtin\_expect(expr,\ expected\_value)}}
+\DoxyCodeLine{01601\ \textcolor{comment}{\ *\ -\/\ 告诉编译器expr的期望值}}
+\DoxyCodeLine{01602\ \textcolor{comment}{\ *\ -\/\ luai\_likely(x):\ 期望x为真(非零)}}
+\DoxyCodeLine{01603\ \textcolor{comment}{\ *\ -\/\ luai\_unlikely(x):\ 期望x为假(零)}}
+\DoxyCodeLine{01604\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01605\ \textcolor{comment}{\ *\ 工作原理:}}
+\DoxyCodeLine{01606\ \textcolor{comment}{\ *\ -\/\ 现代CPU使用分支预测提高性能}}
+\DoxyCodeLine{01607\ \textcolor{comment}{\ *\ -\/\ 预测正确时,流水线不会停顿}}
+\DoxyCodeLine{01608\ \textcolor{comment}{\ *\ -\/\ 预测错误时,需要清空流水线,性能损失}}
+\DoxyCodeLine{01609\ \textcolor{comment}{\ *\ -\/\ 编译器根据提示优化代码布局}}
+\DoxyCodeLine{01610\ \textcolor{comment}{\ *\ -\/\ 常见路径放在一起,减少跳转}}
+\DoxyCodeLine{01611\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01612\ \textcolor{comment}{\ *\ 使用场景:}}
+\DoxyCodeLine{01613\ \textcolor{comment}{\ *\ -\/\ luai\_likely用于正常情况(如成功路径)}}
+\DoxyCodeLine{01614\ \textcolor{comment}{\ *\ -\/\ luai\_unlikely用于错误处理(如if\ (error))}}
+\DoxyCodeLine{01615\ \textcolor{comment}{\ *\ -\/\ 例如:if\ (luai\_unlikely(ptr\ ==\ NULL))\ \{\ handle\_error();\ \}}}
+\DoxyCodeLine{01616\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01617\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01618\ \textcolor{preprocessor}{\#define\ luai\_likely(x)\ (x)}}
+\DoxyCodeLine{01619\ \textcolor{preprocessor}{\#define\ luai\_unlikely(x)\ (x)}}
+\DoxyCodeLine{01620\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01621\ \textcolor{comment}{\ *\ 回退定义:}}
+\DoxyCodeLine{01622\ \textcolor{comment}{\ *\ -\/\ 在不支持\_\_builtin\_expect的编译器上}}
+\DoxyCodeLine{01623\ \textcolor{comment}{\ *\ -\/\ 宏简单地返回参数本身}}
+\DoxyCodeLine{01624\ \textcolor{comment}{\ *\ -\/\ 不影响功能,只是没有优化提示}}
+\DoxyCodeLine{01625\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01626\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01627\ }
+\DoxyCodeLine{01628\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01629\ }
+\DoxyCodeLine{01630\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{01631\ }
+\DoxyCodeLine{01632\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01633\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{01634\ \textcolor{comment}{**\ Language\ Variations\ (语言变化)}}
+\DoxyCodeLine{01635\ \textcolor{comment}{**\ =====================================================================}}
+\DoxyCodeLine{01636\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01637\ }
+\DoxyCodeLine{01638\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01639\ \textcolor{comment}{@@\ LUA\_NOCVTN2S/LUA\_NOCVTS2N\ control\ how\ Lua\ performs\ some}}
+\DoxyCodeLine{01640\ \textcolor{comment}{**\ (LUA\_NOCVTN2S/LUA\_NOCVTS2N控制Lua如何执行某些)}}
+\DoxyCodeLine{01641\ \textcolor{comment}{**\ coercions.\ Define\ LUA\_NOCVTN2S\ to\ turn\ off\ automatic\ coercion\ from}}
+\DoxyCodeLine{01642\ \textcolor{comment}{**\ (强制转换。定义LUA\_NOCVTN2S以关闭自动强制转换从)}}
+\DoxyCodeLine{01643\ \textcolor{comment}{**\ numbers\ to\ strings.\ Define\ LUA\_NOCVTS2N\ to\ turn\ off\ automatic}}
+\DoxyCodeLine{01644\ \textcolor{comment}{**\ (数字到字符串。定义LUA\_NOCVTS2N以关闭自动)}}
+\DoxyCodeLine{01645\ \textcolor{comment}{**\ coercion\ from\ strings\ to\ numbers.}}
+\DoxyCodeLine{01646\ \textcolor{comment}{**\ (强制转换从字符串到数字。)}}
+\DoxyCodeLine{01647\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01648\ \textcolor{comment}{/*\ \#define\ LUA\_NOCVTN2S\ */}}
+\DoxyCodeLine{01649\ \textcolor{comment}{/*\ \#define\ LUA\_NOCVTS2N\ */}}
+\DoxyCodeLine{01650\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01651\ \textcolor{comment}{\ *\ 类型转换控制(默认不启用):}}
+\DoxyCodeLine{01652\ \textcolor{comment}{\ *\ -\/\ LUA\_NOCVTN2S:\ 禁止数字到字符串的自动转换}}
+\DoxyCodeLine{01653\ \textcolor{comment}{\ *\ \ \ 例如:print(123)会报错,必须print(tostring(123))}}
+\DoxyCodeLine{01654\ \textcolor{comment}{\ *\ -\/\ LUA\_NOCVTS2N:\ 禁止字符串到数字的自动转换}}
+\DoxyCodeLine{01655\ \textcolor{comment}{\ *\ \ \ 例如:"{}10"{}\ +\ 20会报错,必须tonumber("{}10"{})\ +\ 20}}
+\DoxyCodeLine{01656\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01657\ \textcolor{comment}{\ *\ 为何提供这些选项:}}
+\DoxyCodeLine{01658\ \textcolor{comment}{\ *\ -\/\ 自动转换有时会隐藏错误}}
+\DoxyCodeLine{01659\ \textcolor{comment}{\ *\ -\/\ 严格模式可以捕获更多bug}}
+\DoxyCodeLine{01660\ \textcolor{comment}{\ *\ -\/\ 但默认不启用,保持Lua的便利性}}
+\DoxyCodeLine{01661\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01662\ }
+\DoxyCodeLine{01663\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01664\ \textcolor{comment}{@@\ LUA\_USE\_APICHECK\ turns\ on\ several\ consistency\ checks\ on\ the\ C\ API.}}
+\DoxyCodeLine{01665\ \textcolor{comment}{**\ (LUA\_USE\_APICHECK打开C\ API上的几个一致性检查。)}}
+\DoxyCodeLine{01666\ \textcolor{comment}{**\ Define\ it\ as\ a\ help\ when\ debugging\ C\ code.}}
+\DoxyCodeLine{01667\ \textcolor{comment}{**\ (在调试C代码时定义它作为帮助。)}}
+\DoxyCodeLine{01668\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01669\ \textcolor{comment}{/*\ \#define\ LUA\_USE\_APICHECK\ */}}
+\DoxyCodeLine{01670\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01671\ \textcolor{comment}{\ *\ API检查(默认不启用):}}
+\DoxyCodeLine{01672\ \textcolor{comment}{\ *\ -\/\ 启用后会在C\ API调用时进行额外的检查}}
+\DoxyCodeLine{01673\ \textcolor{comment}{\ *\ -\/\ 检查栈索引是否有效}}
+\DoxyCodeLine{01674\ \textcolor{comment}{\ *\ -\/\ 检查参数类型是否正确}}
+\DoxyCodeLine{01675\ \textcolor{comment}{\ *\ -\/\ 检查栈空间是否足够}}
+\DoxyCodeLine{01676\ \textcolor{comment}{\ *\ -\/\ 这些检查会降低性能}}
+\DoxyCodeLine{01677\ \textcolor{comment}{\ *\ -\/\ 仅用于开发和调试阶段}}
+\DoxyCodeLine{01678\ \textcolor{comment}{\ *\ -\/\ 发布版本应关闭以提高性能}}
+\DoxyCodeLine{01679\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01680\ }
+\DoxyCodeLine{01681\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{01682\ }
+\DoxyCodeLine{01683\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01684\ \textcolor{comment}{**\ \{==================================================================}}
+\DoxyCodeLine{01685\ \textcolor{comment}{**\ Macros\ that\ affect\ the\ API\ and\ must\ be\ stable\ (that\ is,\ must\ be\ the}}
+\DoxyCodeLine{01686\ \textcolor{comment}{**\ (影响API并且必须稳定的宏(也就是说,必须是)}}
+\DoxyCodeLine{01687\ \textcolor{comment}{**\ same\ when\ you\ compile\ Lua\ and\ when\ you\ compile\ code\ that\ links\ to}}
+\DoxyCodeLine{01688\ \textcolor{comment}{**\ (当你编译Lua和当你编译链接到)}}
+\DoxyCodeLine{01689\ \textcolor{comment}{**\ Lua).}}
+\DoxyCodeLine{01690\ \textcolor{comment}{**\ (Lua的代码时相同)。)}}
+\DoxyCodeLine{01691\ \textcolor{comment}{**\ =====================================================================}}
+\DoxyCodeLine{01692\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01693\ }
+\DoxyCodeLine{01694\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01695\ \textcolor{comment}{@@\ LUA\_EXTRASPACE\ defines\ the\ size\ of\ a\ raw\ memory\ area\ associated\ with}}
+\DoxyCodeLine{01696\ \textcolor{comment}{**\ (LUA\_EXTRASPACE定义与)}}
+\DoxyCodeLine{01697\ \textcolor{comment}{**\ a\ Lua\ state\ with\ very\ fast\ access.}}
+\DoxyCodeLine{01698\ \textcolor{comment}{**\ (Lua状态关联的原始内存区域的大小,具有非常快的访问。)}}
+\DoxyCodeLine{01699\ \textcolor{comment}{**\ CHANGE\ it\ if\ you\ need\ a\ different\ size.}}
+\DoxyCodeLine{01700\ \textcolor{comment}{**\ (如果你需要不同的大小,请修改它。)}}
+\DoxyCodeLine{01701\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01702\ \textcolor{preprocessor}{\#define\ LUA\_EXTRASPACE\ (sizeof(void\ *))}}
+\DoxyCodeLine{01703\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01704\ \textcolor{comment}{\ *\ 额外空间大小:}}
+\DoxyCodeLine{01705\ \textcolor{comment}{\ *\ -\/\ 每个Lua状态(lua\_State)前面预留的内存}}
+\DoxyCodeLine{01706\ \textcolor{comment}{\ *\ -\/\ 默认是一个指针的大小(32位系统4字节,64位系统8字节)}}
+\DoxyCodeLine{01707\ \textcolor{comment}{\ *\ -\/\ 用于存储与Lua状态关联的用户数据}}
+\DoxyCodeLine{01708\ \textcolor{comment}{\ *\ -\/\ 访问非常快,因为位置固定在lua\_State之前}}
+\DoxyCodeLine{01709\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01710\ \textcolor{comment}{\ *\ 使用方法:}}
+\DoxyCodeLine{01711\ \textcolor{comment}{\ *\ -\/\ lua\_getextraspace(L):\ 获取额外空间的指针}}
+\DoxyCodeLine{01712\ \textcolor{comment}{\ *\ -\/\ 可以存储指向应用程序数据结构的指针}}
+\DoxyCodeLine{01713\ \textcolor{comment}{\ *\ -\/\ 例如:存储应用程序上下文、回调函数等}}
+\DoxyCodeLine{01714\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01715\ \textcolor{comment}{\ *\ 为何使用sizeof(void\ *):}}
+\DoxyCodeLine{01716\ \textcolor{comment}{\ *\ -\/\ 一个指针足够存储大多数需要的信息}}
+\DoxyCodeLine{01717\ \textcolor{comment}{\ *\ -\/\ 可以指向更大的数据结构}}
+\DoxyCodeLine{01718\ \textcolor{comment}{\ *\ -\/\ 保持内存对齐}}
+\DoxyCodeLine{01719\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01720\ }
+\DoxyCodeLine{01721\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01722\ \textcolor{comment}{@@\ LUA\_IDSIZE\ gives\ the\ maximum\ size\ for\ the\ description\ of\ the\ source}}
+\DoxyCodeLine{01723\ \textcolor{comment}{**\ (LUA\_IDSIZE给出源代码描述的最大大小)}}
+\DoxyCodeLine{01724\ \textcolor{comment}{**\ of\ a\ function\ in\ debug\ information.}}
+\DoxyCodeLine{01725\ \textcolor{comment}{**\ (函数在调试信息中。)}}
+\DoxyCodeLine{01726\ \textcolor{comment}{**\ CHANGE\ it\ if\ you\ want\ a\ different\ size.}}
+\DoxyCodeLine{01727\ \textcolor{comment}{**\ (如果你想要不同的大小,请修改它。)}}
+\DoxyCodeLine{01728\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01729\ \textcolor{preprocessor}{\#define\ LUA\_IDSIZE\ 60}}
+\DoxyCodeLine{01730\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01731\ \textcolor{comment}{\ *\ 源代码ID大小:}}
+\DoxyCodeLine{01732\ \textcolor{comment}{\ *\ -\/\ 用于存储函数来源的描述字符串}}
+\DoxyCodeLine{01733\ \textcolor{comment}{\ *\ -\/\ 例如:"{}@filename.lua"{}或"{}=[C]"{}或"{}=(load)"{}}}
+\DoxyCodeLine{01734\ \textcolor{comment}{\ *\ -\/\ 60字节足够存储大多数文件名}}
+\DoxyCodeLine{01735\ \textcolor{comment}{\ *\ -\/\ 在调试信息和错误消息中使用}}
+\DoxyCodeLine{01736\ \textcolor{comment}{\ *\ -\/\ 如果文件名太长会被截断}}
+\DoxyCodeLine{01737\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01738\ \textcolor{comment}{\ *\ 格式约定:}}
+\DoxyCodeLine{01739\ \textcolor{comment}{\ *\ -\/\ "{}@filename"{}:\ 从文件加载}}
+\DoxyCodeLine{01740\ \textcolor{comment}{\ *\ -\/\ "{}=name"{}:\ 特殊来源(如C代码)}}
+\DoxyCodeLine{01741\ \textcolor{comment}{\ *\ -\/\ 其他:\ 直接是源代码文本}}
+\DoxyCodeLine{01742\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01743\ }
+\DoxyCodeLine{01744\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01745\ \textcolor{comment}{@@\ LUAL\_BUFFERSIZE\ is\ the\ initial\ buffer\ size\ used\ by\ the\ lauxlib}}
+\DoxyCodeLine{01746\ \textcolor{comment}{**\ (LUAL\_BUFFERSIZE是lauxlib使用的初始缓冲区大小)}}
+\DoxyCodeLine{01747\ \textcolor{comment}{**\ buffer\ system.}}
+\DoxyCodeLine{01748\ \textcolor{comment}{**\ (缓冲区系统。)}}
+\DoxyCodeLine{01749\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01750\ \textcolor{preprocessor}{\#define\ LUAL\_BUFFERSIZE\ ((int)(16\ *\ sizeof(void\ *)\ *\ sizeof(lua\_Number)))}}
+\DoxyCodeLine{01751\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01752\ \textcolor{comment}{\ *\ 辅助库缓冲区大小:}}
+\DoxyCodeLine{01753\ \textcolor{comment}{\ *\ -\/\ luaL\_Buffer的初始大小}}
+\DoxyCodeLine{01754\ \textcolor{comment}{\ *\ -\/\ 计算公式:16\ *\ 指针大小\ *\ lua\_Number大小}}
+\DoxyCodeLine{01755\ \textcolor{comment}{\ *\ -\/\ 在64位系统上,double作为lua\_Number:}}
+\DoxyCodeLine{01756\ \textcolor{comment}{\ *\ \ \ 16\ *\ 8\ *\ 8\ =\ 1024字节}}
+\DoxyCodeLine{01757\ \textcolor{comment}{\ *\ -\/\ 在32位系统上,double作为lua\_Number:}}
+\DoxyCodeLine{01758\ \textcolor{comment}{\ *\ \ \ 16\ *\ 4\ *\ 8\ =\ 512字节}}
+\DoxyCodeLine{01759\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01760\ \textcolor{comment}{\ *\ 设计考虑:}}
+\DoxyCodeLine{01761\ \textcolor{comment}{\ *\ -\/\ 足够大以避免频繁重新分配}}
+\DoxyCodeLine{01762\ \textcolor{comment}{\ *\ -\/\ 不会太大浪费内存}}
+\DoxyCodeLine{01763\ \textcolor{comment}{\ *\ -\/\ 随系统字长和数值大小自动调整}}
+\DoxyCodeLine{01764\ \textcolor{comment}{\ *\ -\/\ 用于字符串构建等操作}}
+\DoxyCodeLine{01765\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01766\ }
+\DoxyCodeLine{01767\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01768\ \textcolor{comment}{@@\ LUAI\_MAXALIGN\ defines\ fields\ that,\ when\ used\ in\ a\ union,\ ensure}}
+\DoxyCodeLine{01769\ \textcolor{comment}{**\ (LUAI\_MAXALIGN定义字段,当在联合中使用时,确保)}}
+\DoxyCodeLine{01770\ \textcolor{comment}{**\ maximum\ alignment\ for\ the\ other\ items\ in\ that\ union.}}
+\DoxyCodeLine{01771\ \textcolor{comment}{**\ (该联合中其他项的最大对齐。)}}
+\DoxyCodeLine{01772\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01773\ \textcolor{preprocessor}{\#define\ LUAI\_MAXALIGN\ \(\backslash\)}}
+\DoxyCodeLine{01774\ \textcolor{preprocessor}{\ \ \ \ lua\_Number\ n;\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01775\ \textcolor{preprocessor}{\ \ \ \ double\ u;\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01776\ \textcolor{preprocessor}{\ \ \ \ void\ *s;\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01777\ \textcolor{preprocessor}{\ \ \ \ lua\_Integer\ i;\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01778\ \textcolor{preprocessor}{\ \ \ \ long\ l}}
+\DoxyCodeLine{01779\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01780\ \textcolor{comment}{\ *\ 最大对齐定义:}}
+\DoxyCodeLine{01781\ \textcolor{comment}{\ *\ -\/\ 用于创建具有最大对齐要求的联合(union)}}
+\DoxyCodeLine{01782\ \textcolor{comment}{\ *\ -\/\ 包含各种可能需要最大对齐的类型}}
+\DoxyCodeLine{01783\ \textcolor{comment}{\ *\ -\/\ lua\_Number\ n:\ Lua数值类型}}
+\DoxyCodeLine{01784\ \textcolor{comment}{\ *\ -\/\ double\ u:\ 双精度浮点(通常需要8字节对齐)}}
+\DoxyCodeLine{01785\ \textcolor{comment}{\ *\ -\/\ void\ *s:\ 指针(在64位系统需要8字节对齐)}}
+\DoxyCodeLine{01786\ \textcolor{comment}{\ *\ -\/\ lua\_Integer\ i:\ Lua整数类型}}
+\DoxyCodeLine{01787\ \textcolor{comment}{\ *\ -\/\ long\ l:\ 长整数}}
+\DoxyCodeLine{01788\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01789\ \textcolor{comment}{\ *\ 内存对齐重要性:}}
+\DoxyCodeLine{01790\ \textcolor{comment}{\ *\ -\/\ CPU访问对齐的数据更快}}
+\DoxyCodeLine{01791\ \textcolor{comment}{\ *\ -\/\ 某些架构要求特定类型必须对齐,否则崩溃}}
+\DoxyCodeLine{01792\ \textcolor{comment}{\ *\ -\/\ 例如:在某些ARM上,double必须8字节对齐}}
+\DoxyCodeLine{01793\ \textcolor{comment}{\ *\ -\/\ 联合会使用最大对齐要求的成员的对齐}}
+\DoxyCodeLine{01794\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01795\ \textcolor{comment}{\ *\ 使用场景:}}
+\DoxyCodeLine{01796\ \textcolor{comment}{\ *\ -\/\ Lua的内部数据结构使用这个定义}}
+\DoxyCodeLine{01797\ \textcolor{comment}{\ *\ -\/\ 确保正确的内存对齐}}
+\DoxyCodeLine{01798\ \textcolor{comment}{\ *\ -\/\ 提高性能和跨平台兼容性}}
+\DoxyCodeLine{01799\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01800\ }
+\DoxyCodeLine{01801\ \textcolor{comment}{/*\ \}==================================================================\ */}}
+\DoxyCodeLine{01802\ }
+\DoxyCodeLine{01803\ \textcolor{comment}{/*\ ===================================================================\ */}}
+\DoxyCodeLine{01804\ }
+\DoxyCodeLine{01805\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01806\ \textcolor{comment}{**\ Local\ configuration.\ You\ can\ use\ this\ space\ to\ add\ your\ redefinitions}}
+\DoxyCodeLine{01807\ \textcolor{comment}{**\ (本地配置。你可以使用这个空间添加你的重新定义)}}
+\DoxyCodeLine{01808\ \textcolor{comment}{**\ without\ modifying\ the\ main\ part\ of\ the\ file.}}
+\DoxyCodeLine{01809\ \textcolor{comment}{**\ (而不修改文件的主要部分。)}}
+\DoxyCodeLine{01810\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01811\ }
+\DoxyCodeLine{01812\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01813\ \textcolor{comment}{\ *\ 本地配置区域:}}
+\DoxyCodeLine{01814\ \textcolor{comment}{\ *\ -\/\ 这是为用户保留的自定义区域}}
+\DoxyCodeLine{01815\ \textcolor{comment}{\ *\ -\/\ 可以在这里添加特定项目的配置}}
+\DoxyCodeLine{01816\ \textcolor{comment}{\ *\ -\/\ 不需要修改文件的主体部分}}
+\DoxyCodeLine{01817\ \textcolor{comment}{\ *\ -\/\ 便于维护和升级Lua源码}}
+\DoxyCodeLine{01818\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{01819\ \textcolor{comment}{\ *\ 使用建议:}}
+\DoxyCodeLine{01820\ \textcolor{comment}{\ *\ -\/\ 在这里重新定义需要修改的宏}}
+\DoxyCodeLine{01821\ \textcolor{comment}{\ *\ -\/\ 或者添加项目特定的配置}}
+\DoxyCodeLine{01822\ \textcolor{comment}{\ *\ -\/\ 保持主要配置部分不变}}
+\DoxyCodeLine{01823\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01824\ }
+\DoxyCodeLine{01825\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01826\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01827\ \textcolor{comment}{\ *\ 头文件保护结束}}
+\DoxyCodeLine{01828\ \textcolor{comment}{\ *\ -\/\ 对应开头的\#ifndef\ luaconf\_h}}
+\DoxyCodeLine{01829\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{01830\ }
+\DoxyCodeLine{01831\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01832\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{01833\ \textcolor{comment}{文件总结}}
+\DoxyCodeLine{01834\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{01835\ \textcolor{comment}{}}
+\DoxyCodeLine{01836\ \textcolor{comment}{【核心功能回顾】}}
+\DoxyCodeLine{01837\ \textcolor{comment}{这个配置文件是Lua的核心配置中心,通过大量的宏定义控制Lua的编译行为。}}
+\DoxyCodeLine{01838\ \textcolor{comment}{}}
+\DoxyCodeLine{01839\ \textcolor{comment}{【主要配置类别】}}
+\DoxyCodeLine{01840\ \textcolor{comment}{}}
+\DoxyCodeLine{01841\ \textcolor{comment}{1.\ 平台适配\ (行41-\/120)}}
+\DoxyCodeLine{01842\ \textcolor{comment}{\ \ \ -\/\ Windows/Linux/macOS/iOS等平台的特定配置}}
+\DoxyCodeLine{01843\ \textcolor{comment}{\ \ \ -\/\ C89/C99标准的兼容性控制}}
+\DoxyCodeLine{01844\ \textcolor{comment}{\ \ \ -\/\ 动态库加载机制(DLL/dlopen)}}
+\DoxyCodeLine{01845\ \textcolor{comment}{\ \ \ -\/\ readline库集成}}
+\DoxyCodeLine{01846\ \textcolor{comment}{}}
+\DoxyCodeLine{01847\ \textcolor{comment}{2.\ 数值类型配置\ (行127-\/457)}}
+\DoxyCodeLine{01848\ \textcolor{comment}{\ \ \ -\/\ 整数类型选择:int/long/long\ long}}
+\DoxyCodeLine{01849\ \textcolor{comment}{\ \ \ -\/\ 浮点类型选择:float/double/long\ double}}
+\DoxyCodeLine{01850\ \textcolor{comment}{\ \ \ -\/\ 默认配置:64位整数(long\ long)和双精度浮点(double)}}
+\DoxyCodeLine{01851\ \textcolor{comment}{\ \ \ -\/\ 特殊配置:32位Lua、C89兼容模式}}
+\DoxyCodeLine{01852\ \textcolor{comment}{}}
+\DoxyCodeLine{01853\ \textcolor{comment}{3.\ 路径配置\ (行464-\/579)}}
+\DoxyCodeLine{01854\ \textcolor{comment}{\ \ \ -\/\ Lua库搜索路径(LUA\_PATH)}}
+\DoxyCodeLine{01855\ \textcolor{comment}{\ \ \ -\/\ C库搜索路径(LUA\_CPATH)}}
+\DoxyCodeLine{01856\ \textcolor{comment}{\ \ \ -\/\ 平台特定的目录结构}}
+\DoxyCodeLine{01857\ \textcolor{comment}{\ \ \ -\/\ 模块查找规则}}
+\DoxyCodeLine{01858\ \textcolor{comment}{}}
+\DoxyCodeLine{01859\ \textcolor{comment}{4.\ API导出控制\ (行586-\/628)}}
+\DoxyCodeLine{01860\ \textcolor{comment}{\ \ \ -\/\ DLL导出/导入机制(Windows)}}
+\DoxyCodeLine{01861\ \textcolor{comment}{\ \ \ -\/\ extern声明(非Windows)}}
+\DoxyCodeLine{01862\ \textcolor{comment}{\ \ \ -\/\ C++兼容性(extern\ "{}C"{})}}
+\DoxyCodeLine{01863\ \textcolor{comment}{}}
+\DoxyCodeLine{01864\ \textcolor{comment}{5.\ 兼容性选项\ (行635-\/664)}}
+\DoxyCodeLine{01865\ \textcolor{comment}{\ \ \ -\/\ 与旧版本Lua的兼容性}}
+\DoxyCodeLine{01866\ \textcolor{comment}{\ \ \ -\/\ 已弃用函数的支持}}
+\DoxyCodeLine{01867\ \textcolor{comment}{\ \ \ -\/\ API变更的适配宏}}
+\DoxyCodeLine{01868\ \textcolor{comment}{}}
+\DoxyCodeLine{01869\ \textcolor{comment}{6.\ 底层实现细节\ (行671-\/866)}}
+\DoxyCodeLine{01870\ \textcolor{comment}{\ \ \ -\/\ 数值格式化和转换}}
+\DoxyCodeLine{01871\ \textcolor{comment}{\ \ \ -\/\ 字符串处理}}
+\DoxyCodeLine{01872\ \textcolor{comment}{\ \ \ -\/\ 本地化支持}}
+\DoxyCodeLine{01873\ \textcolor{comment}{\ \ \ -\/\ 编译器优化提示}}
+\DoxyCodeLine{01874\ \textcolor{comment}{}}
+\DoxyCodeLine{01875\ \textcolor{comment}{7.\ 语言特性控制\ (行873-\/916)}}
+\DoxyCodeLine{01876\ \textcolor{comment}{\ \ \ -\/\ 类型自动转换控制}}
+\DoxyCodeLine{01877\ \textcolor{comment}{\ \ \ -\/\ API一致性检查}}
+\DoxyCodeLine{01878\ \textcolor{comment}{\ \ \ -\/\ 内存和对齐设置}}
+\DoxyCodeLine{01879\ \textcolor{comment}{}}
+\DoxyCodeLine{01880\ \textcolor{comment}{【关键设计思想】}}
+\DoxyCodeLine{01881\ \textcolor{comment}{}}
+\DoxyCodeLine{01882\ \textcolor{comment}{1.\ 灵活性}}
+\DoxyCodeLine{01883\ \textcolor{comment}{\ \ \ -\/\ 通过宏定义提供大量可配置选项}}
+\DoxyCodeLine{01884\ \textcolor{comment}{\ \ \ -\/\ 支持从嵌入式系统到服务器的各种环境}}
+\DoxyCodeLine{01885\ \textcolor{comment}{}}
+\DoxyCodeLine{01886\ \textcolor{comment}{2.\ 兼容性}}
+\DoxyCodeLine{01887\ \textcolor{comment}{\ \ \ -\/\ 同时支持C89和C99标准}}
+\DoxyCodeLine{01888\ \textcolor{comment}{\ \ \ -\/\ 跨平台兼容(Windows/Unix/macOS)}}
+\DoxyCodeLine{01889\ \textcolor{comment}{\ \ \ -\/\ 向后兼容旧版本Lua}}
+\DoxyCodeLine{01890\ \textcolor{comment}{}}
+\DoxyCodeLine{01891\ \textcolor{comment}{3.\ 性能优化}}
+\DoxyCodeLine{01892\ \textcolor{comment}{\ \ \ -\/\ 编译器特定优化(如GCC的\_\_builtin\_expect)}}
+\DoxyCodeLine{01893\ \textcolor{comment}{\ \ \ -\/\ 内存对齐优化}}
+\DoxyCodeLine{01894\ \textcolor{comment}{\ \ \ -\/\ 类型选择优化}}
+\DoxyCodeLine{01895\ \textcolor{comment}{}}
+\DoxyCodeLine{01896\ \textcolor{comment}{4.\ 可维护性}}
+\DoxyCodeLine{01897\ \textcolor{comment}{\ \ \ -\/\ 集中式配置管理}}
+\DoxyCodeLine{01898\ \textcolor{comment}{\ \ \ -\/\ 清晰的注释和文档}}
+\DoxyCodeLine{01899\ \textcolor{comment}{\ \ \ -\/\ 预留本地配置空间}}
+\DoxyCodeLine{01900\ \textcolor{comment}{}}
+\DoxyCodeLine{01901\ \textcolor{comment}{【使用指南】}}
+\DoxyCodeLine{01902\ \textcolor{comment}{}}
+\DoxyCodeLine{01903\ \textcolor{comment}{编译Lua时,可以通过以下方式配置:}}
+\DoxyCodeLine{01904\ \textcolor{comment}{}}
+\DoxyCodeLine{01905\ \textcolor{comment}{1.\ 编译器参数:}}
+\DoxyCodeLine{01906\ \textcolor{comment}{\ \ \ gcc\ -\/DLUA\_32BITS\ -\/DLUA\_USE\_LINUX\ lua.c}}
+\DoxyCodeLine{01907\ \textcolor{comment}{}}
+\DoxyCodeLine{01908\ \textcolor{comment}{2.\ 修改本文件:}}
+\DoxyCodeLine{01909\ \textcolor{comment}{\ \ \ 在文件末尾的本地配置区域添加自定义宏}}
+\DoxyCodeLine{01910\ \textcolor{comment}{}}
+\DoxyCodeLine{01911\ \textcolor{comment}{3.\ 常见配置场景:}}
+\DoxyCodeLine{01912\ \textcolor{comment}{\ \ \ -\/\ 嵌入式系统:定义LUA\_32BITS节省内存}}
+\DoxyCodeLine{01913\ \textcolor{comment}{\ \ \ -\/\ 老旧编译器:定义LUA\_USE\_C89保证兼容}}
+\DoxyCodeLine{01914\ \textcolor{comment}{\ \ \ -\/\ Windows开发:定义LUA\_BUILD\_AS\_DLL构建动态库}}
+\DoxyCodeLine{01915\ \textcolor{comment}{\ \ \ -\/\ 调试阶段:定义LUA\_USE\_APICHECK进行API检查}}
+\DoxyCodeLine{01916\ \textcolor{comment}{}}
+\DoxyCodeLine{01917\ \textcolor{comment}{【与其他文件的关系】}}
+\DoxyCodeLine{01918\ \textcolor{comment}{}}
+\DoxyCodeLine{01919\ \textcolor{comment}{-\/\ lua.h:\ 定义版本号等常量,本文件引用这些常量}}
+\DoxyCodeLine{01920\ \textcolor{comment}{-\/\ luastate.c:\ 使用LUA\_EXTRASPACE定义}}
+\DoxyCodeLine{01921\ \textcolor{comment}{-\/\ lmathlib.c:\ 使用数学函数相关的宏}}
+\DoxyCodeLine{01922\ \textcolor{comment}{-\/\ loadlib.c:\ 使用动态库加载相关的宏}}
+\DoxyCodeLine{01923\ \textcolor{comment}{-\/\ lobject.h:\ 使用LUA\_NUMBER、LUA\_INTEGER等类型定义}}
+\DoxyCodeLine{01924\ \textcolor{comment}{}}
+\DoxyCodeLine{01925\ \textcolor{comment}{【学习建议】}}
+\DoxyCodeLine{01926\ \textcolor{comment}{}}
+\DoxyCodeLine{01927\ \textcolor{comment}{1.\ 初学者:}}
+\DoxyCodeLine{01928\ \textcolor{comment}{\ \ \ -\/\ 理解默认配置即可}}
+\DoxyCodeLine{01929\ \textcolor{comment}{\ \ \ -\/\ 关注数值类型和路径配置}}
+\DoxyCodeLine{01930\ \textcolor{comment}{\ \ \ -\/\ 了解平台差异}}
+\DoxyCodeLine{01931\ \textcolor{comment}{}}
+\DoxyCodeLine{01932\ \textcolor{comment}{2.\ 进阶开发者:}}
+\DoxyCodeLine{01933\ \textcolor{comment}{\ \ \ -\/\ 深入理解各种配置选项的影响}}
+\DoxyCodeLine{01934\ \textcolor{comment}{\ \ \ -\/\ 学习如何针对特定需求定制Lua}}
+\DoxyCodeLine{01935\ \textcolor{comment}{\ \ \ -\/\ 研究不同配置的性能差异}}
+\DoxyCodeLine{01936\ \textcolor{comment}{}}
+\DoxyCodeLine{01937\ \textcolor{comment}{3.\ 系统开发者:}}
+\DoxyCodeLine{01938\ \textcolor{comment}{\ \ \ -\/\ 掌握所有配置选项}}
+\DoxyCodeLine{01939\ \textcolor{comment}{\ \ \ -\/\ 理解底层实现细节}}
+\DoxyCodeLine{01940\ \textcolor{comment}{\ \ \ -\/\ 能够移植Lua到新平台}}
+\DoxyCodeLine{01941\ \textcolor{comment}{}}
+\DoxyCodeLine{01942\ \textcolor{comment}{【总结】}}
+\DoxyCodeLine{01943\ \textcolor{comment}{luaconf.h是Lua的配置中枢,通过精心设计的宏定义系统,实现了Lua在不同平台、}}
+\DoxyCodeLine{01944\ \textcolor{comment}{不同需求下的灵活适配。理解这个文件有助于深入了解Lua的设计理念和实现细节,}}
+\DoxyCodeLine{01945\ \textcolor{comment}{也是定制和优化Lua的基础。}}
+\DoxyCodeLine{01946\ \textcolor{comment}{}}
+\DoxyCodeLine{01947\ \textcolor{comment}{================================================================================}}
+\DoxyCodeLine{01948\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

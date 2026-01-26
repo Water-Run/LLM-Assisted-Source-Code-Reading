@@ -1,0 +1,70 @@
+\doxysection{lualib.\+h}
+\hypertarget{lualib_8h_source}{}\label{lualib_8h_source}\mbox{\hyperlink{lualib_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lualib.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Lua\ standard\ libraries}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ lualib\_h}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ lualib\_h}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lua_8h}{lua.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ version\ suffix\ for\ environment\ variable\ names\ */}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ LUA\_VERSUFFIX\ \ \ \ \ \ \ \ \ \ "{}\_"{}\ LUA\_VERSION\_MAJOR\ "{}\_"{}\ LUA\_VERSION\_MINOR}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ LUA\_GLIBK\ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00018\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{lbaselib_8c_ae99bbf706d0fcfb0c1c7afbe3c4de382}{luaopen\_base}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ LUA\_LOADLIBNAME\ "{}package"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ LUA\_LOADLIBK\ \ \ \ (LUA\_GLIBK\ <<\ 1)}}
+\DoxyCodeLine{00022\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{loadlib_8c_ab732e1ec253c9b8dc0c2ce4d74cb0083}{luaopen\_package}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ LUA\_COLIBNAME\ \ \ "{}coroutine"{}}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ LUA\_COLIBK\ \ (LUA\_LOADLIBK\ <<\ 1)}}
+\DoxyCodeLine{00027\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{lcorolib_8c_a8515aa0d6a2e901a5397afd5e4250db2}{luaopen\_coroutine}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ LUA\_DBLIBNAME\ \ \ "{}debug"{}}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ LUA\_DBLIBK\ \ (LUA\_COLIBK\ <<\ 1)}}
+\DoxyCodeLine{00031\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{ldblib_8c_ad94d3e2d0ca6d83a904a3ba9aad04f3b}{luaopen\_debug}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ LUA\_IOLIBNAME\ \ \ "{}io"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ LUA\_IOLIBK\ \ (LUA\_DBLIBK\ <<\ 1)}}
+\DoxyCodeLine{00035\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{liolib_8c_a2d3f245e532f3d582a4ff62bbd567149}{luaopen\_io}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ LUA\_MATHLIBNAME\ "{}math"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ LUA\_MATHLIBK\ \ \ \ (LUA\_IOLIBK\ <<\ 1)}}
+\DoxyCodeLine{00039\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{lmathlib_8c_a78cbff06fd4d59cf3d7525fa6cc196ba}{luaopen\_math}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ LUA\_OSLIBNAME\ \ \ "{}os"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ LUA\_OSLIBK\ \ (LUA\_MATHLIBK\ <<\ 1)}}
+\DoxyCodeLine{00043\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{loslib_8c_a03d1c1c58e52032aee542b65a2b1c3ca}{luaopen\_os}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ LUA\_STRLIBNAME\ \ "{}string"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ LUA\_STRLIBK\ (LUA\_OSLIBK\ <<\ 1)}}
+\DoxyCodeLine{00047\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{lstrlib_8c_ab65aeff75cb100dde75e955c698c83b8}{luaopen\_string}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ LUA\_TABLIBNAME\ \ "{}table"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ LUA\_TABLIBK\ (LUA\_STRLIBK\ <<\ 1)}}
+\DoxyCodeLine{00051\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{ltablib_8c_acfb66f04d8d0ea06cb1c4c059b9e142b}{luaopen\_table}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ LUA\_UTF8LIBNAME\ "{}utf8"{}}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ LUA\_UTF8LIBK\ \ \ \ (LUA\_TABLIBK\ <<\ 1)}}
+\DoxyCodeLine{00055\ \mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\_API}}\ int\ (\mbox{\hyperlink{lualib_8h_ae1247f71bc4b3f3be7da9c9d5c7668b1}{luaopen\_utf8}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{/*\ open\ selected\ libraries\ */}}
+\DoxyCodeLine{00059\ \mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\_API}}\ void\ (\mbox{\hyperlink{linit_8c_ad09996aefb08d65ffee01b1729919261}{luaL\_openselectedlibs}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ load,\ \textcolor{keywordtype}{int}\ preload);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*\ open\ all\ libraries\ */}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ luaL\_openlibs(L)\ \ \ \ luaL\_openselectedlibs(L,\ \string~0,\ 0)}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

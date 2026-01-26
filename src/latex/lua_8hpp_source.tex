@@ -1,0 +1,177 @@
+\doxysection{lua.\+hpp}
+\hypertarget{lua_8hpp_source}{}\label{lua_8hpp_source}\mbox{\hyperlink{lua_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ 文件名:\ lua.hpp}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ 【概要说明】}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ 这是\ Lua\ 的\ C++\ 头文件包装器。Lua\ 核心库本身是用\ C\ 语言编写的,可以同时}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ 作为\ C\ 和\ C++\ 代码编译。但是当在\ C++\ 项目中使用\ Lua\ 时,需要告诉\ C++\ 编译器}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ 这些函数使用的是\ C\ 语言的链接约定(name\ mangling规则),而不是\ C++\ 的链接约定。}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ 【为什么需要这个文件】}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ -\/\ C++\ 编译器会对函数名进行"{}名称修饰"{}(name\ mangling),以支持函数重载等特性}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ -\/\ C\ 编译器不会进行名称修饰,函数名保持原样}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ -\/\ 如果直接在\ C++\ 中包含\ Lua\ 的\ C\ 头文件,链接器会找不到函数(因为名称不匹配)}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ -\/\ 使用\ extern\ "{}C"{}\ 告诉\ C++\ 编译器:这些函数使用\ C\ 链接约定,不要修饰名称}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ 【使用方式】}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ 在\ C++\ 项目中,包含这个文件而不是直接包含\ lua.h:}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ \ \#include\ "{}lua.hpp"{}\ \ //\ 正确:在\ C++\ 中使用}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ \ \ 而不是:}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ \ \#include\ "{}lua.h"{}\ \ \ \ //\ 错误:会导致链接错误}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ 【文件结构】}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ 1.\ extern\ "{}C"{}\ 块\ -\/\ 声明\ C\ 语言链接约定}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ 2.\ 包含三个核心\ Lua\ 头文件}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ ******************************************************************************/}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ Lua\ header\ files\ for\ C++}}
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Lua\ 的\ C++\ 头文件}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ 'extern\ "{}C"{}\ not\ supplied\ automatically\ in\ lua.h\ and\ other\ headers}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ because\ Lua\ also\ compiles\ as\ C++}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ 'extern\ "{}C"{}'\ 不会在\ lua.h\ 和其他头文件中自动提供,}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ 因为\ Lua\ 本身也可以作为\ C++\ 代码编译}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ 【关键知识点:extern\ "{}C"{}】}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ extern\ "{}C"{}\ 是\ C++\ 中的链接规范(linkage\ specification),用于:}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ 1.\ 告诉\ C++\ 编译器使用\ C\ 语言的链接约定}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ 2.\ 禁止\ C++\ 的名称修饰(name\ mangling)}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ 3.\ 使得\ C++\ 代码可以调用\ C\ 语言编译的库}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ 例如:}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ -\/\ C\ 函数:\ void\ foo(int\ x)\ \ -\/>\ 链接符号:\ foo}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ -\/\ C++\ 函数:\ void\ foo(int\ x)\ -\/>\ 链接符号:\ \_Z3fooi\ (经过名称修饰)}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ *\ 如果没有\ extern\ "{}C"{},C++\ 会生成修饰后的名称,导致链接失败。}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ *\ 【包含的头文件说明】}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ *\ 以下三个头文件是\ Lua\ 的核心\ API:}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ lua.h\ -\/\ Lua\ 核心\ API}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ *\ 包含内容:}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ -\/\ Lua\ 虚拟机的核心数据结构\ (lua\_State)}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *\ -\/\ 基本\ API\ 函数\ (栈操作、函数调用、垃圾回收等)}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ *\ -\/\ 数据类型定义\ (LUA\_TNUMBER,\ LUA\_TSTRING\ 等)}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ *\ -\/\ 基本常量和宏定义}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ *\ 主要函数类别:}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ *\ -\/\ 状态管理:\ lua\_newstate(),\ lua\_close()}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ *\ -\/\ 栈操作:\ lua\_pushstring(),\ lua\_tonumber(),\ lua\_pop()}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ *\ -\/\ 函数调用:\ lua\_call(),\ lua\_pcall()}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ *\ -\/\ 表操作:\ lua\_newtable(),\ lua\_settable(),\ lua\_gettable()}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ *\ -\/\ 元表和元方法:\ lua\_getmetatable(),\ lua\_setmetatable()}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lua_8h}{lua.h}}"{}}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ *\ lualib.h\ -\/\ Lua\ 标准库}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ 包含内容:}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *\ -\/\ 标准库的打开函数声明}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ *\ 主要函数:}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ *\ -\/\ luaL\_openlibs()\ \ -\/\ 打开所有标准库}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ *\ -\/\ luaopen\_base()\ \ \ -\/\ 基础库\ (print,\ type,\ pairs\ 等)}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ *\ -\/\ luaopen\_package()-\/\ 包管理库\ (require,\ module)}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ *\ -\/\ luaopen\_string()\ -\/\ 字符串库\ (string.sub,\ string.find\ 等)}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ *\ -\/\ luaopen\_table()\ \ -\/\ 表操作库\ (table.insert,\ table.sort\ 等)}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ *\ -\/\ luaopen\_math()\ \ \ -\/\ 数学库\ (math.sin,\ math.random\ 等)}}
+\DoxyCodeLine{00089\ \textcolor{comment}{\ *\ -\/\ luaopen\_io()\ \ \ \ \ -\/\ I/O\ 库\ (io.open,\ io.read\ 等)}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ *\ -\/\ luaopen\_os()\ \ \ \ \ -\/\ 操作系统库\ (os.time,\ os.execute\ 等)}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ *\ -\/\ luaopen\_debug()\ \ -\/\ 调试库\ (debug.traceback\ 等)}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ *\ 使用示例:}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ *\ \ \ lua\_State\ *L\ =\ luaL\_newstate();}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ *\ \ \ luaL\_openlibs(L);\ \ //\ 打开所有标准库}}
+\DoxyCodeLine{00096\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lualib_8h}{lualib.h}}"{}}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00100\ \textcolor{comment}{\ *\ lauxlib.h\ -\/\ Lua\ 辅助库}}
+\DoxyCodeLine{00101\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ *\ 包含内容:}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ *\ -\/\ 更高级、更便利的\ API\ 函数}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ *\ -\/\ 错误处理辅助函数}}
+\DoxyCodeLine{00105\ \textcolor{comment}{\ *\ -\/\ 参数检查辅助函数}}
+\DoxyCodeLine{00106\ \textcolor{comment}{\ *\ -\/\ 缓冲区操作}}
+\DoxyCodeLine{00107\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00108\ \textcolor{comment}{\ *\ 主要函数类别:}}
+\DoxyCodeLine{00109\ \textcolor{comment}{\ *\ -\/\ 状态创建:\ luaL\_newstate()\ (创建新的\ Lua\ 状态机)}}
+\DoxyCodeLine{00110\ \textcolor{comment}{\ *\ -\/\ 脚本执行:\ luaL\_dofile(),\ luaL\_dostring()}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ *\ -\/\ 错误处理:\ luaL\_error(),\ luaL\_argerror()}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ *\ -\/\ 参数检查:\ luaL\_checkstring(),\ luaL\_checknumber(),\ luaL\_checktype()}}
+\DoxyCodeLine{00113\ \textcolor{comment}{\ *\ -\/\ 注册函数:\ luaL\_register(),\ luaL\_newlib()}}
+\DoxyCodeLine{00114\ \textcolor{comment}{\ *\ -\/\ 缓冲区:\ luaL\_Buffer\ 及相关函数}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ *\ 这个库让\ C/C++\ 与\ Lua\ 的交互更加简单和安全。}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ *\ 例如:}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ *\ -\/\ lua\_tostring()\ 可能返回\ NULL,需要手动检查}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ *\ -\/\ luaL\_checkstring()\ 会自动检查并在出错时抛出\ Lua\ 错误}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lauxlib_8h}{lauxlib.h}}"{}}}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ *\ 【结束\ extern\ "{}C"{}\ 块】}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ *\ 右大括号标志着\ C\ 链接约定声明的结束。}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ *\ 在这个块之后的代码将恢复使用\ C++\ 的链接约定。}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00132\ \textcolor{comment}{\ *\ 【总结说明】}}
+\DoxyCodeLine{00133\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00134\ \textcolor{comment}{\ *\ 1.\ 【文件目的】}}
+\DoxyCodeLine{00135\ \textcolor{comment}{\ *\ \ \ \ 这是一个简单但关键的包装文件,解决了\ C++\ 项目使用\ Lua\ C\ API\ 的兼容性问题。}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ *\ 2.\ 【核心机制】}}
+\DoxyCodeLine{00138\ \textcolor{comment}{\ *\ \ \ \ -\/\ 使用\ extern\ "{}C"{}\ 声明\ C\ 链接约定}}
+\DoxyCodeLine{00139\ \textcolor{comment}{\ *\ \ \ \ -\/\ 包含三个核心\ Lua\ 头文件}}
+\DoxyCodeLine{00140\ \textcolor{comment}{\ *\ \ \ \ -\/\ 确保\ C++\ 编译器正确链接到\ Lua\ 的\ C\ 库}}
+\DoxyCodeLine{00141\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00142\ \textcolor{comment}{\ *\ 3.\ 【为什么\ Lua\ 不在自己的头文件中添加\ extern\ "{}C"{}】}}
+\DoxyCodeLine{00143\ \textcolor{comment}{\ *\ \ \ \ 如注释所说,Lua\ 本身也可以作为\ C++\ 代码编译。如果在\ lua.h\ 中直接}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\ *\ \ \ \ 使用\ extern\ "{}C"{},那么当\ Lua\ 作为\ C++\ 编译时会出现问题。因此:}}
+\DoxyCodeLine{00145\ \textcolor{comment}{\ *\ \ \ \ -\/\ lua.h\ 等文件保持纯\ C\ 兼容}}
+\DoxyCodeLine{00146\ \textcolor{comment}{\ *\ \ \ \ -\/\ 提供单独的\ lua.hpp\ 给\ C++\ 用户使用}}
+\DoxyCodeLine{00147\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00148\ \textcolor{comment}{\ *\ 4.\ 【使用场景】}}
+\DoxyCodeLine{00149\ \textcolor{comment}{\ *\ \ \ \ 当你在\ C++\ 项目中嵌入\ Lua\ 时,例如:}}
+\DoxyCodeLine{00150\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ *\ \ \ \ //\ main.cpp\ (C++\ 文件)}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ *\ \ \ \ \#include\ "{}lua.hpp"{}\ \ //\ 使用这个包装器}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00154\ \textcolor{comment}{\ *\ \ \ \ int\ main()\ \{}}
+\DoxyCodeLine{00155\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ lua\_State\ *L\ =\ luaL\_newstate();\ \ //\ 创建\ Lua\ 状态机}}
+\DoxyCodeLine{00156\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ luaL\_openlibs(L);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ 打开标准库}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ luaL\_dostring(L,\ "{}print('Hello\ from\ Lua!')"{});}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ lua\_close(L);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ 关闭状态机}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ return\ 0;}}
+\DoxyCodeLine{00160\ \textcolor{comment}{\ *\ \ \ \ \}}}
+\DoxyCodeLine{00161\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00162\ \textcolor{comment}{\ *\ 5.\ 【相关知识点】}}
+\DoxyCodeLine{00163\ \textcolor{comment}{\ *\ \ \ \ -\/\ C/C++\ 链接约定差异}}
+\DoxyCodeLine{00164\ \textcolor{comment}{\ *\ \ \ \ -\/\ 名称修饰(name\ mangling)}}
+\DoxyCodeLine{00165\ \textcolor{comment}{\ *\ \ \ \ -\/\ extern\ "{}C"{}\ 的作用和原理}}
+\DoxyCodeLine{00166\ \textcolor{comment}{\ *\ \ \ \ -\/\ Lua\ 的模块化设计(核心、标准库、辅助库分离)}}
+\DoxyCodeLine{00167\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00168\ \textcolor{comment}{\ *\ 6.\ 【文件大小】}}
+\DoxyCodeLine{00169\ \textcolor{comment}{\ *\ \ \ \ 虽然这个文件只有几行代码,但它是\ C++\ 项目使用\ Lua\ 的必要桥梁。}}
+\DoxyCodeLine{00170\ \textcolor{comment}{\ *\ \ \ \ 这体现了良好的软件设计:职责单一,接口清晰。}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00172\ \textcolor{comment}{\ ******************************************************************************/}}
+
+\end{DoxyCode}

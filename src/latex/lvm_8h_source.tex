@@ -1,0 +1,141 @@
+\doxysection{lvm.\+h}
+\hypertarget{lvm_8h_source}{}\label{lvm_8h_source}\mbox{\hyperlink{lvm_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lvm.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Lua\ virtual\ machine}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lvm\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lvm\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ldo_8h}{ldo.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ltm_8h}{ltm.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#if\ !defined(LUA\_NOCVTN2S)}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ cvt2str(o)\ \ ttisnumber(o)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ cvt2str(o)\ \ 0\ \ \ }\textcolor{comment}{/*\ no\ conversion\ from\ numbers\ to\ strings\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#if\ !defined(LUA\_NOCVTS2N)}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ cvt2num(o)\ \ ttisstring(o)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ cvt2num(o)\ \ 0\ \ \ }\textcolor{comment}{/*\ no\ conversion\ from\ strings\ to\ numbers\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00031\ \textcolor{comment}{**\ You\ can\ define\ LUA\_FLOORN2I\ if\ you\ want\ to\ convert\ floats\ to\ integers}}
+\DoxyCodeLine{00032\ \textcolor{comment}{**\ by\ flooring\ them\ (instead\ of\ raising\ an\ error\ if\ they\ are\ not}}
+\DoxyCodeLine{00033\ \textcolor{comment}{**\ integral\ values)}}
+\DoxyCodeLine{00034\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#if\ !defined(LUA\_FLOORN2I)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ LUA\_FLOORN2I\ \ \ \ \ \ \ \ F2Ieq}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00041\ \textcolor{comment}{**\ Rounding\ modes\ for\ float-\/>integer\ coercion}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00043\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00044\ \ \ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0a7eaebd7cdc41b6f7c4ae319a813f3995}{F2Ieq}},\ \ \ \ \ \textcolor{comment}{/*\ no\ rounding;\ accepts\ only\ integral\ values\ */}}
+\DoxyCodeLine{00045\ \ \ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0a04712d393ba74d0c04f9f1e80f33c02c}{F2Ifloor}},\ \ \textcolor{comment}{/*\ takes\ the\ floor\ of\ the\ number\ */}}
+\DoxyCodeLine{00046\ \ \ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0ac844cfcb3d7f91dd0c10f424d93c13ca}{F2Iceil}}\ \ \ \ \textcolor{comment}{/*\ takes\ the\ ceiling\ of\ the\ number\ */}}
+\DoxyCodeLine{00047\ \}\ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0}{F2Imod}};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*\ convert\ an\ object\ to\ a\ float\ (including\ string\ coercion)\ */}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ tonumber(o,n)\ \(\backslash\)}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\ \ \ \ (ttisfloat(o)\ ?\ (*(n)\ =\ fltvalue(o),\ 1)\ :\ luaV\_tonumber\_(o,n))}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{/*\ convert\ an\ object\ to\ a\ float\ (without\ string\ coercion)\ */}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ tonumberns(o,n)\ \(\backslash\)}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\ \ \ \ (ttisfloat(o)\ ?\ ((n)\ =\ fltvalue(o),\ 1)\ :\ \(\backslash\)}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \ \ (ttisinteger(o)\ ?\ ((n)\ =\ cast\_num(ivalue(o)),\ 1)\ :\ 0))}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*\ convert\ an\ object\ to\ an\ integer\ (including\ string\ coercion)\ */}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ tointeger(o,i)\ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ (l\_likely(ttisinteger(o))\ ?\ (*(i)\ =\ ivalue(o),\ 1)\ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ luaV\_tointeger(o,i,LUA\_FLOORN2I))}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{/*\ convert\ an\ object\ to\ an\ integer\ (without\ string\ coercion)\ */}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ tointegerns(o,i)\ \(\backslash\)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ (l\_likely(ttisinteger(o))\ ?\ (*(i)\ =\ ivalue(o),\ 1)\ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ luaV\_tointegerns(o,i,LUA\_FLOORN2I))}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ intop(op,v1,v2)\ l\_castU2S(l\_castS2U(v1)\ op\ l\_castS2U(v2))}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ luaV\_rawequalobj(t1,t2)\ \ \ \ \ luaV\_equalobj(NULL,t1,t2)}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ fast\ track\ for\ 'gettable'}}
+\DoxyCodeLine{00080\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ luaV\_fastget(t,k,res,f,\ tag)\ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\ \ (tag\ =\ (!ttistable(t)\ ?\ LUA\_VNOTABLE\ :\ f(hvalue(t),\ k,\ res)))}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**\ Special\ case\ of\ 'luaV\_fastget'\ for\ integers,\ inlining\ the\ fast\ case}}
+\DoxyCodeLine{00087\ \textcolor{comment}{**\ of\ 'luaH\_getint'.}}
+\DoxyCodeLine{00088\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#define\ luaV\_fastgeti(t,k,res,tag)\ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ if\ (!ttistable(t))\ tag\ =\ LUA\_VNOTABLE;\ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ else\ \{\ luaH\_fastgeti(hvalue(t),\ k,\ res,\ tag);\ \}}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ luaV\_fastset(t,k,val,hres,f)\ \(\backslash\)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ (hres\ =\ (!ttistable(t)\ ?\ HNOTATABLE\ :\ f(hvalue(t),\ k,\ val)))}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#define\ luaV\_fastseti(t,k,val,hres)\ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ if\ (!ttistable(t))\ hres\ =\ HNOTATABLE;\ \(\backslash\)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ else\ \{\ luaH\_fastseti(hvalue(t),\ k,\ val,\ hres);\ \}}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00103\ \textcolor{comment}{**\ Finish\ a\ fast\ set\ operation\ (when\ fast\ set\ succeeds).}}
+\DoxyCodeLine{00104\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#define\ luaV\_finishfastset(L,t,v)\ \ \ luaC\_barrierback(L,\ gcvalue(t),\ v)}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00109\ \textcolor{comment}{**\ Shift\ right\ is\ the\ same\ as\ shift\ left\ with\ a\ negative\ 'y'}}
+\DoxyCodeLine{00110\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ luaV\_shiftr(x,y)\ \ \ \ luaV\_shiftl(x,intop(-\/,\ 0,\ y))}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_a2f779d315adf5ac6a26c88409b58eeec}{luaV\_equalobj}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *t1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *t2);}
+\DoxyCodeLine{00116\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_a1245a563d674251ea03c7abbd1a2ca8c}{luaV\_lessthan}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *r);}
+\DoxyCodeLine{00117\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_aa151c39c80af19e2ea6d309e7993973c}{luaV\_lessequal}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *r);}
+\DoxyCodeLine{00118\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_a8dde84947fb2b5ec169813216235a4ba}{luaV\_tonumber\_}}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *obj,\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ *n);}
+\DoxyCodeLine{00119\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_a2a864417ad70b6e8d3eb7d3c10cad672}{luaV\_tointeger}}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *obj,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ *p,\ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0}{F2Imod}}\ mode);}
+\DoxyCodeLine{00120\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_a217081972ce52f0e7a489d2398422b39}{luaV\_tointegerns}}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *obj,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ *p,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0}{F2Imod}}\ mode);}
+\DoxyCodeLine{00122\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lvm_8h_aafdf8bf00e39d6cf1d53e1e364ced4cb}{luaV\_flttointeger}}\ (\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ n,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ *p,\ \mbox{\hyperlink{lvm_8h_a1639065f78212a54317141b2703061c0}{F2Imod}}\ mode);}
+\DoxyCodeLine{00123\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{lvm_8h_a2bd5bc2f19cf4d863645d76ec93e8c17}{luaV\_finishget}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *t,\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ val,\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ tag);}
+\DoxyCodeLine{00125\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lvm_8h_a1f4ce3fb3bad1161d5a5c16315041032}{luaV\_finishset}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *t,\ \mbox{\hyperlink{structTValue}{TValue}}\ *key,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *val,\ \textcolor{keywordtype}{int}\ aux);}
+\DoxyCodeLine{00127\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lvm_8h_a5db3e64b3cc2f63c3b10b27f7ecd1d03}{luaV\_finishOp}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00128\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lvm_8h_ac430e93ed874f6ab2449d7a16aa6b62f}{luaV\_execute}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci);}
+\DoxyCodeLine{00129\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lvm_8h_aee84bfc563cb4bdd21a013218a289aa7}{luaV\_concat}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ total);}
+\DoxyCodeLine{00130\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ \mbox{\hyperlink{lvm_8h_a3fb7bab8732e10dbf0305243201075dc}{luaV\_idiv}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ x,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ y);}
+\DoxyCodeLine{00131\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ \mbox{\hyperlink{lvm_8h_a8c64b8dbe11cb5be7617feb17c279ced}{luaV\_mod}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ x,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ y);}
+\DoxyCodeLine{00132\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ \mbox{\hyperlink{lvm_8h_a7de4dcc7d1f397d2c02443dd7cb3e65b}{luaV\_modf}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ x,\ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ y);}
+\DoxyCodeLine{00133\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ \mbox{\hyperlink{lvm_8h_aa785f0ac32664e47c2d3689d75edc5e8}{luaV\_shiftl}}\ (\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ x,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ y);}
+\DoxyCodeLine{00134\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lvm_8h_a414b4b487239935324f2f16e1e7715db}{luaV\_objlen}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ ra,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *rb);}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,166 @@
+\doxysection{ltablib.\+c File Reference}
+\hypertarget{ltablib_8c}{}\label{ltablib_8c}\index{ltablib.c@{ltablib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for ltablib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ltablib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a140da27fde6d0c6ba8c94f2464c570cb}{ltablib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a8fb9ba58986555b9e428a842d0786557}{TAB\+\_\+R}}~1   /\texorpdfstring{$\ast$}{*} read \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_ab9cf0e51aee67f8818580144a1ba7593}{TAB\+\_\+W}}~2   /\texorpdfstring{$\ast$}{*} write \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a3f436d4e584aa1bb0bcee72e95cbdd50}{TAB\+\_\+L}}~4   /\texorpdfstring{$\ast$}{*} length \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a7c8b26f7b00c98971c1c7c2706798ac5}{TAB\+\_\+\+RW}}~(\mbox{\hyperlink{ltablib_8c_a8fb9ba58986555b9e428a842d0786557}{TAB\+\_\+R}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{ltablib_8c_ab9cf0e51aee67f8818580144a1ba7593}{TAB\+\_\+W}})  /\texorpdfstring{$\ast$}{*} read/write \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a5666aa0172909d01d18bac7d35c7e5ee}{aux\+\_\+getn}}(L,  n,  w)
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a3d9ae1ee63b43e57a283ee0b0049c0db}{geti}}(L,  idt,  idx)
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a715796677ced28f5e67bef51efaf93c1}{seti}}(L,  idt,  idx)
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_a7afe86c19c9a9af1055b2935912a50b8}{l\+\_\+randomize\+Pivot}}(L)
+\item 
+\#define \mbox{\hyperlink{ltablib_8c_aeb8c42b2dbafa2030e261ba804a7b530}{RANLIMIT}}~100u
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned int \mbox{\hyperlink{ltablib_8c_a36b2de4b3d95fa6176bdba5be7c22a26}{IdxT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{ltablib_8c_acfb66f04d8d0ea06cb1c4c059b9e142b}{luaopen\+\_\+table}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{ltablib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ltablib_8c_a5666aa0172909d01d18bac7d35c7e5ee}\index{ltablib.c@{ltablib.c}!aux\_getn@{aux\_getn}}
+\index{aux\_getn@{aux\_getn}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{aux\_getn}{aux\_getn}}
+{\footnotesize\ttfamily \label{ltablib_8c_a5666aa0172909d01d18bac7d35c7e5ee} 
+\#define aux\+\_\+getn(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{, }\item[{}]{w}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(checktab(L,\ n,\ (w)\ |\ \mbox{\hyperlink{ltablib_8c_a3f436d4e584aa1bb0bcee72e95cbdd50}{TAB\_L}}),\ \mbox{\hyperlink{lauxlib_8c_aa525c1b6aa90c90d684ef64cf2215e21}{luaL\_len}}(L,\ n))}
+
+\end{DoxyCode}
+\Hypertarget{ltablib_8c_a3d9ae1ee63b43e57a283ee0b0049c0db}\index{ltablib.c@{ltablib.c}!geti@{geti}}
+\index{geti@{geti}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{geti}{geti}}
+{\footnotesize\ttfamily \label{ltablib_8c_a3d9ae1ee63b43e57a283ee0b0049c0db} 
+\#define geti(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{idt}{, }\item[{}]{idx}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a631ebda324b6a0f382ab6b9314917384}{lua\_geti}}(L,\ idt,\ \mbox{\hyperlink{llimits_8h_a873fa1b216f8caed046edbcebd4c1bc8}{l\_castU2S}}(idx))}
+
+\end{DoxyCode}
+\Hypertarget{ltablib_8c_a7afe86c19c9a9af1055b2935912a50b8}\index{ltablib.c@{ltablib.c}!l\_randomizePivot@{l\_randomizePivot}}
+\index{l\_randomizePivot@{l\_randomizePivot}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{l\_randomizePivot}{l\_randomizePivot}}
+{\footnotesize\ttfamily \label{ltablib_8c_a7afe86c19c9a9af1055b2935912a50b8} 
+\#define l\+\_\+randomize\+Pivot(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lauxlib_8c_a1e756923d590e036330971802fc4d857}{luaL\_makeseed}}(L)}
+
+\end{DoxyCode}
+\Hypertarget{ltablib_8c_a140da27fde6d0c6ba8c94f2464c570cb}\index{ltablib.c@{ltablib.c}!ltablib\_c@{ltablib\_c}}
+\index{ltablib\_c@{ltablib\_c}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{ltablib\_c}{ltablib\_c}}
+{\footnotesize\ttfamily \label{ltablib_8c_a140da27fde6d0c6ba8c94f2464c570cb} 
+\#define ltablib\+\_\+c}
+
+\Hypertarget{ltablib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{ltablib.c@{ltablib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{ltablib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{ltablib_8c_aeb8c42b2dbafa2030e261ba804a7b530}\index{ltablib.c@{ltablib.c}!RANLIMIT@{RANLIMIT}}
+\index{RANLIMIT@{RANLIMIT}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{RANLIMIT}{RANLIMIT}}
+{\footnotesize\ttfamily \label{ltablib_8c_aeb8c42b2dbafa2030e261ba804a7b530} 
+\#define RANLIMIT~100u}
+
+\Hypertarget{ltablib_8c_a715796677ced28f5e67bef51efaf93c1}\index{ltablib.c@{ltablib.c}!seti@{seti}}
+\index{seti@{seti}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{seti}{seti}}
+{\footnotesize\ttfamily \label{ltablib_8c_a715796677ced28f5e67bef51efaf93c1} 
+\#define seti(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{idt}{, }\item[{}]{idx}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a3f995c6cbc03d4cdebb2a6fc6fa11e59}{lua\_seti}}(L,\ idt,\ \mbox{\hyperlink{llimits_8h_a873fa1b216f8caed046edbcebd4c1bc8}{l\_castU2S}}(idx))}
+
+\end{DoxyCode}
+\Hypertarget{ltablib_8c_a3f436d4e584aa1bb0bcee72e95cbdd50}\index{ltablib.c@{ltablib.c}!TAB\_L@{TAB\_L}}
+\index{TAB\_L@{TAB\_L}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{TAB\_L}{TAB\_L}}
+{\footnotesize\ttfamily \label{ltablib_8c_a3f436d4e584aa1bb0bcee72e95cbdd50} 
+\#define TAB\+\_\+L~4   /\texorpdfstring{$\ast$}{*} length \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{ltablib_8c_a8fb9ba58986555b9e428a842d0786557}\index{ltablib.c@{ltablib.c}!TAB\_R@{TAB\_R}}
+\index{TAB\_R@{TAB\_R}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{TAB\_R}{TAB\_R}}
+{\footnotesize\ttfamily \label{ltablib_8c_a8fb9ba58986555b9e428a842d0786557} 
+\#define TAB\+\_\+R~1   /\texorpdfstring{$\ast$}{*} read \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{ltablib_8c_a7c8b26f7b00c98971c1c7c2706798ac5}\index{ltablib.c@{ltablib.c}!TAB\_RW@{TAB\_RW}}
+\index{TAB\_RW@{TAB\_RW}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{TAB\_RW}{TAB\_RW}}
+{\footnotesize\ttfamily \label{ltablib_8c_a7c8b26f7b00c98971c1c7c2706798ac5} 
+\#define TAB\+\_\+\+RW~(\mbox{\hyperlink{ltablib_8c_a8fb9ba58986555b9e428a842d0786557}{TAB\+\_\+R}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{ltablib_8c_ab9cf0e51aee67f8818580144a1ba7593}{TAB\+\_\+W}})  /\texorpdfstring{$\ast$}{*} read/write \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{ltablib_8c_ab9cf0e51aee67f8818580144a1ba7593}\index{ltablib.c@{ltablib.c}!TAB\_W@{TAB\_W}}
+\index{TAB\_W@{TAB\_W}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{TAB\_W}{TAB\_W}}
+{\footnotesize\ttfamily \label{ltablib_8c_ab9cf0e51aee67f8818580144a1ba7593} 
+\#define TAB\+\_\+W~2   /\texorpdfstring{$\ast$}{*} write \texorpdfstring{$\ast$}{*}/}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{ltablib_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{ltablib_8c_a36b2de4b3d95fa6176bdba5be7c22a26}\index{ltablib.c@{ltablib.c}!IdxT@{IdxT}}
+\index{IdxT@{IdxT}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{IdxT}{IdxT}}
+{\footnotesize\ttfamily \label{ltablib_8c_a36b2de4b3d95fa6176bdba5be7c22a26} 
+typedef unsigned int \mbox{\hyperlink{ltablib_8c_a36b2de4b3d95fa6176bdba5be7c22a26}{IdxT}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{ltablib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{ltablib_8c_acfb66f04d8d0ea06cb1c4c059b9e142b}\index{ltablib.c@{ltablib.c}!luaopen\_table@{luaopen\_table}}
+\index{luaopen\_table@{luaopen\_table}!ltablib.c@{ltablib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_table()}{luaopen\_table()}}
+{\footnotesize\ttfamily \label{ltablib_8c_acfb66f04d8d0ea06cb1c4c059b9e142b} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
