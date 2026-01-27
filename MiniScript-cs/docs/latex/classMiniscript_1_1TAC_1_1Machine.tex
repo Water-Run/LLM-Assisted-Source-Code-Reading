@@ -1,0 +1,123 @@
+\doxysection{Miniscript.\+TAC.\+Machine Class Reference}
+\hypertarget{classMiniscript_1_1TAC_1_1Machine}{}\label{classMiniscript_1_1TAC_1_1Machine}\index{Miniscript.TAC.Machine@{Miniscript.TAC.Machine}}
+
+
+\doxylink{classMiniscript_1_1TAC_1_1Machine}{TAC.\+Machine} implements a complete Mini\+Script virtual machine. It keeps the context stack, keeps track of run time, and provides methods to step, stop, or reset the program.  
+
+
+
+
+Collaboration diagram for Miniscript.\+TAC.\+Machine\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classMiniscript_1_1TAC_1_1Machine__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_aec2d8406ebdbf93aec14646e3dd3387a}\label{classMiniscript_1_1TAC_1_1Machine_aec2d8406ebdbf93aec14646e3dd3387a} 
+{\bfseries Machine} (\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} global\+Context, \mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} standard\+Output)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_af2a5362e1e81e23675a47c3886ec967c}\label{classMiniscript_1_1TAC_1_1Machine_af2a5362e1e81e23675a47c3886ec967c} 
+void {\bfseries Stop} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a89cd67b260310fd1a7b4b219a82023ee}\label{classMiniscript_1_1TAC_1_1Machine_a89cd67b260310fd1a7b4b219a82023ee} 
+void {\bfseries Reset} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_aacb0cdaede6924fcd9a444f655b0f533}\label{classMiniscript_1_1TAC_1_1Machine_aacb0cdaede6924fcd9a444f655b0f533} 
+void {\bfseries Step} ()
+\item 
+void \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Machine_a5a629224f63a2c0596b09fa2113348d2}{Manually\+Push\+Call}} (\mbox{\hyperlink{classMiniscript_1_1ValFunction}{Val\+Function}} func, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} result\+Storage=null, List$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} $>$ arguments=null)
+\begin{DoxyCompactList}\small\item\em Directly invoke a \doxylink{classMiniscript_1_1ValFunction}{Val\+Function} by manually pushing it onto the call stack. This might be useful, for example, in invoking handlers that have somehow been registered with the host app via intrinsics. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_ab3dcc2212075af98470614fede145cdb}\label{classMiniscript_1_1TAC_1_1Machine_ab3dcc2212075af98470614fede145cdb} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} {\bfseries Get\+Top\+Context} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_aa63d1119fc5cd774ecb0458ae2ed2a2e}\label{classMiniscript_1_1TAC_1_1Machine_aa63d1119fc5cd774ecb0458ae2ed2a2e} 
+void {\bfseries Dump\+Top\+Context} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a131581b9f976baf3733a29485efbf35a}\label{classMiniscript_1_1TAC_1_1Machine_a131581b9f976baf3733a29485efbf35a} 
+string {\bfseries Find\+Short\+Name} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} val)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a10ffc78e8d5f553213438d4b982b88d3}\label{classMiniscript_1_1TAC_1_1Machine_a10ffc78e8d5f553213438d4b982b88d3} 
+List$<$ \mbox{\hyperlink{classMiniscript_1_1SourceLoc}{Source\+Loc}} $>$ {\bfseries Get\+Stack} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a6ed424e711e2fb2b7ba9496ed57aed09}\label{classMiniscript_1_1TAC_1_1Machine_a6ed424e711e2fb2b7ba9496ed57aed09} 
+Weak\+Reference {\bfseries interpreter}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a9fad2888e5dba5b2b0c5f71f49ff30e1}\label{classMiniscript_1_1TAC_1_1Machine_a9fad2888e5dba5b2b0c5f71f49ff30e1} 
+\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} {\bfseries standard\+Output}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a68d16338568e6d16681e545577ac0c44}\label{classMiniscript_1_1TAC_1_1Machine_a68d16338568e6d16681e545577ac0c44} 
+bool {\bfseries store\+Implicit} = false
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a3aa8d9e5fd0c80a5a7aabab0cf5a72f2}\label{classMiniscript_1_1TAC_1_1Machine_a3aa8d9e5fd0c80a5a7aabab0cf5a72f2} 
+bool {\bfseries yielding} = false
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a4ed0454fa716eb6076678a8a1d3235fb}\label{classMiniscript_1_1TAC_1_1Machine_a4ed0454fa716eb6076678a8a1d3235fb} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries function\+Type}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_aafc37b8db27b45e5b6e9c75086864315}\label{classMiniscript_1_1TAC_1_1Machine_aafc37b8db27b45e5b6e9c75086864315} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries list\+Type}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a0153fb6012b7656e1b5dc084e02c110c}\label{classMiniscript_1_1TAC_1_1Machine_a0153fb6012b7656e1b5dc084e02c110c} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries map\+Type}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_aec30136848575d209a4ad5d672af6f52}\label{classMiniscript_1_1TAC_1_1Machine_aec30136848575d209a4ad5d672af6f52} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries number\+Type}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_acb0f0c2a487c33d4a18a56a43b3ea7bf}\label{classMiniscript_1_1TAC_1_1Machine_acb0f0c2a487c33d4a18a56a43b3ea7bf} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries string\+Type}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a8a779cf7feb05e9d6c5ec8b85e0a5b4d}\label{classMiniscript_1_1TAC_1_1Machine_a8a779cf7feb05e9d6c5ec8b85e0a5b4d} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries version\+Map}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_ae8d8e6b9a93b4d717eeede460a551053}\label{classMiniscript_1_1TAC_1_1Machine_ae8d8e6b9a93b4d717eeede460a551053} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} {\bfseries global\+Context}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a845d750c12a22236266aeb3d53c3067e}\label{classMiniscript_1_1TAC_1_1Machine_a845d750c12a22236266aeb3d53c3067e} 
+bool {\bfseries done}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_abccb10d44d68d441b5544de604b71bc0}\label{classMiniscript_1_1TAC_1_1Machine_abccb10d44d68d441b5544de604b71bc0} 
+double {\bfseries run\+Time}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1TAC_1_1Machine}{TAC.\+Machine} implements a complete Mini\+Script virtual machine. It keeps the context stack, keeps track of run time, and provides methods to step, stop, or reset the program. 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1TAC_1_1Machine_a5a629224f63a2c0596b09fa2113348d2}\index{Miniscript.TAC.Machine@{Miniscript.TAC.Machine}!ManuallyPushCall@{ManuallyPushCall}}
+\index{ManuallyPushCall@{ManuallyPushCall}!Miniscript.TAC.Machine@{Miniscript.TAC.Machine}}
+\doxysubsubsection{\texorpdfstring{ManuallyPushCall()}{ManuallyPushCall()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1TAC_1_1Machine_a5a629224f63a2c0596b09fa2113348d2} 
+void Miniscript.\+TAC.\+Machine.\+Manually\+Push\+Call (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1ValFunction}{Val\+Function}}}]{func}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{result\+Storage}{ = {\ttfamily null}, }\item[{List$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} $>$}]{arguments}{ = {\ttfamily null}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Directly invoke a \doxylink{classMiniscript_1_1ValFunction}{Val\+Function} by manually pushing it onto the call stack. This might be useful, for example, in invoking handlers that have somehow been registered with the host app via intrinsics. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & \doxylink{namespaceMiniscript}{Miniscript} function to invoke\\
+\hline
+{\em result\+Storage} & where to store result of the call, in the calling context\\
+\hline
+{\em arguments} & optional list of arguments to push\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+TAC.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,97 @@
+\doxysection{Miniscript.\+Parser Class Reference}
+\hypertarget{classMiniscript_1_1Parser}{}\label{classMiniscript_1_1Parser}\index{Miniscript.Parser@{Miniscript.Parser}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Parser_a95b10e199d856581d1eb296abeba3d0f}\label{classMiniscript_1_1Parser_a95b10e199d856581d1eb296abeba3d0f} 
+void {\bfseries Reset} ()
+\begin{DoxyCompactList}\small\item\em Completely clear out and reset our parse state, throwing out any code and intermediate results. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Parser_a2ad1108619dbb67e52e25f8c98e89b7f}\label{classMiniscript_1_1Parser_a2ad1108619dbb67e52e25f8c98e89b7f} 
+void {\bfseries Partial\+Reset} ()
+\begin{DoxyCompactList}\small\item\em Partially reset, abandoning backpatches, but keeping already-\/ compiled code. This would be used in a REPL, when the user may want to reset and continue after a botched loop or function. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Parser_a39b06abfe46b44e4ab5dc4b5a14e1c02}\label{classMiniscript_1_1Parser_a39b06abfe46b44e4ab5dc4b5a14e1c02} 
+bool {\bfseries Need\+More\+Input} ()
+\item 
+\Hypertarget{classMiniscript_1_1Parser_a653389b7ecad7ae7f5aee630fc1bd401}\label{classMiniscript_1_1Parser_a653389b7ecad7ae7f5aee630fc1bd401} 
+void {\bfseries Parse} (string source\+Code, bool repl\+Mode=false)
+\item 
+TAC.\+Machine \mbox{\hyperlink{classMiniscript_1_1Parser_a62dbc896609489d25af166675a77699a}{Create\+VM}} (\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} standard\+Output)
+\begin{DoxyCompactList}\small\item\em Create a virtual machine loaded with the code we have parsed. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1Function}{Function}} \mbox{\hyperlink{classMiniscript_1_1Parser_abc4bd77c9843378999ea9fdd5816106a}{Create\+Import}} ()
+\begin{DoxyCompactList}\small\item\em Create a \doxylink{classMiniscript_1_1Function}{Function} with the code we have parsed, for use as an import. That means, it runs all that code, then at the end it returns {\ttfamily locals} so that the caller can get its symbols. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Parser_a080bfd574927e1f08a767e2a260da4b3}\label{classMiniscript_1_1Parser_a080bfd574927e1f08a767e2a260da4b3} 
+void {\bfseries REPL} (string line)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{classMiniscript_1_1Parser_a75938248f856800dc46f6ede7e93656e}{Ends\+With\+Line\+Continuation}} (string source\+Code)
+\begin{DoxyCompactList}\small\item\em Return whether the given source code ends in a token that signifies that the statement continues on the next line. That includes binary operators, open brackets or parentheses, etc. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Parser_ae41d4454f1816663df8c4c26e9d88b3f}\label{classMiniscript_1_1Parser_ae41d4454f1816663df8c4c26e9d88b3f} 
+static void {\bfseries Run\+Unit\+Tests} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Parser_a5ca320cf1b45b59b5f8ae6f2a372ee24}\label{classMiniscript_1_1Parser_a5ca320cf1b45b59b5f8ae6f2a372ee24} 
+string {\bfseries error\+Context}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1Parser_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1Parser_abc4bd77c9843378999ea9fdd5816106a}\index{Miniscript.Parser@{Miniscript.Parser}!CreateImport@{CreateImport}}
+\index{CreateImport@{CreateImport}!Miniscript.Parser@{Miniscript.Parser}}
+\doxysubsubsection{\texorpdfstring{CreateImport()}{CreateImport()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Parser_abc4bd77c9843378999ea9fdd5816106a} 
+\mbox{\hyperlink{classMiniscript_1_1Function}{Function}} Miniscript.\+Parser.\+Create\+Import (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create a \doxylink{classMiniscript_1_1Function}{Function} with the code we have parsed, for use as an import. That means, it runs all that code, then at the end it returns {\ttfamily locals} so that the caller can get its symbols. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Parser_a62dbc896609489d25af166675a77699a}\index{Miniscript.Parser@{Miniscript.Parser}!CreateVM@{CreateVM}}
+\index{CreateVM@{CreateVM}!Miniscript.Parser@{Miniscript.Parser}}
+\doxysubsubsection{\texorpdfstring{CreateVM()}{CreateVM()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Parser_a62dbc896609489d25af166675a77699a} 
+TAC.\+Machine Miniscript.\+Parser.\+Create\+VM (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}}}]{standard\+Output}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create a virtual machine loaded with the code we have parsed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em standard\+Output} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Parser_a75938248f856800dc46f6ede7e93656e}\index{Miniscript.Parser@{Miniscript.Parser}!EndsWithLineContinuation@{EndsWithLineContinuation}}
+\index{EndsWithLineContinuation@{EndsWithLineContinuation}!Miniscript.Parser@{Miniscript.Parser}}
+\doxysubsubsection{\texorpdfstring{EndsWithLineContinuation()}{EndsWithLineContinuation()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Parser_a75938248f856800dc46f6ede7e93656e} 
+bool Miniscript.\+Parser.\+Ends\+With\+Line\+Continuation (\begin{DoxyParamCaption}\item[{string}]{source\+Code}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Return whether the given source code ends in a token that signifies that the statement continues on the next line. That includes binary operators, open brackets or parentheses, etc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Code} & source code to analyze\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if line continuation is called for; false otherwise
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Parser.\+cs\end{DoxyCompactItemize}

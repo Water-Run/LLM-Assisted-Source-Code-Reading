@@ -1,0 +1,134 @@
+\doxysection{Miniscript Namespace Reference}
+\hypertarget{namespaceMiniscript}{}\label{namespaceMiniscript}\index{Miniscript@{Miniscript}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Check}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1CompilerException}{Compiler\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Error}{Error}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Function}{Function}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Function}{Function}\+: our internal representation of a Mini\+Script function. This includes its parameters and its code. (It does not include a name -- functions don\textquotesingle{}t actually HAVE names; instead there are named variables whose value may happen to be a function.) \end{DoxyCompactList}\item 
+class {\bfseries Host\+Info}
+\begin{DoxyCompactList}\small\item\em Information about the app hosting Mini\+Script. Set this in your main program. This is provided to the user via the {\ttfamily version} intrinsic. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1IndexException}{Index\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Interpreter}{Interpreter}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Interpreter}{Interpreter}\+: an object that contains and runs one Mini\+Script script. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}\+: represents an intrinsic function available to Mini\+Script code. \end{DoxyCompactList}\item 
+class {\bfseries Intrinsics}
+\begin{DoxyCompactList}\small\item\em Intrinsics\+: a static class containing all of the standard Mini\+Script built-\/in intrinsics. You shouldn\textquotesingle{}t muck with these, but feel free to browse them for lots of examples of how to write your own intrinics. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1KeyException}{Key\+Exception}}
+\item 
+class {\bfseries Keywords}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Lexer}{Lexer}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1LexerException}{Lexer\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1LimitExceededException}{Limit\+Exceeded\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1MiniscriptException}{Miniscript\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Parser}{Parser}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1RuntimeException}{Runtime\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1RValueEqualityComparer}{RValue\+Equality\+Comparer}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Script}{Script}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1SourceLoc}{Source\+Loc}}
+\item 
+class {\bfseries TAC}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1TempValString}{Temp\+Val\+String}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Token}{Token}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1TooManyArgumentsException}{Too\+Many\+Arguments\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1TypeException}{Type\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1UndefinedIdentifierException}{Undefined\+Identifier\+Exception}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1UndefinedLocalException}{Undefined\+Local\+Exception}}
+\item 
+class {\bfseries Unit\+Test}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValFunction}{Val\+Function}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValFunction}{Val\+Function}\+: a \doxylink{classMiniscript_1_1Value}{Value} that is, in fact, a \doxylink{classMiniscript_1_1Function}{Function}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValList}{Val\+List}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValList}{Val\+List} represents a Mini\+Script list (which, under the hood, is just a wrapper for a List of Values). \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValMap}{Val\+Map} represents a Mini\+Script map, which under the hood is just a Dictionary of \doxylink{classMiniscript_1_1Value}{Value}, \doxylink{classMiniscript_1_1Value}{Value} pairs. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValNull}{Val\+Null}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValNull}{Val\+Null} is an object to represent null in places where we can\textquotesingle{}t use an actual null (such as a dictionary key or value). \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValNumber}{Val\+Number}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValNumber}{Val\+Number} represents a numeric (double-\/precision floating point) value in Mini\+Script. Since we also use numbers to represent boolean values, \doxylink{classMiniscript_1_1ValNumber}{Val\+Number} does that job too. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValSeqElem}{Val\+Seq\+Elem}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValString}{Val\+String}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1ValString}{Val\+String} represents a string (text) value. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValTemp}{Val\+Temp}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Value}{Value}\+: abstract base class for the Mini\+Script type hierarchy. Defines a number of handy methods that you can call on ANY value (though some of these do nothing for some types). \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMiniscript_1_1ValuePair}{Value\+Pair}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValueReverseSorter}{Value\+Reverse\+Sorter}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValueSorter}{Value\+Sorter}}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1ValVar}{Val\+Var}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+delegate void \mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} (string output, bool add\+Line\+Break)
+\begin{DoxyCompactList}\small\item\em Text\+Output\+Method\+: a delegate used to return text from the script (e.\+g. normal output, errors, etc.) to your C\# code. \end{DoxyCompactList}\item 
+delegate Intrinsic.\+Result \mbox{\hyperlink{namespaceMiniscript_a939681db9d9ee79d5bb82818515f4cc3}{Intrinsic\+Code}} (TAC.\+Context context, Intrinsic.\+Result partial\+Result)
+\begin{DoxyCompactList}\small\item\em Intrinsic\+Code is a delegate to the actual C\# code invoked by an intrinsic method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespaceMiniscript_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceMiniscript_a939681db9d9ee79d5bb82818515f4cc3}\index{Miniscript@{Miniscript}!IntrinsicCode@{IntrinsicCode}}
+\index{IntrinsicCode@{IntrinsicCode}!Miniscript@{Miniscript}}
+\doxysubsubsection{\texorpdfstring{IntrinsicCode()}{IntrinsicCode()}}
+{\footnotesize\ttfamily \label{namespaceMiniscript_a939681db9d9ee79d5bb82818515f4cc3} 
+delegate Intrinsic.\+Result Miniscript.\+Intrinsic\+Code (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{, }\item[{Intrinsic.\+Result}]{partial\+Result}{}\end{DoxyParamCaption})}
+
+
+
+Intrinsic\+Code is a delegate to the actual C\# code invoked by an intrinsic method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & \doxylink{classMiniscript_1_1TAC_1_1Context}{TAC.\+Context} in which the intrinsic was invoked\\
+\hline
+{\em partial\+Result} & partial result from a previous invocation, if any\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result of the computation\+: whether it\textquotesingle{}s complete, a partial result if not, and a \doxylink{classMiniscript_1_1Value}{Value} if so
+\end{DoxyReturn}
+\Hypertarget{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}\index{Miniscript@{Miniscript}!TextOutputMethod@{TextOutputMethod}}
+\index{TextOutputMethod@{TextOutputMethod}!Miniscript@{Miniscript}}
+\doxysubsubsection{\texorpdfstring{TextOutputMethod()}{TextOutputMethod()}}
+{\footnotesize\ttfamily \label{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94} 
+delegate void Miniscript.\+Text\+Output\+Method (\begin{DoxyParamCaption}\item[{string}]{output}{, }\item[{bool}]{add\+Line\+Break}{}\end{DoxyParamCaption})}
+
+
+
+Text\+Output\+Method\+: a delegate used to return text from the script (e.\+g. normal output, errors, etc.) to your C\# code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \\
+\hline
+\end{DoxyParams}

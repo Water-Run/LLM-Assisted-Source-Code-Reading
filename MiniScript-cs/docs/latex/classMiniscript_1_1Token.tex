@@ -1,0 +1,95 @@
+\doxysection{Miniscript.\+Token Class Reference}
+\hypertarget{classMiniscript_1_1Token}{}\label{classMiniscript_1_1Token}\index{Miniscript.Token@{Miniscript.Token}}
+
+
+Collaboration diagram for Miniscript.\+Token\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{classMiniscript_1_1Token__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Token_a3e15a12ddfe0bfdc4ec9b6d257b599f0}\label{classMiniscript_1_1Token_a3e15a12ddfe0bfdc4ec9b6d257b599f0} 
+enum {\bfseries Type} \{ \newline
+{\bfseries Unknown}
+, {\bfseries Keyword}
+, {\bfseries Number}
+, {\bfseries String}
+, \newline
+{\bfseries Identifier}
+, {\bfseries Op\+Assign}
+, {\bfseries Op\+Plus}
+, {\bfseries Op\+Minus}
+, \newline
+{\bfseries Op\+Times}
+, {\bfseries Op\+Divide}
+, {\bfseries Op\+Mod}
+, {\bfseries Op\+Power}
+, \newline
+{\bfseries Op\+Equal}
+, {\bfseries Op\+Not\+Equal}
+, {\bfseries Op\+Greater}
+, {\bfseries Op\+Great\+Equal}
+, \newline
+{\bfseries Op\+Lesser}
+, {\bfseries Op\+Less\+Equal}
+, {\bfseries Op\+Assign\+Plus}
+, {\bfseries Op\+Assign\+Minus}
+, \newline
+{\bfseries Op\+Assign\+Times}
+, {\bfseries Op\+Assign\+Divide}
+, {\bfseries Op\+Assign\+Mod}
+, {\bfseries Op\+Assign\+Power}
+, \newline
+{\bfseries LParen}
+, {\bfseries RParen}
+, {\bfseries LSquare}
+, {\bfseries RSquare}
+, \newline
+{\bfseries LCurly}
+, {\bfseries RCurly}
+, {\bfseries Address\+Of}
+, {\bfseries Comma}
+, \newline
+{\bfseries Dot}
+, {\bfseries Colon}
+, {\bfseries Comment}
+, {\bfseries EOL}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Token_ac1c1021da55b37e6857028c4f9ea9210}\label{classMiniscript_1_1Token_ac1c1021da55b37e6857028c4f9ea9210} 
+{\bfseries Token} (Type type=Type.\+Unknown, string text=null)
+\item 
+\Hypertarget{classMiniscript_1_1Token_ab60e795617453e817de313396b74c5fe}\label{classMiniscript_1_1Token_ab60e795617453e817de313396b74c5fe} 
+override string {\bfseries To\+String} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Token_a1839eedf3481d3e4a7c295983c602a9a}\label{classMiniscript_1_1Token_a1839eedf3481d3e4a7c295983c602a9a} 
+Type {\bfseries type}
+\item 
+\Hypertarget{classMiniscript_1_1Token_a021cf2c745c6b796aa9f5859abde6f05}\label{classMiniscript_1_1Token_a021cf2c745c6b796aa9f5859abde6f05} 
+string {\bfseries text}
+\item 
+\Hypertarget{classMiniscript_1_1Token_a64dcf8448adb0d9ceb55b03f99f62697}\label{classMiniscript_1_1Token_a64dcf8448adb0d9ceb55b03f99f62697} 
+bool {\bfseries after\+Space}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Token_a4b1bbb7bc565df9cc4b976e2cb0bc2fc}\label{classMiniscript_1_1Token_a4b1bbb7bc565df9cc4b976e2cb0bc2fc} 
+static \mbox{\hyperlink{classMiniscript_1_1Token}{Token}} {\bfseries EOL} = new \mbox{\hyperlink{classMiniscript_1_1Token}{Token}}() \{ type=Type.\+EOL \}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Lexer.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,5 @@
+<map id="Miniscript.ValFunction" name="Miniscript.ValFunction">
+<area shape="rect" id="Node000001" title="ValFunction: a Value that is, in fact, a Function." alt="" coords="5,80,155,107"/>
+<area shape="rect" id="Node000002" href="$classMiniscript_1_1Value.html" title="Value: abstract base class for the MiniScript type hierarchy. Defines a number of handy methods that ..." alt="" coords="23,5,137,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,48,83,80,77,80,77,48"/>
+</map>

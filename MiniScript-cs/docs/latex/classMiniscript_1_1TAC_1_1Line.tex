@@ -1,0 +1,101 @@
+\doxysection{Miniscript.\+TAC.\+Line Class Reference}
+\hypertarget{classMiniscript_1_1TAC_1_1Line}{}\label{classMiniscript_1_1TAC_1_1Line}\index{Miniscript.TAC.Line@{Miniscript.TAC.Line}}
+
+
+Collaboration diagram for Miniscript.\+TAC.\+Line\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{classMiniscript_1_1TAC_1_1Line__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a0a2e44db5df6c479596ab5f65c26f0ad}\label{classMiniscript_1_1TAC_1_1Line_a0a2e44db5df6c479596ab5f65c26f0ad} 
+enum {\bfseries Op} \{ \newline
+{\bfseries Noop} = 0
+, {\bfseries AssignA}
+, {\bfseries Assign\+Implicit}
+, {\bfseries APlusB}
+, \newline
+{\bfseries AMinusB}
+, {\bfseries ATimesB}
+, {\bfseries ADivided\+ByB}
+, {\bfseries AModB}
+, \newline
+{\bfseries APowB}
+, {\bfseries AEqualB}
+, {\bfseries ANot\+EqualB}
+, {\bfseries AGreater\+ThanB}
+, \newline
+{\bfseries AGreat\+Or\+EqualB}
+, {\bfseries ALess\+ThanB}
+, {\bfseries ALess\+Or\+EqualB}
+, {\bfseries AisaB}
+, \newline
+{\bfseries AAndB}
+, {\bfseries AOrB}
+, {\bfseries Bind\+AssignA}
+, {\bfseries CopyA}
+, \newline
+{\bfseries NewA}
+, {\bfseries NotA}
+, {\bfseries GotoA}
+, {\bfseries Goto\+AifB}
+, \newline
+{\bfseries Goto\+Aif\+TrulyB}
+, {\bfseries Goto\+Aif\+NotB}
+, {\bfseries Push\+Param}
+, {\bfseries Call\+FunctionA}
+, \newline
+{\bfseries Call\+IntrinsicA}
+, {\bfseries ReturnA}
+, {\bfseries Elem\+BofA}
+, {\bfseries Elem\+Bof\+IterA}
+, \newline
+{\bfseries Length\+OfA}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a7bce6197a49a31b16431720ca0667862}\label{classMiniscript_1_1TAC_1_1Line_a7bce6197a49a31b16431720ca0667862} 
+{\bfseries Line} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} lhs, Op op, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhsA=null, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhsB=null)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_aa5cebfae70d3dfc8091edcaf0a5e14f5}\label{classMiniscript_1_1TAC_1_1Line_aa5cebfae70d3dfc8091edcaf0a5e14f5} 
+override int {\bfseries Get\+Hash\+Code} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a8c2c7d7d798e4a84949220e1a3b50258}\label{classMiniscript_1_1TAC_1_1Line_a8c2c7d7d798e4a84949220e1a3b50258} 
+override bool {\bfseries Equals} (object obj)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_ac33a58acfcbc8455248153c79c8bafe0}\label{classMiniscript_1_1TAC_1_1Line_ac33a58acfcbc8455248153c79c8bafe0} 
+override string {\bfseries To\+String} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a65d0342368f7a763da2c45db03ea026f}\label{classMiniscript_1_1TAC_1_1Line_a65d0342368f7a763da2c45db03ea026f} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries Evaluate} (\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} context)
+\begin{DoxyCompactList}\small\item\em Evaluate this line and return the value that would be stored into the lhs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a52f0508e8bfe4915053031b23240219d}\label{classMiniscript_1_1TAC_1_1Line_a52f0508e8bfe4915053031b23240219d} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries lhs}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_ad633fdcc5353139a1991154cb3842460}\label{classMiniscript_1_1TAC_1_1Line_ad633fdcc5353139a1991154cb3842460} 
+Op {\bfseries op}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_af9f90808065318ee6a3f053ecaefb02b}\label{classMiniscript_1_1TAC_1_1Line_af9f90808065318ee6a3f053ecaefb02b} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries rhsA}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_af49f263ac2f3a3b5669c74ad71f4157c}\label{classMiniscript_1_1TAC_1_1Line_af49f263ac2f3a3b5669c74ad71f4157c} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries rhsB}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Line_a361fa728fa1c349593e82db3e4fe0a02}\label{classMiniscript_1_1TAC_1_1Line_a361fa728fa1c349593e82db3e4fe0a02} 
+\mbox{\hyperlink{classMiniscript_1_1SourceLoc}{Source\+Loc}} {\bfseries location}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+TAC.\+cs\end{DoxyCompactItemize}

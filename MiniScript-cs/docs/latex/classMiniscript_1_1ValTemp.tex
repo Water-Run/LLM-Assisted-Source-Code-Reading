@@ -1,0 +1,147 @@
+\doxysection{Miniscript.\+Val\+Temp Class Reference}
+\hypertarget{classMiniscript_1_1ValTemp}{}\label{classMiniscript_1_1ValTemp}\index{Miniscript.ValTemp@{Miniscript.ValTemp}}
+
+
+Inheritance diagram for Miniscript.\+Val\+Temp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=179pt]{classMiniscript_1_1ValTemp__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Miniscript.\+Val\+Temp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=179pt]{classMiniscript_1_1ValTemp__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValTemp_a4438faca2e80ff3c8ce7c884cc8f735c}\label{classMiniscript_1_1ValTemp_a4438faca2e80ff3c8ce7c884cc8f735c} 
+{\bfseries Val\+Temp} (int temp\+Num)
+\item 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValTemp_a0e8e8f4c860f3ed8d071a7f4807892ac}{Val}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Get the current value of this \doxylink{classMiniscript_1_1Value}{Value} in the given context. Basic types evaluate to themselves, but some types (e.\+g. variable references) may evaluate to something else. \end{DoxyCompactList}\item 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValTemp_a405770bff2c34283579c3b401485fc12}{Val}} (TAC.\+Context context, out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} value\+Found\+In)
+\begin{DoxyCompactList}\small\item\em This version of Val is like the one above, but also returns (via the output parameter) the \doxylink{classMiniscript_1_1ValMap}{Val\+Map} the value was found in, which could be several steps up the \+\_\+\+\_\+isa chain. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1ValTemp_a732a9ec7a7e88dded879272fc1b5a6fc}\label{classMiniscript_1_1ValTemp_a732a9ec7a7e88dded879272fc1b5a6fc} 
+override string {\bfseries To\+String} (TAC.\+Machine vm)
+\item 
+\Hypertarget{classMiniscript_1_1ValTemp_a2d87827539526f2171259d33b5464e4b}\label{classMiniscript_1_1ValTemp_a2d87827539526f2171259d33b5464e4b} 
+override int {\bfseries Hash} ()
+\item 
+\Hypertarget{classMiniscript_1_1ValTemp_a0886790f32c9ad23fe00ea311d290677}\label{classMiniscript_1_1ValTemp_a0886790f32c9ad23fe00ea311d290677} 
+override double {\bfseries Equality} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+override string {\bfseries To\+String} ()
+\item 
+string {\bfseries To\+String} (TAC.\+Machine vm)
+\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_ad5554b2187bc276e580c711cb072d5c4}{Full\+Eval}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Similar to Val, but recurses into the sub-\/values contained by this value (if it happens to be a container, such as a list or map). \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{classMiniscript_1_1Value_a42d6178a4c151d42fd0391288d6fac6e}{Int\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an integer. \end{DoxyCompactList}\item 
+virtual uint \mbox{\hyperlink{classMiniscript_1_1Value_a70e2c8b9071b5d3b5637551c50dff523}{UInt\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an unsigned integer. \end{DoxyCompactList}\item 
+virtual float \mbox{\hyperlink{classMiniscript_1_1Value_a51bdfe82f8d4b0b6d1eda217422daa4e}{Float\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a single-\/precision float. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classMiniscript_1_1Value_ade90965710f5024fe872205ff874e727}{Double\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a double-\/precision floating-\/point number. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_adae99285709fccbab531ee60da0657ce}{Bool\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the boolean (truth) value of this \doxylink{classMiniscript_1_1Value}{Value}. By default, we consider any numeric value other than zero to be true. (But subclasses override this with different criteria for strings, lists, and maps.) \end{DoxyCompactList}\item 
+virtual string \mbox{\hyperlink{classMiniscript_1_1Value_a50f55b46182b3724af907b4eaa0d1af3}{Code\+Form}} (TAC.\+Machine vm, int recursion\+Limit=-\/1)
+\begin{DoxyCompactList}\small\item\em Get this value in the form of a Mini\+Script literal. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classMiniscript_1_1Value_a617bab1ac3a6764ffeface7ae63cbe08}{Hash}} ()
+\begin{DoxyCompactList}\small\item\em Get a hash value for this \doxylink{classMiniscript_1_1Value}{Value}. Two values that are considered equal will return the same hash value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classMiniscript_1_1Value_acea079110f6a25c55a7c16a9d671e3b4}{Equality}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Check whether this \doxylink{classMiniscript_1_1Value}{Value} is equal to another \doxylink{classMiniscript_1_1Value}{Value}. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_a1da0fe9b9a0642c4aa24a28ca94f410d}{Can\+Set\+Elem}} ()
+\begin{DoxyCompactList}\small\item\em Can we set elements within this value? (I.\+e., is it a list or map?) \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classMiniscript_1_1Value_aa86039b3d5c2144ba4ff80ebf9299b3c}{Set\+Elem}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} index, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Set an element associated with the given index within this \doxylink{classMiniscript_1_1Value}{Value}. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_a21fead0510f6e2eca9f837c888776347}{IsA}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} type, TAC.\+Machine vm)
+\begin{DoxyCompactList}\small\item\em Return whether this value is the given type (or some subclass thereof) in the context of the given virtual machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValTemp_ac3d0f480c69be5425dd2add4425ac0d6}\label{classMiniscript_1_1ValTemp_ac3d0f480c69be5425dd2add4425ac0d6} 
+int {\bfseries temp\+Num}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+static int {\bfseries Compare} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} x, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} y)
+\begin{DoxyCompactList}\small\item\em Compare two Values for sorting purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classMiniscript_1_1Value_a15e4b92b0da5b8b046023d70888bfc5e}{Recursive\+Equal}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Compare lhs and rhs for equality, in a way that traverses down the tree when it finds a list or map. For any other type, this just calls through to the regular Equality method. \end{DoxyCompactList}\item 
+int {\bfseries Recursive\+Hash} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1ValTemp_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1ValTemp_a0e8e8f4c860f3ed8d071a7f4807892ac}\index{Miniscript.ValTemp@{Miniscript.ValTemp}!Val@{Val}}
+\index{Val@{Val}!Miniscript.ValTemp@{Miniscript.ValTemp}}
+\doxysubsubsection{\texorpdfstring{Val()}{Val()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValTemp_a0e8e8f4c860f3ed8d071a7f4807892ac} 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Temp.\+Val (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the current value of this \doxylink{classMiniscript_1_1Value}{Value} in the given context. Basic types evaluate to themselves, but some types (e.\+g. variable references) may evaluate to something else. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & TAC context to evaluate in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of this value (possibly the same as this)
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_ad0934af862b91af552c041dd7a312167}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValTemp_a405770bff2c34283579c3b401485fc12}\index{Miniscript.ValTemp@{Miniscript.ValTemp}!Val@{Val}}
+\index{Val@{Val}!Miniscript.ValTemp@{Miniscript.ValTemp}}
+\doxysubsubsection{\texorpdfstring{Val()}{Val()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValTemp_a405770bff2c34283579c3b401485fc12} 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Temp.\+Val (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{, }\item[{out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}}}]{value\+Found\+In}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+This version of Val is like the one above, but also returns (via the output parameter) the \doxylink{classMiniscript_1_1ValMap}{Val\+Map} the value was found in, which could be several steps up the \+\_\+\+\_\+isa chain. 
+
+\begin{DoxyReturn}{Returns}
+The value.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em context} & Context.\\
+\hline
+{\em value\+Found\+In} & \doxylink{classMiniscript_1_1Value}{Value} found in.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_a088fc4b1731283b4ebc96e26098fae3b}{Miniscript.\+Value}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Types.\+cs\end{DoxyCompactItemize}

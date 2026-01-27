@@ -1,0 +1,387 @@
+﻿/*
+ * ============================================================================
+ * 文件概要说明
+ * ============================================================================
+ * 
+ * 文件名: Miniscript.sln
+ * 文件类型: Visual Studio 解决方案文件 (Solution File)
+ * 格式版本: Visual Studio 2010 (Format Version 12.00)
+ * 
+ * 功能描述:
+ * 这是一个 Visual Studio 解决方案文件,用于组织和管理 MiniScript 项目。
+ * 解决方案文件(.sln)是 Visual Studio 的项目容器,可以包含一个或多个项目。
+ * 
+ * 主要作用:
+ * 1. 定义解决方案中包含的所有项目
+ * 2. 配置不同的编译配置(Debug/Release)
+ * 3. 设置平台目标(x86/x64等)
+ * 4. 保存IDE的各种设置和策略
+ * 
+ * 包含的项目:
+ * - Miniscript 项目 (C# 项目)
+ * 
+ * 支持的构建配置:
+ * - Debug|x86   : 调试版本,面向x86平台
+ * - Release|x86 : 发布版本,面向x86平台
+ * 
+ * 技术说明:
+ * - GUID: 全局唯一标识符,用于唯一标识项目
+ * - MonoDevelop: 跨平台的IDE,这里包含了MonoDevelop的特定配置
+ * 
+ * ============================================================================
+ */
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2010
+
+/*
+ * ============================================================================
+ * Project 部分说明
+ * ============================================================================
+ * 
+ * 这个部分定义了解决方案中包含的项目
+ * 
+ * Project 行格式说明:
+ * Project("{项目类型GUID}") = "项目名称", "项目文件路径", "{项目GUID}"
+ * 
+ * 技术要点:
+ * 1. {FAE04EC0-301F-11D3-BF4B-00C04F79EFBC} 
+ *    - 这是 C# 项目的标准类型GUID
+ *    - Visual Studio 通过这个GUID识别项目类型
+ *    - 这是微软定义的固定值,所有C#项目都使用这个GUID
+ * 
+ * 2. "Miniscript"
+ *    - 这是项目在解决方案中显示的名称
+ * 
+ * 3. "Miniscript.csproj"
+ *    - 这是项目文件的路径
+ *    - .csproj 是 C# 项目文件的扩展名
+ *    - 项目文件包含了项目的详细配置、引用、文件列表等
+ * 
+ * 4. {C3806B8F-9702-4B39-B6D9-9ECBC298565F}
+ *    - 这是此项目的唯一标识符(GUID)
+ *    - 在解决方案内部用于引用这个项目
+ *    - 如果有项目间引用,就通过这个GUID来标识
+ */
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miniscript", "Miniscript.csproj", "{C3806B8F-9702-4B39-B6D9-9ECBC298565F}"
+EndProject
+
+/*
+ * ============================================================================
+ * Global 部分说明
+ * ============================================================================
+ * 
+ * Global 部分包含解决方案级别的配置,这些配置影响整个解决方案
+ * 以及解决方案中的所有项目
+ */
+Global
+	/*
+	 * ========================================================================
+	 * SolutionConfigurationPlatforms 部分
+	 * ========================================================================
+	 * 
+	 * 功能: 定义解决方案支持的所有构建配置和平台组合
+	 * 
+	 * 配置说明:
+	 * - Configuration: 构建配置(Debug 或 Release)
+	 * - Platform: 目标平台(x86, x64, AnyCPU 等)
+	 * 
+	 * Debug vs Release 的区别:
+	 * 1. Debug (调试版本):
+	 *    - 包含完整的调试符号(.pdb文件)
+	 *    - 代码未优化,便于调试
+	 *    - 包含额外的运行时检查
+	 *    - 性能较慢但易于诊断问题
+	 * 
+	 * 2. Release (发布版本):
+	 *    - 代码经过优化
+	 *    - 体积更小,运行更快
+	 *    - 移除或减少调试信息
+	 *    - 用于最终发布
+	 * 
+	 * x86 平台说明:
+	 * - x86: 32位架构
+	 * - 可以在32位和64位Windows上运行
+	 * - 内存限制约2GB(32位寻址)
+	 * - 与旧系统有更好的兼容性
+	 * 
+	 * preSolution 关键字:
+	 * - 表示这些配置是在加载项目之前就定义好的
+	 * - 属于解决方案级别的设置
+	 */
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86        // 调试版本,x86平台
+		Release|x86 = Release|x86    // 发布版本,x86平台
+	EndGlobalSection
+	
+	/*
+	 * ========================================================================
+	 * ProjectConfigurationPlatforms 部分
+	 * ========================================================================
+	 * 
+	 * 功能: 将解决方案的配置映射到各个项目的具体配置
+	 * 
+	 * 行格式说明:
+	 * {项目GUID}.{解决方案配置}.{属性} = {项目配置}
+	 * 
+	 * 属性类型:
+	 * 1. ActiveCfg (Active Configuration)
+	 *    - 指定当选择某个解决方案配置时,项目应该使用哪个配置
+	 *    - 即使不构建项目,也会应用这个配置
+	 * 
+	 * 2. Build.0
+	 *    - 指定该配置是否应该被构建
+	 *    - 有这个设置表示"构建此项目"
+	 *    - 如果没有 Build.0 行,项目将不会被构建(只是加载)
+	 * 
+	 * postSolution 关键字:
+	 * - 表示这些配置在项目加载之后处理
+	 * - 用于配置已加载项目的行为
+	 * 
+	 * 配置映射解释:
+	 * 当解决方案使用"Debug|x86"配置时:
+	 * - 项目的活动配置设为 Debug|x86
+	 * - 项目会被构建
+	 * 
+	 * 当解决方案使用"Release|x86"配置时:
+	 * - 项目的活动配置设为 Release|x86  
+	 * - 项目会被构建
+	 */
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		// Debug|x86 配置映射
+		{C3806B8F-9702-4B39-B6D9-9ECBC298565F}.Debug|x86.ActiveCfg = Debug|x86
+		{C3806B8F-9702-4B39-B6D9-9ECBC298565F}.Debug|x86.Build.0 = Debug|x86
+		
+		// Release|x86 配置映射
+		{C3806B8F-9702-4B39-B6D9-9ECBC298565F}.Release|x86.ActiveCfg = Release|x86
+		{C3806B8F-9702-4B39-B6D9-9ECBC298565F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	
+	/*
+	 * ========================================================================
+	 * MonoDevelopProperties 部分
+	 * ========================================================================
+	 * 
+	 * 功能: 包含 MonoDevelop IDE 的特定设置和代码格式化策略
+	 * 
+	 * MonoDevelop 说明:
+	 * - MonoDevelop 是一个开源的跨平台 IDE
+	 * - 主要用于 Linux 和 macOS 上的 .NET 开发
+	 * - 现已演变为 Visual Studio for Mac
+	 * - 这些设置确保在不同IDE中代码风格一致
+	 * 
+	 * 策略层次结构:
+	 * - $0 是根策略对象
+	 * - $1, $2, $3, $4 是子策略对象
+	 * - 通过 $0.xxx = $1 的方式建立引用关系
+	 * 
+	 * 这种语法类似于对象引用或变量赋值,是 MonoDevelop 解决方案文件的特定格式
+	 */
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0  // 根策略对象
+		
+		/*
+		 * --------------------------------------------------------------------
+		 * DotNetNamingPolicy ($1): .NET 命名策略
+		 * --------------------------------------------------------------------
+		 * 
+		 * 功能: 控制命名空间与目录结构的关联方式
+		 * 
+		 * DirectoryNamespaceAssociation 属性:
+		 * - PrefixedHierarchical: 命名空间采用前缀+层次结构的方式
+		 * 
+		 * 示例:
+		 * 如果项目根命名空间是 "MyApp",目录结构是 "Utils/String/"
+		 * - PrefixedHierarchical 会生成: MyApp.Utils.String
+		 * - Flat 会生成: MyApp (忽略目录)
+		 * - Hierarchical 会生成: Utils.String (没有根前缀)
+		 */
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		
+		/*
+		 * --------------------------------------------------------------------
+		 * TextStylePolicy ($2): C# 文本样式策略
+		 * --------------------------------------------------------------------
+		 * 
+		 * 功能: 定义 C# 代码文件的文本编辑器设置
+		 * 
+		 * inheritsSet = null:
+		 * - 不从其他策略继承设置
+		 * - 所有设置都是显式定义的
+		 * 
+		 * scope = text/x-csharp:
+		 * - 这个策略只应用于 C# 源代码文件
+		 * - text/x-csharp 是 C# 文件的 MIME 类型
+		 * - 其他文件类型(如 XML, JSON)不受此策略影响
+		 */
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		
+		/*
+		 * --------------------------------------------------------------------
+		 * CSharpFormattingPolicy ($3): C# 代码格式化策略
+		 * --------------------------------------------------------------------
+		 * 
+		 * 功能: 定义 C# 代码的自动格式化规则
+		 * 
+		 * 这些设置控制大括号的换行行为,对代码风格有重要影响
+		 * 
+		 * C# 大括号风格主要有两种:
+		 * 
+		 * 1. Allman 风格 (NewLines = True):
+		 *    if (condition)
+		 *    {
+		 *        DoSomething();
+		 *    }
+		 * 
+		 * 2. K&R 风格 (NewLines = False, 本项目使用):
+		 *    if (condition) {
+		 *        DoSomething();
+		 *    }
+		 * 
+		 * 各项设置详解:
+		 */
+		$0.CSharpFormattingPolicy = $3
+		
+		// Properties (属性): 属性的大括号不换行
+		// 示例: public int Count { get; set; }
+		$3.NewLinesForBracesInProperties = False
+		
+		// Accessors (访问器): get/set 访问器的大括号不换行
+		// 示例: get { return _value; }
+		$3.NewLinesForBracesInAccessors = False
+		
+		// Anonymous Methods (匿名方法): 匿名方法的大括号不换行
+		// 示例: delegate() { Console.WriteLine("Hi"); }
+		// 注: 匿名方法是 C# 2.0 引入的特性,现在更常用 Lambda 表达式
+		$3.NewLinesForBracesInAnonymousMethods = False
+		
+		// Control Blocks (控制块): if, for, while 等控制结构的大括号不换行
+		// 示例: if (x > 0) { DoSomething(); }
+		$3.NewLinesForBracesInControlBlocks = False
+		
+		// Anonymous Types (匿名类型): 匿名类型的大括号不换行
+		// 示例: var obj = new { Name = "John", Age = 30 };
+		// 注: 匿名类型常用于 LINQ 查询
+		$3.NewLinesForBracesInAnonymousTypes = False
+		
+		// Object/Collection/Array Initializers (对象/集合/数组初始化器): 初始化器的大括号不换行
+		// 示例: var list = new List<int> { 1, 2, 3 };
+		$3.NewLinesForBracesInObjectCollectionArrayInitializers = False
+		
+		// Lambda Expression Body (Lambda 表达式体): Lambda 表达式的大括号不换行
+		// 示例: x => { return x * 2; }
+		// 注: Lambda 表达式是 C# 3.0 引入的特性,是匿名方法的简化语法
+		$3.NewLinesForBracesInLambdaExpressionBody = False
+		
+		// Else 子句: else 不另起一行
+		// 示例: if (x) { ... } else { ... }
+		$3.NewLineForElse = False
+		
+		// Catch 子句: catch 不另起一行
+		// 示例: try { ... } catch { ... }
+		$3.NewLineForCatch = False
+		
+		// Finally 子句: finally 不另起一行
+		// 示例: try { ... } finally { ... }
+		$3.NewLineForFinally = False
+		
+		// 作用域: 这些格式化规则只应用于 C# 文件
+		$3.scope = text/x-csharp
+		
+		/*
+		 * --------------------------------------------------------------------
+		 * TextStylePolicy ($4): 纯文本样式策略
+		 * --------------------------------------------------------------------
+		 * 
+		 * 功能: 定义纯文本文件的编辑器设置
+		 * 
+		 * FileWidth = 80:
+		 * - 建议的每行最大字符数为 80
+		 * - 这是一个传统的编程约定,源于早期终端的宽度限制
+		 * - 有助于代码在不同编辑器和显示器上的可读性
+		 * - 某些编辑器会在第80列显示参考线
+		 * 
+		 * scope = text/plain:
+		 * - 这个策略应用于纯文本文件
+		 * - 不影响代码文件(.cs)或其他特殊文件类型
+		 * - 可能影响 .txt, README 等文件
+		 */
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 80
+		$4.scope = text/plain
+	EndGlobalSection
+EndGlobal
+
+/*
+ * ============================================================================
+ * 文件总结
+ * ============================================================================
+ * 
+ * 这个解决方案文件是 MiniScript 项目的核心组织文件,主要完成以下任务:
+ * 
+ * 1. 项目组织
+ *    - 定义了一个名为 "Miniscript" 的 C# 项目
+ *    - 使用标准的 C# 项目类型 GUID
+ *    - 项目文件位于 Miniscript.csproj
+ * 
+ * 2. 构建配置
+ *    - 支持两种构建配置: Debug 和 Release
+ *    - 目标平台为 x86 (32位)
+ *    - 所有配置都会构建项目
+ * 
+ * 3. 代码风格
+ *    - 采用 K&R 大括号风格(不换行)
+ *    - 命名空间使用前缀+层次结构
+ *    - 文本宽度限制为 80 字符
+ *    - 控制流语句(if/else/catch/finally)紧凑书写
+ * 
+ * 4. IDE 兼容性
+ *    - 兼容 Visual Studio 2010
+ *    - 包含 MonoDevelop 的特定设置
+ *    - 确保跨平台开发的代码风格一致性
+ * 
+ * 技术要点回顾:
+ * 
+ * - GUID (全局唯一标识符):
+ *   每个项目都有唯一的 GUID,用于在解决方案中标识和引用项目
+ * 
+ * - 配置映射:
+ *   解决方案配置通过 ActiveCfg 和 Build.0 映射到项目配置
+ * 
+ * - MonoDevelop 策略:
+ *   使用 $0, $1 等引用来构建策略层次结构,类似于对象引用
+ * 
+ * - K&R 风格:
+ *   项目采用紧凑的代码风格,所有大括号都不换行,这是一种常见的
+ *   C 语言风格代码布局,在 C# 中也被广泛使用
+ * 
+ * 使用建议:
+ * 
+ * 1. 如果需要添加更多项目:
+ *    - 在 Project 部分添加新的 Project 行
+ *    - 在 ProjectConfigurationPlatforms 中添加对应的配置映射
+ * 
+ * 2. 如果需要支持更多平台(如 x64):
+ *    - 在 SolutionConfigurationPlatforms 中添加新配置
+ *    - 在 ProjectConfigurationPlatforms 中添加对应映射
+ * 
+ * 3. 如果需要修改代码风格:
+ *    - 调整 CSharpFormattingPolicy 中的设置
+ *    - 建议团队成员保持一致的代码风格设置
+ * 
+ * 4. 如果不使用 MonoDevelop:
+ *    - MonoDevelopProperties 部分可以保留,不会影响 Visual Studio
+ *    - 删除也不会影响项目在 Visual Studio 中的使用
+ * 
+ * 注意事项:
+ * 
+ * - 不要手动修改项目的 GUID,这会破坏项目引用
+ * - .sln 文件通常由 IDE 自动维护,手动编辑需谨慎
+ * - 如果遇到解决方案文件损坏,可以在 Visual Studio 中重新创建
+ * - 版本控制时应该包含 .sln 文件,确保团队成员使用相同的配置
+ * 
+ * ============================================================================
+ */

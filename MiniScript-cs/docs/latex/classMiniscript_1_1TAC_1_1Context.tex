@@ -1,0 +1,217 @@
+\doxysection{Miniscript.\+TAC.\+Context Class Reference}
+\hypertarget{classMiniscript_1_1TAC_1_1Context}{}\label{classMiniscript_1_1TAC_1_1Context}\index{Miniscript.TAC.Context@{Miniscript.TAC.Context}}
+
+
+\doxylink{classMiniscript_1_1TAC_1_1Context}{TAC.\+Context} keeps track of the runtime environment, including local variables. \doxylink{classMiniscript_1_1TAC_1_1Context}{Context} objects form a linked list via a "{}parent"{} reference, with a new context formed on each function call (this is known as the call stack).  
+
+
+
+
+Collaboration diagram for Miniscript.\+TAC.\+Context\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMiniscript_1_1TAC_1_1Context__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a0c87d9f21761a69a04dcd1deb7b28590}\label{classMiniscript_1_1TAC_1_1Context_a0c87d9f21761a69a04dcd1deb7b28590} 
+{\bfseries Context} (List$<$ \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Line}{Line}} $>$ code)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a4cd85486a4b5045d0d1bd182eff785b3}\label{classMiniscript_1_1TAC_1_1Context_a4cd85486a4b5045d0d1bd182eff785b3} 
+void {\bfseries Clear\+Code\+And\+Temps} ()
+\item 
+void \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context_ad8e860188e96aca62e2334f5bae9980a}{Reset}} (bool clear\+Variables=true)
+\begin{DoxyCompactList}\small\item\em Reset this context to the first line of code, clearing out any temporary variables, and optionally clearing out all variables. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a1b7a6098911d1e1079510cd9830d0af1}\label{classMiniscript_1_1TAC_1_1Context_a1b7a6098911d1e1079510cd9830d0af1} 
+void {\bfseries Jump\+To\+End} ()
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a71c58909e29cb911bdb694db519a1e13}\label{classMiniscript_1_1TAC_1_1Context_a71c58909e29cb911bdb694db519a1e13} 
+void {\bfseries Set\+Temp} (int temp\+Num, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a097b9702b1a5acfeff98889018ae1380}\label{classMiniscript_1_1TAC_1_1Context_a097b9702b1a5acfeff98889018ae1380} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries Get\+Temp} (int temp\+Num)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_ab264dcd8b38aeee483ca08b0dce31637}\label{classMiniscript_1_1TAC_1_1Context_ab264dcd8b38aeee483ca08b0dce31637} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries Get\+Temp} (int temp\+Num, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} default\+Value)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a0cba6d030d1dfb2f3aab9c2ed72b5621}\label{classMiniscript_1_1TAC_1_1Context_a0cba6d030d1dfb2f3aab9c2ed72b5621} 
+void {\bfseries Set\+Var} (string identifier, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_ab359969ef776b3b5b3c21dfdb38b4beb}\label{classMiniscript_1_1TAC_1_1Context_ab359969ef776b3b5b3c21dfdb38b4beb} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries Get\+Local} (string identifier, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} default\+Value=null)
+\begin{DoxyCompactList}\small\item\em Get the value of a local variable ONLY -- does not check any other scopes, nor check for special built-\/in identifiers like "{}globals"{}. Used mainly by host apps to easily look up an argument to an intrinsic function call by the parameter name. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_aa2c35d0097321a59a0a37c4148e08835}\label{classMiniscript_1_1TAC_1_1Context_aa2c35d0097321a59a0a37c4148e08835} 
+int {\bfseries Get\+Local\+Int} (string identifier, int default\+Value=0)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a4e8f813f48ca300401990f2f66b6f9be}\label{classMiniscript_1_1TAC_1_1Context_a4e8f813f48ca300401990f2f66b6f9be} 
+bool {\bfseries Get\+Local\+Bool} (string identifier, bool default\+Value=false)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_ae6859e34afb42a4ae0d79d967ee3ce83}\label{classMiniscript_1_1TAC_1_1Context_ae6859e34afb42a4ae0d79d967ee3ce83} 
+float {\bfseries Get\+Local\+Float} (string identifier, float default\+Value=0)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a3703cc44d16a0784a94b7ab72ed13897}\label{classMiniscript_1_1TAC_1_1Context_a3703cc44d16a0784a94b7ab72ed13897} 
+double {\bfseries Get\+Local\+Double} (string identifier, double default\+Value=0)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a9cfbc0f8b94be473a19209670c450d31}\label{classMiniscript_1_1TAC_1_1Context_a9cfbc0f8b94be473a19209670c450d31} 
+string {\bfseries Get\+Local\+String} (string identifier, string default\+Value=null)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_ae8b0b73514b03b69961b52ad6d676df6}\label{classMiniscript_1_1TAC_1_1Context_ae8b0b73514b03b69961b52ad6d676df6} 
+\mbox{\hyperlink{classMiniscript_1_1SourceLoc}{Source\+Loc}} {\bfseries Get\+Source\+Loc} ()
+\item 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context_a2cc874cf23572fe98d9859073fef98a5}{Get\+Var}} (string identifier, Val\+Var.\+Local\+Only\+Mode local\+Only=Val\+Var.\+Local\+Only\+Mode.\+Off)
+\begin{DoxyCompactList}\small\item\em Get the value of a variable available in this context (including locals, globals, and intrinsics). Raise an exception if no such identifier can be found. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a31d92b55da4d1a9f0613b8e126f05946}\label{classMiniscript_1_1TAC_1_1Context_a31d92b55da4d1a9f0613b8e126f05946} 
+void {\bfseries Store\+Value} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} lhs, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a6fe66479ffd532be9233d9b20b6edbf1}\label{classMiniscript_1_1TAC_1_1Context_a6fe66479ffd532be9233d9b20b6edbf1} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries Value\+In\+Context} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+void \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context_a64727086d91fc9c5231e22c5ec296de2}{Push\+Param\+Argument}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} arg)
+\begin{DoxyCompactList}\small\item\em Store a parameter argument in preparation for an upcoming call (which should be executed in the context returned by Next\+Call\+Context). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context_afe44aa6b1e417906a2c7a2aec7c94cef}{Next\+Call\+Context}} (\mbox{\hyperlink{classMiniscript_1_1Function}{Function}} func, int arg\+Count, bool got\+Self, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} result\+Storage)
+\begin{DoxyCompactList}\small\item\em Get a context for the next call, which includes any parameter arguments that have been set. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_aa64412956a7f841115d3fd2a69d2e514}\label{classMiniscript_1_1TAC_1_1Context_aa64412956a7f841115d3fd2a69d2e514} 
+void {\bfseries Dump} ()
+\begin{DoxyCompactList}\small\item\em This function prints the three-\/address code to the console, for debugging purposes. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a09207333f8e85e67a873d981a4047485}\label{classMiniscript_1_1TAC_1_1Context_a09207333f8e85e67a873d981a4047485} 
+override string {\bfseries To\+String} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a7d9d7eb755cd3c14b787a52e983643ce}\label{classMiniscript_1_1TAC_1_1Context_a7d9d7eb755cd3c14b787a52e983643ce} 
+List$<$ \mbox{\hyperlink{classMiniscript_1_1TAC_1_1Line}{Line}} $>$ {\bfseries code}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_aa3279973b1b5528328fd7a7f2baf1b88}\label{classMiniscript_1_1TAC_1_1Context_aa3279973b1b5528328fd7a7f2baf1b88} 
+int {\bfseries line\+Num}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a5ceb3401bc3c2d9bda377791a091e8f4}\label{classMiniscript_1_1TAC_1_1Context_a5ceb3401bc3c2d9bda377791a091e8f4} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries variables}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a9ad375b2a37366fd874a2dce1594d556}\label{classMiniscript_1_1TAC_1_1Context_a9ad375b2a37366fd874a2dce1594d556} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries outer\+Vars}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a4a3ae8311d56936476e5aa9aa749a310}\label{classMiniscript_1_1TAC_1_1Context_a4a3ae8311d56936476e5aa9aa749a310} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries self}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_abc01c19a787031c70d96283e6eb1b8d6}\label{classMiniscript_1_1TAC_1_1Context_abc01c19a787031c70d96283e6eb1b8d6} 
+Stack$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} $>$ {\bfseries args}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a17e55e86c15a550553795b6088484cc3}\label{classMiniscript_1_1TAC_1_1Context_a17e55e86c15a550553795b6088484cc3} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} {\bfseries parent}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_af924d8af764c20ff5af1e2945aa66873}\label{classMiniscript_1_1TAC_1_1Context_af924d8af764c20ff5af1e2945aa66873} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries result\+Storage}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a68b78eb76f6f9d5e4e1492b72a05491e}\label{classMiniscript_1_1TAC_1_1Context_a68b78eb76f6f9d5e4e1492b72a05491e} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Machine}{Machine}} {\bfseries vm}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a393f952032cb110adeb3fc71241991d8}\label{classMiniscript_1_1TAC_1_1Context_a393f952032cb110adeb3fc71241991d8} 
+Intrinsic.\+Result {\bfseries partial\+Result}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_add3c55db116151e1ab703708ba932256}\label{classMiniscript_1_1TAC_1_1Context_add3c55db116151e1ab703708ba932256} 
+int {\bfseries implicit\+Result\+Counter}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a8e59fa502312c0ee3333873f25353ec6}\label{classMiniscript_1_1TAC_1_1Context_a8e59fa502312c0ee3333873f25353ec6} 
+bool {\bfseries done}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a28099867f5426bdfbae77e425223bcc4}\label{classMiniscript_1_1TAC_1_1Context_a28099867f5426bdfbae77e425223bcc4} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} {\bfseries root}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_abd3960762d5bca775dffc6478ffd9631}\label{classMiniscript_1_1TAC_1_1Context_abd3960762d5bca775dffc6478ffd9631} 
+\mbox{\hyperlink{classMiniscript_1_1Interpreter}{Interpreter}} {\bfseries interpreter}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1TAC_1_1Context}{TAC.\+Context} keeps track of the runtime environment, including local variables. \doxylink{classMiniscript_1_1TAC_1_1Context}{Context} objects form a linked list via a "{}parent"{} reference, with a new context formed on each function call (this is known as the call stack). 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a2cc874cf23572fe98d9859073fef98a5}\index{Miniscript.TAC.Context@{Miniscript.TAC.Context}!GetVar@{GetVar}}
+\index{GetVar@{GetVar}!Miniscript.TAC.Context@{Miniscript.TAC.Context}}
+\doxysubsubsection{\texorpdfstring{GetVar()}{GetVar()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1TAC_1_1Context_a2cc874cf23572fe98d9859073fef98a5} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+TAC.\+Context.\+Get\+Var (\begin{DoxyParamCaption}\item[{string}]{identifier}{, }\item[{Val\+Var.\+Local\+Only\+Mode}]{local\+Only}{ = {\ttfamily ValVar\+:\+:LocalOnlyMode\+:\+:Off}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the value of a variable available in this context (including locals, globals, and intrinsics). Raise an exception if no such identifier can be found. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & name of identifier to look up\\
+\hline
+{\em local\+Only} & if true, look in local scope only\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of that identifier
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_afe44aa6b1e417906a2c7a2aec7c94cef}\index{Miniscript.TAC.Context@{Miniscript.TAC.Context}!NextCallContext@{NextCallContext}}
+\index{NextCallContext@{NextCallContext}!Miniscript.TAC.Context@{Miniscript.TAC.Context}}
+\doxysubsubsection{\texorpdfstring{NextCallContext()}{NextCallContext()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1TAC_1_1Context_afe44aa6b1e417906a2c7a2aec7c94cef} 
+\mbox{\hyperlink{classMiniscript_1_1TAC_1_1Context}{Context}} Miniscript.\+TAC.\+Context.\+Next\+Call\+Context (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Function}{Function}}}]{func}{, }\item[{int}]{arg\+Count}{, }\item[{bool}]{got\+Self}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{result\+Storage}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a context for the next call, which includes any parameter arguments that have been set. 
+
+\begin{DoxyReturn}{Returns}
+The call context.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em func} & \doxylink{classMiniscript_1_1Function}{Function} to call.\\
+\hline
+{\em arg\+Count} & How many arguments to pop off the stack.\\
+\hline
+{\em got\+Self} & Whether this method was called with dot syntax.\\
+\hline
+{\em result\+Storage} & \doxylink{classMiniscript_1_1Value}{Value} to stuff the result into when done.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_a64727086d91fc9c5231e22c5ec296de2}\index{Miniscript.TAC.Context@{Miniscript.TAC.Context}!PushParamArgument@{PushParamArgument}}
+\index{PushParamArgument@{PushParamArgument}!Miniscript.TAC.Context@{Miniscript.TAC.Context}}
+\doxysubsubsection{\texorpdfstring{PushParamArgument()}{PushParamArgument()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1TAC_1_1Context_a64727086d91fc9c5231e22c5ec296de2} 
+void Miniscript.\+TAC.\+Context.\+Push\+Param\+Argument (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Store a parameter argument in preparation for an upcoming call (which should be executed in the context returned by Next\+Call\+Context). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Argument.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1TAC_1_1Context_ad8e860188e96aca62e2334f5bae9980a}\index{Miniscript.TAC.Context@{Miniscript.TAC.Context}!Reset@{Reset}}
+\index{Reset@{Reset}!Miniscript.TAC.Context@{Miniscript.TAC.Context}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1TAC_1_1Context_ad8e860188e96aca62e2334f5bae9980a} 
+void Miniscript.\+TAC.\+Context.\+Reset (\begin{DoxyParamCaption}\item[{bool}]{clear\+Variables}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Reset this context to the first line of code, clearing out any temporary variables, and optionally clearing out all variables. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clear\+Variables} & if true, clear our local variables\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+TAC.\+cs\end{DoxyCompactItemize}

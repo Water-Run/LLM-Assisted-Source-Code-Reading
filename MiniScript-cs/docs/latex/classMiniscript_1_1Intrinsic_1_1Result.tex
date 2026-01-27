@@ -1,0 +1,85 @@
+\doxysection{Miniscript.\+Intrinsic.\+Result Class Reference}
+\hypertarget{classMiniscript_1_1Intrinsic_1_1Result}{}\label{classMiniscript_1_1Intrinsic_1_1Result}\index{Miniscript.Intrinsic.Result@{Miniscript.Intrinsic.Result}}
+
+
+\doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} represents the result of an intrinsic call. An intrinsic will either be done with its work, or not yet done (e.\+g. because it\textquotesingle{}s waiting for something). If it\textquotesingle{}s done, set done=true, and store the result \doxylink{classMiniscript_1_1Value}{Value} in result. If it\textquotesingle{}s not done, set done=false, and store any partial result in result (and then your intrinsic will get invoked with this \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} passed in as partial\+Result).  
+
+
+
+
+Collaboration diagram for Miniscript.\+Intrinsic.\+Result\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classMiniscript_1_1Intrinsic_1_1Result__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result_ac4586470a09afd0a492de760b5b95e90}{Result}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} result, bool done=true)
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} constructor taking a \doxylink{classMiniscript_1_1Value}{Value}, and an optional done flag. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a7c3d08fde250212e1aac633ca4edbd32}\label{classMiniscript_1_1Intrinsic_1_1Result_a7c3d08fde250212e1aac633ca4edbd32} 
+{\bfseries Result} (double result\+Num)
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} constructor for a simple numeric result. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a0b37485d9b7ed86e4fe24b9775d78def}\label{classMiniscript_1_1Intrinsic_1_1Result_a0b37485d9b7ed86e4fe24b9775d78def} 
+{\bfseries Result} (string result\+Str)
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} constructor for a simple string result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_af7d4c4d33c96ed6d788f022cb8b5e6dc}\label{classMiniscript_1_1Intrinsic_1_1Result_af7d4c4d33c96ed6d788f022cb8b5e6dc} 
+bool {\bfseries done}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_ab375b87a65339fd88740e035d3ec1183}\label{classMiniscript_1_1Intrinsic_1_1Result_ab375b87a65339fd88740e035d3ec1183} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} {\bfseries result}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a7846bd93da5be8fe0252a04e6dab9156}\label{classMiniscript_1_1Intrinsic_1_1Result_a7846bd93da5be8fe0252a04e6dab9156} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries Null}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result_a7846bd93da5be8fe0252a04e6dab9156}{Result.\+Null}\+: static \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} representing null (no value). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a2d8c3ce3c8e50f61cc5ec7743195e0eb}\label{classMiniscript_1_1Intrinsic_1_1Result_a2d8c3ce3c8e50f61cc5ec7743195e0eb} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries Empty\+String}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result_a2d8c3ce3c8e50f61cc5ec7743195e0eb}{Result.\+Empty\+String}\+: static \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} representing "{}"{} (empty string). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a69fecb675361890617f767ff42448a00}\label{classMiniscript_1_1Intrinsic_1_1Result_a69fecb675361890617f767ff42448a00} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries True}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result_a69fecb675361890617f767ff42448a00}{Result.\+True}\+: static \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} representing true (1.\+0). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_afbc65f1e2fecf98416e8c1ba12dc682f}\label{classMiniscript_1_1Intrinsic_1_1Result_afbc65f1e2fecf98416e8c1ba12dc682f} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries False}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result_a69fecb675361890617f767ff42448a00}{Result.\+True}\+: static \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} representing false (0.\+0). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_a2852c32353aac501cfaf3728e709c4a5}\label{classMiniscript_1_1Intrinsic_1_1Result_a2852c32353aac501cfaf3728e709c4a5} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries Waiting}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result_a2852c32353aac501cfaf3728e709c4a5}{Result.\+Waiting}\+: static \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} representing a need to wait, with no in-\/progress value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} represents the result of an intrinsic call. An intrinsic will either be done with its work, or not yet done (e.\+g. because it\textquotesingle{}s waiting for something). If it\textquotesingle{}s done, set done=true, and store the result \doxylink{classMiniscript_1_1Value}{Value} in result. If it\textquotesingle{}s not done, set done=false, and store any partial result in result (and then your intrinsic will get invoked with this \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} passed in as partial\+Result). 
+
+\label{doc-constructors}
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMiniscript_1_1Intrinsic_1_1Result_ac4586470a09afd0a492de760b5b95e90}\index{Miniscript.Intrinsic.Result@{Miniscript.Intrinsic.Result}!Result@{Result}}
+\index{Result@{Result}!Miniscript.Intrinsic.Result@{Miniscript.Intrinsic.Result}}
+\doxysubsubsection{\texorpdfstring{Result()}{Result()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Intrinsic_1_1Result_ac4586470a09afd0a492de760b5b95e90} 
+Miniscript.\+Intrinsic.\+Result.\+Result (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{result}{, }\item[{bool}]{done}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} constructor taking a \doxylink{classMiniscript_1_1Value}{Value}, and an optional done flag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em result} & result or partial result of the call\\
+\hline
+{\em done} & whether our work is done (optional, defaults to true)\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Intrinsics.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,412 @@
+\doxysection{Miniscript.\+Val\+Map Class Reference}
+\hypertarget{classMiniscript_1_1ValMap}{}\label{classMiniscript_1_1ValMap}\index{Miniscript.ValMap@{Miniscript.ValMap}}
+
+
+\doxylink{classMiniscript_1_1ValMap}{Val\+Map} represents a Mini\+Script map, which under the hood is just a Dictionary of \doxylink{classMiniscript_1_1Value}{Value}, \doxylink{classMiniscript_1_1Value}{Value} pairs.  
+
+
+
+
+Inheritance diagram for Miniscript.\+Val\+Map\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{classMiniscript_1_1ValMap__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Miniscript.\+Val\+Map\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{classMiniscript_1_1ValMap__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_aa5ade9860dbfdf77239d05d634b443d9}\label{classMiniscript_1_1ValMap_aa5ade9860dbfdf77239d05d634b443d9} 
+delegate bool {\bfseries Assign\+Override\+Func} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_a8de6193e0cfa3e794179715fda45d177}\label{classMiniscript_1_1ValMap_a8de6193e0cfa3e794179715fda45d177} 
+delegate bool {\bfseries Eval\+Override\+Func} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key, out \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\item 
+override bool \mbox{\hyperlink{classMiniscript_1_1ValMap_a3f98af9325a0428771a3e727a3e21f7d}{Bool\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the boolean (truth) value of this \doxylink{classMiniscript_1_1Value}{Value}. By default, we consider any numeric value other than zero to be true. (But subclasses override this with different criteria for strings, lists, and maps.) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1ValMap_a058eb2082edc151da9ce0582608a8251}{Contains\+Key}} (string identifier)
+\begin{DoxyCompactList}\small\item\em Convenience method to check whether the map contains a given string key. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1ValMap_a2584841bfc211a3ffb546b433f42baed}{Contains\+Key}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key)
+\begin{DoxyCompactList}\small\item\em Convenience method to check whether this map contains a given key (of arbitrary type). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1ValMap_ab3b9428f0bbf7133e2c73f54041bc07d}{Try\+Get\+Value}} (string identifier, out \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Look up the given identifier as quickly as possible, without walking the \+\_\+\+\_\+isa chain or doing anything fancy. (This is used when looking up local variables.) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1ValMap_ae8c492c43f821e87f205e69e179003ea}{Try\+Get\+Value}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key, out \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Look up the given identifier in the backing map (unless overridden by the eval\+Override function). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValMap_ad031cb317490294f25aa596cba09a2ed}{Lookup}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key)
+\begin{DoxyCompactList}\small\item\em Look up a value in this dictionary, walking the \+\_\+\+\_\+isa chain to find it in a parent object if necessary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValMap_a8e2ff61ad563fce7dae4ee2a0e2f82bc}{Lookup}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} key, out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} value\+Found\+In)
+\begin{DoxyCompactList}\small\item\em Look up a value in this dictionary, walking the \+\_\+\+\_\+isa chain to find it in a parent object if necessary; return both the value found and (via the output parameter) the map it was found in. \end{DoxyCompactList}\item 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValMap_ac2a5290075dc3300e78363ba9724c86a}{Full\+Eval}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Similar to Val, but recurses into the sub-\/values contained by this value (if it happens to be a container, such as a list or map). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1ValMap_aad57d394844d8de99b90307a999ab3de}\label{classMiniscript_1_1ValMap_aad57d394844d8de99b90307a999ab3de} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} {\bfseries Eval\+Copy} (TAC.\+Context context)
+\item 
+override string \mbox{\hyperlink{classMiniscript_1_1ValMap_a1bcb9b46e032e60c49800dfcdc8b2223}{Code\+Form}} (TAC.\+Machine vm, int recursion\+Limit=-\/1)
+\begin{DoxyCompactList}\small\item\em Get this value in the form of a Mini\+Script literal. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1ValMap_a200a260eee62fbfd8f7e029c1e663245}\label{classMiniscript_1_1ValMap_a200a260eee62fbfd8f7e029c1e663245} 
+override string {\bfseries To\+String} (TAC.\+Machine vm)
+\item 
+override bool \mbox{\hyperlink{classMiniscript_1_1ValMap_a2a2508bb15653666070c8e0ddff4deb4}{IsA}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} type, TAC.\+Machine vm)
+\begin{DoxyCompactList}\small\item\em Return whether this value is the given type (or some subclass thereof) in the context of the given virtual machine. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1ValMap_a176645223877b5e806d6120c5bbaecd3}\label{classMiniscript_1_1ValMap_a176645223877b5e806d6120c5bbaecd3} 
+override int {\bfseries Hash} ()
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_ac0eeadbf8ee05f2c2cd3ff1e16ce5bd2}\label{classMiniscript_1_1ValMap_ac0eeadbf8ee05f2c2cd3ff1e16ce5bd2} 
+override double {\bfseries Equality} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\item 
+override bool \mbox{\hyperlink{classMiniscript_1_1ValMap_adeaefe209f9999c38af5a6ce60b4c73b}{Can\+Set\+Elem}} ()
+\begin{DoxyCompactList}\small\item\em Can we set elements within this value? (I.\+e., is it a list or map?) \end{DoxyCompactList}\item 
+override void \mbox{\hyperlink{classMiniscript_1_1ValMap_a18b3da79c3e05d195e1d7ea76af72cf1}{Set\+Elem}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} index, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Set the value associated with the given key (index). This is where we take the opportunity to look for an assignment override function, and if found, give that a chance to handle it instead. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} \mbox{\hyperlink{classMiniscript_1_1ValMap_a16d2d3bb5e2392d7c9da35d1a26dafe9}{Get\+Key\+Value\+Pair}} (int index)
+\begin{DoxyCompactList}\small\item\em Get the indicated key/value pair as another map containing "{}key"{} and "{}value"{}. (This is used when iterating over a map with "{}for"{}.) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_ad0934af862b91af552c041dd7a312167}{Val}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Get the current value of this \doxylink{classMiniscript_1_1Value}{Value} in the given context. Basic types evaluate to themselves, but some types (e.\+g. variable references) may evaluate to something else. \end{DoxyCompactList}\item 
+override string {\bfseries To\+String} ()
+\item 
+string {\bfseries To\+String} (TAC.\+Machine vm)
+\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_a088fc4b1731283b4ebc96e26098fae3b}{Val}} (TAC.\+Context context, out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} value\+Found\+In)
+\begin{DoxyCompactList}\small\item\em This version of Val is like the one above, but also returns (via the output parameter) the \doxylink{classMiniscript_1_1ValMap}{Val\+Map} the value was found in, which could be several steps up the \+\_\+\+\_\+isa chain. \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{classMiniscript_1_1Value_a42d6178a4c151d42fd0391288d6fac6e}{Int\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an integer. \end{DoxyCompactList}\item 
+virtual uint \mbox{\hyperlink{classMiniscript_1_1Value_a70e2c8b9071b5d3b5637551c50dff523}{UInt\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an unsigned integer. \end{DoxyCompactList}\item 
+virtual float \mbox{\hyperlink{classMiniscript_1_1Value_a51bdfe82f8d4b0b6d1eda217422daa4e}{Float\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a single-\/precision float. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classMiniscript_1_1Value_ade90965710f5024fe872205ff874e727}{Double\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a double-\/precision floating-\/point number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classMiniscript_1_1Value_a617bab1ac3a6764ffeface7ae63cbe08}{Hash}} ()
+\begin{DoxyCompactList}\small\item\em Get a hash value for this \doxylink{classMiniscript_1_1Value}{Value}. Two values that are considered equal will return the same hash value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classMiniscript_1_1Value_acea079110f6a25c55a7c16a9d671e3b4}{Equality}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Check whether this \doxylink{classMiniscript_1_1Value}{Value} is equal to another \doxylink{classMiniscript_1_1Value}{Value}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_a12bf66e7ff6684ddd3f79ddb6503fe77}\label{classMiniscript_1_1ValMap_a12bf66e7ff6684ddd3f79ddb6503fe77} 
+Dictionary$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} $>$ {\bfseries map}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_a27ae6a541beaf1b68d3de8dd94da0ce3}\label{classMiniscript_1_1ValMap_a27ae6a541beaf1b68d3de8dd94da0ce3} 
+Assign\+Override\+Func {\bfseries assign\+Override}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_aadc2ca5c395e44997362ea925f7ba34e}\label{classMiniscript_1_1ValMap_aadc2ca5c395e44997362ea925f7ba34e} 
+object {\bfseries user\+Data}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_a45e3626aad8edd9cd67e3bfe4c2a8743}\label{classMiniscript_1_1ValMap_a45e3626aad8edd9cd67e3bfe4c2a8743} 
+Eval\+Override\+Func {\bfseries eval\+Override}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_af68f0596d637df3a9f2740949a6b4b12}\label{classMiniscript_1_1ValMap_af68f0596d637df3a9f2740949a6b4b12} 
+const int {\bfseries max\+Isa\+Depth} = 256
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1ValMap_a1de65e9c8bf826561a650e36fc4c45ff}\label{classMiniscript_1_1ValMap_a1de65e9c8bf826561a650e36fc4c45ff} 
+int {\bfseries Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the number of entries in this map. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1ValMap_a2c7d22a8fc01522cb135669c42f21b7c}\label{classMiniscript_1_1ValMap_a2c7d22a8fc01522cb135669c42f21b7c} 
+Dictionary$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} $>$.Key\+Collection {\bfseries Keys}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Return the Key\+Collection for this map. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1ValMap_a2270b80f97aae4e962c68acf125b5732}{this\mbox{[}string identifier\mbox{]}}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Accessor to get/set on element of this map by a string key, walking the \+\_\+\+\_\+isa chain as needed. (Note that if you want to avoid that, then simply look up your value in .map directly.) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+static int {\bfseries Compare} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} x, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} y)
+\begin{DoxyCompactList}\small\item\em Compare two Values for sorting purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classMiniscript_1_1Value}{Miniscript.\+Value}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classMiniscript_1_1Value_a15e4b92b0da5b8b046023d70888bfc5e}{Recursive\+Equal}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Compare lhs and rhs for equality, in a way that traverses down the tree when it finds a list or map. For any other type, this just calls through to the regular Equality method. \end{DoxyCompactList}\item 
+int {\bfseries Recursive\+Hash} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1ValMap}{Val\+Map} represents a Mini\+Script map, which under the hood is just a Dictionary of \doxylink{classMiniscript_1_1Value}{Value}, \doxylink{classMiniscript_1_1Value}{Value} pairs. 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1ValMap_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1ValMap_a3f98af9325a0428771a3e727a3e21f7d}\index{Miniscript.ValMap@{Miniscript.ValMap}!BoolValue@{BoolValue}}
+\index{BoolValue@{BoolValue}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{BoolValue()}{BoolValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a3f98af9325a0428771a3e727a3e21f7d} 
+override bool Miniscript.\+Val\+Map.\+Bool\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the boolean (truth) value of this \doxylink{classMiniscript_1_1Value}{Value}. By default, we consider any numeric value other than zero to be true. (But subclasses override this with different criteria for strings, lists, and maps.) 
+
+\begin{DoxyReturn}{Returns}
+this value, as a bool
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_adae99285709fccbab531ee60da0657ce}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_adeaefe209f9999c38af5a6ce60b4c73b}\index{Miniscript.ValMap@{Miniscript.ValMap}!CanSetElem@{CanSetElem}}
+\index{CanSetElem@{CanSetElem}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{CanSetElem()}{CanSetElem()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_adeaefe209f9999c38af5a6ce60b4c73b} 
+override bool Miniscript.\+Val\+Map.\+Can\+Set\+Elem (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Can we set elements within this value? (I.\+e., is it a list or map?) 
+
+\begin{DoxyReturn}{Returns}
+true if Set\+Elem can work; false if it does nothing
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_a1da0fe9b9a0642c4aa24a28ca94f410d}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_a1bcb9b46e032e60c49800dfcdc8b2223}\index{Miniscript.ValMap@{Miniscript.ValMap}!CodeForm@{CodeForm}}
+\index{CodeForm@{CodeForm}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{CodeForm()}{CodeForm()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a1bcb9b46e032e60c49800dfcdc8b2223} 
+override string Miniscript.\+Val\+Map.\+Code\+Form (\begin{DoxyParamCaption}\item[{TAC.\+Machine}]{vm}{, }\item[{int}]{recursion\+Limit}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get this value in the form of a Mini\+Script literal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em recursion\+Limit} & how deeply we can recurse, or -\/1 for no limit\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_a50f55b46182b3724af907b4eaa0d1af3}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_a058eb2082edc151da9ce0582608a8251}\index{Miniscript.ValMap@{Miniscript.ValMap}!ContainsKey@{ContainsKey}}
+\index{ContainsKey@{ContainsKey}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{ContainsKey()}{ContainsKey()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a058eb2082edc151da9ce0582608a8251} 
+bool Miniscript.\+Val\+Map.\+Contains\+Key (\begin{DoxyParamCaption}\item[{string}]{identifier}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience method to check whether the map contains a given string key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & string key to check for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the map contains that key; false otherwise
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_a2584841bfc211a3ffb546b433f42baed}\index{Miniscript.ValMap@{Miniscript.ValMap}!ContainsKey@{ContainsKey}}
+\index{ContainsKey@{ContainsKey}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{ContainsKey()}{ContainsKey()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a2584841bfc211a3ffb546b433f42baed} 
+bool Miniscript.\+Val\+Map.\+Contains\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience method to check whether this map contains a given key (of arbitrary type). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & key to check for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the map contains that key; false otherwise
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_ac2a5290075dc3300e78363ba9724c86a}\index{Miniscript.ValMap@{Miniscript.ValMap}!FullEval@{FullEval}}
+\index{FullEval@{FullEval}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{FullEval()}{FullEval()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_ac2a5290075dc3300e78363ba9724c86a} 
+override \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Map.\+Full\+Eval (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Similar to Val, but recurses into the sub-\/values contained by this value (if it happens to be a container, such as a list or map). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & context in which to evaluate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+fully-\/evaluated value
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_ad5554b2187bc276e580c711cb072d5c4}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_a16d2d3bb5e2392d7c9da35d1a26dafe9}\index{Miniscript.ValMap@{Miniscript.ValMap}!GetKeyValuePair@{GetKeyValuePair}}
+\index{GetKeyValuePair@{GetKeyValuePair}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{GetKeyValuePair()}{GetKeyValuePair()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a16d2d3bb5e2392d7c9da35d1a26dafe9} 
+\mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} Miniscript.\+Val\+Map.\+Get\+Key\+Value\+Pair (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the indicated key/value pair as another map containing "{}key"{} and "{}value"{}. (This is used when iterating over a map with "{}for"{}.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & 0-\/based index of key/value pair to get.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+new map containing "{}key"{} and "{}value"{} with the requested key/value pair
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_a2a2508bb15653666070c8e0ddff4deb4}\index{Miniscript.ValMap@{Miniscript.ValMap}!IsA@{IsA}}
+\index{IsA@{IsA}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{IsA()}{IsA()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a2a2508bb15653666070c8e0ddff4deb4} 
+override bool Miniscript.\+Val\+Map.\+IsA (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{type}{, }\item[{TAC.\+Machine}]{vm}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return whether this value is the given type (or some subclass thereof) in the context of the given virtual machine. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_a21fead0510f6e2eca9f837c888776347}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_ad031cb317490294f25aa596cba09a2ed}\index{Miniscript.ValMap@{Miniscript.ValMap}!Lookup@{Lookup}}
+\index{Lookup@{Lookup}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{Lookup()}{Lookup()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_ad031cb317490294f25aa596cba09a2ed} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Map.\+Lookup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Look up a value in this dictionary, walking the \+\_\+\+\_\+isa chain to find it in a parent object if necessary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & key to search for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value associated with that key, or null if not found
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_a8e2ff61ad563fce7dae4ee2a0e2f82bc}\index{Miniscript.ValMap@{Miniscript.ValMap}!Lookup@{Lookup}}
+\index{Lookup@{Lookup}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{Lookup()}{Lookup()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a8e2ff61ad563fce7dae4ee2a0e2f82bc} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Map.\+Lookup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{key}{, }\item[{out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}}}]{value\+Found\+In}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Look up a value in this dictionary, walking the \+\_\+\+\_\+isa chain to find it in a parent object if necessary; return both the value found and (via the output parameter) the map it was found in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & key to search for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value associated with that key, or null if not found
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_a18b3da79c3e05d195e1d7ea76af72cf1}\index{Miniscript.ValMap@{Miniscript.ValMap}!SetElem@{SetElem}}
+\index{SetElem@{SetElem}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{SetElem()}{SetElem()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a18b3da79c3e05d195e1d7ea76af72cf1} 
+override void Miniscript.\+Val\+Map.\+Set\+Elem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{index}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Set the value associated with the given key (index). This is where we take the opportunity to look for an assignment override function, and if found, give that a chance to handle it instead. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classMiniscript_1_1Value_aa86039b3d5c2144ba4ff80ebf9299b3c}{Miniscript.\+Value}}.
+
+\Hypertarget{classMiniscript_1_1ValMap_ab3b9428f0bbf7133e2c73f54041bc07d}\index{Miniscript.ValMap@{Miniscript.ValMap}!TryGetValue@{TryGetValue}}
+\index{TryGetValue@{TryGetValue}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{TryGetValue()}{TryGetValue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_ab3b9428f0bbf7133e2c73f54041bc07d} 
+bool Miniscript.\+Val\+Map.\+Try\+Get\+Value (\begin{DoxyParamCaption}\item[{string}]{identifier}{, }\item[{out \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Look up the given identifier as quickly as possible, without walking the \+\_\+\+\_\+isa chain or doing anything fancy. (This is used when looking up local variables.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & identifier to look up\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found, false if not
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1ValMap_ae8c492c43f821e87f205e69e179003ea}\index{Miniscript.ValMap@{Miniscript.ValMap}!TryGetValue@{TryGetValue}}
+\index{TryGetValue@{TryGetValue}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{TryGetValue()}{TryGetValue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_ae8c492c43f821e87f205e69e179003ea} 
+bool Miniscript.\+Val\+Map.\+Try\+Get\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{key}{, }\item[{out \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Look up the given identifier in the backing map (unless overridden by the eval\+Override function). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & identifier to look up\\
+\hline
+{\em value} & Corresponding value, if found\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found, false if not
+\end{DoxyReturn}
+
+
+\label{doc-property-members}
+\Hypertarget{classMiniscript_1_1ValMap_doc-property-members}
+\doxysubsection{Property Documentation}
+\Hypertarget{classMiniscript_1_1ValMap_a2270b80f97aae4e962c68acf125b5732}\index{Miniscript.ValMap@{Miniscript.ValMap}!this\mbox{[}string identifier\mbox{]}@{this[string identifier]}}
+\index{this\mbox{[}string identifier\mbox{]}@{this[string identifier]}!Miniscript.ValMap@{Miniscript.ValMap}}
+\doxysubsubsection{\texorpdfstring{this[string identifier]}{this[string identifier]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1ValMap_a2270b80f97aae4e962c68acf125b5732} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Val\+Map.\+this\mbox{[}string identifier\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Accessor to get/set on element of this map by a string key, walking the \+\_\+\+\_\+isa chain as needed. (Note that if you want to avoid that, then simply look up your value in .map directly.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & string key to get/set\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value associated with that key
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Types.\+cs\end{DoxyCompactItemize}

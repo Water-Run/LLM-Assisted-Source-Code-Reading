@@ -1,0 +1,144 @@
+\doxysection{Miniscript.\+Intrinsic Class Reference}
+\hypertarget{classMiniscript_1_1Intrinsic}{}\label{classMiniscript_1_1Intrinsic}\index{Miniscript.Intrinsic@{Miniscript.Intrinsic}}
+
+
+\doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}\+: represents an intrinsic function available to Mini\+Script code.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}}
+\begin{DoxyCompactList}\small\item\em \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} represents the result of an intrinsic call. An intrinsic will either be done with its work, or not yet done (e.\+g. because it\textquotesingle{}s waiting for something). If it\textquotesingle{}s done, set done=true, and store the result \doxylink{classMiniscript_1_1Value}{Value} in result. If it\textquotesingle{}s not done, set done=false, and store any partial result in result (and then your intrinsic will get invoked with this \doxylink{classMiniscript_1_1Intrinsic_1_1Result}{Result} passed in as partial\+Result). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classMiniscript_1_1Intrinsic_ad8f93551b0cfffb9a5dc8ab66c1d7dc4}{Add\+Param}} (string name, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} default\+Value=null)
+\begin{DoxyCompactList}\small\item\em Add a parameter to this \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}, optionally with a default value to be used if the user doesn\textquotesingle{}t supply one. You must add parameters in the same order in which arguments must be supplied. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Intrinsic_a857d725a1f5b9167c3815b17a96b53b7}{Add\+Param}} (string name, double default\+Value)
+\begin{DoxyCompactList}\small\item\em Add a parameter with a numeric default value. (See comments on the first version of Add\+Param above.) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Intrinsic_aa79dd9813c192d916085aded04eef323}{Add\+Param}} (string name, string default\+Value)
+\begin{DoxyCompactList}\small\item\em Add a parameter with a string default value. (See comments on the first version of Add\+Param above.) \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a2714a0ec371001b083df0d9198b8e15c}\label{classMiniscript_1_1Intrinsic_a2714a0ec371001b083df0d9198b8e15c} 
+\mbox{\hyperlink{classMiniscript_1_1ValFunction}{Val\+Function}} {\bfseries Get\+Func} ()
+\begin{DoxyCompactList}\small\item\em Get\+Func is used internally by the compiler to get the Mini\+Script function that makes an intrinsic call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}} \mbox{\hyperlink{classMiniscript_1_1Intrinsic_a0406b65929a9417ed19a10c7ff642ceb}{Create}} (string name)
+\begin{DoxyCompactList}\small\item\em Factory method to create a new \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}, filling out its name as given, and other internal properties as needed. You\textquotesingle{}ll still need to add any parameters, and define the code it runs. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a7ee2ab5e086d2fb115d079ca52a0e0a8}\label{classMiniscript_1_1Intrinsic_a7ee2ab5e086d2fb115d079ca52a0e0a8} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}} {\bfseries Get\+By\+ID} (int id)
+\begin{DoxyCompactList}\small\item\em Look up an \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic} by its internal numeric ID. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a84b9a25d8c8877b3818c65f75bd32a87}\label{classMiniscript_1_1Intrinsic_a84b9a25d8c8877b3818c65f75bd32a87} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}} {\bfseries Get\+By\+Name} (string name)
+\begin{DoxyCompactList}\small\item\em Look up an \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic} by its name. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a67ca8eb90b1624eb61cc129d668b9fde}\label{classMiniscript_1_1Intrinsic_a67ca8eb90b1624eb61cc129d668b9fde} 
+static \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} {\bfseries Execute} (int id, TAC.\+Context context, \mbox{\hyperlink{classMiniscript_1_1Intrinsic_1_1Result}{Result}} partial\+Result)
+\begin{DoxyCompactList}\small\item\em Internally-\/used function to execute an intrinsic (by ID) given a context and a partial result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a6af3ea415b2db7f1deedf4de104c6b82}\label{classMiniscript_1_1Intrinsic_a6af3ea415b2db7f1deedf4de104c6b82} 
+string {\bfseries name}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_aaacba105a21f93548b67eff3959044ce}\label{classMiniscript_1_1Intrinsic_aaacba105a21f93548b67eff3959044ce} 
+\mbox{\hyperlink{namespaceMiniscript_a939681db9d9ee79d5bb82818515f4cc3}{Intrinsic\+Code}} {\bfseries code}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a1a2c0e68a68d94cb0f4c20b1f88cff7f}\label{classMiniscript_1_1Intrinsic_a1a2c0e68a68d94cb0f4c20b1f88cff7f} 
+static Dictionary$<$ \mbox{\hyperlink{classMiniscript_1_1Value}{Value}}, string $>$ {\bfseries short\+Names} = new Dictionary$<$\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}, string$>$()
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_ab82d9854dc6b4c41bf818fcc6b032869}\label{classMiniscript_1_1Intrinsic_ab82d9854dc6b4c41bf818fcc6b032869} 
+static List$<$ \mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}} $>$ {\bfseries all} = new List$<$\mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}}$>$() \{ null \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Intrinsic_a8c689d36fab033380cc7a6a08cc6757c}\label{classMiniscript_1_1Intrinsic_a8c689d36fab033380cc7a6a08cc6757c} 
+int {\bfseries id}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}\+: represents an intrinsic function available to Mini\+Script code. 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1Intrinsic_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1Intrinsic_a857d725a1f5b9167c3815b17a96b53b7}\index{Miniscript.Intrinsic@{Miniscript.Intrinsic}!AddParam@{AddParam}}
+\index{AddParam@{AddParam}!Miniscript.Intrinsic@{Miniscript.Intrinsic}}
+\doxysubsubsection{\texorpdfstring{AddParam()}{AddParam()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Intrinsic_a857d725a1f5b9167c3815b17a96b53b7} 
+void Miniscript.\+Intrinsic.\+Add\+Param (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{double}]{default\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a parameter with a numeric default value. (See comments on the first version of Add\+Param above.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & parameter name\\
+\hline
+{\em default\+Value} & default value for this parameter\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Intrinsic_aa79dd9813c192d916085aded04eef323}\index{Miniscript.Intrinsic@{Miniscript.Intrinsic}!AddParam@{AddParam}}
+\index{AddParam@{AddParam}!Miniscript.Intrinsic@{Miniscript.Intrinsic}}
+\doxysubsubsection{\texorpdfstring{AddParam()}{AddParam()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Intrinsic_aa79dd9813c192d916085aded04eef323} 
+void Miniscript.\+Intrinsic.\+Add\+Param (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{string}]{default\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a parameter with a string default value. (See comments on the first version of Add\+Param above.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & parameter name\\
+\hline
+{\em default\+Value} & default value for this parameter\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Intrinsic_ad8f93551b0cfffb9a5dc8ab66c1d7dc4}\index{Miniscript.Intrinsic@{Miniscript.Intrinsic}!AddParam@{AddParam}}
+\index{AddParam@{AddParam}!Miniscript.Intrinsic@{Miniscript.Intrinsic}}
+\doxysubsubsection{\texorpdfstring{AddParam()}{AddParam()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Intrinsic_ad8f93551b0cfffb9a5dc8ab66c1d7dc4} 
+void Miniscript.\+Intrinsic.\+Add\+Param (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{default\+Value}{ = {\ttfamily null}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a parameter to this \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}, optionally with a default value to be used if the user doesn\textquotesingle{}t supply one. You must add parameters in the same order in which arguments must be supplied. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & parameter name\\
+\hline
+{\em default\+Value} & default value, if any\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Intrinsic_a0406b65929a9417ed19a10c7ff642ceb}\index{Miniscript.Intrinsic@{Miniscript.Intrinsic}!Create@{Create}}
+\index{Create@{Create}!Miniscript.Intrinsic@{Miniscript.Intrinsic}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Intrinsic_a0406b65929a9417ed19a10c7ff642ceb} 
+\mbox{\hyperlink{classMiniscript_1_1Intrinsic}{Intrinsic}} Miniscript.\+Intrinsic.\+Create (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Factory method to create a new \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}, filling out its name as given, and other internal properties as needed. You\textquotesingle{}ll still need to add any parameters, and define the code it runs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & intrinsic name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+freshly minted (but empty) static \doxylink{classMiniscript_1_1Intrinsic}{Intrinsic}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Intrinsics.\+cs\end{DoxyCompactItemize}

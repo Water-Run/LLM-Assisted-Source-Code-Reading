@@ -1,0 +1,70 @@
+\doxysection{Miniscript.\+Lexer Class Reference}
+\hypertarget{classMiniscript_1_1Lexer}{}\label{classMiniscript_1_1Lexer}\index{Miniscript.Lexer@{Miniscript.Lexer}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_aec23238ca4cdfea28f4ee72d7e92168b}\label{classMiniscript_1_1Lexer_aec23238ca4cdfea28f4ee72d7e92168b} 
+{\bfseries Lexer} (string input)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_af7448359778edaefdb33b8142823caee}\label{classMiniscript_1_1Lexer_af7448359778edaefdb33b8142823caee} 
+\mbox{\hyperlink{classMiniscript_1_1Token}{Token}} {\bfseries Peek} ()
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a47aa74d73f43753ea18226ea89c569a6}\label{classMiniscript_1_1Lexer_a47aa74d73f43753ea18226ea89c569a6} 
+\mbox{\hyperlink{classMiniscript_1_1Token}{Token}} {\bfseries Dequeue} ()
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a6184ec8a95c4e41cd76244a643205192}\label{classMiniscript_1_1Lexer_a6184ec8a95c4e41cd76244a643205192} 
+bool {\bfseries Is\+At\+Whitespace} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a22c6b5e0271a7e17971ed70a75e1f59e}\label{classMiniscript_1_1Lexer_a22c6b5e0271a7e17971ed70a75e1f59e} 
+static bool {\bfseries Is\+Numeric} (char c)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_acab3a06dc8d3dfdd4dadfd6e5843a8fb}\label{classMiniscript_1_1Lexer_acab3a06dc8d3dfdd4dadfd6e5843a8fb} 
+static bool {\bfseries Is\+Identifier} (char c)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a1796db7bf2e08916fa1bef752d399499}\label{classMiniscript_1_1Lexer_a1796db7bf2e08916fa1bef752d399499} 
+static bool {\bfseries Is\+Whitespace} (char c)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a5948409e5b79bc678f45697b28ca723e}\label{classMiniscript_1_1Lexer_a5948409e5b79bc678f45697b28ca723e} 
+static bool {\bfseries Is\+In\+String\+Literal} (int char\+Pos, string source, int start\+Pos=0)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_aa03b3abd81d1e430351f39ce35b97ea7}\label{classMiniscript_1_1Lexer_aa03b3abd81d1e430351f39ce35b97ea7} 
+static int {\bfseries Comment\+Start\+Pos} (string source, int start\+Pos)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a89009753569a0fcf3b6eda9349fe92c7}\label{classMiniscript_1_1Lexer_a89009753569a0fcf3b6eda9349fe92c7} 
+static string {\bfseries Trim\+Comment} (string source)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a5f5c797358f76b1b464afcada1727987}\label{classMiniscript_1_1Lexer_a5f5c797358f76b1b464afcada1727987} 
+static \mbox{\hyperlink{classMiniscript_1_1Token}{Token}} {\bfseries Last\+Token} (string source)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a6eb39604f3d1f22460011e5c9e83d44b}\label{classMiniscript_1_1Lexer_a6eb39604f3d1f22460011e5c9e83d44b} 
+static void {\bfseries Check} (\mbox{\hyperlink{classMiniscript_1_1Token}{Token}} tok, Token.\+Type type, string text=null, int line\+Num=0)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_a90bf2a9ceb925d218142d712a2f0d7a8}\label{classMiniscript_1_1Lexer_a90bf2a9ceb925d218142d712a2f0d7a8} 
+static void {\bfseries Check\+Line\+Num} (int actual, int expected)
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_ac2f6d1deec7e93fa4327e5c0fb97159b}\label{classMiniscript_1_1Lexer_ac2f6d1deec7e93fa4327e5c0fb97159b} 
+static void {\bfseries Run\+Unit\+Tests} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_afa204bd75e3c2160e174fbb0230bdb80}\label{classMiniscript_1_1Lexer_afa204bd75e3c2160e174fbb0230bdb80} 
+int {\bfseries line\+Num} = 1
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_ac0aa49b6a2868102b00af3d3434cb59f}\label{classMiniscript_1_1Lexer_ac0aa49b6a2868102b00af3d3434cb59f} 
+int {\bfseries position}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Lexer_ab32eb76cf371c93c8ef0d566a3676cea}\label{classMiniscript_1_1Lexer_ab32eb76cf371c93c8ef0d566a3676cea} 
+bool {\bfseries At\+End}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Lexer.\+cs\end{DoxyCompactItemize}

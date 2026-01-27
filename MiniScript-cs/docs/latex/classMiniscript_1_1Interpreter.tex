@@ -1,0 +1,243 @@
+\doxysection{Miniscript.\+Interpreter Class Reference}
+\hypertarget{classMiniscript_1_1Interpreter}{}\label{classMiniscript_1_1Interpreter}\index{Miniscript.Interpreter@{Miniscript.Interpreter}}
+
+
+\doxylink{classMiniscript_1_1Interpreter}{Interpreter}\+: an object that contains and runs one Mini\+Script script.  
+
+
+
+
+Collaboration diagram for Miniscript.\+Interpreter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{classMiniscript_1_1Interpreter__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a5b7abd721794a076c3fe44bdc80235f7}\label{classMiniscript_1_1Interpreter_a5b7abd721794a076c3fe44bdc80235f7} 
+{\bfseries Interpreter} (string source=null, \mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} \mbox{\hyperlink{classMiniscript_1_1Interpreter_a08ab22c94abde37d2f16baeffcec33de}{standard\+Output}}=null, \mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} \mbox{\hyperlink{classMiniscript_1_1Interpreter_a65562e362b278169239f0eb83cb6bb79}{error\+Output}}=null)
+\begin{DoxyCompactList}\small\item\em Constructor taking some Mini\+Script source code, and the output delegates. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_ab5fc8a2274ad3ac01cc20ca6c970f188}\label{classMiniscript_1_1Interpreter_ab5fc8a2274ad3ac01cc20ca6c970f188} 
+{\bfseries Interpreter} (List$<$ string $>$ source)
+\begin{DoxyCompactList}\small\item\em Constructor taking source code in the form of a list of strings. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a39eadf7891f1161cb3d25a72608f56ae}\label{classMiniscript_1_1Interpreter_a39eadf7891f1161cb3d25a72608f56ae} 
+{\bfseries Interpreter} (string\mbox{[}$\,$\mbox{]} source)
+\begin{DoxyCompactList}\small\item\em Constructor taking source code in the form of a string array. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a04b4d2524165987c087e8929b86faab2}\label{classMiniscript_1_1Interpreter_a04b4d2524165987c087e8929b86faab2} 
+void {\bfseries Stop} ()
+\begin{DoxyCompactList}\small\item\em Stop the virtual machine, and jump to the end of the program code. Also reset the parser, in case it\textquotesingle{}s stuck waiting for a block ender. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Interpreter_a9cc66335c1f7863241c296aa79051769}{Reset}} (string source="{}"{})
+\begin{DoxyCompactList}\small\item\em Reset the interpreter with the given source code. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a39ec9445038dd32a284bc9602b82a432}\label{classMiniscript_1_1Interpreter_a39ec9445038dd32a284bc9602b82a432} 
+void {\bfseries Compile} ()
+\begin{DoxyCompactList}\small\item\em Compile our source code, if we haven\textquotesingle{}t already done so, so that we are either ready to run, or generate compiler errors (reported via error\+Output). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_ac146836cf5834870c43f76aa4191c5a7}\label{classMiniscript_1_1Interpreter_ac146836cf5834870c43f76aa4191c5a7} 
+void {\bfseries Restart} ()
+\begin{DoxyCompactList}\small\item\em Reset the virtual machine to the beginning of the code. Note that this does {\itshape not} reset global variables; it simply clears the stack and jumps to the beginning. Useful in cases where you have a short script you want to run over and over, without recompiling every time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Interpreter_ac55cb29d8cc4adc0c317b980d6ad887f}{Run\+Until\+Done}} (double time\+Limit=60, bool return\+Early=true)
+\begin{DoxyCompactList}\small\item\em Run the compiled code until we either reach the end, or we reach the specified time limit. In the latter case, you can then call Run\+Until\+Done again to continue execution right from where it left off. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_aad840a8f8ab80dcd39d2ed18c30fa8fc}\label{classMiniscript_1_1Interpreter_aad840a8f8ab80dcd39d2ed18c30fa8fc} 
+void {\bfseries Step} ()
+\begin{DoxyCompactList}\small\item\em Run one step of the virtual machine. This method is not very useful except in special cases; usually you will use Run\+Until\+Done (above) instead. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Interpreter_a6796590cefb28ca42a7ebbc7d81999db}{REPL}} (string source\+Line, double time\+Limit=60)
+\begin{DoxyCompactList}\small\item\em Read Eval Print Loop. Run the given source until it either terminates, or hits the given time limit. When it terminates, if we have new implicit output, print that to the implicit\+Output stream. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1Interpreter_afd5b224fef04f8efe0b8e9bb637a19db}{Running}} ()
+\begin{DoxyCompactList}\small\item\em Report whether the virtual machine is still running, that is, whether it has not yet reached the end of the program code. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMiniscript_1_1Interpreter_a407c00407f1ab654846c59b1244d167c}{Need\+More\+Input}} ()
+\begin{DoxyCompactList}\small\item\em Return whether the parser needs more input, for example because we have run out of source code in the middle of an "{}if"{} block. This is typically used with REPL for making an interactive console, so you can change the prompt when more input is expected. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Interpreter_a5b0fd990bbf446f880982cb7dfec9a61}{Get\+Global\+Value}} (string var\+Name)
+\begin{DoxyCompactList}\small\item\em Get a value from the global namespace of this interpreter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMiniscript_1_1Interpreter_afda01a5d27c73663e91a1b5e3d3f2929}{Set\+Global\+Value}} (string var\+Name, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Set a value in the global namespace of this interpreter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Interpreter_aee544e22cda9e7705ffd764e2f1b6054}\label{classMiniscript_1_1Interpreter_aee544e22cda9e7705ffd764e2f1b6054} 
+\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} {\bfseries implicit\+Output}
+\begin{DoxyCompactList}\small\item\em implicit\+Output\+: receives the value of expressions entered when in REPL mode. If you\textquotesingle{}re not using the \doxylink{classMiniscript_1_1Interpreter_a6796590cefb28ca42a7ebbc7d81999db}{REPL()} method, you can safely ignore this. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a65562e362b278169239f0eb83cb6bb79}\label{classMiniscript_1_1Interpreter_a65562e362b278169239f0eb83cb6bb79} 
+\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} {\bfseries error\+Output}
+\begin{DoxyCompactList}\small\item\em error\+Output\+: receives error messages from the runtime. (This happens via the Report\+Error method, which is virtual; so if you want to catch the actual exceptions rather than get the error messages as strings, you can subclass \doxylink{classMiniscript_1_1Interpreter}{Interpreter} and override that method.) \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a4004326b4f34af3b076864f50c57881e}\label{classMiniscript_1_1Interpreter_a4004326b4f34af3b076864f50c57881e} 
+object {\bfseries host\+Data}
+\begin{DoxyCompactList}\small\item\em host\+Data is just a convenient place for you to attach some arbitrary data to the interpreter. It gets passed through to the context object, so you can access it inside your custom intrinsic functions. Use it for whatever you like (or don\textquotesingle{}t, if you don\textquotesingle{}t feel the need). \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_ae63e9350bf7bcd3c2ff66beab21c692c}\label{classMiniscript_1_1Interpreter_ae63e9350bf7bcd3c2ff66beab21c692c} 
+TAC.\+Machine {\bfseries vm}
+\begin{DoxyCompactList}\small\item\em vm\+: the virtual machine this interpreter is running. Most applications will not need to use this, but it\textquotesingle{}s provided for advanced users. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classMiniscript_1_1Interpreter_ad3272dfb5d69a3b70b767ad4650b31e0}{Check\+Implicit\+Result}} (int previous\+Imp\+Result\+Count)
+\begin{DoxyCompactList}\small\item\em Helper method that checks whether we have a new implicit result, and if so, invokes the implicit\+Output callback (if any). This is how you can see the result of an expression in a Read-\/\+Eval-\/\+Print Loop (REPL). \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classMiniscript_1_1Interpreter_ad60a078bdc7e44833418449f69e39290}{Report\+Error}} (\mbox{\hyperlink{classMiniscript_1_1MiniscriptException}{Miniscript\+Exception}} mse)
+\begin{DoxyCompactList}\small\item\em Report a Mini\+Script error to the user. The default implementation simply invokes error\+Output with the error description. If you want to do something different, then make an \doxylink{classMiniscript_1_1Interpreter}{Interpreter} subclass, and override this method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a08ab22c94abde37d2f16baeffcec33de}\label{classMiniscript_1_1Interpreter_a08ab22c94abde37d2f16baeffcec33de} 
+\mbox{\hyperlink{namespaceMiniscript_acfa495a58269ba3e1abce75787af4b94}{Text\+Output\+Method}} {\bfseries standard\+Output}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em standard\+Output\+: receives the output of the "{}print"{} intrinsic. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Interpreter_a0665ed94c0862165f45387800514dde9}\label{classMiniscript_1_1Interpreter_a0665ed94c0862165f45387800514dde9} 
+bool {\bfseries done}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em done\+: returns true when we don\textquotesingle{}t have a virtual machine, or we do have one and it is done (has reached the end of its code). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1Interpreter}{Interpreter}\+: an object that contains and runs one Mini\+Script script. 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1Interpreter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1Interpreter_ad3272dfb5d69a3b70b767ad4650b31e0}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!CheckImplicitResult@{CheckImplicitResult}}
+\index{CheckImplicitResult@{CheckImplicitResult}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{CheckImplicitResult()}{CheckImplicitResult()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_ad3272dfb5d69a3b70b767ad4650b31e0} 
+void Miniscript.\+Interpreter.\+Check\+Implicit\+Result (\begin{DoxyParamCaption}\item[{int}]{previous\+Imp\+Result\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Helper method that checks whether we have a new implicit result, and if so, invokes the implicit\+Output callback (if any). This is how you can see the result of an expression in a Read-\/\+Eval-\/\+Print Loop (REPL). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em previous\+Imp\+Result\+Count} & previous value of implicit\+Result\+Counter\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Interpreter_a5b0fd990bbf446f880982cb7dfec9a61}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!GetGlobalValue@{GetGlobalValue}}
+\index{GetGlobalValue@{GetGlobalValue}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{GetGlobalValue()}{GetGlobalValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_a5b0fd990bbf446f880982cb7dfec9a61} 
+\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Interpreter.\+Get\+Global\+Value (\begin{DoxyParamCaption}\item[{string}]{var\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a value from the global namespace of this interpreter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em var\+Name} & name of global variable to get\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classMiniscript_1_1Value}{Value} of the named variable, or null if not found
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Interpreter_a407c00407f1ab654846c59b1244d167c}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!NeedMoreInput@{NeedMoreInput}}
+\index{NeedMoreInput@{NeedMoreInput}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{NeedMoreInput()}{NeedMoreInput()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_a407c00407f1ab654846c59b1244d167c} 
+bool Miniscript.\+Interpreter.\+Need\+More\+Input (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return whether the parser needs more input, for example because we have run out of source code in the middle of an "{}if"{} block. This is typically used with REPL for making an interactive console, so you can change the prompt when more input is expected. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Interpreter_a6796590cefb28ca42a7ebbc7d81999db}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!REPL@{REPL}}
+\index{REPL@{REPL}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{REPL()}{REPL()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_a6796590cefb28ca42a7ebbc7d81999db} 
+void Miniscript.\+Interpreter.\+REPL (\begin{DoxyParamCaption}\item[{string}]{source\+Line}{, }\item[{double}]{time\+Limit}{ = {\ttfamily 60}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Read Eval Print Loop. Run the given source until it either terminates, or hits the given time limit. When it terminates, if we have new implicit output, print that to the implicit\+Output stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Line} & Source line.\\
+\hline
+{\em time\+Limit} & Time limit.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Interpreter_ad60a078bdc7e44833418449f69e39290}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!ReportError@{ReportError}}
+\index{ReportError@{ReportError}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{ReportError()}{ReportError()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_ad60a078bdc7e44833418449f69e39290} 
+virtual void Miniscript.\+Interpreter.\+Report\+Error (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1MiniscriptException}{Miniscript\+Exception}}}]{mse}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Report a Mini\+Script error to the user. The default implementation simply invokes error\+Output with the error description. If you want to do something different, then make an \doxylink{classMiniscript_1_1Interpreter}{Interpreter} subclass, and override this method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mse} & exception that was thrown\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Interpreter_a9cc66335c1f7863241c296aa79051769}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!Reset@{Reset}}
+\index{Reset@{Reset}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_a9cc66335c1f7863241c296aa79051769} 
+void Miniscript.\+Interpreter.\+Reset (\begin{DoxyParamCaption}\item[{string}]{source}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Reset the interpreter with the given source code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Interpreter_afd5b224fef04f8efe0b8e9bb637a19db}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!Running@{Running}}
+\index{Running@{Running}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{Running()}{Running()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_afd5b224fef04f8efe0b8e9bb637a19db} 
+bool Miniscript.\+Interpreter.\+Running (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Report whether the virtual machine is still running, that is, whether it has not yet reached the end of the program code. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Interpreter_ac55cb29d8cc4adc0c317b980d6ad887f}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!RunUntilDone@{RunUntilDone}}
+\index{RunUntilDone@{RunUntilDone}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{RunUntilDone()}{RunUntilDone()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_ac55cb29d8cc4adc0c317b980d6ad887f} 
+void Miniscript.\+Interpreter.\+Run\+Until\+Done (\begin{DoxyParamCaption}\item[{double}]{time\+Limit}{ = {\ttfamily 60}, }\item[{bool}]{return\+Early}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Run the compiled code until we either reach the end, or we reach the specified time limit. In the latter case, you can then call Run\+Until\+Done again to continue execution right from where it left off. 
+
+Or, if return\+Early is true, we will also return if we reach an intrinsic method that returns a partial result, indicating that it needs to wait for something. Again, call Run\+Until\+Done again later to continue.
+
+Note that this method first compiles the source code if it wasn\textquotesingle{}t compiled already, and in that case, may generate compiler errors. And of course it may generate runtime errors while running. In either case, these are reported via error\+Output.
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+Limit} & maximum amout of time to run before returning, in seconds\\
+\hline
+{\em return\+Early} & if true, return as soon as we reach an intrinsic that returns a partial result\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMiniscript_1_1Interpreter_afda01a5d27c73663e91a1b5e3d3f2929}\index{Miniscript.Interpreter@{Miniscript.Interpreter}!SetGlobalValue@{SetGlobalValue}}
+\index{SetGlobalValue@{SetGlobalValue}!Miniscript.Interpreter@{Miniscript.Interpreter}}
+\doxysubsubsection{\texorpdfstring{SetGlobalValue()}{SetGlobalValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Interpreter_afda01a5d27c73663e91a1b5e3d3f2929} 
+void Miniscript.\+Interpreter.\+Set\+Global\+Value (\begin{DoxyParamCaption}\item[{string}]{var\+Name}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set a value in the global namespace of this interpreter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em var\+Name} & name of global variable to set\\
+\hline
+{\em value} & value to set\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Interpreter.\+cs\end{DoxyCompactItemize}

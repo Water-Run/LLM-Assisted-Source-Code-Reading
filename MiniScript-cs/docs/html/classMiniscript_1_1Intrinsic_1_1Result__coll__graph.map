@@ -1,0 +1,5 @@
+<map id="Miniscript.Intrinsic.Result" name="Miniscript.Intrinsic.Result">
+<area shape="rect" id="Node000001" title="Result represents the result of an intrinsic call. An intrinsic will either be done with its work,..." alt="" coords="5,104,175,131"/>
+<area shape="rect" id="Node000002" href="$classMiniscript_1_1Value.html" title="Value: abstract base class for the MiniScript type hierarchy. Defines a number of handy methods that ..." alt="" coords="33,5,147,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,48,93,104,87,104,87,48"/>
+</map>

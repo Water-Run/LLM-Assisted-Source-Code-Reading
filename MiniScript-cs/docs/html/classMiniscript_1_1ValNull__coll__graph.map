@@ -1,0 +1,5 @@
+<map id="Miniscript.ValNull" name="Miniscript.ValNull">
+<area shape="rect" id="Node000001" title="ValNull is an object to represent null in places where we can&#39;t use an actual null (such as a diction..." alt="" coords="5,80,128,107"/>
+<area shape="rect" id="Node000002" href="$classMiniscript_1_1Value.html" title="Value: abstract base class for the MiniScript type hierarchy. Defines a number of handy methods that ..." alt="" coords="10,5,123,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,48,69,80,64,80,64,48"/>
+</map>

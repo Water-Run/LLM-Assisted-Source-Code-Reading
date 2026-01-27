@@ -1,0 +1,10 @@
+<map id="Miniscript.ValFunction" name="Miniscript.ValFunction">
+<area shape="rect" id="Node000001" title="ValFunction: a Value that is, in fact, a Function." alt="" coords="71,180,221,207"/>
+<area shape="rect" id="Node000002" href="$classMiniscript_1_1Value.html" title="Value: abstract base class for the MiniScript type hierarchy. Defines a number of handy methods that ..." alt="" coords="5,5,119,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,48,66,77,74,107,86,128,101,148,132,178,128,182,97,151,81,131,69,109,60,78,58,48"/>
+<area shape="rect" id="Node000004" href="$classMiniscript_1_1ValMap.html" title="ValMap represents a MiniScript map, which under the hood is just a Dictionary of Value,..." alt="" coords="84,81,208,108"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="89,40,134,79,130,83,86,44"/>
+<area shape="rect" id="Node000003" href="$classMiniscript_1_1Function.html" title="Function: our internal representation of a MiniScript function. This includes its parameters and its ..." alt="" coords="232,81,364,108"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="271,120,215,158,173,182,170,177,213,154,268,116"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="149,124,149,180,143,180,143,124"/>
+</map>

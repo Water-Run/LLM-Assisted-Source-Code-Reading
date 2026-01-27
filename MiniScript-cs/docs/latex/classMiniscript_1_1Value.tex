@@ -1,0 +1,341 @@
+\doxysection{Miniscript.\+Value Class Reference}
+\hypertarget{classMiniscript_1_1Value}{}\label{classMiniscript_1_1Value}\index{Miniscript.Value@{Miniscript.Value}}
+
+
+\doxylink{classMiniscript_1_1Value}{Value}\+: abstract base class for the Mini\+Script type hierarchy. Defines a number of handy methods that you can call on ANY value (though some of these do nothing for some types).  
+
+
+
+
+Inheritance diagram for Miniscript.\+Value\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMiniscript_1_1Value__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_ad0934af862b91af552c041dd7a312167}{Val}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Get the current value of this \doxylink{classMiniscript_1_1Value}{Value} in the given context. Basic types evaluate to themselves, but some types (e.\+g. variable references) may evaluate to something else. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Value_a73230d076ee279bb30a7eb295e027ec3}\label{classMiniscript_1_1Value_a73230d076ee279bb30a7eb295e027ec3} 
+override string {\bfseries To\+String} ()
+\item 
+\Hypertarget{classMiniscript_1_1Value_a017f0483d222db770bd7b5ba9002f16b}\label{classMiniscript_1_1Value_a017f0483d222db770bd7b5ba9002f16b} 
+string {\bfseries To\+String} (TAC.\+Machine vm)
+\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_a088fc4b1731283b4ebc96e26098fae3b}{Val}} (TAC.\+Context context, out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}} value\+Found\+In)
+\begin{DoxyCompactList}\small\item\em This version of Val is like the one above, but also returns (via the output parameter) the \doxylink{classMiniscript_1_1ValMap}{Val\+Map} the value was found in, which could be several steps up the \+\_\+\+\_\+isa chain. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} \mbox{\hyperlink{classMiniscript_1_1Value_ad5554b2187bc276e580c711cb072d5c4}{Full\+Eval}} (TAC.\+Context context)
+\begin{DoxyCompactList}\small\item\em Similar to Val, but recurses into the sub-\/values contained by this value (if it happens to be a container, such as a list or map). \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{classMiniscript_1_1Value_a42d6178a4c151d42fd0391288d6fac6e}{Int\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an integer. \end{DoxyCompactList}\item 
+virtual uint \mbox{\hyperlink{classMiniscript_1_1Value_a70e2c8b9071b5d3b5637551c50dff523}{UInt\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an unsigned integer. \end{DoxyCompactList}\item 
+virtual float \mbox{\hyperlink{classMiniscript_1_1Value_a51bdfe82f8d4b0b6d1eda217422daa4e}{Float\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a single-\/precision float. \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classMiniscript_1_1Value_ade90965710f5024fe872205ff874e727}{Double\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a double-\/precision floating-\/point number. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_adae99285709fccbab531ee60da0657ce}{Bool\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the boolean (truth) value of this \doxylink{classMiniscript_1_1Value}{Value}. By default, we consider any numeric value other than zero to be true. (But subclasses override this with different criteria for strings, lists, and maps.) \end{DoxyCompactList}\item 
+virtual string \mbox{\hyperlink{classMiniscript_1_1Value_a50f55b46182b3724af907b4eaa0d1af3}{Code\+Form}} (TAC.\+Machine vm, int recursion\+Limit=-\/1)
+\begin{DoxyCompactList}\small\item\em Get this value in the form of a Mini\+Script literal. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classMiniscript_1_1Value_a617bab1ac3a6764ffeface7ae63cbe08}{Hash}} ()
+\begin{DoxyCompactList}\small\item\em Get a hash value for this \doxylink{classMiniscript_1_1Value}{Value}. Two values that are considered equal will return the same hash value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classMiniscript_1_1Value_acea079110f6a25c55a7c16a9d671e3b4}{Equality}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Check whether this \doxylink{classMiniscript_1_1Value}{Value} is equal to another \doxylink{classMiniscript_1_1Value}{Value}. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_a1da0fe9b9a0642c4aa24a28ca94f410d}{Can\+Set\+Elem}} ()
+\begin{DoxyCompactList}\small\item\em Can we set elements within this value? (I.\+e., is it a list or map?) \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classMiniscript_1_1Value_aa86039b3d5c2144ba4ff80ebf9299b3c}{Set\+Elem}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} index, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} value)
+\begin{DoxyCompactList}\small\item\em Set an element associated with the given index within this \doxylink{classMiniscript_1_1Value}{Value}. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classMiniscript_1_1Value_a21fead0510f6e2eca9f837c888776347}{IsA}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} type, TAC.\+Machine vm)
+\begin{DoxyCompactList}\small\item\em Return whether this value is the given type (or some subclass thereof) in the context of the given virtual machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMiniscript_1_1Value_ab35bdb3fa20f714a2bea0e74554ba3ec}\label{classMiniscript_1_1Value_ab35bdb3fa20f714a2bea0e74554ba3ec} 
+static int {\bfseries Compare} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} x, \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} y)
+\begin{DoxyCompactList}\small\item\em Compare two Values for sorting purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classMiniscript_1_1Value_a15e4b92b0da5b8b046023d70888bfc5e}{Recursive\+Equal}} (\mbox{\hyperlink{classMiniscript_1_1Value}{Value}} rhs)
+\begin{DoxyCompactList}\small\item\em Compare lhs and rhs for equality, in a way that traverses down the tree when it finds a list or map. For any other type, this just calls through to the regular Equality method. \end{DoxyCompactList}\item 
+\Hypertarget{classMiniscript_1_1Value_a7ec71819f97aa26c974a66c8eff173e2}\label{classMiniscript_1_1Value_a7ec71819f97aa26c974a66c8eff173e2} 
+int {\bfseries Recursive\+Hash} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classMiniscript_1_1Value}{Value}\+: abstract base class for the Mini\+Script type hierarchy. Defines a number of handy methods that you can call on ANY value (though some of these do nothing for some types). 
+
+\label{doc-func-members}
+\Hypertarget{classMiniscript_1_1Value_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMiniscript_1_1Value_adae99285709fccbab531ee60da0657ce}\index{Miniscript.Value@{Miniscript.Value}!BoolValue@{BoolValue}}
+\index{BoolValue@{BoolValue}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{BoolValue()}{BoolValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_adae99285709fccbab531ee60da0657ce} 
+virtual bool Miniscript.\+Value.\+Bool\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the boolean (truth) value of this \doxylink{classMiniscript_1_1Value}{Value}. By default, we consider any numeric value other than zero to be true. (But subclasses override this with different criteria for strings, lists, and maps.) 
+
+\begin{DoxyReturn}{Returns}
+this value, as a bool
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValFunction_a4976172a3a014497ec3c939e464030aa}{Miniscript.\+Val\+Function}}, \mbox{\hyperlink{classMiniscript_1_1ValList_a7a746bc4237344c9f99f40b31f8a0aef}{Miniscript.\+Val\+List}}, \mbox{\hyperlink{classMiniscript_1_1ValMap_a3f98af9325a0428771a3e727a3e21f7d}{Miniscript.\+Val\+Map}}, \mbox{\hyperlink{classMiniscript_1_1ValNull_a050f59524f44198139965db0b03c0328}{Miniscript.\+Val\+Null}}, \mbox{\hyperlink{classMiniscript_1_1ValNumber_a068495f05df858d89de5f9b0e46bca16}{Miniscript.\+Val\+Number}}, and \mbox{\hyperlink{classMiniscript_1_1ValString_a26b5a47e12b87ccf998fd4a020da9129}{Miniscript.\+Val\+String}}.
+
+\Hypertarget{classMiniscript_1_1Value_a1da0fe9b9a0642c4aa24a28ca94f410d}\index{Miniscript.Value@{Miniscript.Value}!CanSetElem@{CanSetElem}}
+\index{CanSetElem@{CanSetElem}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{CanSetElem()}{CanSetElem()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a1da0fe9b9a0642c4aa24a28ca94f410d} 
+virtual bool Miniscript.\+Value.\+Can\+Set\+Elem (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Can we set elements within this value? (I.\+e., is it a list or map?) 
+
+\begin{DoxyReturn}{Returns}
+true if Set\+Elem can work; false if it does nothing
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValList_a731d128a8b7173f4999ccd9bdeb85c75}{Miniscript.\+Val\+List}}, and \mbox{\hyperlink{classMiniscript_1_1ValMap_adeaefe209f9999c38af5a6ce60b4c73b}{Miniscript.\+Val\+Map}}.
+
+\Hypertarget{classMiniscript_1_1Value_a50f55b46182b3724af907b4eaa0d1af3}\index{Miniscript.Value@{Miniscript.Value}!CodeForm@{CodeForm}}
+\index{CodeForm@{CodeForm}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{CodeForm()}{CodeForm()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a50f55b46182b3724af907b4eaa0d1af3} 
+virtual string Miniscript.\+Value.\+Code\+Form (\begin{DoxyParamCaption}\item[{TAC.\+Machine}]{vm}{, }\item[{int}]{recursion\+Limit}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get this value in the form of a Mini\+Script literal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em recursion\+Limit} & how deeply we can recurse, or -\/1 for no limit\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValList_a7e07adc55b6a79841000aa11a58805be}{Miniscript.\+Val\+List}}, \mbox{\hyperlink{classMiniscript_1_1ValMap_a1bcb9b46e032e60c49800dfcdc8b2223}{Miniscript.\+Val\+Map}}, and \mbox{\hyperlink{classMiniscript_1_1ValString_ab4a6e00c725786bf8093c4edf2756360}{Miniscript.\+Val\+String}}.
+
+\Hypertarget{classMiniscript_1_1Value_ade90965710f5024fe872205ff874e727}\index{Miniscript.Value@{Miniscript.Value}!DoubleValue@{DoubleValue}}
+\index{DoubleValue@{DoubleValue}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{DoubleValue()}{DoubleValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_ade90965710f5024fe872205ff874e727} 
+virtual double Miniscript.\+Value.\+Double\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a double-\/precision floating-\/point number. 
+
+\begin{DoxyReturn}{Returns}
+this value, as a double
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValNull_a47580d0085e4833c5032fa9f6677ae50}{Miniscript.\+Val\+Null}}, and \mbox{\hyperlink{classMiniscript_1_1ValNumber_a70803a64c853e789babf481934bb0b84}{Miniscript.\+Val\+Number}}.
+
+\Hypertarget{classMiniscript_1_1Value_acea079110f6a25c55a7c16a9d671e3b4}\index{Miniscript.Value@{Miniscript.Value}!Equality@{Equality}}
+\index{Equality@{Equality}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{Equality()}{Equality()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_acea079110f6a25c55a7c16a9d671e3b4} 
+double Miniscript.\+Value.\+Equality (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{rhs}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Check whether this \doxylink{classMiniscript_1_1Value}{Value} is equal to another \doxylink{classMiniscript_1_1Value}{Value}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & other value to compare to\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if these values are considered equal; 0 if not equal; 0.\+5 if unsure
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Value_a51bdfe82f8d4b0b6d1eda217422daa4e}\index{Miniscript.Value@{Miniscript.Value}!FloatValue@{FloatValue}}
+\index{FloatValue@{FloatValue}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{FloatValue()}{FloatValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a51bdfe82f8d4b0b6d1eda217422daa4e} 
+virtual float Miniscript.\+Value.\+Float\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as a single-\/precision float. 
+
+\begin{DoxyReturn}{Returns}
+this value, as a float
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Value_ad5554b2187bc276e580c711cb072d5c4}\index{Miniscript.Value@{Miniscript.Value}!FullEval@{FullEval}}
+\index{FullEval@{FullEval}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{FullEval()}{FullEval()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_ad5554b2187bc276e580c711cb072d5c4} 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Value.\+Full\+Eval (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Similar to Val, but recurses into the sub-\/values contained by this value (if it happens to be a container, such as a list or map). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & context in which to evaluate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+fully-\/evaluated value
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValList_ad7530aaf1e7718803a55e6a626d3d7d8}{Miniscript.\+Val\+List}}, \mbox{\hyperlink{classMiniscript_1_1ValMap_ac2a5290075dc3300e78363ba9724c86a}{Miniscript.\+Val\+Map}}, and \mbox{\hyperlink{classMiniscript_1_1ValNull_aa6878b07709c2c8f6f7dbe2a77c1f737}{Miniscript.\+Val\+Null}}.
+
+\Hypertarget{classMiniscript_1_1Value_a617bab1ac3a6764ffeface7ae63cbe08}\index{Miniscript.Value@{Miniscript.Value}!Hash@{Hash}}
+\index{Hash@{Hash}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{Hash()}{Hash()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a617bab1ac3a6764ffeface7ae63cbe08} 
+int Miniscript.\+Value.\+Hash (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+
+
+Get a hash value for this \doxylink{classMiniscript_1_1Value}{Value}. Two values that are considered equal will return the same hash value. 
+
+\begin{DoxyReturn}{Returns}
+hash value
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Value_a42d6178a4c151d42fd0391288d6fac6e}\index{Miniscript.Value@{Miniscript.Value}!IntValue@{IntValue}}
+\index{IntValue@{IntValue}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{IntValue()}{IntValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a42d6178a4c151d42fd0391288d6fac6e} 
+virtual int Miniscript.\+Value.\+Int\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an integer. 
+
+\begin{DoxyReturn}{Returns}
+this value, as signed integer
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValNull_a510f861cb697a1c34f4910243f441a1f}{Miniscript.\+Val\+Null}}, and \mbox{\hyperlink{classMiniscript_1_1ValNumber_a36be8b290cc637ade4b1f2ea15915fea}{Miniscript.\+Val\+Number}}.
+
+\Hypertarget{classMiniscript_1_1Value_a21fead0510f6e2eca9f837c888776347}\index{Miniscript.Value@{Miniscript.Value}!IsA@{IsA}}
+\index{IsA@{IsA}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{IsA()}{IsA()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a21fead0510f6e2eca9f837c888776347} 
+virtual bool Miniscript.\+Value.\+IsA (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{type}{, }\item[{TAC.\+Machine}]{vm}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return whether this value is the given type (or some subclass thereof) in the context of the given virtual machine. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValFunction_af2872c74ff9cadb58aa8d6e21398ce3b}{Miniscript.\+Val\+Function}}, \mbox{\hyperlink{classMiniscript_1_1ValList_af7601481691c2e15e0ed871557ca77bb}{Miniscript.\+Val\+List}}, \mbox{\hyperlink{classMiniscript_1_1ValMap_a2a2508bb15653666070c8e0ddff4deb4}{Miniscript.\+Val\+Map}}, \mbox{\hyperlink{classMiniscript_1_1ValNull_a7da22ae1e6f575f3b807c44d48ca41ee}{Miniscript.\+Val\+Null}}, \mbox{\hyperlink{classMiniscript_1_1ValNumber_a6af1d347488ce82dd7b393ee27e5a08b}{Miniscript.\+Val\+Number}}, and \mbox{\hyperlink{classMiniscript_1_1ValString_a4c4336edcdcb991bc8f7532ae0eb5677}{Miniscript.\+Val\+String}}.
+
+\Hypertarget{classMiniscript_1_1Value_a15e4b92b0da5b8b046023d70888bfc5e}\index{Miniscript.Value@{Miniscript.Value}!RecursiveEqual@{RecursiveEqual}}
+\index{RecursiveEqual@{RecursiveEqual}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{RecursiveEqual()}{RecursiveEqual()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a15e4b92b0da5b8b046023d70888bfc5e} 
+bool Miniscript.\+Value.\+Recursive\+Equal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{rhs}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Compare lhs and rhs for equality, in a way that traverses down the tree when it finds a list or map. For any other type, this just calls through to the regular Equality method. 
+
+Note that this works correctly for loops (maintaining a visited list to avoid recursing indefinitely). \Hypertarget{classMiniscript_1_1Value_aa86039b3d5c2144ba4ff80ebf9299b3c}\index{Miniscript.Value@{Miniscript.Value}!SetElem@{SetElem}}
+\index{SetElem@{SetElem}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{SetElem()}{SetElem()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_aa86039b3d5c2144ba4ff80ebf9299b3c} 
+virtual void Miniscript.\+Value.\+Set\+Elem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{index}{, }\item[{\mbox{\hyperlink{classMiniscript_1_1Value}{Value}}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Set an element associated with the given index within this \doxylink{classMiniscript_1_1Value}{Value}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index/key for the value to set\\
+\hline
+{\em value} & value to set\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValList_ab7bc2b910d4cac85f21b3805c7dfd06e}{Miniscript.\+Val\+List}}, and \mbox{\hyperlink{classMiniscript_1_1ValMap_a18b3da79c3e05d195e1d7ea76af72cf1}{Miniscript.\+Val\+Map}}.
+
+\Hypertarget{classMiniscript_1_1Value_a70e2c8b9071b5d3b5637551c50dff523}\index{Miniscript.Value@{Miniscript.Value}!UIntValue@{UIntValue}}
+\index{UIntValue@{UIntValue}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{UIntValue()}{UIntValue()}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a70e2c8b9071b5d3b5637551c50dff523} 
+virtual uint Miniscript.\+Value.\+UInt\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the numeric value of this \doxylink{classMiniscript_1_1Value}{Value} as an unsigned integer. 
+
+\begin{DoxyReturn}{Returns}
+this value, as unsigned int
+\end{DoxyReturn}
+\Hypertarget{classMiniscript_1_1Value_ad0934af862b91af552c041dd7a312167}\index{Miniscript.Value@{Miniscript.Value}!Val@{Val}}
+\index{Val@{Val}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{Val()}{Val()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_ad0934af862b91af552c041dd7a312167} 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Value.\+Val (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the current value of this \doxylink{classMiniscript_1_1Value}{Value} in the given context. Basic types evaluate to themselves, but some types (e.\+g. variable references) may evaluate to something else. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em context} & TAC context to evaluate in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of this value (possibly the same as this)
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValNull_a0a6705bb9a89a35ef6064f455c827214}{Miniscript.\+Val\+Null}}, \mbox{\hyperlink{classMiniscript_1_1ValSeqElem_ab79513fe86928f42f102223d9f2f00b6}{Miniscript.\+Val\+Seq\+Elem}}, \mbox{\hyperlink{classMiniscript_1_1ValTemp_a0e8e8f4c860f3ed8d071a7f4807892ac}{Miniscript.\+Val\+Temp}}, and \mbox{\hyperlink{classMiniscript_1_1ValVar_ac4a7770eb93352120924afc08500d778}{Miniscript.\+Val\+Var}}.
+
+\Hypertarget{classMiniscript_1_1Value_a088fc4b1731283b4ebc96e26098fae3b}\index{Miniscript.Value@{Miniscript.Value}!Val@{Val}}
+\index{Val@{Val}!Miniscript.Value@{Miniscript.Value}}
+\doxysubsubsection{\texorpdfstring{Val()}{Val()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMiniscript_1_1Value_a088fc4b1731283b4ebc96e26098fae3b} 
+virtual \mbox{\hyperlink{classMiniscript_1_1Value}{Value}} Miniscript.\+Value.\+Val (\begin{DoxyParamCaption}\item[{TAC.\+Context}]{context}{, }\item[{out \mbox{\hyperlink{classMiniscript_1_1ValMap}{Val\+Map}}}]{value\+Found\+In}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+This version of Val is like the one above, but also returns (via the output parameter) the \doxylink{classMiniscript_1_1ValMap}{Val\+Map} the value was found in, which could be several steps up the \+\_\+\+\_\+isa chain. 
+
+\begin{DoxyReturn}{Returns}
+The value.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em context} & Context.\\
+\hline
+{\em value\+Found\+In} & \doxylink{classMiniscript_1_1Value}{Value} found in.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classMiniscript_1_1ValNull_a8dfc5b061b034e6edf396225910868fc}{Miniscript.\+Val\+Null}}, \mbox{\hyperlink{classMiniscript_1_1ValSeqElem_ae88ff0435f4f28dc6df823093c427899}{Miniscript.\+Val\+Seq\+Elem}}, \mbox{\hyperlink{classMiniscript_1_1ValTemp_a405770bff2c34283579c3b401485fc12}{Miniscript.\+Val\+Temp}}, and \mbox{\hyperlink{classMiniscript_1_1ValVar_a26af127e6e99d33fd2f19ff9699da9c1}{Miniscript.\+Val\+Var}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Miniscript\+Types.\+cs\end{DoxyCompactItemize}

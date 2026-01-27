@@ -1,0 +1,9 @@
+<map id="Miniscript.ValueSorter" name="Miniscript.ValueSorter">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,180,154,207"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="33,5,115,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,47,82,180,76,180,72,48"/>
+<area shape="rect" id="Node000003" href="$classMiniscript_1_1ValueSorter.html" title=" " alt="" coords="96,81,244,108"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="104,39,156,79,153,83,101,44"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="150,121,93,182,89,178,146,118"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="261,87,271,95,263,102,245,104,244,99,261,97,266,95,258,92"/>
+</map>

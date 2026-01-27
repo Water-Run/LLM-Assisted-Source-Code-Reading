@@ -1,0 +1,5 @@
+<map id="Miniscript.ValList" name="Miniscript.ValList">
+<area shape="rect" id="Node000001" title="ValList represents a MiniScript list (which, under the hood, is just a wrapper for a List of Values)." alt="" coords="5,80,126,107"/>
+<area shape="rect" id="Node000002" href="$classMiniscript_1_1Value.html" title="Value: abstract base class for the MiniScript type hierarchy. Defines a number of handy methods that ..." alt="" coords="9,5,122,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,48,68,80,63,80,63,48"/>
+</map>
