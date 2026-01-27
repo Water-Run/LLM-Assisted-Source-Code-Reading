@@ -1,0 +1,110 @@
+\doxysection{ltm.\+h}
+\hypertarget{ltm_8h_source}{}\label{ltm_8h_source}\mbox{\hyperlink{ltm_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ ltm.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Tag\ methods}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ ltm\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ ltm\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00015\ \textcolor{comment}{*\ WARNING:\ if\ you\ change\ the\ order\ of\ this\ enumeration,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{*\ grep\ "{}ORDER\ TM"{}\ and\ "{}ORDER\ OP"{}}}
+\DoxyCodeLine{00017\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a9adb5d2c8bad970dff73ee1b9df1242e}{TM\_INDEX}},}
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a256e00a44fb438064c2eb7a8b7df206d}{TM\_NEWINDEX}},}
+\DoxyCodeLine{00021\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a01e1b0be5e2785471e19db3665960536}{TM\_GC}},}
+\DoxyCodeLine{00022\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a5cd07c76b9aff7450d8052363ff2db4e}{TM\_MODE}},}
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aadbac1e8e363dc76eb94aac5c8e7a7a4}{TM\_LEN}},}
+\DoxyCodeLine{00024\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aa0074eac874e7e19d5e7c0c8a22ea592}{TM\_EQ}},\ \ \textcolor{comment}{/*\ last\ tag\ method\ with\ fast\ access\ */}}
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1ab9351e0ba5143d069dfb4dea793676b5}{TM\_ADD}},}
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aae0e4c65a5c4797c1dbb82609504f0f6}{TM\_SUB}},}
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a6291d50fca67ff97d7092975c2ab2dc4}{TM\_MUL}},}
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1afbd50be6cf5042cdf520fb50627081ae}{TM\_MOD}},}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aa4846ab09831f6b351671be81cef3e5d}{TM\_POW}},}
+\DoxyCodeLine{00030\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aa5bfa1609bcf15e4105b991a7975ac03}{TM\_DIV}},}
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a23a0c8647ff6e501d7430900a08f343b}{TM\_IDIV}},}
+\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a31cb5bcae367d5cfec150a489c6472b6}{TM\_BAND}},}
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a8f1f4fdbc05573cd376bf9704c31d494}{TM\_BOR}},}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a7c95694d2607b50b86ef8cf1a4f2eb05}{TM\_BXOR}},}
+\DoxyCodeLine{00035\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1ac0c09418341a5d115650a2cb4a6724a1}{TM\_SHL}},}
+\DoxyCodeLine{00036\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a893cb9ea636210f2e65dbf0bf784121b}{TM\_SHR}},}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a9ba35e1d71b4d8aca322d84a070528dd}{TM\_UNM}},}
+\DoxyCodeLine{00038\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a695b7da29958a1275089c619b5139091}{TM\_BNOT}},}
+\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1afa8fa71435d77125e294751a6ec36dc0}{TM\_LT}},}
+\DoxyCodeLine{00040\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1acb92c94037b451f214223a4c57eccbdf}{TM\_LE}},}
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1aef8c5f56efb01cf7a514270559237343}{TM\_CONCAT}},}
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1abdcb5cf63c297351b7dbd68b16b0c22b}{TM\_CALL}},}
+\DoxyCodeLine{00043\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1ae986ac24deb0443eb62f40fb5d895edd}{TM\_CLOSE}},}
+\DoxyCodeLine{00044\ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1a0d06a30ffbc1d1f7e21a96f52da3ef56}{TM\_N}}\ \ \ \ \ \ \textcolor{comment}{/*\ number\ of\ elements\ in\ the\ enum\ */}}
+\DoxyCodeLine{00045\ \}\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00049\ \textcolor{comment}{**\ Mask\ with\ 1\ in\ all\ fast-\/access\ methods.\ A\ 1\ in\ any\ of\ these\ bits}}
+\DoxyCodeLine{00050\ \textcolor{comment}{**\ in\ the\ flag\ of\ a\ (meta)table\ means\ the\ metatable\ does\ not\ have\ the}}
+\DoxyCodeLine{00051\ \textcolor{comment}{**\ corresponding\ metamethod\ field.\ (Bit\ 6\ of\ the\ flag\ indicates\ that}}
+\DoxyCodeLine{00052\ \textcolor{comment}{**\ the\ table\ is\ using\ the\ dummy\ node;\ bit\ 7\ is\ used\ for\ 'isrealasize'.)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ maskflags\ \ \ cast\_byte(\string~(\string~0u\ <<\ (TM\_EQ\ +\ 1)))}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00058\ \textcolor{comment}{**\ Test\ whether\ there\ is\ no\ tagmethod.}}
+\DoxyCodeLine{00059\ \textcolor{comment}{**\ (Because\ tagmethods\ use\ raw\ accesses,\ the\ result\ may\ be\ an\ "{}empty"{}\ nil.)}}
+\DoxyCodeLine{00060\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ notm(tm)\ \ \ \ ttisnil(tm)}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ checknoTM(mt,e)\ ((mt)\ ==\ NULL\ ||\ (mt)-\/>flags\ \&\ (1u<<(e)))}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ gfasttm(g,mt,e)\ \ \(\backslash\)}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\ \ (checknoTM(mt,\ e)\ ?\ NULL\ :\ luaT\_gettm(mt,\ e,\ (g)-\/>tmname[e]))}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ fasttm(l,mt,e)\ \ gfasttm(G(l),\ mt,\ e)}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ ttypename(x)\ \ \ \ luaT\_typenames\_[(x)\ +\ 1]}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \mbox{\hyperlink{llimits_8h_a3f2cdf96bb04b9d2a9a318a126f99182}{LUAI\_DDEC}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\textcolor{keyword}{const}\ \mbox{\hyperlink{ltm_8c_a56a6ffbcfc64ddd03dca836db6463705}{luaT\_typenames\_}}[\mbox{\hyperlink{lobject_8h_a19bae920c9c442143f021d1c4301b8cb}{LUA\_TOTALTYPES}}];)}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{ltm_8c_af2d87694e75cf07977250efb1d85d497}{luaT\_objtypename}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *o);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *\mbox{\hyperlink{ltm_8h_ac3d6df2b5cfede8fcd1cce9fcfe489f8}{luaT\_gettm}}\ (\mbox{\hyperlink{structTable}{Table}}\ *events,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event,\ \mbox{\hyperlink{structTString}{TString}}\ *ename);}
+\DoxyCodeLine{00078\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *\mbox{\hyperlink{ltm_8h_abe08ae693155fdb3d6bf04b84674aa6b}{luaT\_gettmbyobj}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *o,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00080\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_adadf25053747df0beeec91a8836b2dfc}{luaT\_init}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a4380eceaa582fe847011b265423c8fa4}{luaT\_callTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *f,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p3);}
+\DoxyCodeLine{00084\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{ltm_8h_aeb58eb18d8e672237f3c3145c98a149f}{luaT\_callTMres}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *f,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ p3);}
+\DoxyCodeLine{00086\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a52f9c211746126a08117801bd7e2d826}{luaT\_trybinTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ res,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00088\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a57603cad2e23d236a640ef8d7569d18f}{luaT\_tryconcatTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00089\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_af6ca076ae3f6c830e06852712950d0f7}{luaT\_trybinassocTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \textcolor{keywordtype}{int}\ inv,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ res,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00091\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a8cf869ab5c4e507b6c72df4bf30d1438}{luaT\_trybiniTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,\ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ i2,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ inv,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ res,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00093\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltm_8h_a42fa775919957ebfb826d96c80e65f92}{luaT\_callorderTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00095\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ltm_8h_a16f52862d54db7359c09dcec396f066a}{luaT\_callorderiTM}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,\ \textcolor{keywordtype}{int}\ v2,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ inv,\ \textcolor{keywordtype}{int}\ isfloat,\ \mbox{\hyperlink{ltm_8h_a69e345ae253d250b61a03f1d6871c8d1}{TMS}}\ event);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_ad4a60ee345276a8668a3dee4be1d32e8}{luaT\_adjustvarargs}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structProto}{Proto}}\ *p);}
+\DoxyCodeLine{00100\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a124815b022a65d5bea1d09ae44bf1233}{luaT\_getvararg}}\ (\mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ ra,\ \mbox{\hyperlink{structTValue}{TValue}}\ *rc);}
+\DoxyCodeLine{00101\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ltm_8h_a7824643559c47b2d989b88375517b483}{luaT\_getvarargs}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ where,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ wanted,\ \textcolor{keywordtype}{int}\ vatab);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

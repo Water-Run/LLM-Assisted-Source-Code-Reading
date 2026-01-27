@@ -1,0 +1,195 @@
+\doxysection{lctype.\+h File Reference}
+\hypertarget{lctype_8h}{}\label{lctype_8h}\index{lctype.h@{lctype.h}}
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lctype.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{lctype_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{lctype_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a7d15b705d59378d3c5ab7a722473bf8d}{LUA\+\_\+\+USE\+\_\+\+CTYPE}}~0
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a091fbd82b59441d4a091c0312c0a0e35}{ALPHABIT}}~0
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a089c6406273b00564db9bd9d43945a25}{DIGITBIT}}~1
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a708b2cd4d3f7f7126e5f795097ab1592}{PRINTBIT}}~2
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a6fe589191c9eb50677a9dcdcbc47891e}{SPACEBIT}}~3
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a326c899e67809dd5626560011d3dd09c}{XDIGITBIT}}~4
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(B)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,  p)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a7132e9f6daf30b344b74f51d64eadf7d}{lislalpha}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a9c0dc6a934853b8ab5e7d65a3ca8abcd}{lislalnum}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_aee1d27a5eac398ec2c9c8b80281041e6}{lisdigit}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a768801f115261ae5ad51fdf6e54904e2}{lisspace}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a68562616d451f440d5c8e4e3d345c573}{lisprint}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a72e55b66d80325fb20cbc098d3448996}{lisxdigit}}(c)
+\item 
+\#define \mbox{\hyperlink{lctype_8h_a951ea98d03894d36dd2efed11ec9d973}{ltolower}}(c)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lctype_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lctype_8h_a091fbd82b59441d4a091c0312c0a0e35}\index{lctype.h@{lctype.h}!ALPHABIT@{ALPHABIT}}
+\index{ALPHABIT@{ALPHABIT}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{ALPHABIT}{ALPHABIT}}
+{\footnotesize\ttfamily \label{lctype_8h_a091fbd82b59441d4a091c0312c0a0e35} 
+\#define ALPHABIT~0}
+
+\Hypertarget{lctype_8h_a089c6406273b00564db9bd9d43945a25}\index{lctype.h@{lctype.h}!DIGITBIT@{DIGITBIT}}
+\index{DIGITBIT@{DIGITBIT}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{DIGITBIT}{DIGITBIT}}
+{\footnotesize\ttfamily \label{lctype_8h_a089c6406273b00564db9bd9d43945a25} 
+\#define DIGITBIT~1}
+
+\Hypertarget{lctype_8h_aee1d27a5eac398ec2c9c8b80281041e6}\index{lctype.h@{lctype.h}!lisdigit@{lisdigit}}
+\index{lisdigit@{lisdigit}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lisdigit}{lisdigit}}
+{\footnotesize\ttfamily \label{lctype_8h_aee1d27a5eac398ec2c9c8b80281041e6} 
+\#define lisdigit(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a089c6406273b00564db9bd9d43945a25}{DIGITBIT}}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a9c0dc6a934853b8ab5e7d65a3ca8abcd}\index{lctype.h@{lctype.h}!lislalnum@{lislalnum}}
+\index{lislalnum@{lislalnum}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lislalnum}{lislalnum}}
+{\footnotesize\ttfamily \label{lctype_8h_a9c0dc6a934853b8ab5e7d65a3ca8abcd} 
+\#define lislalnum(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ (\mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a091fbd82b59441d4a091c0312c0a0e35}{ALPHABIT}})\ |\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a089c6406273b00564db9bd9d43945a25}{DIGITBIT}})))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a7132e9f6daf30b344b74f51d64eadf7d}\index{lctype.h@{lctype.h}!lislalpha@{lislalpha}}
+\index{lislalpha@{lislalpha}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lislalpha}{lislalpha}}
+{\footnotesize\ttfamily \label{lctype_8h_a7132e9f6daf30b344b74f51d64eadf7d} 
+\#define lislalpha(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a091fbd82b59441d4a091c0312c0a0e35}{ALPHABIT}}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a68562616d451f440d5c8e4e3d345c573}\index{lctype.h@{lctype.h}!lisprint@{lisprint}}
+\index{lisprint@{lisprint}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lisprint}{lisprint}}
+{\footnotesize\ttfamily \label{lctype_8h_a68562616d451f440d5c8e4e3d345c573} 
+\#define lisprint(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a708b2cd4d3f7f7126e5f795097ab1592}{PRINTBIT}}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a768801f115261ae5ad51fdf6e54904e2}\index{lctype.h@{lctype.h}!lisspace@{lisspace}}
+\index{lisspace@{lisspace}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lisspace}{lisspace}}
+{\footnotesize\ttfamily \label{lctype_8h_a768801f115261ae5ad51fdf6e54904e2} 
+\#define lisspace(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a6fe589191c9eb50677a9dcdcbc47891e}{SPACEBIT}}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a72e55b66d80325fb20cbc098d3448996}\index{lctype.h@{lctype.h}!lisxdigit@{lisxdigit}}
+\index{lisxdigit@{lisxdigit}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{lisxdigit}{lisxdigit}}
+{\footnotesize\ttfamily \label{lctype_8h_a72e55b66d80325fb20cbc098d3448996} 
+\#define lisxdigit(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}{testprop}}(c,\ \mbox{\hyperlink{lctype_8h_a7d3df71e2854f50a0da793b08732e197}{MASK}}(\mbox{\hyperlink{lctype_8h_a326c899e67809dd5626560011d3dd09c}{XDIGITBIT}}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a951ea98d03894d36dd2efed11ec9d973}\index{lctype.h@{lctype.h}!ltolower@{ltolower}}
+\index{ltolower@{ltolower}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{ltolower}{ltolower}}
+{\footnotesize\ttfamily \label{lctype_8h_a951ea98d03894d36dd2efed11ec9d973} 
+\#define ltolower(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((\textcolor{charliteral}{'A'}\ <=\ (c)\ \&\&\ (c)\ <=\ \textcolor{charliteral}{'Z'})\ ||\ (c)\ ==\ ((c)\ |\ (\textcolor{charliteral}{'A'}\ \string^\ \textcolor{charliteral}{'a'})),\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ (c)\ |\ (\textcolor{charliteral}{'A'}\ \string^\ \textcolor{charliteral}{'a'}))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a7d15b705d59378d3c5ab7a722473bf8d}\index{lctype.h@{lctype.h}!LUA\_USE\_CTYPE@{LUA\_USE\_CTYPE}}
+\index{LUA\_USE\_CTYPE@{LUA\_USE\_CTYPE}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_USE\_CTYPE}{LUA\_USE\_CTYPE}}
+{\footnotesize\ttfamily \label{lctype_8h_a7d15b705d59378d3c5ab7a722473bf8d} 
+\#define LUA\+\_\+\+USE\+\_\+\+CTYPE~0}
+
+\Hypertarget{lctype_8h_a7d3df71e2854f50a0da793b08732e197}\index{lctype.h@{lctype.h}!MASK@{MASK}}
+\index{MASK@{MASK}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{MASK}{MASK}}
+{\footnotesize\ttfamily \label{lctype_8h_a7d3df71e2854f50a0da793b08732e197} 
+\#define MASK(\begin{DoxyParamCaption}\item[{}]{B}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(1\ <<\ (B))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a708b2cd4d3f7f7126e5f795097ab1592}\index{lctype.h@{lctype.h}!PRINTBIT@{PRINTBIT}}
+\index{PRINTBIT@{PRINTBIT}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{PRINTBIT}{PRINTBIT}}
+{\footnotesize\ttfamily \label{lctype_8h_a708b2cd4d3f7f7126e5f795097ab1592} 
+\#define PRINTBIT~2}
+
+\Hypertarget{lctype_8h_a6fe589191c9eb50677a9dcdcbc47891e}\index{lctype.h@{lctype.h}!SPACEBIT@{SPACEBIT}}
+\index{SPACEBIT@{SPACEBIT}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{SPACEBIT}{SPACEBIT}}
+{\footnotesize\ttfamily \label{lctype_8h_a6fe589191c9eb50677a9dcdcbc47891e} 
+\#define SPACEBIT~3}
+
+\Hypertarget{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d}\index{lctype.h@{lctype.h}!testprop@{testprop}}
+\index{testprop@{testprop}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{testprop}{testprop}}
+{\footnotesize\ttfamily \label{lctype_8h_ac933a1d6fac0b2e206836c4b8089482d} 
+\#define testprop(\begin{DoxyParamCaption}\item[{}]{c}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lctype_8c_a0fb53cca0a77a27211713000fc8f66b2}{luai\_ctype\_}}[(c)+1]\ \&\ (p))}
+
+\end{DoxyCode}
+\Hypertarget{lctype_8h_a326c899e67809dd5626560011d3dd09c}\index{lctype.h@{lctype.h}!XDIGITBIT@{XDIGITBIT}}
+\index{XDIGITBIT@{XDIGITBIT}!lctype.h@{lctype.h}}
+\doxysubsubsection{\texorpdfstring{XDIGITBIT}{XDIGITBIT}}
+{\footnotesize\ttfamily \label{lctype_8h_a326c899e67809dd5626560011d3dd09c} 
+\#define XDIGITBIT~4}
+

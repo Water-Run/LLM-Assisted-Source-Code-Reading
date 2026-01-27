@@ -1,0 +1,180 @@
+\doxysection{loadlib.\+c File Reference}
+\hypertarget{loadlib_8c}{}\label{loadlib_8c}\index{loadlib.c@{loadlib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for loadlib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loadlib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a204928807a3aea44a5765758cec7e49a}{loadlib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a612c9af4dd9a58765226bcdddb380c7d}{LUA\+\_\+\+CSUBSEP}}~\mbox{\hyperlink{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}{LUA\+\_\+\+DIRSEP}}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a6c20d5257fe758acbee718f58ec054f8}{LUA\+\_\+\+LSUBSEP}}~\mbox{\hyperlink{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}{LUA\+\_\+\+DIRSEP}}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_ae484759202e13c0121badd902b707955}{LUA\+\_\+\+POF}}~"{}luaopen\+\_\+"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_addb93481df7869f7e8c6f85ad7ed3e53}{LUA\+\_\+\+OFSEP}}~"{}\+\_\+"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4}{LIB\+\_\+\+FAIL}}~"{}open"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_aaf2f653c673bdd616a05f1643e1784ab}{setprogdir}}(L)
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a09cd6f3f38bdccbc03f94caeffd02290}{cast\+\_\+\+Lfunc}}(p)
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4}{LIB\+\_\+\+FAIL}}~"{}absent"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_ae5b5e1b4773252e50831be85fbf40777}{DLMSG}}~"{}dynamic libraries not enabled; check your Lua installation"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_aafc06e5218aa84669dd7d3a2c6a94046}{LUA\+\_\+\+PATH\+\_\+\+VAR}}~"{}LUA\+\_\+\+PATH"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_adb8da8be231c0a4a2395949f78d092c5}{LUA\+\_\+\+CPATH\+\_\+\+VAR}}~"{}LUA\+\_\+\+CPATH"{}
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a3a24a5a8d141a252b170da80f26a1f2f}{ERRLIB}}~1
+\item 
+\#define \mbox{\hyperlink{loadlib_8c_a51529ffe3184e16719bcb031a03c8f6f}{ERRFUNC}}~2
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{loadlib_8c_ab732e1ec253c9b8dc0c2ce4d74cb0083}{luaopen\+\_\+package}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{loadlib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{loadlib_8c_a09cd6f3f38bdccbc03f94caeffd02290}\index{loadlib.c@{loadlib.c}!cast\_Lfunc@{cast\_Lfunc}}
+\index{cast\_Lfunc@{cast\_Lfunc}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{cast\_Lfunc}{cast\_Lfunc}}
+{\footnotesize\ttfamily \label{loadlib_8c_a09cd6f3f38bdccbc03f94caeffd02290} 
+\#define cast\+\_\+\+Lfunc(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}},\ \mbox{\hyperlink{llimits_8h_acc9d4f3030e913a0df31d4b06a9251da}{cast\_func}}(p))}
+
+\end{DoxyCode}
+\Hypertarget{loadlib_8c_ae5b5e1b4773252e50831be85fbf40777}\index{loadlib.c@{loadlib.c}!DLMSG@{DLMSG}}
+\index{DLMSG@{DLMSG}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{DLMSG}{DLMSG}}
+{\footnotesize\ttfamily \label{loadlib_8c_ae5b5e1b4773252e50831be85fbf40777} 
+\#define DLMSG~"{}dynamic libraries not enabled; check your Lua installation"{}}
+
+\Hypertarget{loadlib_8c_a51529ffe3184e16719bcb031a03c8f6f}\index{loadlib.c@{loadlib.c}!ERRFUNC@{ERRFUNC}}
+\index{ERRFUNC@{ERRFUNC}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{ERRFUNC}{ERRFUNC}}
+{\footnotesize\ttfamily \label{loadlib_8c_a51529ffe3184e16719bcb031a03c8f6f} 
+\#define ERRFUNC~2}
+
+\Hypertarget{loadlib_8c_a3a24a5a8d141a252b170da80f26a1f2f}\index{loadlib.c@{loadlib.c}!ERRLIB@{ERRLIB}}
+\index{ERRLIB@{ERRLIB}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{ERRLIB}{ERRLIB}}
+{\footnotesize\ttfamily \label{loadlib_8c_a3a24a5a8d141a252b170da80f26a1f2f} 
+\#define ERRLIB~1}
+
+\Hypertarget{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4}\index{loadlib.c@{loadlib.c}!LIB\_FAIL@{LIB\_FAIL}}
+\index{LIB\_FAIL@{LIB\_FAIL}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LIB\_FAIL}{LIB\_FAIL}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4} 
+\#define LIB\+\_\+\+FAIL~"{}open"{}}
+
+\Hypertarget{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4}\index{loadlib.c@{loadlib.c}!LIB\_FAIL@{LIB\_FAIL}}
+\index{LIB\_FAIL@{LIB\_FAIL}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LIB\_FAIL}{LIB\_FAIL}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{loadlib_8c_af0b680e98ad7c321efb7b5e46f7e69c4} 
+\#define LIB\+\_\+\+FAIL~"{}absent"{}}
+
+\Hypertarget{loadlib_8c_a204928807a3aea44a5765758cec7e49a}\index{loadlib.c@{loadlib.c}!loadlib\_c@{loadlib\_c}}
+\index{loadlib\_c@{loadlib\_c}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{loadlib\_c}{loadlib\_c}}
+{\footnotesize\ttfamily \label{loadlib_8c_a204928807a3aea44a5765758cec7e49a} 
+\#define loadlib\+\_\+c}
+
+\Hypertarget{loadlib_8c_adb8da8be231c0a4a2395949f78d092c5}\index{loadlib.c@{loadlib.c}!LUA\_CPATH\_VAR@{LUA\_CPATH\_VAR}}
+\index{LUA\_CPATH\_VAR@{LUA\_CPATH\_VAR}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CPATH\_VAR}{LUA\_CPATH\_VAR}}
+{\footnotesize\ttfamily \label{loadlib_8c_adb8da8be231c0a4a2395949f78d092c5} 
+\#define LUA\+\_\+\+CPATH\+\_\+\+VAR~"{}LUA\+\_\+\+CPATH"{}}
+
+\Hypertarget{loadlib_8c_a612c9af4dd9a58765226bcdddb380c7d}\index{loadlib.c@{loadlib.c}!LUA\_CSUBSEP@{LUA\_CSUBSEP}}
+\index{LUA\_CSUBSEP@{LUA\_CSUBSEP}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CSUBSEP}{LUA\_CSUBSEP}}
+{\footnotesize\ttfamily \label{loadlib_8c_a612c9af4dd9a58765226bcdddb380c7d} 
+\#define LUA\+\_\+\+CSUBSEP~\mbox{\hyperlink{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}{LUA\+\_\+\+DIRSEP}}}
+
+\Hypertarget{loadlib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{loadlib.c@{loadlib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{loadlib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{loadlib_8c_a6c20d5257fe758acbee718f58ec054f8}\index{loadlib.c@{loadlib.c}!LUA\_LSUBSEP@{LUA\_LSUBSEP}}
+\index{LUA\_LSUBSEP@{LUA\_LSUBSEP}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LSUBSEP}{LUA\_LSUBSEP}}
+{\footnotesize\ttfamily \label{loadlib_8c_a6c20d5257fe758acbee718f58ec054f8} 
+\#define LUA\+\_\+\+LSUBSEP~\mbox{\hyperlink{luaconf_8h_a2e611ade620cc30a6f0c306ae39d27d8}{LUA\+\_\+\+DIRSEP}}}
+
+\Hypertarget{loadlib_8c_addb93481df7869f7e8c6f85ad7ed3e53}\index{loadlib.c@{loadlib.c}!LUA\_OFSEP@{LUA\_OFSEP}}
+\index{LUA\_OFSEP@{LUA\_OFSEP}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_OFSEP}{LUA\_OFSEP}}
+{\footnotesize\ttfamily \label{loadlib_8c_addb93481df7869f7e8c6f85ad7ed3e53} 
+\#define LUA\+\_\+\+OFSEP~"{}\+\_\+"{}}
+
+\Hypertarget{loadlib_8c_aafc06e5218aa84669dd7d3a2c6a94046}\index{loadlib.c@{loadlib.c}!LUA\_PATH\_VAR@{LUA\_PATH\_VAR}}
+\index{LUA\_PATH\_VAR@{LUA\_PATH\_VAR}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_PATH\_VAR}{LUA\_PATH\_VAR}}
+{\footnotesize\ttfamily \label{loadlib_8c_aafc06e5218aa84669dd7d3a2c6a94046} 
+\#define LUA\+\_\+\+PATH\+\_\+\+VAR~"{}LUA\+\_\+\+PATH"{}}
+
+\Hypertarget{loadlib_8c_ae484759202e13c0121badd902b707955}\index{loadlib.c@{loadlib.c}!LUA\_POF@{LUA\_POF}}
+\index{LUA\_POF@{LUA\_POF}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_POF}{LUA\_POF}}
+{\footnotesize\ttfamily \label{loadlib_8c_ae484759202e13c0121badd902b707955} 
+\#define LUA\+\_\+\+POF~"{}luaopen\+\_\+"{}}
+
+\Hypertarget{loadlib_8c_aaf2f653c673bdd616a05f1643e1784ab}\index{loadlib.c@{loadlib.c}!setprogdir@{setprogdir}}
+\index{setprogdir@{setprogdir}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{setprogdir}{setprogdir}}
+{\footnotesize\ttfamily \label{loadlib_8c_aaf2f653c673bdd616a05f1643e1784ab} 
+\#define setprogdir(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)0)}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{loadlib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{loadlib_8c_ab732e1ec253c9b8dc0c2ce4d74cb0083}\index{loadlib.c@{loadlib.c}!luaopen\_package@{luaopen\_package}}
+\index{luaopen\_package@{luaopen\_package}!loadlib.c@{loadlib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_package()}{luaopen\_package()}}
+{\footnotesize\ttfamily \label{loadlib_8c_ab732e1ec253c9b8dc0c2ce4d74cb0083} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+package (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loadlib_8c_ab732e1ec253c9b8dc0c2ce4d74cb0083_cgraph}
+\end{center}
+\end{figure}

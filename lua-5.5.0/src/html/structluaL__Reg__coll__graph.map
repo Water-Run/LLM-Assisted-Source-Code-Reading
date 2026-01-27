@@ -1,0 +1,54 @@
+<map id="luaL_Reg" name="luaL_Reg">
+<area shape="rect" id="Node000001" title=" " alt="" coords="595,556,672,583"/>
+<area shape="rect" id="Node000002" href="$structlua__State.html" title=" " alt="" coords="595,417,672,444"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="636,460,636,555,631,555,631,460"/>
+<area shape="poly" id="edge33_Node000002_Node000002" title=" " alt="" coords="688,418,695,422,698,431,690,443,672,446,671,441,687,438,693,430,691,426,685,422"/>
+<area shape="rect" id="Node000006" href="$structglobal__State.html" title=" " alt="" coords="525,1235,619,1261"/>
+<area shape="poly" id="edge11_Node000006_Node000002" title=" " alt="" coords="659,454,674,476,694,516,705,549,711,584,712,628,712,1131,709,1150,702,1168,676,1198,643,1221,610,1236,607,1232,640,1216,672,1194,697,1165,704,1149,707,1130,707,628,705,584,700,550,689,518,670,479,654,457"/>
+<area shape="rect" id="Node000011" href="$unionValue.html" title=" " alt="" coords="331,556,384,583"/>
+<area shape="poly" id="edge16_Node000011_Node000002" title=" " alt="" coords="580,443,524,457,467,480,438,498,411,519,371,557,367,554,407,515,434,493,464,475,522,452,579,438"/>
+<area shape="rect" id="Node000014" href="$structLX.html" title=" " alt="" coords="506,616,545,643"/>
+<area shape="poly" id="edge24_Node000014_Node000002" title=" " alt="" coords="582,444,553,458,530,479,521,496,516,514,513,552,517,588,524,615,519,616,512,589,508,552,511,513,516,494,526,476,550,453,579,439"/>
+<area shape="rect" id="Node000015" href="$structCallInfo.html" title=" " alt="" coords="794,556,860,583"/>
+<area shape="poly" id="edge28_Node000015_Node000002" title=" " alt="" coords="687,431,745,444,774,457,799,475,813,494,822,516,829,555,824,556,817,518,809,497,795,479,771,462,744,449,686,437"/>
+<area shape="rect" id="Node000003" href="$unionStkIdRel.html" title=" " alt="" coords="816,245,888,272"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="803,281,776,298,757,320,746,341,735,362,715,386,690,405,664,419,661,414,687,400,712,382,730,360,741,338,752,317,773,294,800,276"/>
+<area shape="poly" id="edge26_Node000015_Node000003" title=" " alt="" coords="856,287,856,391,853,457,844,523,834,556,829,555,839,522,847,457,851,391,851,287"/>
+<area shape="rect" id="Node000004" href="$unionStackValue.html" title=" " alt="" coords="408,125,496,152"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="510,154,816,244,815,249,508,159"/>
+<area shape="rect" id="Node000005" href="$structTValue.html" title=" " alt="" coords="99,5,160,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="176,20,292,31,347,40,387,54,407,69,425,88,448,123,444,126,421,91,404,73,384,58,346,46,291,36,175,25"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="87,42,60,59,34,80,15,107,8,138,8,1130,12,1148,24,1164,43,1178,68,1191,135,1211,215,1226,301,1235,387,1241,525,1244,525,1250,387,1246,301,1241,214,1231,133,1216,66,1196,40,1183,20,1168,7,1151,3,1131,3,137,10,104,30,77,57,54,84,37"/>
+<area shape="rect" id="Node000012" href="$unionNode.html" title=" " alt="" coords="92,997,145,1024"/>
+<area shape="poly" id="edge20_Node000012_Node000005" title=" " alt="" coords="123,48,112,90,107,137,107,787,112,909,120,997,115,997,107,909,101,787,101,137,107,89,117,46"/>
+<area shape="rect" id="Node000016" href="$structUpVal.html" title=" " alt="" coords="405,185,462,212"/>
+<area shape="poly" id="edge30_Node000016_Node000005" title=" " alt="" coords="165,38,413,183,411,187,162,42"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="580,1219,583,1210,591,1159,593,1118,593,1024,594,903,590,808,584,714,580,592,578,569,580,546,601,487,624,443,628,445,605,489,585,547,584,569,585,592,590,713,595,808,599,902,599,1024,599,1118,596,1159,588,1211,585,1221"/>
+<area shape="rect" id="Node000007" href="$structstringtable.html" title=" " alt="" coords="871,1116,953,1143"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="887,1155,843,1186,790,1213,746,1227,701,1237,620,1247,619,1242,700,1232,745,1222,788,1208,841,1181,884,1150"/>
+<area shape="rect" id="Node000008" href="$structTString.html" title=" " alt="" coords="790,997,853,1024"/>
+<area shape="poly" id="edge12_Node000006_Node000008" title=" " alt="" coords="812,1039,730,1212,704,1229,675,1239,619,1249,619,1244,674,1234,702,1224,726,1209,807,1037"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="843,1035,904,1114,900,1117,838,1038"/>
+<area shape="poly" id="edge8_Node000008_Node000008" title=" " alt="" coords="869,1000,877,1004,880,1011,871,1020,854,1023,853,1017,869,1016,874,1010,873,1008,867,1005"/>
+<area shape="rect" id="Node000009" href="$structGCObject.html" title=" " alt="" coords="348,245,428,272"/>
+<area shape="poly" id="edge32_Node000002_Node000009" title=" " alt="" coords="428,279,444,294,455,319,457,341,460,362,474,382,501,401,533,414,565,422,595,426,594,431,564,427,531,419,499,406,470,386,455,364,452,342,450,320,439,298,424,283"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="401,286,419,350,426,390,429,429,429,1130,432,1149,439,1166,465,1194,499,1216,533,1232,531,1236,496,1221,461,1199,435,1169,427,1151,424,1131,424,429,421,390,414,352,395,287"/>
+<area shape="rect" id="Node000010" href="$structTable.html" title=" " alt="" coords="202,1116,254,1143"/>
+<area shape="poly" id="edge22_Node000010_Node000009" title=" " alt="" coords="335,279,284,302,233,334,211,354,194,376,183,401,179,430,179,631,185,780,200,924,228,1115,223,1116,194,925,180,781,173,631,173,429,178,400,190,373,207,350,230,329,281,297,333,274"/>
+<area shape="poly" id="edge15_Node000011_Node000009" title=" " alt="" coords="388,288,361,556,356,555,383,287"/>
+<area shape="poly" id="edge13_Node000006_Node000010" title=" " alt="" coords="262,1149,319,1179,386,1208,458,1227,525,1239,525,1244,457,1233,384,1213,317,1184,260,1153"/>
+<area shape="poly" id="edge21_Node000010_Node000010" title=" " alt="" coords="271,1116,278,1121,281,1129,278,1137,272,1142,255,1145,254,1139,270,1138,274,1134,276,1129,274,1124,268,1120"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="362,598,365,655,365,732,359,818,343,905,320,970,290,1031,239,1117,234,1114,286,1029,315,968,337,903,353,818,360,731,360,655,357,598"/>
+<area shape="rect" id="Node000013" href="$structNode_1_1NodeKey.html" title=" " alt="" coords="214,772,328,799"/>
+<area shape="poly" id="edge19_Node000013_Node000011" title=" " alt="" coords="320,593,296,617,279,658,271,702,270,742,272,771,267,772,265,742,266,702,274,657,291,615,316,590"/>
+<area shape="poly" id="edge17_Node000010_Node000012" title=" " alt="" coords="121,1039,123,1056,130,1071,145,1087,164,1100,202,1118,200,1123,161,1105,142,1091,126,1073,118,1057,115,1040"/>
+<area shape="poly" id="edge18_Node000012_Node000013" title=" " alt="" coords="256,813,129,998,125,995,251,810"/>
+<area shape="poly" id="edge23_Node000006_Node000014" title=" " alt="" coords="529,658,537,814,552,1024,573,1234,568,1234,546,1024,532,814,524,658"/>
+<area shape="poly" id="edge25_Node000002_Node000015" title=" " alt="" coords="781,551,743,525,732,512,726,501,721,491,712,479,687,461,661,447,664,442,690,456,715,475,725,488,731,499,737,510,746,521,784,547"/>
+<area shape="poly" id="edge27_Node000015_Node000015" title=" " alt="" coords="876,558,883,562,886,570,878,580,861,583,860,578,876,576,881,569,879,565,874,562"/>
+<area shape="poly" id="edge29_Node000002_Node000016" title=" " alt="" coords="456,222,625,415,621,419,452,226"/>
+<area shape="poly" id="edge31_Node000016_Node000016" title=" " alt="" coords="478,187,485,191,488,199,480,210,462,212,461,207,477,205,483,198,481,194,475,191"/>
+<area shape="rect" id="Node000017" href="$structlua__longjmp.html" title=" " alt="" coords="620,245,710,272"/>
+<area shape="poly" id="edge34_Node000002_Node000017" title=" " alt="" coords="659,288,657,297,644,364,637,417,632,416,639,363,652,295,654,286"/>
+<area shape="poly" id="edge35_Node000017_Node000017" title=" " alt="" coords="727,247,734,252,737,259,729,269,711,273,710,267,726,265,732,258,730,255,724,252"/>
+</map>

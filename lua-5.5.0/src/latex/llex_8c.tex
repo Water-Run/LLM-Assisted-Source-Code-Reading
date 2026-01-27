@@ -1,0 +1,200 @@
+\doxysection{llex.\+c File Reference}
+\hypertarget{llex_8c}{}\label{llex_8c}\index{llex.c@{llex.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lctype.\+h"{}}\newline
+{\ttfamily \#include "{}ldebug.\+h"{}}\newline
+{\ttfamily \#include "{}ldo.\+h"{}}\newline
+{\ttfamily \#include "{}lgc.\+h"{}}\newline
+{\ttfamily \#include "{}llex.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lparser.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+{\ttfamily \#include "{}lstring.\+h"{}}\newline
+{\ttfamily \#include "{}ltable.\+h"{}}\newline
+{\ttfamily \#include "{}lzio.\+h"{}}\newline
+Include dependency graph for llex.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{llex_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{llex_8c_a2e2a05c4292ce934408b59470a78472d}{llex\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{llex_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{llex_8c_a8ab976102fb046f9974c53caaf5a1995}{next}}(ls)
+\item 
+\#define \mbox{\hyperlink{llex_8c_aa0320f75a72bf131ae24d39111ac9938}{LUA\+\_\+\+MINBUFFER}}~32
+\item 
+\#define \mbox{\hyperlink{llex_8c_aee0dbe3090a8bf4b0ecd633781c5a09a}{curr\+Is\+Newline}}(ls)
+\item 
+\#define \mbox{\hyperlink{llex_8c_ac4c2ebdfa66caf9c1ef124c30e9d68a5}{save\+\_\+and\+\_\+next}}(ls)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{llex_8c_a50834f7eb4b2ac79c8df048988749abe}{lua\+X\+\_\+init}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{llex_8c_ae0344e32c36c15c39ad59d97b428f8c9}{lua\+X\+\_\+token2str}} (\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls, int token)
+\item 
+\mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\+\_\+noret}} \mbox{\hyperlink{llex_8c_aa5303ae41cbf1a2d9ef2f422751f85be}{lua\+X\+\_\+syntaxerror}} (\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls, const char \texorpdfstring{$\ast$}{*}msg)
+\item 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{llex_8c_a51ec8735f32a452d48a77e71e9dd0a3b}{lua\+X\+\_\+newstring}} (\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls, const char \texorpdfstring{$\ast$}{*}str, size\+\_\+t l)
+\item 
+void \mbox{\hyperlink{llex_8c_a169c85d08461f83e3f8a8c32dcb3d151}{lua\+X\+\_\+setinput}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, \mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*}source, int firstchar)
+\item 
+void \mbox{\hyperlink{llex_8c_a8b9f2aa3f74c4e2f814d860dc7f5a6a8}{lua\+X\+\_\+next}} (\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls)
+\item 
+int \mbox{\hyperlink{llex_8c_af44c274f4e9a24ac9bc41ff31bac5ffb}{lua\+X\+\_\+lookahead}} (\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}ls)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{llex_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{llex_8c_aee0dbe3090a8bf4b0ecd633781c5a09a}\index{llex.c@{llex.c}!currIsNewline@{currIsNewline}}
+\index{currIsNewline@{currIsNewline}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{currIsNewline}{currIsNewline}}
+{\footnotesize\ttfamily \label{llex_8c_aee0dbe3090a8bf4b0ecd633781c5a09a} 
+\#define curr\+Is\+Newline(\begin{DoxyParamCaption}\item[{}]{ls}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(ls-\/>current\ ==\ \textcolor{charliteral}{'\(\backslash\)n'}\ ||\ ls-\/>current\ ==\ \textcolor{charliteral}{'\(\backslash\)r'})}
+
+\end{DoxyCode}
+\Hypertarget{llex_8c_a2e2a05c4292ce934408b59470a78472d}\index{llex.c@{llex.c}!llex\_c@{llex\_c}}
+\index{llex\_c@{llex\_c}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{llex\_c}{llex\_c}}
+{\footnotesize\ttfamily \label{llex_8c_a2e2a05c4292ce934408b59470a78472d} 
+\#define llex\+\_\+c}
+
+\Hypertarget{llex_8c_abf0b3947b59218777a8e928a10be205b}\index{llex.c@{llex.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{llex_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+\Hypertarget{llex_8c_aa0320f75a72bf131ae24d39111ac9938}\index{llex.c@{llex.c}!LUA\_MINBUFFER@{LUA\_MINBUFFER}}
+\index{LUA\_MINBUFFER@{LUA\_MINBUFFER}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_MINBUFFER}{LUA\_MINBUFFER}}
+{\footnotesize\ttfamily \label{llex_8c_aa0320f75a72bf131ae24d39111ac9938} 
+\#define LUA\+\_\+\+MINBUFFER~32}
+
+\Hypertarget{llex_8c_a8ab976102fb046f9974c53caaf5a1995}\index{llex.c@{llex.c}!next@{next}}
+\index{next@{next}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily \label{llex_8c_a8ab976102fb046f9974c53caaf5a1995} 
+\#define next(\begin{DoxyParamCaption}\item[{}]{ls}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(ls-\/>current\ =\ \mbox{\hyperlink{lzio_8h_aecca8ea1e6dc0c97b458f77c0e3491de}{zgetc}}(ls-\/>z))}
+
+\end{DoxyCode}
+\Hypertarget{llex_8c_ac4c2ebdfa66caf9c1ef124c30e9d68a5}\index{llex.c@{llex.c}!save\_and\_next@{save\_and\_next}}
+\index{save\_and\_next@{save\_and\_next}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{save\_and\_next}{save\_and\_next}}
+{\footnotesize\ttfamily \label{llex_8c_ac4c2ebdfa66caf9c1ef124c30e9d68a5} 
+\#define save\+\_\+and\+\_\+next(\begin{DoxyParamCaption}\item[{}]{ls}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(save(ls,\ ls-\/>current),\ \mbox{\hyperlink{llex_8c_a8ab976102fb046f9974c53caaf5a1995}{next}}(ls))}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{llex_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{llex_8c_a50834f7eb4b2ac79c8df048988749abe}\index{llex.c@{llex.c}!luaX\_init@{luaX\_init}}
+\index{luaX\_init@{luaX\_init}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_init()}{luaX\_init()}}
+{\footnotesize\ttfamily \label{llex_8c_a50834f7eb4b2ac79c8df048988749abe} 
+void lua\+X\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{llex_8c_a50834f7eb4b2ac79c8df048988749abe_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{llex_8c_af44c274f4e9a24ac9bc41ff31bac5ffb}\index{llex.c@{llex.c}!luaX\_lookahead@{luaX\_lookahead}}
+\index{luaX\_lookahead@{luaX\_lookahead}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_lookahead()}{luaX\_lookahead()}}
+{\footnotesize\ttfamily \label{llex_8c_af44c274f4e9a24ac9bc41ff31bac5ffb} 
+int lua\+X\+\_\+lookahead (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{}\end{DoxyParamCaption})}
+
+\Hypertarget{llex_8c_a51ec8735f32a452d48a77e71e9dd0a3b}\index{llex.c@{llex.c}!luaX\_newstring@{luaX\_newstring}}
+\index{luaX\_newstring@{luaX\_newstring}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_newstring()}{luaX\_newstring()}}
+{\footnotesize\ttfamily \label{llex_8c_a51ec8735f32a452d48a77e71e9dd0a3b} 
+\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} lua\+X\+\_\+newstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{size\+\_\+t}]{l}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{llex_8c_a51ec8735f32a452d48a77e71e9dd0a3b_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{llex_8c_a8b9f2aa3f74c4e2f814d860dc7f5a6a8}\index{llex.c@{llex.c}!luaX\_next@{luaX\_next}}
+\index{luaX\_next@{luaX\_next}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_next()}{luaX\_next()}}
+{\footnotesize\ttfamily \label{llex_8c_a8b9f2aa3f74c4e2f814d860dc7f5a6a8} 
+void lua\+X\+\_\+next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{}\end{DoxyParamCaption})}
+
+\Hypertarget{llex_8c_a169c85d08461f83e3f8a8c32dcb3d151}\index{llex.c@{llex.c}!luaX\_setinput@{luaX\_setinput}}
+\index{luaX\_setinput@{luaX\_setinput}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_setinput()}{luaX\_setinput()}}
+{\footnotesize\ttfamily \label{llex_8c_a169c85d08461f83e3f8a8c32dcb3d151} 
+void lua\+X\+\_\+setinput (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{int}]{firstchar}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{llex_8c_a169c85d08461f83e3f8a8c32dcb3d151_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{llex_8c_aa5303ae41cbf1a2d9ef2f422751f85be}\index{llex.c@{llex.c}!luaX\_syntaxerror@{luaX\_syntaxerror}}
+\index{luaX\_syntaxerror@{luaX\_syntaxerror}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_syntaxerror()}{luaX\_syntaxerror()}}
+{\footnotesize\ttfamily \label{llex_8c_aa5303ae41cbf1a2d9ef2f422751f85be} 
+\mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\+\_\+noret}} lua\+X\+\_\+syntaxerror (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{llex_8c_aa5303ae41cbf1a2d9ef2f422751f85be_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{llex_8c_ae0344e32c36c15c39ad59d97b428f8c9}\index{llex.c@{llex.c}!luaX\_token2str@{luaX\_token2str}}
+\index{luaX\_token2str@{luaX\_token2str}!llex.c@{llex.c}}
+\doxysubsubsection{\texorpdfstring{luaX\_token2str()}{luaX\_token2str()}}
+{\footnotesize\ttfamily \label{llex_8c_ae0344e32c36c15c39ad59d97b428f8c9} 
+const char \texorpdfstring{$\ast$}{*} lua\+X\+\_\+token2str (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structLexState}{Lex\+State}} \texorpdfstring{$\ast$}{*}}]{ls}{, }\item[{int}]{token}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{llex_8c_ae0344e32c36c15c39ad59d97b428f8c9_cgraph}
+\end{center}
+\end{figure}

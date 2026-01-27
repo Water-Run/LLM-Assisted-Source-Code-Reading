@@ -1,0 +1,360 @@
+\doxysection{lmem.\+h File Reference}
+\hypertarget{lmem_8h}{}\label{lmem_8h}\index{lmem.h@{lmem.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+Include dependency graph for lmem.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=297pt]{lmem_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ae11aaaf07d13b2f0c3a671b01d7e3822}{lua\+M\+\_\+error}}(L)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_aaa4ae2ac3a122058ba3e73b1f438a89c}{lua\+M\+\_\+testsize}}(n,  e)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a0ab87210cc8c1a531b9397f6d55b1a97}{lua\+M\+\_\+checksize}}(L,  n,  e)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a29ccefa76d4743ffb490cdbc291f708a}{lua\+M\+\_\+limitN}}(n,  t)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a5904278d180acc29faf199e1d76f3e85}{lua\+M\+\_\+reallocvchar}}(L,  b,  on,  n)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a159fd0a4f45c4aa195990526f9d0bf01}{lua\+M\+\_\+freemem}}(L,  b,  s)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ad927ceb6a17a9e89a00b83dcc4482988}{lua\+M\+\_\+free}}(L,  b)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a574612879aa6814c76b8b57c41e4af5a}{lua\+M\+\_\+freearray}}(L,  b,  n)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ae72bd363be924fa9a67be67de0802ad7}{lua\+M\+\_\+new}}(L,  t)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a715cc368a85506c7a104cda58f270f3e}{lua\+M\+\_\+newvector}}(L,  n,  t)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ab223744a0660c0aa48e388ca51466839}{lua\+M\+\_\+newvectorchecked}}(L,  n,  t)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a0ce640c4b032a327440e3820365d7167}{lua\+M\+\_\+newobject}}(L,  tag,  s)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a145325e561c4f718a732ebc6bce1dc38}{lua\+M\+\_\+newblock}}(L,  size)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_a38823c4cdf0d53b73e1e3015affb06f9}{lua\+M\+\_\+growvector}}(L,  v,  nelems,  size,  t,  limit,  e)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ab1174e625ed7a62e5f8ba33a7e1c1917}{lua\+M\+\_\+reallocvector}}(L,  v,  oldn,  n,  t)
+\item 
+\#define \mbox{\hyperlink{lmem_8h_ab90797c53a311d30154c486b2b8561d5}{lua\+M\+\_\+shrinkvector}}(L,  v,  size,  fs,  t)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\+\_\+noret}} \mbox{\hyperlink{lmem_8h_a23b8703b7b50e1c5dd37d41569a09a9a}{lua\+M\+\_\+toobig}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lmem_8h_ae5c8a16bb1c249e63cb08e0e2bd5a8d0}{lua\+M\+\_\+realloc\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, void \texorpdfstring{$\ast$}{*}block, size\+\_\+t oldsize, size\+\_\+t size)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lmem_8h_af857f53df3465facdda7f0453b04cc46}{lua\+M\+\_\+saferealloc\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, void \texorpdfstring{$\ast$}{*}block, size\+\_\+t oldsize, size\+\_\+t size)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lmem_8h_a1596632e07c593bd9558ee4920fbe5de}{lua\+M\+\_\+free\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, void \texorpdfstring{$\ast$}{*}block, size\+\_\+t osize)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lmem_8h_ad2a00a983d282f85f14ed4574a958369}{lua\+M\+\_\+growaux\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, void \texorpdfstring{$\ast$}{*}block, int nelems, int \texorpdfstring{$\ast$}{*}size, unsigned size\+\_\+elem, int limit, const char \texorpdfstring{$\ast$}{*}what)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lmem_8h_a9b0e7fcca89e578ea39b2d7479373fd1}{lua\+M\+\_\+shrinkvector\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, void \texorpdfstring{$\ast$}{*}block, int \texorpdfstring{$\ast$}{*}nelem, int final\+\_\+n, unsigned size\+\_\+elem)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lmem_8h_afec71d56433572a98317d256cb6c6c11}{lua\+M\+\_\+malloc\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, size\+\_\+t size, int tag)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lmem_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lmem_8h_a0ab87210cc8c1a531b9397f6d55b1a97}\index{lmem.h@{lmem.h}!luaM\_checksize@{luaM\_checksize}}
+\index{luaM\_checksize@{luaM\_checksize}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_checksize}{luaM\_checksize}}
+{\footnotesize\ttfamily \label{lmem_8h_a0ab87210cc8c1a531b9397f6d55b1a97} 
+\#define lua\+M\+\_\+checksize(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{, }\item[{}]{e}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\mbox{\hyperlink{lmem_8h_aaa4ae2ac3a122058ba3e73b1f438a89c}{luaM\_testsize}}(n,e)\ ?\ \mbox{\hyperlink{lmem_8c_a8fc7df43dd830ccbe7581fd53f65bdbe}{luaM\_toobig}}(L)\ :\ \mbox{\hyperlink{llimits_8h_a52a5166d7dc0590b63a9331cfc0f4564}{cast\_void}}(0))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ae11aaaf07d13b2f0c3a671b01d7e3822}\index{lmem.h@{lmem.h}!luaM\_error@{luaM\_error}}
+\index{luaM\_error@{luaM\_error}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_error}{luaM\_error}}
+{\footnotesize\ttfamily \label{lmem_8h_ae11aaaf07d13b2f0c3a671b01d7e3822} 
+\#define lua\+M\+\_\+error(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{ldo_8c_a717a80f91a6e8dd85101173268d94eca}{luaD\_throw}}(L,\ \mbox{\hyperlink{lua_8h_ac28ced8d63f58b5164a298d7d254f658}{LUA\_ERRMEM}})}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ad927ceb6a17a9e89a00b83dcc4482988}\index{lmem.h@{lmem.h}!luaM\_free@{luaM\_free}}
+\index{luaM\_free@{luaM\_free}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_free}{luaM\_free}}
+{\footnotesize\ttfamily \label{lmem_8h_ad927ceb6a17a9e89a00b83dcc4482988} 
+\#define lua\+M\+\_\+free(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lmem_8c_a36b12d49a937e5de982e2a2a135e6824}{luaM\_free\_}}(L,\ (b),\ \textcolor{keyword}{sizeof}(*(b)))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a574612879aa6814c76b8b57c41e4af5a}\index{lmem.h@{lmem.h}!luaM\_freearray@{luaM\_freearray}}
+\index{luaM\_freearray@{luaM\_freearray}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_freearray}{luaM\_freearray}}
+{\footnotesize\ttfamily \label{lmem_8h_a574612879aa6814c76b8b57c41e4af5a} 
+\#define lua\+M\+\_\+freearray(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{b}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lmem_8c_a36b12d49a937e5de982e2a2a135e6824}{luaM\_free\_}}(L,\ (b),\ (n)*\textcolor{keyword}{sizeof}(*(b)))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a159fd0a4f45c4aa195990526f9d0bf01}\index{lmem.h@{lmem.h}!luaM\_freemem@{luaM\_freemem}}
+\index{luaM\_freemem@{luaM\_freemem}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_freemem}{luaM\_freemem}}
+{\footnotesize\ttfamily \label{lmem_8h_a159fd0a4f45c4aa195990526f9d0bf01} 
+\#define lua\+M\+\_\+freemem(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{b}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lmem_8c_a36b12d49a937e5de982e2a2a135e6824}{luaM\_free\_}}(L,\ (b),\ (s))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a38823c4cdf0d53b73e1e3015affb06f9}\index{lmem.h@{lmem.h}!luaM\_growvector@{luaM\_growvector}}
+\index{luaM\_growvector@{luaM\_growvector}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_growvector}{luaM\_growvector}}
+{\footnotesize\ttfamily \label{lmem_8h_a38823c4cdf0d53b73e1e3015affb06f9} 
+\#define lua\+M\+\_\+growvector(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{v}{, }\item[{}]{nelems}{, }\item[{}]{size}{, }\item[{}]{t}{, }\item[{}]{limit}{, }\item[{}]{e}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((v)=\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t\ *,\ \mbox{\hyperlink{lmem_8c_a72bce3855c26220efa79e0047cc36cf5}{luaM\_growaux\_}}(L,v,nelems,\&(size),\textcolor{keyword}{sizeof}(t),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{lmem_8h_a29ccefa76d4743ffb490cdbc291f708a}{luaM\_limitN}}(limit,t),e)))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a29ccefa76d4743ffb490cdbc291f708a}\index{lmem.h@{lmem.h}!luaM\_limitN@{luaM\_limitN}}
+\index{luaM\_limitN@{luaM\_limitN}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_limitN}{luaM\_limitN}}
+{\footnotesize\ttfamily \label{lmem_8h_a29ccefa76d4743ffb490cdbc291f708a} 
+\#define lua\+M\+\_\+limitN(\begin{DoxyParamCaption}\item[{}]{n}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ ((\mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(n)\ <=\ \mbox{\hyperlink{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}{MAX\_SIZET}}/\textcolor{keyword}{sizeof}(t))\ ?\ (n)\ :\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}((\mbox{\hyperlink{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}{MAX\_SIZET}}/\textcolor{keyword}{sizeof}(t))))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ae72bd363be924fa9a67be67de0802ad7}\index{lmem.h@{lmem.h}!luaM\_new@{luaM\_new}}
+\index{luaM\_new@{luaM\_new}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_new}{luaM\_new}}
+{\footnotesize\ttfamily \label{lmem_8h_ae72bd363be924fa9a67be67de0802ad7} 
+\#define lua\+M\+\_\+new(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t*,\ \mbox{\hyperlink{lmem_8c_af0c92d038f767832eb8dd29eb0678096}{luaM\_malloc\_}}(L,\ \textcolor{keyword}{sizeof}(t),\ 0))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a145325e561c4f718a732ebc6bce1dc38}\index{lmem.h@{lmem.h}!luaM\_newblock@{luaM\_newblock}}
+\index{luaM\_newblock@{luaM\_newblock}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_newblock}{luaM\_newblock}}
+{\footnotesize\ttfamily \label{lmem_8h_a145325e561c4f718a732ebc6bce1dc38} 
+\#define lua\+M\+\_\+newblock(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{size}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lmem_8h_a715cc368a85506c7a104cda58f270f3e}{luaM\_newvector}}(L,\ size,\ \textcolor{keywordtype}{char})}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a0ce640c4b032a327440e3820365d7167}\index{lmem.h@{lmem.h}!luaM\_newobject@{luaM\_newobject}}
+\index{luaM\_newobject@{luaM\_newobject}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_newobject}{luaM\_newobject}}
+{\footnotesize\ttfamily \label{lmem_8h_a0ce640c4b032a327440e3820365d7167} 
+\#define lua\+M\+\_\+newobject(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{tag}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lmem_8c_af0c92d038f767832eb8dd29eb0678096}{luaM\_malloc\_}}(L,\ (s),\ tag)}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a715cc368a85506c7a104cda58f270f3e}\index{lmem.h@{lmem.h}!luaM\_newvector@{luaM\_newvector}}
+\index{luaM\_newvector@{luaM\_newvector}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_newvector}{luaM\_newvector}}
+{\footnotesize\ttfamily \label{lmem_8h_a715cc368a85506c7a104cda58f270f3e} 
+\#define lua\+M\+\_\+newvector(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t*,\ \mbox{\hyperlink{lmem_8c_af0c92d038f767832eb8dd29eb0678096}{luaM\_malloc\_}}(L,\ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(n)*\textcolor{keyword}{sizeof}(t),\ 0))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ab223744a0660c0aa48e388ca51466839}\index{lmem.h@{lmem.h}!luaM\_newvectorchecked@{luaM\_newvectorchecked}}
+\index{luaM\_newvectorchecked@{luaM\_newvectorchecked}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_newvectorchecked}{luaM\_newvectorchecked}}
+{\footnotesize\ttfamily \label{lmem_8h_ab223744a0660c0aa48e388ca51466839} 
+\#define lua\+M\+\_\+newvectorchecked(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ (\mbox{\hyperlink{lmem_8h_a0ab87210cc8c1a531b9397f6d55b1a97}{luaM\_checksize}}(L,n,\textcolor{keyword}{sizeof}(t)),\ \mbox{\hyperlink{lmem_8h_a715cc368a85506c7a104cda58f270f3e}{luaM\_newvector}}(L,n,t))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_a5904278d180acc29faf199e1d76f3e85}\index{lmem.h@{lmem.h}!luaM\_reallocvchar@{luaM\_reallocvchar}}
+\index{luaM\_reallocvchar@{luaM\_reallocvchar}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_reallocvchar}{luaM\_reallocvchar}}
+{\footnotesize\ttfamily \label{lmem_8h_a5904278d180acc29faf199e1d76f3e85} 
+\#define lua\+M\+\_\+reallocvchar(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{b}{, }\item[{}]{on}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{llimits_8h_a1d905979f8c901b7143b43ee98341206}{cast\_charp}}(\mbox{\hyperlink{lmem_8c_a8cb94bca57e8ae6aff344d3e6e4593af}{luaM\_saferealloc\_}}(L,\ (b),\ (on)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}),\ (n)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char})))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ab1174e625ed7a62e5f8ba33a7e1c1917}\index{lmem.h@{lmem.h}!luaM\_reallocvector@{luaM\_reallocvector}}
+\index{luaM\_reallocvector@{luaM\_reallocvector}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_reallocvector}{luaM\_reallocvector}}
+{\footnotesize\ttfamily \label{lmem_8h_ab1174e625ed7a62e5f8ba33a7e1c1917} 
+\#define lua\+M\+\_\+reallocvector(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{v}{, }\item[{}]{oldn}{, }\item[{}]{n}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ (\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t\ *,\ \mbox{\hyperlink{lmem_8c_a7dd4e9ddf6987797216fa9cf4bc23954}{luaM\_realloc\_}}(L,\ v,\ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(oldn)\ *\ \textcolor{keyword}{sizeof}(t),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(n)\ *\ \textcolor{keyword}{sizeof}(t))))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_ab90797c53a311d30154c486b2b8561d5}\index{lmem.h@{lmem.h}!luaM\_shrinkvector@{luaM\_shrinkvector}}
+\index{luaM\_shrinkvector@{luaM\_shrinkvector}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_shrinkvector}{luaM\_shrinkvector}}
+{\footnotesize\ttfamily \label{lmem_8h_ab90797c53a311d30154c486b2b8561d5} 
+\#define lua\+M\+\_\+shrinkvector(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{v}{, }\item[{}]{size}{, }\item[{}]{fs}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ ((v)=\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t\ *,\ \mbox{\hyperlink{lmem_8c_a9edf70f3b22fbd2c904175bd26607a1f}{luaM\_shrinkvector\_}}(L,\ v,\ \&(size),\ fs,\ \textcolor{keyword}{sizeof}(t))))}
+
+\end{DoxyCode}
+\Hypertarget{lmem_8h_aaa4ae2ac3a122058ba3e73b1f438a89c}\index{lmem.h@{lmem.h}!luaM\_testsize@{luaM\_testsize}}
+\index{luaM\_testsize@{luaM\_testsize}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_testsize}{luaM\_testsize}}
+{\footnotesize\ttfamily \label{lmem_8h_aaa4ae2ac3a122058ba3e73b1f438a89c} 
+\#define lua\+M\+\_\+testsize(\begin{DoxyParamCaption}\item[{}]{n}{, }\item[{}]{e}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\textcolor{keyword}{sizeof}(n)\ >=\ \textcolor{keyword}{sizeof}(size\_t)\ \&\&\ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}((n))\ +\ 1\ >\ \mbox{\hyperlink{llimits_8h_aa927c7bf177c162feda3483e1e972b3a}{MAX\_SIZET}}/(e))}
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{lmem_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lmem_8h_a1596632e07c593bd9558ee4920fbe5de}\index{lmem.h@{lmem.h}!luaM\_free\_@{luaM\_free\_}}
+\index{luaM\_free\_@{luaM\_free\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_free\_()}{luaM\_free\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_a1596632e07c593bd9558ee4920fbe5de} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+M\+\_\+free\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{block}{, }\item[{size\+\_\+t}]{osize}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lmem_8h_ad2a00a983d282f85f14ed4574a958369}\index{lmem.h@{lmem.h}!luaM\_growaux\_@{luaM\_growaux\_}}
+\index{luaM\_growaux\_@{luaM\_growaux\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_growaux\_()}{luaM\_growaux\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_ad2a00a983d282f85f14ed4574a958369} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} lua\+M\+\_\+growaux\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{block}{, }\item[{int}]{nelems}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{size}{, }\item[{unsigned}]{size\+\_\+elem}{, }\item[{int}]{limit}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{what}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h_ad2a00a983d282f85f14ed4574a958369_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lmem_8h_afec71d56433572a98317d256cb6c6c11}\index{lmem.h@{lmem.h}!luaM\_malloc\_@{luaM\_malloc\_}}
+\index{luaM\_malloc\_@{luaM\_malloc\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_malloc\_()}{luaM\_malloc\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_afec71d56433572a98317d256cb6c6c11} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} lua\+M\+\_\+malloc\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{size\+\_\+t}]{size}{, }\item[{int}]{tag}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lmem_8h_ae5c8a16bb1c249e63cb08e0e2bd5a8d0}\index{lmem.h@{lmem.h}!luaM\_realloc\_@{luaM\_realloc\_}}
+\index{luaM\_realloc\_@{luaM\_realloc\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_realloc\_()}{luaM\_realloc\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_ae5c8a16bb1c249e63cb08e0e2bd5a8d0} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} lua\+M\+\_\+realloc\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{block}{, }\item[{size\+\_\+t}]{oldsize}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h_ae5c8a16bb1c249e63cb08e0e2bd5a8d0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lmem_8h_af857f53df3465facdda7f0453b04cc46}\index{lmem.h@{lmem.h}!luaM\_saferealloc\_@{luaM\_saferealloc\_}}
+\index{luaM\_saferealloc\_@{luaM\_saferealloc\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_saferealloc\_()}{luaM\_saferealloc\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_af857f53df3465facdda7f0453b04cc46} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} lua\+M\+\_\+saferealloc\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{block}{, }\item[{size\+\_\+t}]{oldsize}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{lmem_8h_af857f53df3465facdda7f0453b04cc46_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{lmem_8h_af857f53df3465facdda7f0453b04cc46_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lmem_8h_a9b0e7fcca89e578ea39b2d7479373fd1}\index{lmem.h@{lmem.h}!luaM\_shrinkvector\_@{luaM\_shrinkvector\_}}
+\index{luaM\_shrinkvector\_@{luaM\_shrinkvector\_}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_shrinkvector\_()}{luaM\_shrinkvector\_()}}
+{\footnotesize\ttfamily \label{lmem_8h_a9b0e7fcca89e578ea39b2d7479373fd1} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \texorpdfstring{$\ast$}{*} lua\+M\+\_\+shrinkvector\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{block}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{nelem}{, }\item[{int}]{final\+\_\+n}{, }\item[{unsigned}]{size\+\_\+elem}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h_a9b0e7fcca89e578ea39b2d7479373fd1_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lmem_8h_a23b8703b7b50e1c5dd37d41569a09a9a}\index{lmem.h@{lmem.h}!luaM\_toobig@{luaM\_toobig}}
+\index{luaM\_toobig@{luaM\_toobig}!lmem.h@{lmem.h}}
+\doxysubsubsection{\texorpdfstring{luaM\_toobig()}{luaM\_toobig()}}
+{\footnotesize\ttfamily \label{lmem_8h_a23b8703b7b50e1c5dd37d41569a09a9a} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\+\_\+noret}} lua\+M\+\_\+toobig (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h_a23b8703b7b50e1c5dd37d41569a09a9a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmem_8h_a23b8703b7b50e1c5dd37d41569a09a9a_icgraph}
+\end{center}
+\end{figure}

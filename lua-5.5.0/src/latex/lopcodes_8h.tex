@@ -1,0 +1,1434 @@
+\doxysection{lopcodes.\+h File Reference}
+\hypertarget{lopcodes_8h}{}\label{lopcodes_8h}\index{lopcodes.h@{lopcodes.h}}
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+Include dependency graph for lopcodes.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=319pt]{lopcodes_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lopcodes_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\+\_\+C}}~8
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}{SIZE\+\_\+vC}}~10
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}}~8
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\+\_\+vB}}~6
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\+\_\+\+Bx}}~(\mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\+\_\+C}} + \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}} + 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}}~8
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a52d077faf8699f2d66aef36bf4e6c751}{SIZE\+\_\+\+Ax}}~(\mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\+\_\+\+Bx}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a0746f1da0d525504790943f2b79b2856}{SIZE\+\_\+sJ}}~(\mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\+\_\+\+Bx}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\+\_\+\+OP}}~7
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\+\_\+\+OP}}~0
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}}~(\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\+\_\+\+OP}} + \mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\+\_\+\+OP}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}}~(\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\+\_\+B}}~(\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}} + 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\+\_\+vB}}~(\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}} + 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d}{POS\+\_\+C}}~(\mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\+\_\+B}} + \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2}{POS\+\_\+vC}}~(\mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\+\_\+vB}} + \mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\+\_\+vB}})
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}{POS\+\_\+\+Bx}}~\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39}{POS\+\_\+\+Ax}}~\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a}{POS\+\_\+sJ}}~\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aaefe4466d31a7397a337ee6f83bdc14f}{L\+\_\+\+INTHASBITS}}(b)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aebbf650de6e9cbec539bfabcb9ae50c6}{MAXARG\+\_\+\+Bx}}~INT\+\_\+\+MAX
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_afda4d6a4b816b12ffd722e04b20f0884}{OFFSET\+\_\+s\+Bx}}~(\mbox{\hyperlink{lopcodes_8h_aebbf650de6e9cbec539bfabcb9ae50c6}{MAXARG\+\_\+\+Bx}}$>$$>$1)         /\texorpdfstring{$\ast$}{*} \textquotesingle{}s\+Bx\textquotesingle{} is signed \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a742a1bed832225c3800b3f73eb8b20ec}{MAXARG\+\_\+\+Ax}}~INT\+\_\+\+MAX
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a25010bef992b79abb26404ddde6b47ee}{MAXARG\+\_\+sJ}}~INT\+\_\+\+MAX
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1618fbbbf634a1b231240cfd6f3a3e5f}{OFFSET\+\_\+sJ}}~(\mbox{\hyperlink{lopcodes_8h_a25010bef992b79abb26404ddde6b47ee}{MAXARG\+\_\+sJ}} $>$$>$ 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ab3c4feecc8cd0add12e881e26bbb3b15}{MAXARG\+\_\+A}}~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ae5132046fa2196de46214613a36235b2}{MAXARG\+\_\+B}}~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a2c7b1453c76877608074d5da5655f717}{MAXARG\+\_\+vB}}~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\+\_\+vB}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}{MAXARG\+\_\+C}}~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\+\_\+C}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac49e2026407c10cd9e416570d6d33279}{MAXARG\+\_\+vC}}~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}{SIZE\+\_\+vC}})-\/1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aa857ab7e20a7c4cb44ec3b6d3d2ec2bd}{OFFSET\+\_\+sC}}~(\mbox{\hyperlink{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}{MAXARG\+\_\+C}} $>$$>$ 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1918af9b0bd50d9a0e6b3a4e243bbaad}{int2sC}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a68747af4969db9dc341d6dbff87e9c7a}{s\+C2int}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{MASK1}}(n,  p)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac38be540eada841367170e3764e93748}{MASK0}}(n,  p)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc}{GET\+\_\+\+OPCODE}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a9ae2b84a40beacf053969ff426aae06f}{SET\+\_\+\+OPCODE}}(i,  o)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,  m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,  pos,  size)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,  v,  pos,  size)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1d504abc1e2246548f89977210dce0b9}{GETARG\+\_\+A}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a01900876b9281238c6dbb4d7bc59ca66}{SETARG\+\_\+A}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a7a343159ef7669a438c2097b839b2b13}{GETARG\+\_\+B}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a848820755e9cb58f470b7a5298a4b3f6}{GETARG\+\_\+vB}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a7af64834446acb4afeec51438217c73d}{GETARG\+\_\+sB}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a52ddcdcbd367c4557cc83c38e3e1723f}{SETARG\+\_\+B}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a41500e633a64143e2852c733fcd5fd09}{SETARG\+\_\+vB}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_af96cb84f2685fda7f36d3d099dba6a44}{GETARG\+\_\+C}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a8927d6bc19f98b8fc4146402fe9b080b}{GETARG\+\_\+vC}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a2dadd55729fda230ce1765caef7ea416}{GETARG\+\_\+sC}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a085f9af93bc2386ddb0b9fb53d5ff0b8}{SETARG\+\_\+C}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a5bba63cb8a754caf44f5ad1221b971b0}{SETARG\+\_\+vC}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aa874f9aac8107c30bf683067661a988a}{TESTARG\+\_\+k}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aa9ce1e6169ccc23a1e9c783f61af343f}{GETARG\+\_\+k}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac3ce38dc1556d678ef023b240c97fde8}{SETARG\+\_\+k}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_acf8d228275fd2789dcf5f019bbabc019}{GETARG\+\_\+\+Bx}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a0c476ba8d647ec398f25bb6374a0c088}{SETARG\+\_\+\+Bx}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_acfd578bba038b6682b924cf48012d80a}{GETARG\+\_\+\+Ax}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_afeb0c89bdd47db50d0ba6b78bc894681}{SETARG\+\_\+\+Ax}}(i,  v)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1f61a823709ac7847e481290a596c480}{GETARG\+\_\+s\+Bx}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ad28b4bc013c6ddae165ac998ebe321c7}{SETARG\+\_\+s\+Bx}}(i,  b)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1e69b8e862462ab13df4acd8de7ef54c}{GETARG\+\_\+sJ}}(i)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_abfb44d9f7226140f97beb16afad6f6c3}{SETARG\+\_\+sJ}}(i,  j)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a9cb59013204285f8d899c8f3d88d2707}{CREATE\+\_\+\+ABCk}}(o,  a,  b,  c,  k)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a0b175e127620f53cbc6139cbf96d3329}{CREATE\+\_\+v\+ABCk}}(o,  a,  b,  c,  k)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a46bb00b89420c78407eb45a3bc98b50d}{CREATE\+\_\+\+ABx}}(o,  a,  bc)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ae08e838d4e7f9c8ed9b23a6a52d1b819}{CREATE\+\_\+\+Ax}}(o,  a)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a38d90774993bc1ec075f5705889f9982}{CREATE\+\_\+sJ}}(o,  j,  k)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a37cd6e85943ea87c9b99ef1ea6bcdb3e}{MAXINDEXRK}}~\mbox{\hyperlink{lopcodes_8h_ae5132046fa2196de46214613a36235b2}{MAXARG\+\_\+B}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a0e66a1cd1751e6c926059c3250ebd8cf}{MAX\+\_\+\+FSTACK}}~\mbox{\hyperlink{lopcodes_8h_ab3c4feecc8cd0add12e881e26bbb3b15}{MAXARG\+\_\+A}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a6552ce4b3bba3b1a820dc0adaf85974a}{NO\+\_\+\+REG}}~\mbox{\hyperlink{lopcodes_8h_a0e66a1cd1751e6c926059c3250ebd8cf}{MAX\+\_\+\+FSTACK}}
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a1fb469ba81540d3314cfbe37c675ba20}{NUM\+\_\+\+OPCODES}}~((int)(\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea}{OP\+\_\+\+EXTRAARG}}) + 1)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_afb3fdd221fb95fdd1c254f7ab479739e}{get\+Op\+Mode}}(m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_aaae51a1c7e304923c51509b7cd644f29}{test\+AMode}}(m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a6750851f9d04ae7f9612146b07f88c97}{test\+TMode}}(m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_ac5afff4b1215ce8a72b400c40834241b}{test\+ITMode}}(m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a0d5c4bc6c8c7a22a6591c65a93d9c908}{test\+OTMode}}(m)
+\item 
+\#define \mbox{\hyperlink{lopcodes_8h_a128c04f70b43fb82ed2eadb2b255cc81}{test\+MMMode}}(m)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}{Op\+Mode}} \{ \newline
+\mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3}{i\+ABC}}
+, \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0}{iv\+ABC}}
+, \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afae162f330f7a1e7581cdbbb4af60dc8ea}{i\+ABx}}
+, \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5db94456d16691b254a6b2fc7b473e55}{i\+As\+Bx}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa453db051897b5faf2716653c2aa5a2e2}{i\+Ax}}
+, \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa8c4168189c62aed69b9160daeb20f20e}{isJ}}
+ \}
+\item 
+enum \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{Op\+Code}} \{ \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7addf83bbc02b6a88d325135c880d12184}{OP\+\_\+\+MOVE}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a60de4d2d9c05216369b32f22325ac26c}{OP\+\_\+\+LOADI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a82da04477198d0562981ddd7d3adda8b}{OP\+\_\+\+LOADF}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab34a8eaf6d32d3c41810653d9eb99c1a}{OP\+\_\+\+LOADK}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae95580de7b3877b66fdf87366b8e5887}{OP\+\_\+\+LOADKX}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8653663e33ebaa8572c7e76c86c6539d}{OP\+\_\+\+LOADFALSE}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1163876c1d6575f1f220aca5be6751b8}{OP\+\_\+\+LFALSESKIP}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac1fc81b1c2650990762cf656ac42540d}{OP\+\_\+\+LOADTRUE}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5c399a98a26c923cdae3971b5e5b6432}{OP\+\_\+\+LOADNIL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab48573533495922f053a7d1c9b0d00b4}{OP\+\_\+\+GETUPVAL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a47df60373847890b47b447c870aea678}{OP\+\_\+\+SETUPVAL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acba90301f3ac979a3edd23f74182367b}{OP\+\_\+\+GETTABUP}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab1ec2a36c59db7612249cc31e382fdd9}{OP\+\_\+\+GETTABLE}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a965a4251f6730e9c8e5ca9e4ba4d8568}{OP\+\_\+\+GETI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab8cb85274c0cd7f8d8525953bd844207}{OP\+\_\+\+GETFIELD}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac486cd83792b58a638e37cb249d54a7e}{OP\+\_\+\+SETTABUP}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a34315d7408f31b006bf41c9e9c2d736e}{OP\+\_\+\+SETTABLE}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a51eb594f07db275f5c6a77621b2de777}{OP\+\_\+\+SETI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a342ca5ec1477419948043acb24ef3032}{OP\+\_\+\+SETFIELD}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af4ae9eb9a3c88596112a1d99d0c66280}{OP\+\_\+\+NEWTABLE}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a64bea18253f9e73c4c5fcfa6b0d5abd2}{OP\+\_\+\+SELF}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae59b0459d271ccd33e3b5e525d8d82ec}{OP\+\_\+\+ADDI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aabeaee235c2d819809ba4179c9ad7c40}{OP\+\_\+\+ADDK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7affb0b7800883712a266b8f74d7ed67de}{OP\+\_\+\+SUBK}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2bb6b0300af606f3f17cc492e8a0fd9c}{OP\+\_\+\+MULK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acdf979ebf1cab75f05b47c659568a2c2}{OP\+\_\+\+MODK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a20894c12c21a091fc6b3965894a66a29}{OP\+\_\+\+POWK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8ea5e5bf7705ac9d64a421520f641561}{OP\+\_\+\+DIVK}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9cf8f2bf4a89a2965fba615eb70da736}{OP\+\_\+\+IDIVK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a257504b0bf681f2fbcb9395a3c4e7deb}{OP\+\_\+\+BANDK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a57ac522387add616066acffc523b74f6}{OP\+\_\+\+BORK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af49936a7a3eb6346a7f200981837265c}{OP\+\_\+\+BXORK}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab0da05be7645df562d8968b4f254df2b}{OP\+\_\+\+SHLI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9159011638ef566ddb323918488443e8}{OP\+\_\+\+SHRI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a96186829480e5b34b1373288e956b1c8}{OP\+\_\+\+ADD}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6c224b456bd394d4d8bad0631ca8e2b7}{OP\+\_\+\+SUB}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa0e08a6f94350f03d29e4a55d543ba2f}{OP\+\_\+\+MUL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39c596fc7eae450b7218bd97126e37c9}{OP\+\_\+\+MOD}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a35127684be890cfd81d556dc84d5f9db}{OP\+\_\+\+POW}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a719aeab2140dd5f575d1559b95bf74e1}{OP\+\_\+\+DIV}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac813f8b860222d35f2d02410a84f53b3}{OP\+\_\+\+IDIV}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6410f6c403b6cd759180c8b8be874cac}{OP\+\_\+\+BAND}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2f4bd7bbcff0799872d56d31e258599b}{OP\+\_\+\+BOR}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd5cb32a2593241c564d2cdce914021b}{OP\+\_\+\+BXOR}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a845012132d1f5f2d1cd125326476c25b}{OP\+\_\+\+SHL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a789f5e2846cb039c0273aff134011fd4}{OP\+\_\+\+SHR}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a25acd5dff5083adb067889345ae100d6}{OP\+\_\+\+MMBIN}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2068a8603e2904d2abd826877ab9e516}{OP\+\_\+\+MMBINI}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a023d51bef94e0b9450cce3b76788a229}{OP\+\_\+\+MMBINK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3fd0932f8be8e5e810d731fd60ab8ef}{OP\+\_\+\+UNM}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ada36dd48f6870a79b5998262341c57d6}{OP\+\_\+\+BNOT}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a36a6b73cc4823f54891a013e2cc760d1}{OP\+\_\+\+NOT}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a55406931f4958f887e6d966d154a1931}{OP\+\_\+\+LEN}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a28a7da14b1413b441cf2a5d433b43a51}{OP\+\_\+\+CONCAT}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9e771dc35104ec1246adba881d27e372}{OP\+\_\+\+CLOSE}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a45ba48df2b6802b55eb5eef6bc66b749}{OP\+\_\+\+TBC}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd679fab86e6a91d22c91734e287639b}{OP\+\_\+\+JMP}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1634898deb6e4d1bcb15416034c641c5}{OP\+\_\+\+EQ}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7d5ed006824d331041dad8486e52df50}{OP\+\_\+\+LT}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acef6e71b662db063ff532d89500bb0c0}{OP\+\_\+\+LE}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac474caab30c580d7a336de092e3e8754}{OP\+\_\+\+EQK}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a073492f9f138556d12ee1020f01afa9d}{OP\+\_\+\+EQI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7355d162e8b15877fe33c54e3b755746}{OP\+\_\+\+LTI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aec7e53f36f35ef810ecff8a7eb274877}{OP\+\_\+\+LEI}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a4c9ef8190def252dc1e0deb1bf7e787e}{OP\+\_\+\+GTI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ade0bd78cc2f7ec9c1bf6c161759221fa}{OP\+\_\+\+GEI}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8952e66300f2660060e38c67ccd21c9d}{OP\+\_\+\+TEST}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39b4077a15fb8fffc166f5045dddacee}{OP\+\_\+\+TESTSET}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a098bbeea13096667b102f7fd90cbe38f}{OP\+\_\+\+CALL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aff2c07ebfd82aa22cc247e9855a16069}{OP\+\_\+\+TAILCALL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ad436c18b194473f5ec64c28b774e41b3}{OP\+\_\+\+RETURN}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3f8033d220b543563720de9ab788e82}{OP\+\_\+\+RETURN0}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a85801949afc11b7d95553fd0ee912f38}{OP\+\_\+\+RETURN1}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa01470a2fc70a3f2dbd20c7c8f270802}{OP\+\_\+\+FORLOOP}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5277c6eb2b1ab790c4942fdccd749e33}{OP\+\_\+\+FORPREP}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aafeb9e3e631d6f6c1700bf77134d425e}{OP\+\_\+\+TFORPREP}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a899602d2c96443e08eec9e477071aa22}{OP\+\_\+\+TFORCALL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7dabccd7671c8ff374cb4502a6edb9c0}{OP\+\_\+\+TFORLOOP}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a01618d8295953fd4ab2ef721b2051718}{OP\+\_\+\+SETLIST}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a407a76cd8c503b0f4dc14603687a77a2}{OP\+\_\+\+CLOSURE}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1856103c50818d72aaa506821a4ef004}{OP\+\_\+\+VARARG}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1fef421d733b227c65508a8d0dbb8d91}{OP\+\_\+\+GETVARG}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac60d85a7aad029584666b5a2d46bffb5}{OP\+\_\+\+ERRNNIL}}
+, \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a0ac7fd650d101088cfc6beed3757ba44}{OP\+\_\+\+VARARGPREP}}
+, \newline
+\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea}{OP\+\_\+\+EXTRAARG}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int \mbox{\hyperlink{lopcodes_8h_a638e4f8e6bf687e36fd3601bf973fa43}{lua\+P\+\_\+is\+OT}} (\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}} i)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int \mbox{\hyperlink{lopcodes_8h_a0eb5a24da76fa24d4f05b81cae59f2d9}{lua\+P\+\_\+is\+IT}} (\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}} i)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lopcodes_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}\index{lopcodes.h@{lopcodes.h}!checkopm@{checkopm}}
+\index{checkopm@{checkopm}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{checkopm}{checkopm}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf} 
+\#define checkopm(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8h_afb3fdd221fb95fdd1c254f7ab479739e}{getOpMode}}(\mbox{\hyperlink{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc}{GET\_OPCODE}}(i))\ ==\ m)}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a9cb59013204285f8d899c8f3d88d2707}\index{lopcodes.h@{lopcodes.h}!CREATE\_ABCk@{CREATE\_ABCk}}
+\index{CREATE\_ABCk@{CREATE\_ABCk}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{CREATE\_ABCk}{CREATE\_ABCk}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a9cb59013204285f8d899c8f3d88d2707} 
+\#define CREATE\+\_\+\+ABCk(\begin{DoxyParamCaption}\item[{}]{o}{, }\item[{}]{a}{, }\item[{}]{b}{, }\item[{}]{c}{, }\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)<<\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(a)<<\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\_A}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(b)<<\mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\_B}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(c)<<\mbox{\hyperlink{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d}{POS\_C}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(k)<<\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a46bb00b89420c78407eb45a3bc98b50d}\index{lopcodes.h@{lopcodes.h}!CREATE\_ABx@{CREATE\_ABx}}
+\index{CREATE\_ABx@{CREATE\_ABx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{CREATE\_ABx}{CREATE\_ABx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a46bb00b89420c78407eb45a3bc98b50d} 
+\#define CREATE\+\_\+\+ABx(\begin{DoxyParamCaption}\item[{}]{o}{, }\item[{}]{a}{, }\item[{}]{bc}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)<<\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(a)<<\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\_A}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(bc)<<\mbox{\hyperlink{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}{POS\_Bx}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_ae08e838d4e7f9c8ed9b23a6a52d1b819}\index{lopcodes.h@{lopcodes.h}!CREATE\_Ax@{CREATE\_Ax}}
+\index{CREATE\_Ax@{CREATE\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{CREATE\_Ax}{CREATE\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ae08e838d4e7f9c8ed9b23a6a52d1b819} 
+\#define CREATE\+\_\+\+Ax(\begin{DoxyParamCaption}\item[{}]{o}{, }\item[{}]{a}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)<<\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(a)<<\mbox{\hyperlink{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39}{POS\_Ax}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a38d90774993bc1ec075f5705889f9982}\index{lopcodes.h@{lopcodes.h}!CREATE\_sJ@{CREATE\_sJ}}
+\index{CREATE\_sJ@{CREATE\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{CREATE\_sJ}{CREATE\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a38d90774993bc1ec075f5705889f9982} 
+\#define CREATE\+\_\+sJ(\begin{DoxyParamCaption}\item[{}]{o}{, }\item[{}]{j}{, }\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)\ <<\ \mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(j)\ <<\ \mbox{\hyperlink{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a}{POS\_sJ}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(k)\ <<\ \mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a0b175e127620f53cbc6139cbf96d3329}\index{lopcodes.h@{lopcodes.h}!CREATE\_vABCk@{CREATE\_vABCk}}
+\index{CREATE\_vABCk@{CREATE\_vABCk}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{CREATE\_vABCk}{CREATE\_vABCk}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0b175e127620f53cbc6139cbf96d3329} 
+\#define CREATE\+\_\+v\+ABCk(\begin{DoxyParamCaption}\item[{}]{o}{, }\item[{}]{a}{, }\item[{}]{b}{, }\item[{}]{c}{, }\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)<<\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(a)<<\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\_A}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(b)<<\mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\_vB}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(c)<<\mbox{\hyperlink{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2}{POS\_vC}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(k)<<\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc}\index{lopcodes.h@{lopcodes.h}!GET\_OPCODE@{GET\_OPCODE}}
+\index{GET\_OPCODE@{GET\_OPCODE}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GET\_OPCODE}{GET\_OPCODE}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc} 
+\#define GET\+\_\+\+OPCODE(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{OpCode}},\ ((i)>>\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\ \&\ \mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{MASK1}}(\mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\_OP}},0)))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}\index{lopcodes.h@{lopcodes.h}!getarg@{getarg}}
+\index{getarg@{getarg}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{getarg}{getarg}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a34176ea971e0563a800c45073da2d09a} 
+\#define getarg(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{pos}{, }\item[{}]{size}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}(((i)>>(pos))\ \&\ \mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{MASK1}}(size,0)))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a1d504abc1e2246548f89977210dce0b9}\index{lopcodes.h@{lopcodes.h}!GETARG\_A@{GETARG\_A}}
+\index{GETARG\_A@{GETARG\_A}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_A}{GETARG\_A}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1d504abc1e2246548f89977210dce0b9} 
+\#define GETARG\+\_\+A(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\_A}},\ \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\_A}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_acfd578bba038b6682b924cf48012d80a}\index{lopcodes.h@{lopcodes.h}!GETARG\_Ax@{GETARG\_Ax}}
+\index{GETARG\_Ax@{GETARG\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_Ax}{GETARG\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_acfd578bba038b6682b924cf48012d80a} 
+\#define GETARG\+\_\+\+Ax(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa453db051897b5faf2716653c2aa5a2e2}{iAx}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39}{POS\_Ax}},\ \mbox{\hyperlink{lopcodes_8h_a52d077faf8699f2d66aef36bf4e6c751}{SIZE\_Ax}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a7a343159ef7669a438c2097b839b2b13}\index{lopcodes.h@{lopcodes.h}!GETARG\_B@{GETARG\_B}}
+\index{GETARG\_B@{GETARG\_B}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_B}{GETARG\_B}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a7a343159ef7669a438c2097b839b2b13} 
+\#define GETARG\+\_\+B(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3}{iABC}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\_B}},\ \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\_B}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_acf8d228275fd2789dcf5f019bbabc019}\index{lopcodes.h@{lopcodes.h}!GETARG\_Bx@{GETARG\_Bx}}
+\index{GETARG\_Bx@{GETARG\_Bx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_Bx}{GETARG\_Bx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_acf8d228275fd2789dcf5f019bbabc019} 
+\#define GETARG\+\_\+\+Bx(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afae162f330f7a1e7581cdbbb4af60dc8ea}{iABx}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}{POS\_Bx}},\ \mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\_Bx}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_af96cb84f2685fda7f36d3d099dba6a44}\index{lopcodes.h@{lopcodes.h}!GETARG\_C@{GETARG\_C}}
+\index{GETARG\_C@{GETARG\_C}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_C}{GETARG\_C}}
+{\footnotesize\ttfamily \label{lopcodes_8h_af96cb84f2685fda7f36d3d099dba6a44} 
+\#define GETARG\+\_\+C(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3}{iABC}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d}{POS\_C}},\ \mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\_C}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_aa9ce1e6169ccc23a1e9c783f61af343f}\index{lopcodes.h@{lopcodes.h}!GETARG\_k@{GETARG\_k}}
+\index{GETARG\_k@{GETARG\_k}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_k}{GETARG\_k}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aa9ce1e6169ccc23a1e9c783f61af343f} 
+\#define GETARG\+\_\+k(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}},\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a7af64834446acb4afeec51438217c73d}\index{lopcodes.h@{lopcodes.h}!GETARG\_sB@{GETARG\_sB}}
+\index{GETARG\_sB@{GETARG\_sB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_sB}{GETARG\_sB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a7af64834446acb4afeec51438217c73d} 
+\#define GETARG\+\_\+sB(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_a68747af4969db9dc341d6dbff87e9c7a}{sC2int}}(\mbox{\hyperlink{lopcodes_8h_a7a343159ef7669a438c2097b839b2b13}{GETARG\_B}}(i))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a1f61a823709ac7847e481290a596c480}\index{lopcodes.h@{lopcodes.h}!GETARG\_sBx@{GETARG\_sBx}}
+\index{GETARG\_sBx@{GETARG\_sBx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_sBx}{GETARG\_sBx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1f61a823709ac7847e481290a596c480} 
+\#define GETARG\+\_\+s\+Bx(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5db94456d16691b254a6b2fc7b473e55}{iAsBx}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}{POS\_Bx}},\ \mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\_Bx}})\ -\/\ \mbox{\hyperlink{lopcodes_8h_afda4d6a4b816b12ffd722e04b20f0884}{OFFSET\_sBx}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a2dadd55729fda230ce1765caef7ea416}\index{lopcodes.h@{lopcodes.h}!GETARG\_sC@{GETARG\_sC}}
+\index{GETARG\_sC@{GETARG\_sC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_sC}{GETARG\_sC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a2dadd55729fda230ce1765caef7ea416} 
+\#define GETARG\+\_\+sC(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_a68747af4969db9dc341d6dbff87e9c7a}{sC2int}}(\mbox{\hyperlink{lopcodes_8h_af96cb84f2685fda7f36d3d099dba6a44}{GETARG\_C}}(i))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a1e69b8e862462ab13df4acd8de7ef54c}\index{lopcodes.h@{lopcodes.h}!GETARG\_sJ@{GETARG\_sJ}}
+\index{GETARG\_sJ@{GETARG\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_sJ}{GETARG\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1e69b8e862462ab13df4acd8de7ef54c} 
+\#define GETARG\+\_\+sJ(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa8c4168189c62aed69b9160daeb20f20e}{isJ}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a}{POS\_sJ}},\ \mbox{\hyperlink{lopcodes_8h_a0746f1da0d525504790943f2b79b2856}{SIZE\_sJ}})\ -\/\ \mbox{\hyperlink{lopcodes_8h_a1618fbbbf634a1b231240cfd6f3a3e5f}{OFFSET\_sJ}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a848820755e9cb58f470b7a5298a4b3f6}\index{lopcodes.h@{lopcodes.h}!GETARG\_vB@{GETARG\_vB}}
+\index{GETARG\_vB@{GETARG\_vB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_vB}{GETARG\_vB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a848820755e9cb58f470b7a5298a4b3f6} 
+\#define GETARG\+\_\+vB(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0}{ivABC}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\_vB}},\ \mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\_vB}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a8927d6bc19f98b8fc4146402fe9b080b}\index{lopcodes.h@{lopcodes.h}!GETARG\_vC@{GETARG\_vC}}
+\index{GETARG\_vC@{GETARG\_vC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{GETARG\_vC}{GETARG\_vC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a8927d6bc19f98b8fc4146402fe9b080b} 
+\#define GETARG\+\_\+vC(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lopcodes_8h_aa8c8723567bea374193abbc0fecd82cf}{checkopm}}(i,\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0}{ivABC}}),\ \mbox{\hyperlink{lopcodes_8h_a34176ea971e0563a800c45073da2d09a}{getarg}}(i,\ \mbox{\hyperlink{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2}{POS\_vC}},\ \mbox{\hyperlink{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}{SIZE\_vC}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_afb3fdd221fb95fdd1c254f7ab479739e}\index{lopcodes.h@{lopcodes.h}!getOpMode@{getOpMode}}
+\index{getOpMode@{getOpMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{getOpMode}{getOpMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_afb3fdd221fb95fdd1c254f7ab479739e} 
+\#define get\+Op\+Mode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keyword}{enum}\ \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}{OpMode}},\ \mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ 7))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a1918af9b0bd50d9a0e6b3a4e243bbaad}\index{lopcodes.h@{lopcodes.h}!int2sC@{int2sC}}
+\index{int2sC@{int2sC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{int2sC}{int2sC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1918af9b0bd50d9a0e6b3a4e243bbaad} 
+\#define int2sC(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((i)\ +\ \mbox{\hyperlink{lopcodes_8h_aa857ab7e20a7c4cb44ec3b6d3d2ec2bd}{OFFSET\_sC}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_aaefe4466d31a7397a337ee6f83bdc14f}\index{lopcodes.h@{lopcodes.h}!L\_INTHASBITS@{L\_INTHASBITS}}
+\index{L\_INTHASBITS@{L\_INTHASBITS}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{L\_INTHASBITS}{L\_INTHASBITS}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aaefe4466d31a7397a337ee6f83bdc14f} 
+\#define L\+\_\+\+INTHASBITS(\begin{DoxyParamCaption}\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((UINT\_MAX\ >>\ (b))\ >=\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_ac38be540eada841367170e3764e93748}\index{lopcodes.h@{lopcodes.h}!MASK0@{MASK0}}
+\index{MASK0@{MASK0}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MASK0}{MASK0}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac38be540eada841367170e3764e93748} 
+\#define MASK0(\begin{DoxyParamCaption}\item[{}]{n}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{\string~MASK1}}(n,p))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}\index{lopcodes.h@{lopcodes.h}!MASK1@{MASK1}}
+\index{MASK1@{MASK1}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MASK1}{MASK1}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f} 
+\#define MASK1(\begin{DoxyParamCaption}\item[{}]{n}{, }\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((\string~((\string~(\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}})0)<<(n)))<<(p))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a0e66a1cd1751e6c926059c3250ebd8cf}\index{lopcodes.h@{lopcodes.h}!MAX\_FSTACK@{MAX\_FSTACK}}
+\index{MAX\_FSTACK@{MAX\_FSTACK}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_FSTACK}{MAX\_FSTACK}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0e66a1cd1751e6c926059c3250ebd8cf} 
+\#define MAX\+\_\+\+FSTACK~\mbox{\hyperlink{lopcodes_8h_ab3c4feecc8cd0add12e881e26bbb3b15}{MAXARG\+\_\+A}}}
+
+\Hypertarget{lopcodes_8h_ab3c4feecc8cd0add12e881e26bbb3b15}\index{lopcodes.h@{lopcodes.h}!MAXARG\_A@{MAXARG\_A}}
+\index{MAXARG\_A@{MAXARG\_A}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_A}{MAXARG\_A}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ab3c4feecc8cd0add12e881e26bbb3b15} 
+\#define MAXARG\+\_\+A~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})-\/1)}
+
+\Hypertarget{lopcodes_8h_a742a1bed832225c3800b3f73eb8b20ec}\index{lopcodes.h@{lopcodes.h}!MAXARG\_Ax@{MAXARG\_Ax}}
+\index{MAXARG\_Ax@{MAXARG\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_Ax}{MAXARG\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a742a1bed832225c3800b3f73eb8b20ec} 
+\#define MAXARG\+\_\+\+Ax~INT\+\_\+\+MAX}
+
+\Hypertarget{lopcodes_8h_ae5132046fa2196de46214613a36235b2}\index{lopcodes.h@{lopcodes.h}!MAXARG\_B@{MAXARG\_B}}
+\index{MAXARG\_B@{MAXARG\_B}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_B}{MAXARG\_B}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ae5132046fa2196de46214613a36235b2} 
+\#define MAXARG\+\_\+B~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}})-\/1)}
+
+\Hypertarget{lopcodes_8h_aebbf650de6e9cbec539bfabcb9ae50c6}\index{lopcodes.h@{lopcodes.h}!MAXARG\_Bx@{MAXARG\_Bx}}
+\index{MAXARG\_Bx@{MAXARG\_Bx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_Bx}{MAXARG\_Bx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aebbf650de6e9cbec539bfabcb9ae50c6} 
+\#define MAXARG\+\_\+\+Bx~INT\+\_\+\+MAX}
+
+\Hypertarget{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}\index{lopcodes.h@{lopcodes.h}!MAXARG\_C@{MAXARG\_C}}
+\index{MAXARG\_C@{MAXARG\_C}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_C}{MAXARG\_C}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f} 
+\#define MAXARG\+\_\+C~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\+\_\+C}})-\/1)}
+
+\Hypertarget{lopcodes_8h_a25010bef992b79abb26404ddde6b47ee}\index{lopcodes.h@{lopcodes.h}!MAXARG\_sJ@{MAXARG\_sJ}}
+\index{MAXARG\_sJ@{MAXARG\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_sJ}{MAXARG\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a25010bef992b79abb26404ddde6b47ee} 
+\#define MAXARG\+\_\+sJ~INT\+\_\+\+MAX}
+
+\Hypertarget{lopcodes_8h_a2c7b1453c76877608074d5da5655f717}\index{lopcodes.h@{lopcodes.h}!MAXARG\_vB@{MAXARG\_vB}}
+\index{MAXARG\_vB@{MAXARG\_vB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_vB}{MAXARG\_vB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a2c7b1453c76877608074d5da5655f717} 
+\#define MAXARG\+\_\+vB~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\+\_\+vB}})-\/1)}
+
+\Hypertarget{lopcodes_8h_ac49e2026407c10cd9e416570d6d33279}\index{lopcodes.h@{lopcodes.h}!MAXARG\_vC@{MAXARG\_vC}}
+\index{MAXARG\_vC@{MAXARG\_vC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXARG\_vC}{MAXARG\_vC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac49e2026407c10cd9e416570d6d33279} 
+\#define MAXARG\+\_\+vC~((1$<$$<$\mbox{\hyperlink{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}{SIZE\+\_\+vC}})-\/1)}
+
+\Hypertarget{lopcodes_8h_a37cd6e85943ea87c9b99ef1ea6bcdb3e}\index{lopcodes.h@{lopcodes.h}!MAXINDEXRK@{MAXINDEXRK}}
+\index{MAXINDEXRK@{MAXINDEXRK}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{MAXINDEXRK}{MAXINDEXRK}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a37cd6e85943ea87c9b99ef1ea6bcdb3e} 
+\#define MAXINDEXRK~\mbox{\hyperlink{lopcodes_8h_ae5132046fa2196de46214613a36235b2}{MAXARG\+\_\+B}}}
+
+\Hypertarget{lopcodes_8h_a6552ce4b3bba3b1a820dc0adaf85974a}\index{lopcodes.h@{lopcodes.h}!NO\_REG@{NO\_REG}}
+\index{NO\_REG@{NO\_REG}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{NO\_REG}{NO\_REG}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a6552ce4b3bba3b1a820dc0adaf85974a} 
+\#define NO\+\_\+\+REG~\mbox{\hyperlink{lopcodes_8h_a0e66a1cd1751e6c926059c3250ebd8cf}{MAX\+\_\+\+FSTACK}}}
+
+\Hypertarget{lopcodes_8h_a1fb469ba81540d3314cfbe37c675ba20}\index{lopcodes.h@{lopcodes.h}!NUM\_OPCODES@{NUM\_OPCODES}}
+\index{NUM\_OPCODES@{NUM\_OPCODES}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{NUM\_OPCODES}{NUM\_OPCODES}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1fb469ba81540d3314cfbe37c675ba20} 
+\#define NUM\+\_\+\+OPCODES~((int)(\mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea}{OP\+\_\+\+EXTRAARG}}) + 1)}
+
+\Hypertarget{lopcodes_8h_afda4d6a4b816b12ffd722e04b20f0884}\index{lopcodes.h@{lopcodes.h}!OFFSET\_sBx@{OFFSET\_sBx}}
+\index{OFFSET\_sBx@{OFFSET\_sBx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{OFFSET\_sBx}{OFFSET\_sBx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_afda4d6a4b816b12ffd722e04b20f0884} 
+\#define OFFSET\+\_\+s\+Bx~(\mbox{\hyperlink{lopcodes_8h_aebbf650de6e9cbec539bfabcb9ae50c6}{MAXARG\+\_\+\+Bx}}$>$$>$1)         /\texorpdfstring{$\ast$}{*} \textquotesingle{}s\+Bx\textquotesingle{} is signed \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lopcodes_8h_aa857ab7e20a7c4cb44ec3b6d3d2ec2bd}\index{lopcodes.h@{lopcodes.h}!OFFSET\_sC@{OFFSET\_sC}}
+\index{OFFSET\_sC@{OFFSET\_sC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{OFFSET\_sC}{OFFSET\_sC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aa857ab7e20a7c4cb44ec3b6d3d2ec2bd} 
+\#define OFFSET\+\_\+sC~(\mbox{\hyperlink{lopcodes_8h_a15a7daf14e4640990519e4e7f627900f}{MAXARG\+\_\+C}} $>$$>$ 1)}
+
+\Hypertarget{lopcodes_8h_a1618fbbbf634a1b231240cfd6f3a3e5f}\index{lopcodes.h@{lopcodes.h}!OFFSET\_sJ@{OFFSET\_sJ}}
+\index{OFFSET\_sJ@{OFFSET\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{OFFSET\_sJ}{OFFSET\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1618fbbbf634a1b231240cfd6f3a3e5f} 
+\#define OFFSET\+\_\+sJ~(\mbox{\hyperlink{lopcodes_8h_a25010bef992b79abb26404ddde6b47ee}{MAXARG\+\_\+sJ}} $>$$>$ 1)}
+
+\Hypertarget{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}\index{lopcodes.h@{lopcodes.h}!POS\_A@{POS\_A}}
+\index{POS\_A@{POS\_A}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_A}{POS\_A}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7} 
+\#define POS\+\_\+A~(\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\+\_\+\+OP}} + \mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\+\_\+\+OP}})}
+
+\Hypertarget{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39}\index{lopcodes.h@{lopcodes.h}!POS\_Ax@{POS\_Ax}}
+\index{POS\_Ax@{POS\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_Ax}{POS\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39} 
+\#define POS\+\_\+\+Ax~\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}}}
+
+\Hypertarget{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}\index{lopcodes.h@{lopcodes.h}!POS\_B@{POS\_B}}
+\index{POS\_B@{POS\_B}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_B}{POS\_B}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953} 
+\#define POS\+\_\+B~(\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}} + 1)}
+
+\Hypertarget{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}\index{lopcodes.h@{lopcodes.h}!POS\_Bx@{POS\_Bx}}
+\index{POS\_Bx@{POS\_Bx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_Bx}{POS\_Bx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87} 
+\#define POS\+\_\+\+Bx~\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}}}
+
+\Hypertarget{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d}\index{lopcodes.h@{lopcodes.h}!POS\_C@{POS\_C}}
+\index{POS\_C@{POS\_C}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_C}{POS\_C}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d} 
+\#define POS\+\_\+C~(\mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\+\_\+B}} + \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}})}
+
+\Hypertarget{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}\index{lopcodes.h@{lopcodes.h}!POS\_k@{POS\_k}}
+\index{POS\_k@{POS\_k}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_k}{POS\_k}}
+{\footnotesize\ttfamily \label{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc} 
+\#define POS\+\_\+k~(\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})}
+
+\Hypertarget{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}\index{lopcodes.h@{lopcodes.h}!POS\_OP@{POS\_OP}}
+\index{POS\_OP@{POS\_OP}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_OP}{POS\_OP}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51} 
+\#define POS\+\_\+\+OP~0}
+
+\Hypertarget{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a}\index{lopcodes.h@{lopcodes.h}!POS\_sJ@{POS\_sJ}}
+\index{POS\_sJ@{POS\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_sJ}{POS\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a} 
+\#define POS\+\_\+sJ~\mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\+\_\+A}}}
+
+\Hypertarget{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}\index{lopcodes.h@{lopcodes.h}!POS\_vB@{POS\_vB}}
+\index{POS\_vB@{POS\_vB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_vB}{POS\_vB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b} 
+\#define POS\+\_\+vB~(\mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\+\_\+k}} + 1)}
+
+\Hypertarget{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2}\index{lopcodes.h@{lopcodes.h}!POS\_vC@{POS\_vC}}
+\index{POS\_vC@{POS\_vC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{POS\_vC}{POS\_vC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2} 
+\#define POS\+\_\+vC~(\mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\+\_\+vB}} + \mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\+\_\+vB}})}
+
+\Hypertarget{lopcodes_8h_a68747af4969db9dc341d6dbff87e9c7a}\index{lopcodes.h@{lopcodes.h}!sC2int@{sC2int}}
+\index{sC2int@{sC2int}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{sC2int}{sC2int}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a68747af4969db9dc341d6dbff87e9c7a} 
+\#define s\+C2int(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((i)\ -\/\ \mbox{\hyperlink{lopcodes_8h_aa857ab7e20a7c4cb44ec3b6d3d2ec2bd}{OFFSET\_sC}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a9ae2b84a40beacf053969ff426aae06f}\index{lopcodes.h@{lopcodes.h}!SET\_OPCODE@{SET\_OPCODE}}
+\index{SET\_OPCODE@{SET\_OPCODE}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SET\_OPCODE}{SET\_OPCODE}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a9ae2b84a40beacf053969ff426aae06f} 
+\#define SET\+\_\+\+OPCODE(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ((i)\ =\ (((i)\&\mbox{\hyperlink{lopcodes_8h_ac38be540eada841367170e3764e93748}{MASK0}}(\mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\_OP}},\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}}))\ |\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(o)<<\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}})\&\mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{MASK1}}(\mbox{\hyperlink{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}{SIZE\_OP}},\mbox{\hyperlink{lopcodes_8h_a86559e8fac93f9aa28733fc4dd96af51}{POS\_OP}}))))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}\index{lopcodes.h@{lopcodes.h}!setarg@{setarg}}
+\index{setarg@{setarg}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{setarg}{setarg}}
+{\footnotesize\ttfamily \label{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a} 
+\#define setarg(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{, }\item[{}]{pos}{, }\item[{}]{size}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((i)\ =\ (((i)\&\mbox{\hyperlink{lopcodes_8h_ac38be540eada841367170e3764e93748}{MASK0}}(size,pos))\ |\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{llimits_8h_a95080c27926cc0e377cd52941486acd5}{cast\_Inst}}(v)<<pos)\&\mbox{\hyperlink{lopcodes_8h_aedd5e7a7ce381d9be03d198dce7db53f}{MASK1}}(size,pos))))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a01900876b9281238c6dbb4d7bc59ca66}\index{lopcodes.h@{lopcodes.h}!SETARG\_A@{SETARG\_A}}
+\index{SETARG\_A@{SETARG\_A}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_A}{SETARG\_A}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a01900876b9281238c6dbb4d7bc59ca66} 
+\#define SETARG\+\_\+A(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_a9a088c55af7f419a19a3228fd5048ef7}{POS\_A}},\ \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\_A}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_afeb0c89bdd47db50d0ba6b78bc894681}\index{lopcodes.h@{lopcodes.h}!SETARG\_Ax@{SETARG\_Ax}}
+\index{SETARG\_Ax@{SETARG\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_Ax}{SETARG\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_afeb0c89bdd47db50d0ba6b78bc894681} 
+\#define SETARG\+\_\+\+Ax(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_a1df1ba0f129f8e4691da2c5e6d1ecc39}{POS\_Ax}},\ \mbox{\hyperlink{lopcodes_8h_a52d077faf8699f2d66aef36bf4e6c751}{SIZE\_Ax}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a52ddcdcbd367c4557cc83c38e3e1723f}\index{lopcodes.h@{lopcodes.h}!SETARG\_B@{SETARG\_B}}
+\index{SETARG\_B@{SETARG\_B}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_B}{SETARG\_B}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a52ddcdcbd367c4557cc83c38e3e1723f} 
+\#define SETARG\+\_\+B(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_ac71a05d32f83f3f83b05fa95bad8c953}{POS\_B}},\ \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\_B}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a0c476ba8d647ec398f25bb6374a0c088}\index{lopcodes.h@{lopcodes.h}!SETARG\_Bx@{SETARG\_Bx}}
+\index{SETARG\_Bx@{SETARG\_Bx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_Bx}{SETARG\_Bx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0c476ba8d647ec398f25bb6374a0c088} 
+\#define SETARG\+\_\+\+Bx(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_a3626b235301aa4d50a1eddfb650ddd87}{POS\_Bx}},\ \mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\_Bx}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a085f9af93bc2386ddb0b9fb53d5ff0b8}\index{lopcodes.h@{lopcodes.h}!SETARG\_C@{SETARG\_C}}
+\index{SETARG\_C@{SETARG\_C}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_C}{SETARG\_C}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a085f9af93bc2386ddb0b9fb53d5ff0b8} 
+\#define SETARG\+\_\+C(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_ab67ab8adf1f91e2c7e2b30b5345d214d}{POS\_C}},\ \mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\_C}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_ac3ce38dc1556d678ef023b240c97fde8}\index{lopcodes.h@{lopcodes.h}!SETARG\_k@{SETARG\_k}}
+\index{SETARG\_k@{SETARG\_k}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_k}{SETARG\_k}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac3ce38dc1556d678ef023b240c97fde8} 
+\#define SETARG\+\_\+k(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}},\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_ad28b4bc013c6ddae165ac998ebe321c7}\index{lopcodes.h@{lopcodes.h}!SETARG\_sBx@{SETARG\_sBx}}
+\index{SETARG\_sBx@{SETARG\_sBx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_sBx}{SETARG\_sBx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ad28b4bc013c6ddae165ac998ebe321c7} 
+\#define SETARG\+\_\+s\+Bx(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_a0c476ba8d647ec398f25bb6374a0c088}{SETARG\_Bx}}((i),\mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\_uint}}((b)+\mbox{\hyperlink{lopcodes_8h_afda4d6a4b816b12ffd722e04b20f0884}{OFFSET\_sBx}}))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_abfb44d9f7226140f97beb16afad6f6c3}\index{lopcodes.h@{lopcodes.h}!SETARG\_sJ@{SETARG\_sJ}}
+\index{SETARG\_sJ@{SETARG\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_sJ}{SETARG\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_abfb44d9f7226140f97beb16afad6f6c3} 
+\#define SETARG\+\_\+sJ(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{j}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ \mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\_uint}}((j)+\mbox{\hyperlink{lopcodes_8h_a1618fbbbf634a1b231240cfd6f3a3e5f}{OFFSET\_sJ}}),\ \mbox{\hyperlink{lopcodes_8h_a2e16ff1e3bdd4a468f0872517ebadc0a}{POS\_sJ}},\ \mbox{\hyperlink{lopcodes_8h_a0746f1da0d525504790943f2b79b2856}{SIZE\_sJ}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a41500e633a64143e2852c733fcd5fd09}\index{lopcodes.h@{lopcodes.h}!SETARG\_vB@{SETARG\_vB}}
+\index{SETARG\_vB@{SETARG\_vB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_vB}{SETARG\_vB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a41500e633a64143e2852c733fcd5fd09} 
+\#define SETARG\+\_\+vB(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_a4fea5c3771306f3f5d2202c5cdf1975b}{POS\_vB}},\ \mbox{\hyperlink{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}{SIZE\_vB}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a5bba63cb8a754caf44f5ad1221b971b0}\index{lopcodes.h@{lopcodes.h}!SETARG\_vC@{SETARG\_vC}}
+\index{SETARG\_vC@{SETARG\_vC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SETARG\_vC}{SETARG\_vC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a5bba63cb8a754caf44f5ad1221b971b0} 
+\#define SETARG\+\_\+vC(\begin{DoxyParamCaption}\item[{}]{i}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lopcodes_8h_afb6645a4d916d7dab36ba5f6f658bb8a}{setarg}}(i,\ v,\ \mbox{\hyperlink{lopcodes_8h_a3fe179e51155648f7f0b3d7d9965f7c2}{POS\_vC}},\ \mbox{\hyperlink{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}{SIZE\_vC}})}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}\index{lopcodes.h@{lopcodes.h}!SIZE\_A@{SIZE\_A}}
+\index{SIZE\_A@{SIZE\_A}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_A}{SIZE\_A}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90} 
+\#define SIZE\+\_\+A~8}
+
+\Hypertarget{lopcodes_8h_a52d077faf8699f2d66aef36bf4e6c751}\index{lopcodes.h@{lopcodes.h}!SIZE\_Ax@{SIZE\_Ax}}
+\index{SIZE\_Ax@{SIZE\_Ax}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_Ax}{SIZE\_Ax}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a52d077faf8699f2d66aef36bf4e6c751} 
+\#define SIZE\+\_\+\+Ax~(\mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\+\_\+\+Bx}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})}
+
+\Hypertarget{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}\index{lopcodes.h@{lopcodes.h}!SIZE\_B@{SIZE\_B}}
+\index{SIZE\_B@{SIZE\_B}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_B}{SIZE\_B}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac8795820709810bf0baf1660341cacc2} 
+\#define SIZE\+\_\+B~8}
+
+\Hypertarget{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}\index{lopcodes.h@{lopcodes.h}!SIZE\_Bx@{SIZE\_Bx}}
+\index{SIZE\_Bx@{SIZE\_Bx}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_Bx}{SIZE\_Bx}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619} 
+\#define SIZE\+\_\+\+Bx~(\mbox{\hyperlink{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}{SIZE\+\_\+C}} + \mbox{\hyperlink{lopcodes_8h_ac8795820709810bf0baf1660341cacc2}{SIZE\+\_\+B}} + 1)}
+
+\Hypertarget{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1}\index{lopcodes.h@{lopcodes.h}!SIZE\_C@{SIZE\_C}}
+\index{SIZE\_C@{SIZE\_C}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_C}{SIZE\_C}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a5f42703bf77b09689626ca8cf3fc5fc1} 
+\#define SIZE\+\_\+C~8}
+
+\Hypertarget{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13}\index{lopcodes.h@{lopcodes.h}!SIZE\_OP@{SIZE\_OP}}
+\index{SIZE\_OP@{SIZE\_OP}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_OP}{SIZE\_OP}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a4c1d995d13200130d713c6dc5e223c13} 
+\#define SIZE\+\_\+\+OP~7}
+
+\Hypertarget{lopcodes_8h_a0746f1da0d525504790943f2b79b2856}\index{lopcodes.h@{lopcodes.h}!SIZE\_sJ@{SIZE\_sJ}}
+\index{SIZE\_sJ@{SIZE\_sJ}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_sJ}{SIZE\_sJ}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0746f1da0d525504790943f2b79b2856} 
+\#define SIZE\+\_\+sJ~(\mbox{\hyperlink{lopcodes_8h_a4b81cf762841df8820b6077b66c0c619}{SIZE\+\_\+\+Bx}} + \mbox{\hyperlink{lopcodes_8h_a205e8f662c5b2496cb7d9e7aa37cda90}{SIZE\+\_\+A}})}
+
+\Hypertarget{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e}\index{lopcodes.h@{lopcodes.h}!SIZE\_vB@{SIZE\_vB}}
+\index{SIZE\_vB@{SIZE\_vB}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_vB}{SIZE\_vB}}
+{\footnotesize\ttfamily \label{lopcodes_8h_afc292dd54e65d031cabb62c0ca74e59e} 
+\#define SIZE\+\_\+vB~6}
+
+\Hypertarget{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d}\index{lopcodes.h@{lopcodes.h}!SIZE\_vC@{SIZE\_vC}}
+\index{SIZE\_vC@{SIZE\_vC}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{SIZE\_vC}{SIZE\_vC}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a4b82b14d1ce8bae368fd55e9f7d97a3d} 
+\#define SIZE\+\_\+vC~10}
+
+\Hypertarget{lopcodes_8h_aaae51a1c7e304923c51509b7cd644f29}\index{lopcodes.h@{lopcodes.h}!testAMode@{testAMode}}
+\index{testAMode@{testAMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{testAMode}{testAMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aaae51a1c7e304923c51509b7cd644f29} 
+\#define test\+AMode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 3))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_aa874f9aac8107c30bf683067661a988a}\index{lopcodes.h@{lopcodes.h}!TESTARG\_k@{TESTARG\_k}}
+\index{TESTARG\_k@{TESTARG\_k}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{TESTARG\_k}{TESTARG\_k}}
+{\footnotesize\ttfamily \label{lopcodes_8h_aa874f9aac8107c30bf683067661a988a} 
+\#define TESTARG\+\_\+k(\begin{DoxyParamCaption}\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}(((i)\ \&\ (1u\ <<\ \mbox{\hyperlink{lopcodes_8h_af191be3002964d0ce1e4f56135fa42bc}{POS\_k}}))))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_ac5afff4b1215ce8a72b400c40834241b}\index{lopcodes.h@{lopcodes.h}!testITMode@{testITMode}}
+\index{testITMode@{testITMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{testITMode}{testITMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_ac5afff4b1215ce8a72b400c40834241b} 
+\#define test\+ITMode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 5))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a128c04f70b43fb82ed2eadb2b255cc81}\index{lopcodes.h@{lopcodes.h}!testMMMode@{testMMMode}}
+\index{testMMMode@{testMMMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{testMMMode}{testMMMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a128c04f70b43fb82ed2eadb2b255cc81} 
+\#define test\+MMMode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 7))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a0d5c4bc6c8c7a22a6591c65a93d9c908}\index{lopcodes.h@{lopcodes.h}!testOTMode@{testOTMode}}
+\index{testOTMode@{testOTMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{testOTMode}{testOTMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0d5c4bc6c8c7a22a6591c65a93d9c908} 
+\#define test\+OTMode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 6))}
+
+\end{DoxyCode}
+\Hypertarget{lopcodes_8h_a6750851f9d04ae7f9612146b07f88c97}\index{lopcodes.h@{lopcodes.h}!testTMode@{testTMode}}
+\index{testTMode@{testTMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{testTMode}{testTMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a6750851f9d04ae7f9612146b07f88c97} 
+\#define test\+TMode(\begin{DoxyParamCaption}\item[{}]{m}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lopcodes_8c_a248069754c0d1d3d8c92d4581836be73}{luaP\_opmodes}}[m]\ \&\ (1\ <<\ 4))}
+
+\end{DoxyCode}
+
+
+\label{doc-enum-members}
+\Hypertarget{lopcodes_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}\index{lopcodes.h@{lopcodes.h}!OpCode@{OpCode}}
+\index{OpCode@{OpCode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{OpCode}{OpCode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7} 
+enum \mbox{\hyperlink{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7}{Op\+Code}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MOVE@{OP\_MOVE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MOVE@{OP\_MOVE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7addf83bbc02b6a88d325135c880d12184}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7addf83bbc02b6a88d325135c880d12184} 
+OP\+\_\+\+MOVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADI@{OP\_LOADI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADI@{OP\_LOADI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a60de4d2d9c05216369b32f22325ac26c}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a60de4d2d9c05216369b32f22325ac26c} 
+OP\+\_\+\+LOADI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADF@{OP\_LOADF}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADF@{OP\_LOADF}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a82da04477198d0562981ddd7d3adda8b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a82da04477198d0562981ddd7d3adda8b} 
+OP\+\_\+\+LOADF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADK@{OP\_LOADK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADK@{OP\_LOADK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab34a8eaf6d32d3c41810653d9eb99c1a}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab34a8eaf6d32d3c41810653d9eb99c1a} 
+OP\+\_\+\+LOADK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADKX@{OP\_LOADKX}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADKX@{OP\_LOADKX}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae95580de7b3877b66fdf87366b8e5887}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae95580de7b3877b66fdf87366b8e5887} 
+OP\+\_\+\+LOADKX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADFALSE@{OP\_LOADFALSE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADFALSE@{OP\_LOADFALSE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8653663e33ebaa8572c7e76c86c6539d}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8653663e33ebaa8572c7e76c86c6539d} 
+OP\+\_\+\+LOADFALSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LFALSESKIP@{OP\_LFALSESKIP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LFALSESKIP@{OP\_LFALSESKIP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1163876c1d6575f1f220aca5be6751b8}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1163876c1d6575f1f220aca5be6751b8} 
+OP\+\_\+\+LFALSESKIP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADTRUE@{OP\_LOADTRUE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADTRUE@{OP\_LOADTRUE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac1fc81b1c2650990762cf656ac42540d}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac1fc81b1c2650990762cf656ac42540d} 
+OP\+\_\+\+LOADTRUE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LOADNIL@{OP\_LOADNIL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LOADNIL@{OP\_LOADNIL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5c399a98a26c923cdae3971b5e5b6432}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5c399a98a26c923cdae3971b5e5b6432} 
+OP\+\_\+\+LOADNIL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETUPVAL@{OP\_GETUPVAL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETUPVAL@{OP\_GETUPVAL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab48573533495922f053a7d1c9b0d00b4}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab48573533495922f053a7d1c9b0d00b4} 
+OP\+\_\+\+GETUPVAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETUPVAL@{OP\_SETUPVAL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETUPVAL@{OP\_SETUPVAL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a47df60373847890b47b447c870aea678}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a47df60373847890b47b447c870aea678} 
+OP\+\_\+\+SETUPVAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETTABUP@{OP\_GETTABUP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETTABUP@{OP\_GETTABUP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acba90301f3ac979a3edd23f74182367b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acba90301f3ac979a3edd23f74182367b} 
+OP\+\_\+\+GETTABUP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETTABLE@{OP\_GETTABLE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETTABLE@{OP\_GETTABLE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab1ec2a36c59db7612249cc31e382fdd9}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab1ec2a36c59db7612249cc31e382fdd9} 
+OP\+\_\+\+GETTABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETI@{OP\_GETI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETI@{OP\_GETI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a965a4251f6730e9c8e5ca9e4ba4d8568}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a965a4251f6730e9c8e5ca9e4ba4d8568} 
+OP\+\_\+\+GETI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETFIELD@{OP\_GETFIELD}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETFIELD@{OP\_GETFIELD}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab8cb85274c0cd7f8d8525953bd844207}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab8cb85274c0cd7f8d8525953bd844207} 
+OP\+\_\+\+GETFIELD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETTABUP@{OP\_SETTABUP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETTABUP@{OP\_SETTABUP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac486cd83792b58a638e37cb249d54a7e}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac486cd83792b58a638e37cb249d54a7e} 
+OP\+\_\+\+SETTABUP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETTABLE@{OP\_SETTABLE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETTABLE@{OP\_SETTABLE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a34315d7408f31b006bf41c9e9c2d736e}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a34315d7408f31b006bf41c9e9c2d736e} 
+OP\+\_\+\+SETTABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETI@{OP\_SETI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETI@{OP\_SETI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a51eb594f07db275f5c6a77621b2de777}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a51eb594f07db275f5c6a77621b2de777} 
+OP\+\_\+\+SETI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETFIELD@{OP\_SETFIELD}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETFIELD@{OP\_SETFIELD}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a342ca5ec1477419948043acb24ef3032}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a342ca5ec1477419948043acb24ef3032} 
+OP\+\_\+\+SETFIELD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_NEWTABLE@{OP\_NEWTABLE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_NEWTABLE@{OP\_NEWTABLE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af4ae9eb9a3c88596112a1d99d0c66280}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af4ae9eb9a3c88596112a1d99d0c66280} 
+OP\+\_\+\+NEWTABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SELF@{OP\_SELF}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SELF@{OP\_SELF}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a64bea18253f9e73c4c5fcfa6b0d5abd2}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a64bea18253f9e73c4c5fcfa6b0d5abd2} 
+OP\+\_\+\+SELF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_ADDI@{OP\_ADDI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_ADDI@{OP\_ADDI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae59b0459d271ccd33e3b5e525d8d82ec}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae59b0459d271ccd33e3b5e525d8d82ec} 
+OP\+\_\+\+ADDI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_ADDK@{OP\_ADDK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_ADDK@{OP\_ADDK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aabeaee235c2d819809ba4179c9ad7c40}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aabeaee235c2d819809ba4179c9ad7c40} 
+OP\+\_\+\+ADDK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SUBK@{OP\_SUBK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SUBK@{OP\_SUBK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7affb0b7800883712a266b8f74d7ed67de}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7affb0b7800883712a266b8f74d7ed67de} 
+OP\+\_\+\+SUBK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MULK@{OP\_MULK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MULK@{OP\_MULK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2bb6b0300af606f3f17cc492e8a0fd9c}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2bb6b0300af606f3f17cc492e8a0fd9c} 
+OP\+\_\+\+MULK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MODK@{OP\_MODK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MODK@{OP\_MODK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acdf979ebf1cab75f05b47c659568a2c2}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acdf979ebf1cab75f05b47c659568a2c2} 
+OP\+\_\+\+MODK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_POWK@{OP\_POWK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_POWK@{OP\_POWK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a20894c12c21a091fc6b3965894a66a29}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a20894c12c21a091fc6b3965894a66a29} 
+OP\+\_\+\+POWK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_DIVK@{OP\_DIVK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_DIVK@{OP\_DIVK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8ea5e5bf7705ac9d64a421520f641561}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8ea5e5bf7705ac9d64a421520f641561} 
+OP\+\_\+\+DIVK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_IDIVK@{OP\_IDIVK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_IDIVK@{OP\_IDIVK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9cf8f2bf4a89a2965fba615eb70da736}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9cf8f2bf4a89a2965fba615eb70da736} 
+OP\+\_\+\+IDIVK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BANDK@{OP\_BANDK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BANDK@{OP\_BANDK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a257504b0bf681f2fbcb9395a3c4e7deb}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a257504b0bf681f2fbcb9395a3c4e7deb} 
+OP\+\_\+\+BANDK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BORK@{OP\_BORK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BORK@{OP\_BORK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a57ac522387add616066acffc523b74f6}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a57ac522387add616066acffc523b74f6} 
+OP\+\_\+\+BORK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BXORK@{OP\_BXORK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BXORK@{OP\_BXORK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af49936a7a3eb6346a7f200981837265c}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7af49936a7a3eb6346a7f200981837265c} 
+OP\+\_\+\+BXORK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SHLI@{OP\_SHLI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SHLI@{OP\_SHLI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab0da05be7645df562d8968b4f254df2b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ab0da05be7645df562d8968b4f254df2b} 
+OP\+\_\+\+SHLI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SHRI@{OP\_SHRI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SHRI@{OP\_SHRI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9159011638ef566ddb323918488443e8}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9159011638ef566ddb323918488443e8} 
+OP\+\_\+\+SHRI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_ADD@{OP\_ADD}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_ADD@{OP\_ADD}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a96186829480e5b34b1373288e956b1c8}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a96186829480e5b34b1373288e956b1c8} 
+OP\+\_\+\+ADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SUB@{OP\_SUB}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SUB@{OP\_SUB}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6c224b456bd394d4d8bad0631ca8e2b7}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6c224b456bd394d4d8bad0631ca8e2b7} 
+OP\+\_\+\+SUB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MUL@{OP\_MUL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MUL@{OP\_MUL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa0e08a6f94350f03d29e4a55d543ba2f}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa0e08a6f94350f03d29e4a55d543ba2f} 
+OP\+\_\+\+MUL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MOD@{OP\_MOD}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MOD@{OP\_MOD}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39c596fc7eae450b7218bd97126e37c9}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39c596fc7eae450b7218bd97126e37c9} 
+OP\+\_\+\+MOD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_POW@{OP\_POW}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_POW@{OP\_POW}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a35127684be890cfd81d556dc84d5f9db}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a35127684be890cfd81d556dc84d5f9db} 
+OP\+\_\+\+POW&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_DIV@{OP\_DIV}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_DIV@{OP\_DIV}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a719aeab2140dd5f575d1559b95bf74e1}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a719aeab2140dd5f575d1559b95bf74e1} 
+OP\+\_\+\+DIV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_IDIV@{OP\_IDIV}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_IDIV@{OP\_IDIV}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac813f8b860222d35f2d02410a84f53b3}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac813f8b860222d35f2d02410a84f53b3} 
+OP\+\_\+\+IDIV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BAND@{OP\_BAND}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BAND@{OP\_BAND}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6410f6c403b6cd759180c8b8be874cac}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a6410f6c403b6cd759180c8b8be874cac} 
+OP\+\_\+\+BAND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BOR@{OP\_BOR}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BOR@{OP\_BOR}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2f4bd7bbcff0799872d56d31e258599b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2f4bd7bbcff0799872d56d31e258599b} 
+OP\+\_\+\+BOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BXOR@{OP\_BXOR}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BXOR@{OP\_BXOR}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd5cb32a2593241c564d2cdce914021b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd5cb32a2593241c564d2cdce914021b} 
+OP\+\_\+\+BXOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SHL@{OP\_SHL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SHL@{OP\_SHL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a845012132d1f5f2d1cd125326476c25b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a845012132d1f5f2d1cd125326476c25b} 
+OP\+\_\+\+SHL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SHR@{OP\_SHR}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SHR@{OP\_SHR}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a789f5e2846cb039c0273aff134011fd4}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a789f5e2846cb039c0273aff134011fd4} 
+OP\+\_\+\+SHR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MMBIN@{OP\_MMBIN}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MMBIN@{OP\_MMBIN}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a25acd5dff5083adb067889345ae100d6}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a25acd5dff5083adb067889345ae100d6} 
+OP\+\_\+\+MMBIN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MMBINI@{OP\_MMBINI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MMBINI@{OP\_MMBINI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2068a8603e2904d2abd826877ab9e516}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a2068a8603e2904d2abd826877ab9e516} 
+OP\+\_\+\+MMBINI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_MMBINK@{OP\_MMBINK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_MMBINK@{OP\_MMBINK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a023d51bef94e0b9450cce3b76788a229}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a023d51bef94e0b9450cce3b76788a229} 
+OP\+\_\+\+MMBINK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_UNM@{OP\_UNM}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_UNM@{OP\_UNM}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3fd0932f8be8e5e810d731fd60ab8ef}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3fd0932f8be8e5e810d731fd60ab8ef} 
+OP\+\_\+\+UNM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_BNOT@{OP\_BNOT}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_BNOT@{OP\_BNOT}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ada36dd48f6870a79b5998262341c57d6}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ada36dd48f6870a79b5998262341c57d6} 
+OP\+\_\+\+BNOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_NOT@{OP\_NOT}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_NOT@{OP\_NOT}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a36a6b73cc4823f54891a013e2cc760d1}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a36a6b73cc4823f54891a013e2cc760d1} 
+OP\+\_\+\+NOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LEN@{OP\_LEN}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LEN@{OP\_LEN}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a55406931f4958f887e6d966d154a1931}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a55406931f4958f887e6d966d154a1931} 
+OP\+\_\+\+LEN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_CONCAT@{OP\_CONCAT}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_CONCAT@{OP\_CONCAT}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a28a7da14b1413b441cf2a5d433b43a51}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a28a7da14b1413b441cf2a5d433b43a51} 
+OP\+\_\+\+CONCAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_CLOSE@{OP\_CLOSE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_CLOSE@{OP\_CLOSE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9e771dc35104ec1246adba881d27e372}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a9e771dc35104ec1246adba881d27e372} 
+OP\+\_\+\+CLOSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TBC@{OP\_TBC}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TBC@{OP\_TBC}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a45ba48df2b6802b55eb5eef6bc66b749}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a45ba48df2b6802b55eb5eef6bc66b749} 
+OP\+\_\+\+TBC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_JMP@{OP\_JMP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_JMP@{OP\_JMP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd679fab86e6a91d22c91734e287639b}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7afd679fab86e6a91d22c91734e287639b} 
+OP\+\_\+\+JMP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_EQ@{OP\_EQ}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_EQ@{OP\_EQ}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1634898deb6e4d1bcb15416034c641c5}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1634898deb6e4d1bcb15416034c641c5} 
+OP\+\_\+\+EQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LT@{OP\_LT}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LT@{OP\_LT}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7d5ed006824d331041dad8486e52df50}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7d5ed006824d331041dad8486e52df50} 
+OP\+\_\+\+LT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LE@{OP\_LE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LE@{OP\_LE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acef6e71b662db063ff532d89500bb0c0}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7acef6e71b662db063ff532d89500bb0c0} 
+OP\+\_\+\+LE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_EQK@{OP\_EQK}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_EQK@{OP\_EQK}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac474caab30c580d7a336de092e3e8754}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac474caab30c580d7a336de092e3e8754} 
+OP\+\_\+\+EQK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_EQI@{OP\_EQI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_EQI@{OP\_EQI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a073492f9f138556d12ee1020f01afa9d}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a073492f9f138556d12ee1020f01afa9d} 
+OP\+\_\+\+EQI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LTI@{OP\_LTI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LTI@{OP\_LTI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7355d162e8b15877fe33c54e3b755746}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7355d162e8b15877fe33c54e3b755746} 
+OP\+\_\+\+LTI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_LEI@{OP\_LEI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_LEI@{OP\_LEI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aec7e53f36f35ef810ecff8a7eb274877}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aec7e53f36f35ef810ecff8a7eb274877} 
+OP\+\_\+\+LEI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GTI@{OP\_GTI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GTI@{OP\_GTI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a4c9ef8190def252dc1e0deb1bf7e787e}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a4c9ef8190def252dc1e0deb1bf7e787e} 
+OP\+\_\+\+GTI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GEI@{OP\_GEI}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GEI@{OP\_GEI}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ade0bd78cc2f7ec9c1bf6c161759221fa}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ade0bd78cc2f7ec9c1bf6c161759221fa} 
+OP\+\_\+\+GEI&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TEST@{OP\_TEST}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TEST@{OP\_TEST}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8952e66300f2660060e38c67ccd21c9d}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a8952e66300f2660060e38c67ccd21c9d} 
+OP\+\_\+\+TEST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TESTSET@{OP\_TESTSET}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TESTSET@{OP\_TESTSET}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39b4077a15fb8fffc166f5045dddacee}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a39b4077a15fb8fffc166f5045dddacee} 
+OP\+\_\+\+TESTSET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_CALL@{OP\_CALL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_CALL@{OP\_CALL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a098bbeea13096667b102f7fd90cbe38f}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a098bbeea13096667b102f7fd90cbe38f} 
+OP\+\_\+\+CALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TAILCALL@{OP\_TAILCALL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TAILCALL@{OP\_TAILCALL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aff2c07ebfd82aa22cc247e9855a16069}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aff2c07ebfd82aa22cc247e9855a16069} 
+OP\+\_\+\+TAILCALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_RETURN@{OP\_RETURN}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_RETURN@{OP\_RETURN}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ad436c18b194473f5ec64c28b774e41b3}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ad436c18b194473f5ec64c28b774e41b3} 
+OP\+\_\+\+RETURN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_RETURN0@{OP\_RETURN0}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_RETURN0@{OP\_RETURN0}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3f8033d220b543563720de9ab788e82}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae3f8033d220b543563720de9ab788e82} 
+OP\+\_\+\+RETURN0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_RETURN1@{OP\_RETURN1}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_RETURN1@{OP\_RETURN1}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a85801949afc11b7d95553fd0ee912f38}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a85801949afc11b7d95553fd0ee912f38} 
+OP\+\_\+\+RETURN1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_FORLOOP@{OP\_FORLOOP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_FORLOOP@{OP\_FORLOOP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa01470a2fc70a3f2dbd20c7c8f270802}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aa01470a2fc70a3f2dbd20c7c8f270802} 
+OP\+\_\+\+FORLOOP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_FORPREP@{OP\_FORPREP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_FORPREP@{OP\_FORPREP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5277c6eb2b1ab790c4942fdccd749e33}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a5277c6eb2b1ab790c4942fdccd749e33} 
+OP\+\_\+\+FORPREP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TFORPREP@{OP\_TFORPREP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TFORPREP@{OP\_TFORPREP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aafeb9e3e631d6f6c1700bf77134d425e}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7aafeb9e3e631d6f6c1700bf77134d425e} 
+OP\+\_\+\+TFORPREP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TFORCALL@{OP\_TFORCALL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TFORCALL@{OP\_TFORCALL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a899602d2c96443e08eec9e477071aa22}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a899602d2c96443e08eec9e477071aa22} 
+OP\+\_\+\+TFORCALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_TFORLOOP@{OP\_TFORLOOP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_TFORLOOP@{OP\_TFORLOOP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7dabccd7671c8ff374cb4502a6edb9c0}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a7dabccd7671c8ff374cb4502a6edb9c0} 
+OP\+\_\+\+TFORLOOP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_SETLIST@{OP\_SETLIST}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_SETLIST@{OP\_SETLIST}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a01618d8295953fd4ab2ef721b2051718}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a01618d8295953fd4ab2ef721b2051718} 
+OP\+\_\+\+SETLIST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_CLOSURE@{OP\_CLOSURE}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_CLOSURE@{OP\_CLOSURE}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a407a76cd8c503b0f4dc14603687a77a2}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a407a76cd8c503b0f4dc14603687a77a2} 
+OP\+\_\+\+CLOSURE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_VARARG@{OP\_VARARG}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_VARARG@{OP\_VARARG}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1856103c50818d72aaa506821a4ef004}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1856103c50818d72aaa506821a4ef004} 
+OP\+\_\+\+VARARG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_GETVARG@{OP\_GETVARG}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_GETVARG@{OP\_GETVARG}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1fef421d733b227c65508a8d0dbb8d91}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a1fef421d733b227c65508a8d0dbb8d91} 
+OP\+\_\+\+GETVARG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_ERRNNIL@{OP\_ERRNNIL}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_ERRNNIL@{OP\_ERRNNIL}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac60d85a7aad029584666b5a2d46bffb5}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ac60d85a7aad029584666b5a2d46bffb5} 
+OP\+\_\+\+ERRNNIL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_VARARGPREP@{OP\_VARARGPREP}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_VARARGPREP@{OP\_VARARGPREP}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a0ac7fd650d101088cfc6beed3757ba44}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7a0ac7fd650d101088cfc6beed3757ba44} 
+OP\+\_\+\+VARARGPREP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OP\_EXTRAARG@{OP\_EXTRAARG}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!OP\_EXTRAARG@{OP\_EXTRAARG}}}\Hypertarget{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea}\label{lopcodes_8h_abeb7dfb0e9e2b3114e240a405d046ea7ae7a29a9b5e1490453da04cba95b39bea} 
+OP\+\_\+\+EXTRAARG&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}\index{lopcodes.h@{lopcodes.h}!OpMode@{OpMode}}
+\index{OpMode@{OpMode}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{OpMode}{OpMode}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af} 
+enum \mbox{\hyperlink{lopcodes_8h_a56752d1aeb4bd4940e632396072d68af}{Op\+Mode}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{iABC@{iABC}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!iABC@{iABC}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5032b5bab05a3312f6236ad8a6053cf3} 
+i\+ABC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ivABC@{ivABC}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!ivABC@{ivABC}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa352a37e1587e07a2056bbd86af8ff7f0} 
+iv\+ABC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{iABx@{iABx}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!iABx@{iABx}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afae162f330f7a1e7581cdbbb4af60dc8ea}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afae162f330f7a1e7581cdbbb4af60dc8ea} 
+i\+ABx&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{iAsBx@{iAsBx}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!iAsBx@{iAsBx}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5db94456d16691b254a6b2fc7b473e55}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa5db94456d16691b254a6b2fc7b473e55} 
+i\+As\+Bx&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{iAx@{iAx}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!iAx@{iAx}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa453db051897b5faf2716653c2aa5a2e2}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa453db051897b5faf2716653c2aa5a2e2} 
+i\+Ax&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{isJ@{isJ}!lopcodes.h@{lopcodes.h}}\index{lopcodes.h@{lopcodes.h}!isJ@{isJ}}}\Hypertarget{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa8c4168189c62aed69b9160daeb20f20e}\label{lopcodes_8h_a56752d1aeb4bd4940e632396072d68afa8c4168189c62aed69b9160daeb20f20e} 
+isJ&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{lopcodes_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lopcodes_8h_a0eb5a24da76fa24d4f05b81cae59f2d9}\index{lopcodes.h@{lopcodes.h}!luaP\_isIT@{luaP\_isIT}}
+\index{luaP\_isIT@{luaP\_isIT}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{luaP\_isIT()}{luaP\_isIT()}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a0eb5a24da76fa24d4f05b81cae59f2d9} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int lua\+P\+\_\+is\+IT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}}]{i}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lopcodes_8h_a0eb5a24da76fa24d4f05b81cae59f2d9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lopcodes_8h_a638e4f8e6bf687e36fd3601bf973fa43}\index{lopcodes.h@{lopcodes.h}!luaP\_isOT@{luaP\_isOT}}
+\index{luaP\_isOT@{luaP\_isOT}!lopcodes.h@{lopcodes.h}}
+\doxysubsubsection{\texorpdfstring{luaP\_isOT()}{luaP\_isOT()}}
+{\footnotesize\ttfamily \label{lopcodes_8h_a638e4f8e6bf687e36fd3601bf973fa43} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int lua\+P\+\_\+is\+OT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}}]{i}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{lopcodes_8h_a638e4f8e6bf687e36fd3601bf973fa43_icgraph}
+\end{center}
+\end{figure}

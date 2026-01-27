@@ -1,0 +1,13 @@
+<map id="lua_getfield" name="lua_getfield">
+<area shape="rect" id="Node000001" title=" " alt="" coords="540,47,628,74"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#a4cd66d7b986316711233243a268e8e04" title=" " alt="" coords="373,22,492,49"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="525,53,492,48,493,43,525,48"/>
+<area shape="rect" id="Node000004" href="$lauxlib_8c.html#a3cb8205f86c838d8f82b7d2360b1b0f4" title=" " alt="" coords="216,73,312,99"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="525,68,312,85,312,80,524,63"/>
+<area shape="rect" id="Node000003" href="$linit_8c.html#ad09996aefb08d65ffee01b1729919261" title=" " alt="" coords="5,22,155,49"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="369,20,325,13,264,8,203,13,136,24,135,19,202,7,264,3,325,7,370,15"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="372,56,312,75,310,69,371,51"/>
+<area shape="rect" id="Node000005" href="$loadlib_8c.html#ab732e1ec253c9b8dc0c2ce4d74cb0083" title=" " alt="" coords="203,22,325,49"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="358,38,325,38,325,33,358,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="201,71,130,52,132,47,202,66"/>
+</map>

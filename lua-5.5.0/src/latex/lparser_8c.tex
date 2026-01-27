@@ -1,0 +1,259 @@
+\doxysection{lparser.\+c File Reference}
+\hypertarget{lparser_8c}{}\label{lparser_8c}\index{lparser.c@{lparser.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lcode.\+h"{}}\newline
+{\ttfamily \#include "{}ldebug.\+h"{}}\newline
+{\ttfamily \#include "{}ldo.\+h"{}}\newline
+{\ttfamily \#include "{}lfunc.\+h"{}}\newline
+{\ttfamily \#include "{}llex.\+h"{}}\newline
+{\ttfamily \#include "{}lmem.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lopcodes.\+h"{}}\newline
+{\ttfamily \#include "{}lparser.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+{\ttfamily \#include "{}lstring.\+h"{}}\newline
+{\ttfamily \#include "{}ltable.\+h"{}}\newline
+Include dependency graph for lparser.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structBlockCnt}{Block\+Cnt}}
+\item 
+struct \mbox{\hyperlink{structConsControl}{Cons\+Control}}
+\item 
+struct \mbox{\hyperlink{structLHS__assign}{LHS\+\_\+assign}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a7b083c8164f99ddd60e711ca706869d0}{lparser\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lparser_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a0879a0e632584a9a8bee5ebffab571ca}{MAXVARS}}~200
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a38d6bad3bcde3d124ca880d6a9d82ba6}{hasmultret}}(k)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a5ea0ac9ed10a85ea4b0db7ca78050824}{eqstr}}(a,  b)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_aece9aca90eb75d99df8490bdb813bdd4}{check\+\_\+condition}}(ls,  c,  msg)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a031fd03dec54eb67a3cfac513b8575bb}{new\+\_\+localvarliteral}}(ls,  v)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_ab61308992bd6c2013519fdebd0d52704}{enterlevel}}(ls)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a147b3ba4d2004b4b4ee7260661ec31e1}{leavelevel}}(ls)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a73600d871136632041cea7c61740ac97}{MAX\+\_\+\+CNST}}~(INT\+\_\+\+MAX/2)
+\item 
+\#define \mbox{\hyperlink{lparser_8c_a521d60e3611f1afe98634adda1a0a050}{UNARY\+\_\+\+PRIORITY}}~12  /\texorpdfstring{$\ast$}{*} priority for unary operators \texorpdfstring{$\ast$}{*}/
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Block\+Cnt \mbox{\hyperlink{lparser_8c_a672971a1a6f6fb76c404bac87274225f}{Block\+Cnt}}
+\item 
+typedef struct Cons\+Control \mbox{\hyperlink{lparser_8c_aac0d82e2c5c45771c53cd25cb8b48972}{Cons\+Control}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{lparser_8c_a824424fa1d3f3295fc105d2d1c803f5b}{lua\+Y\+\_\+checklimit}} (\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}fs, int v, int l, const char \texorpdfstring{$\ast$}{*}what)
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{lparser_8c_a1260b2dc4b52b17d08315007d233d50d}{lua\+Y\+\_\+nvarstack}} (\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}fs)
+\item 
+\mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lparser_8c_abbb1e5661495c9268282e55b387a819a}{lua\+Y\+\_\+parser}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, \mbox{\hyperlink{structMbuffer}{Mbuffer}} \texorpdfstring{$\ast$}{*}buff, \mbox{\hyperlink{structDyndata}{Dyndata}} \texorpdfstring{$\ast$}{*}dyd, const char \texorpdfstring{$\ast$}{*}name, int firstchar)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lparser_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lparser_8c_aece9aca90eb75d99df8490bdb813bdd4}\index{lparser.c@{lparser.c}!check\_condition@{check\_condition}}
+\index{check\_condition@{check\_condition}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{check\_condition}{check\_condition}}
+{\footnotesize\ttfamily \label{lparser_8c_aece9aca90eb75d99df8490bdb813bdd4} 
+\#define check\+\_\+condition(\begin{DoxyParamCaption}\item[{}]{ls}{, }\item[{}]{c}{, }\item[{}]{msg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\ \textcolor{keywordflow}{if}\ (!(c))\ \mbox{\hyperlink{llex_8c_aa5303ae41cbf1a2d9ef2f422751f85be}{luaX\_syntaxerror}}(ls,\ msg);\ \}}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_ab61308992bd6c2013519fdebd0d52704}\index{lparser.c@{lparser.c}!enterlevel@{enterlevel}}
+\index{enterlevel@{enterlevel}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{enterlevel}{enterlevel}}
+{\footnotesize\ttfamily \label{lparser_8c_ab61308992bd6c2013519fdebd0d52704} 
+\#define enterlevel(\begin{DoxyParamCaption}\item[{}]{ls}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lstate_8c_ab0a7818dc5fb3e9ab38ad91329b6e3f2}{luaE\_incCstack}}(ls-\/>L)}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_a5ea0ac9ed10a85ea4b0db7ca78050824}\index{lparser.c@{lparser.c}!eqstr@{eqstr}}
+\index{eqstr@{eqstr}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{eqstr}{eqstr}}
+{\footnotesize\ttfamily \label{lparser_8c_a5ea0ac9ed10a85ea4b0db7ca78050824} 
+\#define eqstr(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((a)\ ==\ (b))}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_a38d6bad3bcde3d124ca880d6a9d82ba6}\index{lparser.c@{lparser.c}!hasmultret@{hasmultret}}
+\index{hasmultret@{hasmultret}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{hasmultret}{hasmultret}}
+{\footnotesize\ttfamily \label{lparser_8c_a38d6bad3bcde3d124ca880d6a9d82ba6} 
+\#define hasmultret(\begin{DoxyParamCaption}\item[{}]{k}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((k)\ ==\ \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4eae61a8c04cfeabd756694cd13774e47b7}{VCALL}}\ ||\ (k)\ ==\ \mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4ea3f5f58de0fa9e69449d4e2362ddbfaa1}{VVARARG}})}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_a147b3ba4d2004b4b4ee7260661ec31e1}\index{lparser.c@{lparser.c}!leavelevel@{leavelevel}}
+\index{leavelevel@{leavelevel}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{leavelevel}{leavelevel}}
+{\footnotesize\ttfamily \label{lparser_8c_a147b3ba4d2004b4b4ee7260661ec31e1} 
+\#define leavelevel(\begin{DoxyParamCaption}\item[{}]{ls}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((ls)-\/>L-\/>nCcalls-\/-\/)}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_a7b083c8164f99ddd60e711ca706869d0}\index{lparser.c@{lparser.c}!lparser\_c@{lparser\_c}}
+\index{lparser\_c@{lparser\_c}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{lparser\_c}{lparser\_c}}
+{\footnotesize\ttfamily \label{lparser_8c_a7b083c8164f99ddd60e711ca706869d0} 
+\#define lparser\+\_\+c}
+
+\Hypertarget{lparser_8c_abf0b3947b59218777a8e928a10be205b}\index{lparser.c@{lparser.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{lparser_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+\Hypertarget{lparser_8c_a73600d871136632041cea7c61740ac97}\index{lparser.c@{lparser.c}!MAX\_CNST@{MAX\_CNST}}
+\index{MAX\_CNST@{MAX\_CNST}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_CNST}{MAX\_CNST}}
+{\footnotesize\ttfamily \label{lparser_8c_a73600d871136632041cea7c61740ac97} 
+\#define MAX\+\_\+\+CNST~(INT\+\_\+\+MAX/2)}
+
+\Hypertarget{lparser_8c_a0879a0e632584a9a8bee5ebffab571ca}\index{lparser.c@{lparser.c}!MAXVARS@{MAXVARS}}
+\index{MAXVARS@{MAXVARS}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{MAXVARS}{MAXVARS}}
+{\footnotesize\ttfamily \label{lparser_8c_a0879a0e632584a9a8bee5ebffab571ca} 
+\#define MAXVARS~200}
+
+\Hypertarget{lparser_8c_a031fd03dec54eb67a3cfac513b8575bb}\index{lparser.c@{lparser.c}!new\_localvarliteral@{new\_localvarliteral}}
+\index{new\_localvarliteral@{new\_localvarliteral}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{new\_localvarliteral}{new\_localvarliteral}}
+{\footnotesize\ttfamily \label{lparser_8c_a031fd03dec54eb67a3cfac513b8575bb} 
+\#define new\+\_\+localvarliteral(\begin{DoxyParamCaption}\item[{}]{ls}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ new\_localvar(ls,\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{llex_8c_a51ec8735f32a452d48a77e71e9dd0a3b}{luaX\_newstring}}(ls,\ \textcolor{stringliteral}{"{}"{}}\ v,\ (\textcolor{keyword}{sizeof}(v)/\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}))\ -\/\ 1));}
+
+\end{DoxyCode}
+\Hypertarget{lparser_8c_a521d60e3611f1afe98634adda1a0a050}\index{lparser.c@{lparser.c}!UNARY\_PRIORITY@{UNARY\_PRIORITY}}
+\index{UNARY\_PRIORITY@{UNARY\_PRIORITY}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{UNARY\_PRIORITY}{UNARY\_PRIORITY}}
+{\footnotesize\ttfamily \label{lparser_8c_a521d60e3611f1afe98634adda1a0a050} 
+\#define UNARY\+\_\+\+PRIORITY~12  /\texorpdfstring{$\ast$}{*} priority for unary operators \texorpdfstring{$\ast$}{*}/}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{lparser_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lparser_8c_a672971a1a6f6fb76c404bac87274225f}\index{lparser.c@{lparser.c}!BlockCnt@{BlockCnt}}
+\index{BlockCnt@{BlockCnt}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{BlockCnt}{BlockCnt}}
+{\footnotesize\ttfamily \label{lparser_8c_a672971a1a6f6fb76c404bac87274225f} 
+typedef struct Block\+Cnt Block\+Cnt}
+
+\Hypertarget{lparser_8c_aac0d82e2c5c45771c53cd25cb8b48972}\index{lparser.c@{lparser.c}!ConsControl@{ConsControl}}
+\index{ConsControl@{ConsControl}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{ConsControl}{ConsControl}}
+{\footnotesize\ttfamily \label{lparser_8c_aac0d82e2c5c45771c53cd25cb8b48972} 
+typedef struct Cons\+Control Cons\+Control}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lparser_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lparser_8c_a824424fa1d3f3295fc105d2d1c803f5b}\index{lparser.c@{lparser.c}!luaY\_checklimit@{luaY\_checklimit}}
+\index{luaY\_checklimit@{luaY\_checklimit}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{luaY\_checklimit()}{luaY\_checklimit()}}
+{\footnotesize\ttfamily \label{lparser_8c_a824424fa1d3f3295fc105d2d1c803f5b} 
+void lua\+Y\+\_\+checklimit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}}]{fs}{, }\item[{int}]{v}{, }\item[{int}]{l}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{what}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8c_a824424fa1d3f3295fc105d2d1c803f5b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lparser_8c_a1260b2dc4b52b17d08315007d233d50d}\index{lparser.c@{lparser.c}!luaY\_nvarstack@{luaY\_nvarstack}}
+\index{luaY\_nvarstack@{luaY\_nvarstack}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{luaY\_nvarstack()}{luaY\_nvarstack()}}
+{\footnotesize\ttfamily \label{lparser_8c_a1260b2dc4b52b17d08315007d233d50d} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+Y\+\_\+nvarstack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structFuncState}{Func\+State}} \texorpdfstring{$\ast$}{*}}]{fs}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8c_a1260b2dc4b52b17d08315007d233d50d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lparser_8c_abbb1e5661495c9268282e55b387a819a}\index{lparser.c@{lparser.c}!luaY\_parser@{luaY\_parser}}
+\index{luaY\_parser@{luaY\_parser}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{luaY\_parser()}{luaY\_parser()}}
+{\footnotesize\ttfamily \label{lparser_8c_abbb1e5661495c9268282e55b387a819a} 
+\mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} lua\+Y\+\_\+parser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{\mbox{\hyperlink{structMbuffer}{Mbuffer}} \texorpdfstring{$\ast$}{*}}]{buff}{, }\item[{\mbox{\hyperlink{structDyndata}{Dyndata}} \texorpdfstring{$\ast$}{*}}]{dyd}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{int}]{firstchar}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lparser_8c_abbb1e5661495c9268282e55b387a819a_cgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-var-members}
+\Hypertarget{lparser_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{lparser_8c_a3584754acc5e91c03d6fc91359eefd78}\index{lparser.c@{lparser.c}!left@{left}}
+\index{left@{left}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{left}{left}}
+{\footnotesize\ttfamily \label{lparser_8c_a3584754acc5e91c03d6fc91359eefd78} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} left}
+
+\Hypertarget{lparser_8c_a34b07942956eb7acd9d02c5b75177ae6}\index{lparser.c@{lparser.c}!right@{right}}
+\index{right@{right}!lparser.c@{lparser.c}}
+\doxysubsubsection{\texorpdfstring{right}{right}}
+{\footnotesize\ttfamily \label{lparser_8c_a34b07942956eb7acd9d02c5b75177ae6} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} right}
+

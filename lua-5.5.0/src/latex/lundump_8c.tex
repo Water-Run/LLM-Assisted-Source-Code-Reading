@@ -1,0 +1,143 @@
+\doxysection{lundump.\+c File Reference}
+\hypertarget{lundump_8c}{}\label{lundump_8c}\index{lundump.c@{lundump.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}ldebug.\+h"{}}\newline
+{\ttfamily \#include "{}ldo.\+h"{}}\newline
+{\ttfamily \#include "{}lfunc.\+h"{}}\newline
+{\ttfamily \#include "{}lmem.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lstring.\+h"{}}\newline
+{\ttfamily \#include "{}ltable.\+h"{}}\newline
+{\ttfamily \#include "{}lundump.\+h"{}}\newline
+{\ttfamily \#include "{}lzio.\+h"{}}\newline
+Include dependency graph for lundump.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lundump_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structLoadState}{Load\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lundump_8c_aa480de4ebd1ff43b613879e98ab2bcd8}{lundump\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lundump_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{lundump_8c_ac24baf04a83a58a79d218599dc7474c7}{luai\+\_\+verifycode}}(L,  f)
+\item 
+\#define \mbox{\hyperlink{lundump_8c_ac2c6d25be53702eb5dac5a27feec260e}{load\+Vector}}(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},  b,  n)
+\item 
+\#define \mbox{\hyperlink{lundump_8c_aecfc8b8330ab32c6d430cf1cdf68c5b2}{getaddr}}(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},  n,  t)
+\item 
+\#define \mbox{\hyperlink{lundump_8c_ab1d6f5039e26f72694ca2e711b21a232}{load\+Var}}(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},  x)
+\item 
+\#define \mbox{\hyperlink{lundump_8c_ae30a29ad1512572bca8ef79f7609bbe2}{checknum}}(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},  tvar,  value,  tname)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lundump_8c_abe61c3dc465c8ab5d8bafba61ecfb93e}{lua\+U\+\_\+undump}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}Z, const char \texorpdfstring{$\ast$}{*}name, int fixed)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lundump_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lundump_8c_ae30a29ad1512572bca8ef79f7609bbe2}\index{lundump.c@{lundump.c}!checknum@{checknum}}
+\index{checknum@{checknum}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{checknum}{checknum}}
+{\footnotesize\ttfamily \label{lundump_8c_ae30a29ad1512572bca8ef79f7609bbe2} 
+\#define checknum(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}}}{, }\item[{}]{tvar}{, }\item[{}]{value}{, }\item[{}]{tname}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \{\ tvar\ i;\ checknumsize(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},\ \textcolor{keyword}{sizeof}(i),\ tname);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ loadVar(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},\ i);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ checknumformat(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},\ i\ ==\ value,\ tname);\ \}}
+
+\end{DoxyCode}
+\Hypertarget{lundump_8c_aecfc8b8330ab32c6d430cf1cdf68c5b2}\index{lundump.c@{lundump.c}!getaddr@{getaddr}}
+\index{getaddr@{getaddr}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{getaddr}{getaddr}}
+{\footnotesize\ttfamily \label{lundump_8c_aecfc8b8330ab32c6d430cf1cdf68c5b2} 
+\#define getaddr(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}}}{, }\item[{}]{n}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(t\ *,\ getaddr\_(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},\mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(n)\ *\ \textcolor{keyword}{sizeof}(t)))}
+
+\end{DoxyCode}
+\Hypertarget{lundump_8c_ab1d6f5039e26f72694ca2e711b21a232}\index{lundump.c@{lundump.c}!loadVar@{loadVar}}
+\index{loadVar@{loadVar}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{loadVar}{loadVar}}
+{\footnotesize\ttfamily \label{lundump_8c_ab1d6f5039e26f72694ca2e711b21a232} 
+\#define load\+Var(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}}}{, }\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lundump_8c_ac2c6d25be53702eb5dac5a27feec260e}{loadVector}}(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},\&x,1)}
+
+\end{DoxyCode}
+\Hypertarget{lundump_8c_ac2c6d25be53702eb5dac5a27feec260e}\index{lundump.c@{lundump.c}!loadVector@{loadVector}}
+\index{loadVector@{loadVector}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{loadVector}{loadVector}}
+{\footnotesize\ttfamily \label{lundump_8c_ac2c6d25be53702eb5dac5a27feec260e} 
+\#define load\+Vector(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}}}{, }\item[{}]{b}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{loadBlock(\mbox{\hyperlink{luac_8c_ac4a3ed3432929804c708f7760fb79e28}{S}},b,\mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(n)*\textcolor{keyword}{sizeof}((b)[0]))}
+
+\end{DoxyCode}
+\Hypertarget{lundump_8c_abf0b3947b59218777a8e928a10be205b}\index{lundump.c@{lundump.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{lundump_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+\Hypertarget{lundump_8c_ac24baf04a83a58a79d218599dc7474c7}\index{lundump.c@{lundump.c}!luai\_verifycode@{luai\_verifycode}}
+\index{luai\_verifycode@{luai\_verifycode}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{luai\_verifycode}{luai\_verifycode}}
+{\footnotesize\ttfamily \label{lundump_8c_ac24baf04a83a58a79d218599dc7474c7} 
+\#define luai\+\_\+verifycode(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{/*\ empty\ */}}
+
+\end{DoxyCode}
+\Hypertarget{lundump_8c_aa480de4ebd1ff43b613879e98ab2bcd8}\index{lundump.c@{lundump.c}!lundump\_c@{lundump\_c}}
+\index{lundump\_c@{lundump\_c}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{lundump\_c}{lundump\_c}}
+{\footnotesize\ttfamily \label{lundump_8c_aa480de4ebd1ff43b613879e98ab2bcd8} 
+\#define lundump\+\_\+c}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lundump_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lundump_8c_abe61c3dc465c8ab5d8bafba61ecfb93e}\index{lundump.c@{lundump.c}!luaU\_undump@{luaU\_undump}}
+\index{luaU\_undump@{luaU\_undump}!lundump.c@{lundump.c}}
+\doxysubsubsection{\texorpdfstring{luaU\_undump()}{luaU\_undump()}}
+{\footnotesize\ttfamily \label{lundump_8c_abe61c3dc465c8ab5d8bafba61ecfb93e} 
+\mbox{\hyperlink{structLClosure}{LClosure}} \texorpdfstring{$\ast$}{*} lua\+U\+\_\+undump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{Z}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{int}]{fixed}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lundump_8c_abe61c3dc465c8ab5d8bafba61ecfb93e_cgraph}
+\end{center}
+\end{figure}

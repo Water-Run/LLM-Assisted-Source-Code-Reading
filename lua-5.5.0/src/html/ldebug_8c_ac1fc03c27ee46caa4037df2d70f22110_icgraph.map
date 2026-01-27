@@ -1,0 +1,32 @@
+<map id="lua_getstack" name="lua_getstack">
+<area shape="rect" id="Node000001" title=" " alt="" coords="814,132,909,159"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#ac607576dd107a3120cd51948989f1ed2" title=" " alt="" coords="366,81,462,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="800,130,766,123,683,111,599,104,463,98,463,93,600,99,683,106,766,117,801,125"/>
+<area shape="rect" id="Node000006" href="$lauxlib_8c.html#a67bf3728d34d2c9badb2bd2f57c75233" title=" " alt="" coords="657,132,766,159"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="798,148,766,148,766,143,798,143"/>
+<area shape="rect" id="Node000007" href="$lauxlib_8c.html#a0f4d3c30c07eae36aa25605df84279a0" title=" " alt="" coords="668,183,755,209"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="806,167,754,185,752,180,805,162"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a8ebfe706b773eaaf50283e6583d4642e" title=" " alt="" coords="183,5,291,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="367,77,297,46,270,35,272,30,299,42,369,72"/>
+<area shape="rect" id="Node000004" href="$lauxlib_8c.html#a7a3959469b5643d9ea2313eb11a3946f" title=" " alt="" coords="176,56,298,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="350,88,298,81,299,75,351,83"/>
+<area shape="rect" id="Node000005" href="$lauxlib_8c.html#aaa48a92e16c27c06e9c56e526e70f111" title=" " alt="" coords="185,107,288,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="351,106,290,115,289,110,350,101"/>
+<area shape="rect" id="Node000008" href="$lauxlib_8c.html#a6c51d83d29244779392551388913e08a" title=" " alt="" coords="530,183,609,209"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="652,199,609,199,609,193,652,193"/>
+<area shape="poly" id="edge8_Node000008_Node000002" title=" " alt="" coords="544,174,515,147,481,122,458,111,460,106,484,118,518,143,547,170"/>
+<area shape="rect" id="Node000009" href="$lauxlib_8c.html#a7c46517055e0e8cb25e61b959709083a" title=" " alt="" coords="354,132,474,159"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="515,181,457,162,458,157,517,176"/>
+<area shape="rect" id="Node000013" href="$lauxlib_8c.html#a8ad94df78305955cad1c698ea9d1eee9" title=" " alt="" coords="346,183,482,209"/>
+<area shape="poly" id="edge13_Node000008_Node000013" title=" " alt="" coords="515,199,483,199,483,193,515,193"/>
+<area shape="rect" id="Node000014" href="$lauxlib_8c.html#aa525c1b6aa90c90d684ef64cf2215e21" title=" " alt="" coords="380,233,449,260"/>
+<area shape="poly" id="edge14_Node000008_Node000014" title=" " alt="" coords="517,216,450,238,448,233,515,211"/>
+<area shape="rect" id="Node000015" href="$lauxlib_8c.html#a64d366034d114de946f1b93199847dab" title=" " alt="" coords="365,284,463,311"/>
+<area shape="poly" id="edge15_Node000008_Node000015" title=" " alt="" coords="547,222,518,249,484,274,460,286,458,281,481,270,515,245,544,218"/>
+<area shape="rect" id="Node000010" href="$lauxlib_8c.html#a4cab22d0cb403fa6b94f2542f4303096" title=" " alt="" coords="186,157,288,184"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="340,159,289,166,288,161,339,153"/>
+<area shape="rect" id="Node000011" href="$lbaselib_8c.html#ae99bbf706d0fcfb0c1c7afbe3c4de382" title=" " alt="" coords="16,132,117,159"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="170,163,117,155,118,150,171,158"/>
+<area shape="rect" id="Node000012" href="$loadlib_8c.html#ab732e1ec253c9b8dc0c2ce4d74cb0083" title=" " alt="" coords="5,183,128,209"/>
+<area shape="poly" id="edge12_Node000010_Node000012" title=" " alt="" coords="171,183,129,190,128,184,170,178"/>
+</map>

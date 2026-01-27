@@ -1,0 +1,45 @@
+\doxysection{lundump.\+h}
+\hypertarget{lundump_8h_source}{}\label{lundump_8h_source}\mbox{\hyperlink{lundump_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lundump.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ load\ precompiled\ Lua\ chunks}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lundump\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lundump\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <limits.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llimits_8h}{llimits.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lzio_8h}{lzio.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/*\ data\ to\ catch\ conversion\ errors\ */}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ LUAC\_DATA\ \ \ "{}\(\backslash\)x19\(\backslash\)x93\(\backslash\)r\(\backslash\)n\(\backslash\)x1a\(\backslash\)n"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ LUAC\_INT\ \ \ \ -\/0x5678}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ LUAC\_INST\ \ \ 0x12345678}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ LUAC\_NUM\ \ \ \ cast\_num(-\/370.5)}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ Encode\ major-\/minor\ version\ in\ one\ byte,\ one\ nibble\ for\ each}}
+\DoxyCodeLine{00026\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ LUAC\_VERSION\ \ \ \ (LUA\_VERSION\_MAJOR\_N*16+LUA\_VERSION\_MINOR\_N)}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ LUAC\_FORMAT\ 0\ \ \ }\textcolor{comment}{/*\ this\ is\ the\ official\ format\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{/*\ load\ one\ chunk;\ from\ lundump.c\ */}}
+\DoxyCodeLine{00033\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structLClosure}{LClosure}}*\ \mbox{\hyperlink{lundump_8h_a55a19bf7f9cefd80e3e8185d8deeb7de}{luaU\_undump}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}*\ L,\ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}*\ Z,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fixed);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{/*\ dump\ one\ chunk;\ from\ ldump.c\ */}}
+\DoxyCodeLine{00037\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lundump_8h_a2b9d33dfd898f6284de183d168556786}{luaU\_dump}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}*\ L,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structProto}{Proto}}*\ f,\ \mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\_Writer}}\ w,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{int}\ strip);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

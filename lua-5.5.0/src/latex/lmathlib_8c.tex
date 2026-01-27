@@ -1,0 +1,136 @@
+\doxysection{lmathlib.\+c File Reference}
+\hypertarget{lmathlib_8c}{}\label{lmathlib_8c}\index{lmathlib.c@{lmathlib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$float.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lmathlib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lmathlib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structRand64}{Rand64}}
+\item 
+struct \mbox{\hyperlink{structRanState}{Ran\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a758ac163994ce1fb9a74163e4d468db3}{lmathlib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a598a3330b3c21701223ee0ca14316eca}{PI}}~(\mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\+\_\+mathop}}(3.\+141592653589793238462643383279502884))
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a0282a980b31306aa7d94e9e6ad975837}{FIGS}}~\mbox{\hyperlink{luaconf_8h_af41b220b80eae0908ca2e190ca024990}{l\+\_\+floatatt}}(MANT\+\_\+\+DIG)
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a4d4f48045002686d9d2b361148c98db5}{trim32}}(x)
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_a37c87c7e103e67064c02ce86e5c00215}{UONE}}~((\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}})1)
+\item 
+\#define \mbox{\hyperlink{lmathlib_8c_af9acb4963a9c1f6a8e60d4b1e8b76184}{scale\+FIG}}~(\mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\+\_\+mathop}}(0.\+5) / (\mbox{\hyperlink{lmathlib_8c_a37c87c7e103e67064c02ce86e5c00215}{UONE}} $<$$<$ (\mbox{\hyperlink{lmathlib_8c_a0282a980b31306aa7d94e9e6ad975837}{FIGS}} -\/ 1)))
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Rand64 \mbox{\hyperlink{lmathlib_8c_ac514b2d1475b8c2e91f0b3a1f46d0f34}{Rand64}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{lmathlib_8c_a78cbff06fd4d59cf3d7525fa6cc196ba}{luaopen\+\_\+math}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lmathlib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lmathlib_8c_a0282a980b31306aa7d94e9e6ad975837}\index{lmathlib.c@{lmathlib.c}!FIGS@{FIGS}}
+\index{FIGS@{FIGS}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{FIGS}{FIGS}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a0282a980b31306aa7d94e9e6ad975837} 
+\#define FIGS~\mbox{\hyperlink{luaconf_8h_af41b220b80eae0908ca2e190ca024990}{l\+\_\+floatatt}}(MANT\+\_\+\+DIG)}
+
+\Hypertarget{lmathlib_8c_a758ac163994ce1fb9a74163e4d468db3}\index{lmathlib.c@{lmathlib.c}!lmathlib\_c@{lmathlib\_c}}
+\index{lmathlib\_c@{lmathlib\_c}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{lmathlib\_c}{lmathlib\_c}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a758ac163994ce1fb9a74163e4d468db3} 
+\#define lmathlib\+\_\+c}
+
+\Hypertarget{lmathlib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{lmathlib.c@{lmathlib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{lmathlib_8c_a598a3330b3c21701223ee0ca14316eca}\index{lmathlib.c@{lmathlib.c}!PI@{PI}}
+\index{PI@{PI}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{PI}{PI}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a598a3330b3c21701223ee0ca14316eca} 
+\#define PI~(\mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\+\_\+mathop}}(3.\+141592653589793238462643383279502884))}
+
+\Hypertarget{lmathlib_8c_af9acb4963a9c1f6a8e60d4b1e8b76184}\index{lmathlib.c@{lmathlib.c}!scaleFIG@{scaleFIG}}
+\index{scaleFIG@{scaleFIG}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{scaleFIG}{scaleFIG}}
+{\footnotesize\ttfamily \label{lmathlib_8c_af9acb4963a9c1f6a8e60d4b1e8b76184} 
+\#define scale\+FIG~(\mbox{\hyperlink{luaconf_8h_a919f548d82dc9a0681dd0ba8996d986d}{l\+\_\+mathop}}(0.\+5) / (\mbox{\hyperlink{lmathlib_8c_a37c87c7e103e67064c02ce86e5c00215}{UONE}} $<$$<$ (\mbox{\hyperlink{lmathlib_8c_a0282a980b31306aa7d94e9e6ad975837}{FIGS}} -\/ 1)))}
+
+\Hypertarget{lmathlib_8c_a4d4f48045002686d9d2b361148c98db5}\index{lmathlib.c@{lmathlib.c}!trim32@{trim32}}
+\index{trim32@{trim32}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{trim32}{trim32}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a4d4f48045002686d9d2b361148c98db5} 
+\#define trim32(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((x)\ \&\ 0xffffffffu)}
+
+\end{DoxyCode}
+\Hypertarget{lmathlib_8c_a37c87c7e103e67064c02ce86e5c00215}\index{lmathlib.c@{lmathlib.c}!UONE@{UONE}}
+\index{UONE@{UONE}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{UONE}{UONE}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a37c87c7e103e67064c02ce86e5c00215} 
+\#define UONE~((\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}})1)}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{lmathlib_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lmathlib_8c_ac514b2d1475b8c2e91f0b3a1f46d0f34}\index{lmathlib.c@{lmathlib.c}!Rand64@{Rand64}}
+\index{Rand64@{Rand64}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{Rand64}{Rand64}}
+{\footnotesize\ttfamily \label{lmathlib_8c_ac514b2d1475b8c2e91f0b3a1f46d0f34} 
+typedef struct Rand64 Rand64}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lmathlib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lmathlib_8c_a78cbff06fd4d59cf3d7525fa6cc196ba}\index{lmathlib.c@{lmathlib.c}!luaopen\_math@{luaopen\_math}}
+\index{luaopen\_math@{luaopen\_math}!lmathlib.c@{lmathlib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_math()}{luaopen\_math()}}
+{\footnotesize\ttfamily \label{lmathlib_8c_a78cbff06fd4d59cf3d7525fa6cc196ba} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+math (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{lmathlib_8c_a78cbff06fd4d59cf3d7525fa6cc196ba_cgraph}
+\end{center}
+\end{figure}

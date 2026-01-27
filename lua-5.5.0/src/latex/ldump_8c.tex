@@ -1,0 +1,141 @@
+\doxysection{ldump.\+c File Reference}
+\hypertarget{ldump_8c}{}\label{ldump_8c}\index{ldump.c@{ldump.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lapi.\+h"{}}\newline
+{\ttfamily \#include "{}lgc.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+{\ttfamily \#include "{}ltable.\+h"{}}\newline
+{\ttfamily \#include "{}lundump.\+h"{}}\newline
+Include dependency graph for ldump.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ldump_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structDumpState}{Dump\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ldump_8c_a305a0bdaea32b19e7f6d2cb6dce1cc81}{ldump\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{ldump_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{ldump_8c_aa57836f656453350c7d2b6b89df1b003}{dump\+Vector}}(D,  v,  n)
+\item 
+\#define \mbox{\hyperlink{ldump_8c_a05e931c17f007b1c9d54080d6243af18}{dump\+Literal}}(D,  s)
+\item 
+\#define \mbox{\hyperlink{ldump_8c_ad2bf75eb38f1f5a5a7f71818fbb04098}{dump\+Var}}(D,  x)
+\item 
+\#define \mbox{\hyperlink{ldump_8c_a2a1ad4360d7023093f769ebda9341597}{DIBS}}~((\mbox{\hyperlink{llimits_8h_ad40053171fbf571af0be66edc7a93457}{l\+\_\+numbits}}(\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\+\_\+\+Unsigned}}) + 6) / 7)
+\item 
+\#define \mbox{\hyperlink{ldump_8c_a1b8c7443d1f215741e5c3fe82bb39e01}{dump\+Num\+Info}}(D,  tvar,  value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{ldump_8c_a808f6a29001ac6446f40c76014c6b6e9}{lua\+U\+\_\+dump}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const \mbox{\hyperlink{structProto}{Proto}} \texorpdfstring{$\ast$}{*}f, \mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\+\_\+\+Writer}} w, void \texorpdfstring{$\ast$}{*}data, int strip)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{ldump_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ldump_8c_a2a1ad4360d7023093f769ebda9341597}\index{ldump.c@{ldump.c}!DIBS@{DIBS}}
+\index{DIBS@{DIBS}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{DIBS}{DIBS}}
+{\footnotesize\ttfamily \label{ldump_8c_a2a1ad4360d7023093f769ebda9341597} 
+\#define DIBS~((\mbox{\hyperlink{llimits_8h_ad40053171fbf571af0be66edc7a93457}{l\+\_\+numbits}}(\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\+\_\+\+Unsigned}}) + 6) / 7)}
+
+\Hypertarget{ldump_8c_a05e931c17f007b1c9d54080d6243af18}\index{ldump.c@{ldump.c}!dumpLiteral@{dumpLiteral}}
+\index{dumpLiteral@{dumpLiteral}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{dumpLiteral}{dumpLiteral}}
+{\footnotesize\ttfamily \label{ldump_8c_a05e931c17f007b1c9d54080d6243af18} 
+\#define dump\+Literal(\begin{DoxyParamCaption}\item[{}]{D}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{dumpBlock(D,s,\textcolor{keyword}{sizeof}(s)\ -\/\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}))}
+
+\end{DoxyCode}
+\Hypertarget{ldump_8c_a1b8c7443d1f215741e5c3fe82bb39e01}\index{ldump.c@{ldump.c}!dumpNumInfo@{dumpNumInfo}}
+\index{dumpNumInfo@{dumpNumInfo}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{dumpNumInfo}{dumpNumInfo}}
+{\footnotesize\ttfamily \label{ldump_8c_a1b8c7443d1f215741e5c3fe82bb39e01} 
+\#define dump\+Num\+Info(\begin{DoxyParamCaption}\item[{}]{D}{, }\item[{}]{tvar}{, }\item[{}]{value}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \{\ tvar\ i\ =\ value;\ dumpByte(D,\ \textcolor{keyword}{sizeof}(tvar));\ \mbox{\hyperlink{ldump_8c_ad2bf75eb38f1f5a5a7f71818fbb04098}{dumpVar}}(D,\ i);\ \}}
+
+\end{DoxyCode}
+\Hypertarget{ldump_8c_ad2bf75eb38f1f5a5a7f71818fbb04098}\index{ldump.c@{ldump.c}!dumpVar@{dumpVar}}
+\index{dumpVar@{dumpVar}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{dumpVar}{dumpVar}}
+{\footnotesize\ttfamily \label{ldump_8c_ad2bf75eb38f1f5a5a7f71818fbb04098} 
+\#define dump\+Var(\begin{DoxyParamCaption}\item[{}]{D}{, }\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{ldump_8c_aa57836f656453350c7d2b6b89df1b003}{dumpVector}}(D,\&x,1)}
+
+\end{DoxyCode}
+\Hypertarget{ldump_8c_aa57836f656453350c7d2b6b89df1b003}\index{ldump.c@{ldump.c}!dumpVector@{dumpVector}}
+\index{dumpVector@{dumpVector}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{dumpVector}{dumpVector}}
+{\footnotesize\ttfamily \label{ldump_8c_aa57836f656453350c7d2b6b89df1b003} 
+\#define dump\+Vector(\begin{DoxyParamCaption}\item[{}]{D}{, }\item[{}]{v}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{dumpBlock(D,v,(n)*\textcolor{keyword}{sizeof}((v)[0]))}
+
+\end{DoxyCode}
+\Hypertarget{ldump_8c_a305a0bdaea32b19e7f6d2cb6dce1cc81}\index{ldump.c@{ldump.c}!ldump\_c@{ldump\_c}}
+\index{ldump\_c@{ldump\_c}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{ldump\_c}{ldump\_c}}
+{\footnotesize\ttfamily \label{ldump_8c_a305a0bdaea32b19e7f6d2cb6dce1cc81} 
+\#define ldump\+\_\+c}
+
+\Hypertarget{ldump_8c_abf0b3947b59218777a8e928a10be205b}\index{ldump.c@{ldump.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{ldump_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+
+
+\label{doc-func-members}
+\Hypertarget{ldump_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{ldump_8c_a808f6a29001ac6446f40c76014c6b6e9}\index{ldump.c@{ldump.c}!luaU\_dump@{luaU\_dump}}
+\index{luaU\_dump@{luaU\_dump}!ldump.c@{ldump.c}}
+\doxysubsubsection{\texorpdfstring{luaU\_dump()}{luaU\_dump()}}
+{\footnotesize\ttfamily \label{ldump_8c_a808f6a29001ac6446f40c76014c6b6e9} 
+int lua\+U\+\_\+dump (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const \mbox{\hyperlink{structProto}{Proto}} \texorpdfstring{$\ast$}{*}}]{f}{, }\item[{\mbox{\hyperlink{lua_8h_a855729196d7066b2da21178284868a8d}{lua\+\_\+\+Writer}}}]{w}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{strip}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ldump_8c_a808f6a29001ac6446f40c76014c6b6e9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{ldump_8c_a808f6a29001ac6446f40c76014c6b6e9_icgraph}
+\end{center}
+\end{figure}

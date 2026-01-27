@@ -1,0 +1,273 @@
+\doxysection{lgc.\+h}
+\hypertarget{lgc_8h_source}{}\label{lgc_8h_source}\mbox{\hyperlink{lgc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lgc.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Garbage\ Collector}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lgc\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lgc\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lstate_8h}{lstate.h}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ Collectable\ objects\ may\ have\ one\ of\ three\ colors:\ white,\ which\ means}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ the\ object\ is\ not\ marked;\ gray,\ which\ means\ the\ object\ is\ marked,\ but}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ its\ references\ may\ be\ not\ marked;\ and\ black,\ which\ means\ that\ the}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ object\ and\ all\ its\ references\ are\ marked.\ \ The\ main\ invariant\ of\ the}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**\ garbage\ collector,\ while\ marking\ objects,\ is\ that\ a\ black\ object\ can}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**\ never\ point\ to\ a\ white\ one.\ Moreover,\ any\ gray\ object\ must\ be\ in\ a}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ "{}gray\ list"{}\ (gray,\ grayagain,\ weak,\ allweak,\ ephemeron)\ so\ that\ it}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ can\ be\ visited\ again\ before\ finishing\ the\ collection\ cycle.\ (Open}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ upvalues\ are\ an\ exception\ to\ this\ rule,\ as\ they\ are\ attached\ to}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ a\ corresponding\ thread.)\ \ These\ lists\ have\ no\ meaning\ when\ the}}
+\DoxyCodeLine{00028\ \textcolor{comment}{**\ invariant\ is\ not\ being\ enforced\ (e.g.,\ sweep\ phase).}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00033\ \textcolor{comment}{**\ Possible\ states\ of\ the\ Garbage\ Collector}}
+\DoxyCodeLine{00034\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ GCSpropagate\ \ \ \ 0}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ GCSenteratomic\ \ 1}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ GCSatomic\ \ \ 2}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ GCSswpallgc\ 3}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ GCSswpfinobj\ \ \ \ 4}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ GCSswptobefnz\ \ \ 5}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ GCSswpend\ \ \ 6}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ GCScallfin\ \ 7}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ GCSpause\ \ \ \ 8}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ issweepphase(g)\ \ \(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\ \ \ \ (GCSswpallgc\ <=\ (g)-\/>gcstate\ \&\&\ (g)-\/>gcstate\ <=\ GCSswpend)}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00051\ \textcolor{comment}{**\ macro\ to\ tell\ when\ main\ invariant\ (white\ objects\ cannot\ point\ to\ black}}
+\DoxyCodeLine{00052\ \textcolor{comment}{**\ ones)\ must\ be\ kept.\ During\ a\ collection,\ the\ sweep\ phase\ may\ break}}
+\DoxyCodeLine{00053\ \textcolor{comment}{**\ the\ invariant,\ as\ objects\ turned\ white\ may\ point\ to\ still-\/black}}
+\DoxyCodeLine{00054\ \textcolor{comment}{**\ objects.\ The\ invariant\ is\ restored\ when\ sweep\ ends\ and\ all\ objects}}
+\DoxyCodeLine{00055\ \textcolor{comment}{**\ are\ white\ again.}}
+\DoxyCodeLine{00056\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ keepinvariant(g)\ \ \ \ ((g)-\/>gcstate\ <=\ GCSatomic)}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00062\ \textcolor{comment}{**\ some\ useful\ bit\ tricks}}
+\DoxyCodeLine{00063\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ resetbits(x,m)\ \ \ \ \ \ ((x)\ \&=\ cast\_byte(\string~(m)))}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ setbits(x,m)\ \ \ \ \ \ \ \ ((x)\ |=\ (m))}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ testbits(x,m)\ \ \ \ \ \ \ ((x)\ \&\ (m))}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ bitmask(b)\ \ \ \ \ \ (1<<(b))}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ bit2mask(b1,b2)\ \ \ \ \ (bitmask(b1)\ |\ bitmask(b2))}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ l\_setbit(x,b)\ \ \ \ \ \ \ setbits(x,\ bitmask(b))}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ resetbit(x,b)\ \ \ \ \ \ \ resetbits(x,\ bitmask(b))}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ testbit(x,b)\ \ \ \ \ \ \ \ testbits(x,\ bitmask(b))}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00075\ \textcolor{comment}{**\ Layout\ for\ bit\ use\ in\ 'marked'\ field.\ First\ three\ bits\ are}}
+\DoxyCodeLine{00076\ \textcolor{comment}{**\ used\ for\ object\ "{}age"{}\ in\ generational\ mode.\ Last\ bit\ is\ used}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ by\ tests.}}
+\DoxyCodeLine{00078\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ WHITE0BIT\ \ \ 3\ \ }\textcolor{comment}{/*\ object\ is\ white\ (type\ 0)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#define\ WHITE1BIT\ \ \ 4\ \ }\textcolor{comment}{/*\ object\ is\ white\ (type\ 1)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ BLACKBIT\ \ \ \ 5\ \ }\textcolor{comment}{/*\ object\ is\ black\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ FINALIZEDBIT\ \ \ \ 6\ \ }\textcolor{comment}{/*\ object\ has\ been\ marked\ for\ finalization\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#define\ TESTBIT\ \ \ \ \ 7}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ WHITEBITS\ \ \ bit2mask(WHITE0BIT,\ WHITE1BIT)}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#define\ iswhite(x)\ \ \ \ \ \ testbits((x)-\/>marked,\ WHITEBITS)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ isblack(x)\ \ \ \ \ \ testbit((x)-\/>marked,\ BLACKBIT)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ isgray(x)\ \ }\textcolor{comment}{/*\ neither\ white\ nor\ black\ */}\textcolor{preprocessor}{\ \ \(\backslash\)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\ \ \ \ (!testbits((x)-\/>marked,\ WHITEBITS\ |\ bitmask(BLACKBIT)))}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ tofinalize(x)\ \ \ testbit((x)-\/>marked,\ FINALIZEDBIT)}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#define\ otherwhite(g)\ \ \ ((g)-\/>currentwhite\ \string^\ WHITEBITS)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ isdeadm(ow,m)\ \ \ ((m)\ \&\ (ow))}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ isdead(g,v)\ isdeadm(otherwhite(g),\ (v)-\/>marked)}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#define\ changewhite(x)\ \ ((x)-\/>marked\ \string^=\ WHITEBITS)}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#define\ nw2black(x)\ \ \(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\ \ \ \ check\_exp(!iswhite(x),\ l\_setbit((x)-\/>marked,\ BLACKBIT))}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ luaC\_white(g)\ \ \ cast\_byte((g)-\/>currentwhite\ \&\ WHITEBITS)}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{/*\ object\ age\ in\ generational\ mode\ */}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ G\_NEW\ \ \ \ \ \ \ 0\ \ \ }\textcolor{comment}{/*\ created\ in\ current\ cycle\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ G\_SURVIVAL\ \ 1\ \ \ }\textcolor{comment}{/*\ created\ in\ previous\ cycle\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#define\ G\_OLD0\ \ \ \ \ \ 2\ \ \ }\textcolor{comment}{/*\ marked\ old\ by\ frw.\ barrier\ in\ this\ cycle\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ G\_OLD1\ \ \ \ \ \ 3\ \ \ }\textcolor{comment}{/*\ first\ full\ cycle\ as\ old\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ G\_OLD\ \ \ \ \ \ \ 4\ \ \ }\textcolor{comment}{/*\ really\ old\ object\ (not\ to\ be\ visited)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#define\ G\_TOUCHED1\ \ 5\ \ \ }\textcolor{comment}{/*\ old\ object\ touched\ this\ cycle\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#define\ G\_TOUCHED2\ \ 6\ \ \ }\textcolor{comment}{/*\ old\ object\ touched\ in\ previous\ cycle\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ AGEBITS\ \ \ \ \ 7\ \ }\textcolor{comment}{/*\ all\ age\ bits\ (111)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#define\ getage(o)\ \ \ ((o)-\/>marked\ \&\ AGEBITS)}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#define\ setage(o,a)\ \ ((o)-\/>marked\ =\ cast\_byte(((o)-\/>marked\ \&\ (\string~AGEBITS))\ |\ a))}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#define\ isold(o)\ \ \ \ (getage(o)\ >\ G\_SURVIVAL)}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00126\ \textcolor{comment}{**\ In\ generational\ mode,\ objects\ are\ created\ 'new'.\ After\ surviving\ one}}
+\DoxyCodeLine{00127\ \textcolor{comment}{**\ cycle,\ they\ become\ 'survival'.\ Both\ 'new'\ and\ 'survival'\ can\ point}}
+\DoxyCodeLine{00128\ \textcolor{comment}{**\ to\ any\ other\ object,\ as\ they\ are\ traversed\ at\ the\ end\ of\ the\ cycle.}}
+\DoxyCodeLine{00129\ \textcolor{comment}{**\ We\ call\ them\ both\ 'young'\ objects.}}
+\DoxyCodeLine{00130\ \textcolor{comment}{**\ If\ a\ survival\ object\ survives\ another\ cycle,\ it\ becomes\ 'old1'.}}
+\DoxyCodeLine{00131\ \textcolor{comment}{**\ 'old1'\ objects\ can\ still\ point\ to\ survival\ objects\ (but\ not\ to}}
+\DoxyCodeLine{00132\ \textcolor{comment}{**\ new\ objects),\ so\ they\ still\ must\ be\ traversed.\ After\ another\ cycle}}
+\DoxyCodeLine{00133\ \textcolor{comment}{**\ (that,\ being\ old,\ 'old1'\ objects\ will\ "{}survive"{}\ no\ matter\ what)}}
+\DoxyCodeLine{00134\ \textcolor{comment}{**\ finally\ the\ 'old1'\ object\ becomes\ really\ 'old',\ and\ then\ they}}
+\DoxyCodeLine{00135\ \textcolor{comment}{**\ are\ no\ more\ traversed.}}
+\DoxyCodeLine{00136\ \textcolor{comment}{**}}
+\DoxyCodeLine{00137\ \textcolor{comment}{**\ To\ keep\ its\ invariants,\ the\ generational\ mode\ uses\ the\ same\ barriers}}
+\DoxyCodeLine{00138\ \textcolor{comment}{**\ also\ used\ by\ the\ incremental\ mode.\ If\ a\ young\ object\ is\ caught\ in\ a}}
+\DoxyCodeLine{00139\ \textcolor{comment}{**\ forward\ barrier,\ it\ cannot\ become\ old\ immediately,\ because\ it\ can}}
+\DoxyCodeLine{00140\ \textcolor{comment}{**\ still\ point\ to\ other\ young\ objects.\ Instead,\ it\ becomes\ 'old0',}}
+\DoxyCodeLine{00141\ \textcolor{comment}{**\ which\ in\ the\ next\ cycle\ becomes\ 'old1'.\ So,\ 'old0'\ objects\ is}}
+\DoxyCodeLine{00142\ \textcolor{comment}{**\ old\ but\ can\ point\ to\ new\ and\ survival\ objects;\ 'old1'\ is\ old}}
+\DoxyCodeLine{00143\ \textcolor{comment}{**\ but\ cannot\ point\ to\ new\ objects;\ and\ 'old'\ cannot\ point\ to\ any}}
+\DoxyCodeLine{00144\ \textcolor{comment}{**\ young\ object.}}
+\DoxyCodeLine{00145\ \textcolor{comment}{**}}
+\DoxyCodeLine{00146\ \textcolor{comment}{**\ If\ any\ old\ object\ ('old0',\ 'old1',\ 'old')\ is\ caught\ in\ a\ back}}
+\DoxyCodeLine{00147\ \textcolor{comment}{**\ barrier,\ it\ becomes\ 'touched1'\ and\ goes\ into\ a\ gray\ list,\ to\ be}}
+\DoxyCodeLine{00148\ \textcolor{comment}{**\ visited\ at\ the\ end\ of\ the\ cycle.\ \ There\ it\ evolves\ to\ 'touched2',}}
+\DoxyCodeLine{00149\ \textcolor{comment}{**\ which\ can\ point\ to\ survivals\ but\ not\ to\ new\ objects.\ In\ yet\ another}}
+\DoxyCodeLine{00150\ \textcolor{comment}{**\ cycle\ then\ it\ becomes\ 'old'\ again.}}
+\DoxyCodeLine{00151\ \textcolor{comment}{**}}
+\DoxyCodeLine{00152\ \textcolor{comment}{**\ The\ generational\ mode\ must\ also\ control\ the\ colors\ of\ objects,}}
+\DoxyCodeLine{00153\ \textcolor{comment}{**\ because\ of\ the\ barriers.\ \ While\ the\ mutator\ is\ running,\ young\ objects}}
+\DoxyCodeLine{00154\ \textcolor{comment}{**\ are\ kept\ white.\ 'old',\ 'old1',\ and\ 'touched2'\ objects\ are\ kept\ black,}}
+\DoxyCodeLine{00155\ \textcolor{comment}{**\ as\ they\ cannot\ point\ to\ new\ objects;\ exceptions\ are\ threads\ and\ open}}
+\DoxyCodeLine{00156\ \textcolor{comment}{**\ upvalues,\ which\ age\ to\ 'old1'\ and\ 'old'\ but\ are\ kept\ gray.\ 'old0'}}
+\DoxyCodeLine{00157\ \textcolor{comment}{**\ objects\ may\ be\ gray\ or\ black,\ as\ in\ the\ incremental\ mode.\ 'touched1'}}
+\DoxyCodeLine{00158\ \textcolor{comment}{**\ objects\ are\ kept\ gray,\ as\ they\ must\ be\ visited\ again\ at\ the\ end\ of}}
+\DoxyCodeLine{00159\ \textcolor{comment}{**\ the\ cycle.}}
+\DoxyCodeLine{00160\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00164\ \textcolor{comment}{**\ \{======================================================}}
+\DoxyCodeLine{00165\ \textcolor{comment}{**\ Default\ Values\ for\ GC\ parameters}}
+\DoxyCodeLine{00166\ \textcolor{comment}{**\ =======================================================}}
+\DoxyCodeLine{00167\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00170\ \textcolor{comment}{**\ Minor\ collections\ will\ shift\ to\ major\ ones\ after\ LUAI\_MINORMAJOR\%}}
+\DoxyCodeLine{00171\ \textcolor{comment}{**\ bytes\ become\ old.}}
+\DoxyCodeLine{00172\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#define\ LUAI\_MINORMAJOR\ \ \ \ \ \ \ \ \ 70}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00176\ \textcolor{comment}{**\ Major\ collections\ will\ shift\ to\ minor\ ones\ after\ a\ collection}}
+\DoxyCodeLine{00177\ \textcolor{comment}{**\ collects\ at\ least\ LUAI\_MAJORMINOR\%\ of\ the\ new\ bytes.}}
+\DoxyCodeLine{00178\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#define\ LUAI\_MAJORMINOR\ \ \ \ \ \ \ \ \ 50}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00182\ \textcolor{comment}{**\ A\ young\ (minor)\ collection\ will\ run\ after\ creating\ LUAI\_GENMINORMUL\%}}
+\DoxyCodeLine{00183\ \textcolor{comment}{**\ new\ bytes.}}
+\DoxyCodeLine{00184\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\#define\ LUAI\_GENMINORMUL\ \ \ \ \ \ \ \ \ 20}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{comment}{/*\ incremental\ */}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \textcolor{comment}{/*\ Number\ of\ bytes\ must\ be\ LUAI\_GCPAUSE\%\ before\ starting\ new\ cycle\ */}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\#define\ LUAI\_GCPAUSE\ \ \ \ 250}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00194\ \textcolor{comment}{**\ Step\ multiplier:\ The\ collector\ handles\ LUAI\_GCMUL\%\ work\ units\ for}}
+\DoxyCodeLine{00195\ \textcolor{comment}{**\ each\ new\ allocated\ word.\ (Each\ "{}work\ unit"{}\ corresponds\ roughly\ to}}
+\DoxyCodeLine{00196\ \textcolor{comment}{**\ sweeping\ one\ object\ or\ traversing\ one\ slot.)}}
+\DoxyCodeLine{00197\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\#define\ LUAI\_GCMUL\ \ \ \ \ \ 200}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \textcolor{comment}{/*\ How\ many\ bytes\ to\ allocate\ before\ next\ GC\ step\ */}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#define\ LUAI\_GCSTEPSIZE\ (200\ *\ sizeof(Table))}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\#define\ setgcparam(g,p,v)\ \ (g-\/>gcparams[LUA\_GCP\#\#p]\ =\ luaO\_codeparam(v))}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\#define\ applygcparam(g,p,x)\ \ luaO\_applyparam(g-\/>gcparams[LUA\_GCP\#\#p],\ x)}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \textcolor{comment}{/*\ \}======================================================\ */}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00211\ \textcolor{comment}{**\ Control\ when\ GC\ is\ running:}}
+\DoxyCodeLine{00212\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00213\ \textcolor{preprocessor}{\#define\ GCSTPUSR\ \ \ \ 1\ \ }\textcolor{comment}{/*\ bit\ true\ when\ GC\ stopped\ by\ user\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00214\ \textcolor{preprocessor}{\#define\ GCSTPGC\ \ \ \ \ 2\ \ }\textcolor{comment}{/*\ bit\ true\ when\ GC\ stopped\ by\ itself\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#define\ GCSTPCLS\ \ \ \ 4\ \ }\textcolor{comment}{/*\ bit\ true\ when\ closing\ Lua\ state\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\#define\ gcrunning(g)\ \ \ \ ((g)-\/>gcstp\ ==\ 0)}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00220\ \textcolor{comment}{**\ Does\ one\ step\ of\ collection\ when\ debt\ becomes\ zero.\ 'pre'/'pos'}}
+\DoxyCodeLine{00221\ \textcolor{comment}{**\ allows\ some\ adjustments\ to\ be\ done\ only\ when\ needed.\ macro}}
+\DoxyCodeLine{00222\ \textcolor{comment}{**\ 'condchangemem'\ is\ used\ only\ for\ heavy\ tests\ (forcing\ a\ full}}
+\DoxyCodeLine{00223\ \textcolor{comment}{**\ GC\ cycle\ on\ every\ opportunity)}}
+\DoxyCodeLine{00224\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#if\ !defined(HARDMEMTESTS)}}
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\#define\ condchangemem(L,pre,pos,emg)\ \ \ \ ((void)0)}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#define\ condchangemem(L,pre,pos,emg)\ \ \(\backslash\)}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\ \ \ \ \{\ if\ (gcrunning(G(L)))\ \{\ pre;\ luaC\_fullgc(L,\ emg);\ pos;\ \}\ \}}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \textcolor{preprocessor}{\#define\ luaC\_condGC(L,pre,pos)\ \(\backslash\)}}
+\DoxyCodeLine{00234\ \textcolor{preprocessor}{\ \ \ \ \{\ if\ (G(L)-\/>GCdebt\ <=\ 0)\ \{\ pre;\ luaC\_step(L);\ pos;\};\ \(\backslash\)}}
+\DoxyCodeLine{00235\ \textcolor{preprocessor}{\ \ \ \ \ \ condchangemem(L,pre,pos,0);\ \}}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \textcolor{comment}{/*\ more\ often\ than\ not,\ 'pre'/'pos'\ are\ empty\ */}}
+\DoxyCodeLine{00238\ \textcolor{preprocessor}{\#define\ luaC\_checkGC(L)\ \ \ \ \ luaC\_condGC(L,(void)0,(void)0)}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\#define\ luaC\_objbarrier(L,p,o)\ (\ \ \(\backslash\)}}
+\DoxyCodeLine{00242\ \textcolor{preprocessor}{\ \ \ \ (isblack(p)\ \&\&\ iswhite(o))\ ?\ \(\backslash\)}}
+\DoxyCodeLine{00243\ \textcolor{preprocessor}{\ \ \ \ luaC\_barrier\_(L,obj2gco(p),obj2gco(o))\ :\ cast\_void(0))}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{preprocessor}{\#define\ luaC\_barrier(L,p,v)\ (\ \ \(\backslash\)}}
+\DoxyCodeLine{00246\ \textcolor{preprocessor}{\ \ \ \ iscollectable(v)\ ?\ luaC\_objbarrier(L,p,gcvalue(v))\ :\ cast\_void(0))}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \textcolor{preprocessor}{\#define\ luaC\_objbarrierback(L,p,o)\ (\ \ \(\backslash\)}}
+\DoxyCodeLine{00249\ \textcolor{preprocessor}{\ \ \ \ (isblack(p)\ \&\&\ iswhite(o))\ ?\ luaC\_barrierback\_(L,p)\ :\ cast\_void(0))}}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \textcolor{preprocessor}{\#define\ luaC\_barrierback(L,p,v)\ (\ \ \(\backslash\)}}
+\DoxyCodeLine{00252\ \textcolor{preprocessor}{\ \ \ \ iscollectable(v)\ ?\ luaC\_objbarrierback(L,\ p,\ gcvalue(v))\ :\ cast\_void(0))}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a242d4a66c025c294ec2c1ec4fe75e804}{luaC\_fix}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *o);}
+\DoxyCodeLine{00255\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a9aa52a500c9cc2076edb1707e6d8a045}{luaC\_freeallobjects}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00256\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a6c71cc4b9e503c0e96c0c4ffcff93900}{luaC\_step}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00257\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a5a4ac037c6e209635c83018e5ffae3df}{luaC\_runtilstate}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ state,\ \textcolor{keywordtype}{int}\ fast);}
+\DoxyCodeLine{00258\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_aa0b753c3ed80e1eed0379ec58592c404}{luaC\_fullgc}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ isemergency);}
+\DoxyCodeLine{00259\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{lgc_8h_abcb3d3772356b12e5e9ed7dbf82c70d4}{luaC\_newobj}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ tt,\ \textcolor{keywordtype}{size\_t}\ sz);}
+\DoxyCodeLine{00260\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{lgc_8h_a92ef79baff325e6a3ec6c77cb7bb3741}{luaC\_newobjdt}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ tt,\ \textcolor{keywordtype}{size\_t}\ sz,}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset);}
+\DoxyCodeLine{00262\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_ac5106ee2a18cde8bc3bd92e5891ad8e5}{luaC\_barrier\_}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *o,\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *v);}
+\DoxyCodeLine{00263\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a65d1fcc6e437592a5a893406cce7d8e3}{luaC\_barrierback\_}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *o);}
+\DoxyCodeLine{00264\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a15870c09448216ce5c4e1ff63d39e0a9}{luaC\_checkfinalizer}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structGCObject}{GCObject}}\ *o,\ \mbox{\hyperlink{structTable}{Table}}\ *mt);}
+\DoxyCodeLine{00265\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lgc_8h_a45671ff26d738167ce8e421cc233fc59}{luaC\_changemode}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ newmode);}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

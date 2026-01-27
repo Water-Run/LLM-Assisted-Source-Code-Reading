@@ -1,0 +1,18 @@
+var searchData=
+[
+  ['i_0',['i',['../unionSemInfo.html#a6ed52b8a8b415d8f16089445f93e5391',1,'SemInfo::i'],['../unionValue.html#a0d6f6bd1f2576b712e95aaffa0f87bab',1,'Value::i']]],
+  ['i_5fci_1',['i_ci',['../structlua__Debug.html#a6cfa3d2272ea187b08164b0a2081d59d',1,'lua_Debug']]],
+  ['i_5fval_2',['i_val',['../unionNode.html#a79460c331faee0ef988637e92749e866',1,'Node']]],
+  ['idx_3',['idx',['../structUpvaldesc.html#a8478ecca9cb593200c562a0837aedfac',1,'Upvaldesc::idx'],['../structexpdesc.html#a2333bf09cdfaeb847c56b2a13925ff11',1,'expdesc::idx']]],
+  ['ind_4',['ind',['../structexpdesc.html#a0dd496429fa8f15e5833add97c06106c',1,'expdesc']]],
+  ['info_5',['info',['../structexpdesc.html#a0b2f77c33e2412d54ec90f71030121e2',1,'expdesc']]],
+  ['init_6',['init',['../structluaL__Buffer.html#ab57f2329723b3162159e2e74115484ac',1,'luaL_Buffer::init'],['../structstr__Writer.html#a9b260bdd86544e4aff65d79ad49c6abd',1,'str_Writer::init'],['../structMatchState.html#a2b63cea9c88925a59ba9680d8c615dd7',1,'MatchState::init']]],
+  ['insidetbc_7',['insidetbc',['../structBlockCnt.html#a33066e7c373e7732f5971d470f4580b7',1,'BlockCnt']]],
+  ['instack_8',['instack',['../structUpvaldesc.html#a1e5182ac7b8b72848ed71b7b4844e3d1',1,'Upvaldesc']]],
+  ['islittle_9',['islittle',['../structHeader.html#abf580577b27ac36c8c26b86131a01b2b',1,'Header']]],
+  ['isloop_10',['isloop',['../structBlockCnt.html#a6434a0c8f9724248c839b6e9e6d9ec00',1,'BlockCnt']]],
+  ['istailcall_11',['istailcall',['../structlua__Debug.html#a08e9cf647790ffeb068db293c7572260',1,'lua_Debug']]],
+  ['isvararg_12',['isvararg',['../structlua__Debug.html#a943220c57a4dd46dcc1bcd1198cfea88',1,'lua_Debug']]],
+  ['ival_13',['ival',['../structexpdesc.html#ab9299c85deaf83fd3f37c0f7d29639e0',1,'expdesc']]],
+  ['iwthabs_14',['iwthabs',['../structFuncState.html#a5ddc3f780b936d7f3e5936f8ec9eda79',1,'FuncState']]]
+];

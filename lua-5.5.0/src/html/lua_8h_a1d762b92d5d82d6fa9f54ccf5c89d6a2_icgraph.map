@@ -1,0 +1,11 @@
+<map id="lua_checkstack" name="lua_checkstack">
+<area shape="rect" id="Node000001" title=" " alt="" coords="493,31,606,57"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#a7c46517055e0e8cb25e61b959709083a" title=" " alt="" coords="326,31,445,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="477,47,446,47,446,41,477,41"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a4cab22d0cb403fa6b94f2542f4303096" title=" " alt="" coords="176,31,278,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,47,278,47,278,41,311,41"/>
+<area shape="rect" id="Node000004" href="$lbaselib_8c.html#ae99bbf706d0fcfb0c1c7afbe3c4de382" title=" " alt="" coords="16,5,117,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="160,36,117,29,118,24,161,31"/>
+<area shape="rect" id="Node000005" href="$loadlib_8c.html#ab732e1ec253c9b8dc0c2ce4d74cb0083" title=" " alt="" coords="5,56,128,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="160,57,129,62,128,57,160,52"/>
+</map>

@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['gc_0',['gc',['../unionValue.html#a1809643a2deb85a2e8d690b8e1488481',1,'Value::gc'],['../unionGCUnion.html#a13ae493ad805f4272526bbb154ea469e',1,'GCUnion::gc']]],
+  ['gcdebt_1',['GCdebt',['../structglobal__State.html#a238d1f76279f013961d01abb93a74a47',1,'global_State']]],
+  ['gcemergency_2',['gcemergency',['../structglobal__State.html#a3caf542e40aca4f02d6cc6ff2008f467',1,'global_State']]],
+  ['gckind_3',['gckind',['../structglobal__State.html#acf4c834918cf4766f13dd91306360802',1,'global_State']]],
+  ['gclist_4',['gclist',['../structUdata.html#af984abb747b485c84ea97362d843d897',1,'Udata::gclist'],['../structProto.html#a7991ec396b493a42b5c7f38b4e162959',1,'Proto::gclist'],['../structTable.html#a1b6f3d76efed2011a36ee7c78f65aa70',1,'Table::gclist'],['../structlua__State.html#a0d446661e92287c8409076c970771217',1,'lua_State::gclist']]],
+  ['gcmajorminor_5',['GCmajorminor',['../structglobal__State.html#a2fd2bd7bafd42ee4b5668384f4c10aea',1,'global_State']]],
+  ['gcmarked_6',['GCmarked',['../structglobal__State.html#a25849ffdfd13bf88aa73b2c80b7ba2ba',1,'global_State']]],
+  ['gcparams_7',['gcparams',['../structglobal__State.html#a15336deb7defd1b096d875c3d16a6d15',1,'global_State']]],
+  ['gcstate_8',['gcstate',['../structglobal__State.html#aea4d494b8b9accef389f2be8830f7a84',1,'global_State']]],
+  ['gcstopem_9',['gcstopem',['../structglobal__State.html#a435de3a5495d7529fff62accc539a96d',1,'global_State']]],
+  ['gcstp_10',['gcstp',['../structglobal__State.html#ad8326cdab506c623a4daf1d91ef8981f',1,'global_State']]],
+  ['gctotalbytes_11',['GCtotalbytes',['../structglobal__State.html#aaca0824b783d72bcbc3c14dddebe1f21',1,'global_State']]],
+  ['glbn_12',['glbn',['../structLexState.html#a13134d7e5b4ef8430baee3284bd41068',1,'LexState']]],
+  ['gray_13',['gray',['../structglobal__State.html#a2d96e2afbc62ff832ab660ed4c357696',1,'global_State']]],
+  ['grayagain_14',['grayagain',['../structglobal__State.html#a2ccaa5d2e98c086489c04e2045082535',1,'global_State']]],
+  ['gt_15',['gt',['../structDyndata.html#a0e4b4f8cf1af3f8e4398e705f22e09cb',1,'Dyndata']]]
+];

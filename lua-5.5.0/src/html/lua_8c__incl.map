@@ -1,0 +1,38 @@
+<map id="lua.c" name="lua.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="333,5,382,32"/>
+<area shape="rect" id="Node000002" href="$lprefix_8h.html" title=" " alt="" coords="5,80,73,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="333,28,88,82,87,77,332,23"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="424,155,484,181"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="370,31,407,79,443,140,438,143,402,81,366,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="467,80,531,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="383,30,462,70,460,75,381,35"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="555,80,619,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="383,25,541,75,539,80,382,30"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="643,80,710,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="384,23,629,77,628,82,382,28"/>
+<area shape="rect" id="Node000007" href="$lua_8h.html" title=" " alt="" coords="236,155,285,181"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="349,34,313,81,276,142,272,140,309,79,345,31"/>
+<area shape="rect" id="Node000012" href="$lauxlib_8h.html" title=" " alt="" coords="323,80,392,107"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="360,33,360,64,355,64,355,33"/>
+<area shape="rect" id="Node000013" href="$lualib_8h.html" title=" " alt="" coords="186,80,249,107"/>
+<area shape="poly" id="edge17_Node000001_Node000013" title=" " alt="" coords="335,35,257,75,255,70,332,30"/>
+<area shape="rect" id="Node000014" href="$llimits_8h.html" title=" " alt="" coords="96,80,163,107"/>
+<area shape="poly" id="edge19_Node000001_Node000014" title=" " alt="" coords="333,31,178,79,177,74,332,25"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="130,229,198,256"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="245,184,195,222,192,218,242,180"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="264,304,332,331"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="277,180,296,201,312,229,316,260,310,290,305,289,311,260,307,230,292,204,273,184"/>
+<area shape="rect" id="Node000010" href="$luaconf_8h.html" title=" " alt="" coords="223,229,298,256"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="263,182,263,214,258,214,258,182"/>
+<area shape="poly" id="edge11_Node000010_Node000009" title=" " alt="" coords="269,255,287,289,282,292,264,258"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="113,304,176,331"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="242,259,179,298,176,293,239,254"/>
+<area shape="poly" id="edge14_Node000012_Node000003" title=" " alt="" coords="376,105,426,143,423,147,373,109"/>
+<area shape="poly" id="edge16_Node000012_Node000007" title=" " alt="" coords="342,109,291,148,287,143,339,105"/>
+<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="360,107,352,172,344,215,332,257,316,292,311,289,327,255,339,213,347,171,354,107"/>
+<area shape="poly" id="edge15_Node000012_Node000010" title=" " alt="" coords="352,109,279,218,275,215,347,106"/>
+<area shape="poly" id="edge18_Node000013_Node000007" title=" " alt="" coords="227,106,248,140,243,143,223,109"/>
+<area shape="poly" id="edge22_Node000014_Node000007" title=" " alt="" coords="154,105,225,144,223,149,151,110"/>
+<area shape="poly" id="edge21_Node000014_Node000009" title=" " alt="" coords="126,108,115,137,106,176,106,217,110,237,120,254,146,280,179,297,215,307,249,312,248,317,213,312,177,302,143,284,116,258,105,239,100,218,101,175,110,135,121,106"/>
+<area shape="poly" id="edge20_Node000014_Node000011" title=" " alt="" coords="114,109,93,129,76,156,67,183,63,206,66,228,76,255,91,276,110,293,106,297,87,279,71,257,61,229,58,206,61,182,71,154,89,126,110,105"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="luaO_tostringbuff" name="luaO_tostringbuff">
+<area shape="rect" id="Node000001" title=" " alt="" coords="666,55,785,81"/>
+<area shape="rect" id="Node000002" href="$lapi_8c.html#ad6cf56b58b2a6359cd495f89d3a2c75f" title=" " alt="" coords="333,29,471,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="650,65,472,51,472,45,650,60"/>
+<area shape="rect" id="Node000004" href="$lobject_8c.html#a53824ade5220a50d44148175f7787199" title=" " alt="" coords="519,80,618,107"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="651,83,618,88,617,83,650,77"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="430,16,420,10,402,8,385,10,376,15,374,20,378,28,373,30,368,21,372,11,383,5,402,3,422,5,433,12"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a64d366034d114de946f1b93199847dab" title=" " alt="" coords="175,29,273,56"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="317,45,274,45,274,40,317,40"/>
+<area shape="rect" id="Node000005" href="$lapi_8c.html#a5fbc943e3486fad9672f9a74d7cb49b4" title=" " alt="" coords="356,80,448,107"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="504,96,448,96,448,91,504,91"/>
+<area shape="poly" id="edge10_Node000005_Node000003" title=" " alt="" coords="341,79,273,59,274,54,343,74"/>
+<area shape="rect" id="Node000006" href="$lauxlib_8c.html#a59a8ac34826fee305ad56101d97aee18" title=" " alt="" coords="172,80,276,107"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="341,96,276,96,276,91,341,91"/>
+<area shape="rect" id="Node000008" href="$lauxlib_8c.html#a84f77c4f62b1f42748cabbfd875cb36f" title=" " alt="" coords="163,131,285,157"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="343,113,274,133,273,127,341,108"/>
+<area shape="rect" id="Node000007" href="$lauxlib_8c.html#a67bf3728d34d2c9badb2bd2f57c75233" title=" " alt="" coords="5,80,115,107"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="156,96,115,96,115,91,156,91"/>
+<area shape="rect" id="Node000009" href="$lauxlib_8c.html#a01a929d867927a2ffb2ed558ccb761be" title=" " alt="" coords="7,131,113,157"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="147,147,113,147,113,141,147,141"/>
+</map>

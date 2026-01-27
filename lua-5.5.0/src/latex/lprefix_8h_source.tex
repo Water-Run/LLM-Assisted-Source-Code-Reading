@@ -1,0 +1,342 @@
+\doxysection{lprefix.\+h}
+\hypertarget{lprefix_8h_source}{}\label{lprefix_8h_source}\mbox{\hyperlink{lprefix_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ 文件概要说明}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00005\ \textcolor{comment}{**\ 文件名:\ lprefix.h}}
+\DoxyCodeLine{00006\ \textcolor{comment}{**\ 作用:\ Lua前缀头文件\ -\/\ 必须在任何其他头文件之前包含的定义}}
+\DoxyCodeLine{00007\ \textcolor{comment}{**}}
+\DoxyCodeLine{00008\ \textcolor{comment}{**\ 功能描述:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{**\ 这是Lua源码中最基础的头文件之一,用于在包含任何其他头文件之前设置必要的}}
+\DoxyCodeLine{00010\ \textcolor{comment}{**\ 编译器宏定义。主要完成以下功能:}}
+\DoxyCodeLine{00011\ \textcolor{comment}{**}}
+\DoxyCodeLine{00012\ \textcolor{comment}{**\ 1.\ 启用POSIX/XSI标准功能}}
+\DoxyCodeLine{00013\ \textcolor{comment}{**\ \ \ \ -\/\ 通过定义\_XOPEN\_SOURCE宏,使程序能够使用POSIX标准中的扩展功能}}
+\DoxyCodeLine{00014\ \textcolor{comment}{**\ \ \ \ -\/\ POSIX\ (Portable\ Operating\ System\ Interface)\ 是类Unix系统的标准接口}}
+\DoxyCodeLine{00015\ \textcolor{comment}{**}}
+\DoxyCodeLine{00016\ \textcolor{comment}{**\ 2.\ 支持大文件操作(Large\ File\ Support)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**\ \ \ \ -\/\ 在64位系统上启用大于2GB文件的支持}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ \ \ \ -\/\ 通过定义\_FILE\_OFFSET\_BITS为64实现}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ 3.\ Windows平台兼容性}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ \ \ \ -\/\ 禁用某些Windows特定的安全警告}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**\ \ \ \ -\/\ 使代码在Windows上编译时更加友好}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ 技术要点:}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ -\/\ 使用条件编译(\#if,\ \#ifdef等预处理指令)针对不同平台进行适配}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ -\/\ 这些宏必须在包含标准库头文件(如stdio.h)之前定义才能生效}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ -\/\ 这就是为什么这个文件叫"{}prefix"{}(前缀)的原因}}
+\DoxyCodeLine{00028\ \textcolor{comment}{**}}
+\DoxyCodeLine{00029\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00030\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00033\ \textcolor{comment}{**\ \$Id:\ lprefix.h\ \$}}
+\DoxyCodeLine{00034\ \textcolor{comment}{**\ Definitions\ for\ Lua\ code\ that\ must\ come\ before\ any\ other\ header\ file}}
+\DoxyCodeLine{00035\ \textcolor{comment}{**\ 必须在任何其他头文件之前的Lua代码定义}}
+\DoxyCodeLine{00036\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00037\ \textcolor{comment}{**\ 参见lua.h中的版权声明}}
+\DoxyCodeLine{00038\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00041\ \textcolor{comment}{**\ 头文件保护(Header\ Guard)}}
+\DoxyCodeLine{00042\ \textcolor{comment}{**}}
+\DoxyCodeLine{00043\ \textcolor{comment}{**\ 作用:\ 防止头文件被重复包含}}
+\DoxyCodeLine{00044\ \textcolor{comment}{**\ 工作原理:}}
+\DoxyCodeLine{00045\ \textcolor{comment}{**\ -\/\ 第一次包含时,lprefix\_h未定义,所以会定义它并处理文件内容}}
+\DoxyCodeLine{00046\ \textcolor{comment}{**\ -\/\ 第二次包含时,lprefix\_h已定义,整个文件内容会被跳过}}
+\DoxyCodeLine{00047\ \textcolor{comment}{**}}
+\DoxyCodeLine{00048\ \textcolor{comment}{**\ 这是C语言中标准的头文件保护模式,防止重复定义导致编译错误}}
+\DoxyCodeLine{00049\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#ifndef\ lprefix\_h}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ lprefix\_h}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00054\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00055\ \textcolor{comment}{**\ POSIX/XSI功能启用部分}}
+\DoxyCodeLine{00056\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00057\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{**\ Allows\ POSIX/XSI\ stuff}}
+\DoxyCodeLine{00061\ \textcolor{comment}{**\ 允许使用POSIX/XSI标准的功能}}
+\DoxyCodeLine{00062\ \textcolor{comment}{**}}
+\DoxyCodeLine{00063\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00064\ \textcolor{comment}{**\ -\/\ POSIX:\ 可移植操作系统接口,定义了Unix系统的标准API}}
+\DoxyCodeLine{00065\ \textcolor{comment}{**\ -\/\ XSI:\ X/Open\ System\ Interface,POSIX的扩展标准}}
+\DoxyCodeLine{00066\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00069\ \textcolor{comment}{**\ 条件编译:\ 仅在非C89模式下执行}}
+\DoxyCodeLine{00070\ \textcolor{comment}{**}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ LUA\_USE\_C89:\ 如果定义了此宏,表示要求Lua严格遵循C89标准}}
+\DoxyCodeLine{00072\ \textcolor{comment}{**\ !defined(LUA\_USE\_C89):\ 如果未定义此宏(即允许使用更新的标准)}}
+\DoxyCodeLine{00073\ \textcolor{comment}{**\ \{\ 和\ \}:\ 用于标记条件编译块的开始和结束,方便代码折叠和阅读}}
+\DoxyCodeLine{00074\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#if\ !defined(LUA\_USE\_C89)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**\ \_XOPEN\_SOURCE\ 宏的处理}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**}}
+\DoxyCodeLine{00080\ \textcolor{comment}{**\ \_XOPEN\_SOURCE:\ 这是一个特性测试宏(Feature\ Test\ Macro)}}
+\DoxyCodeLine{00081\ \textcolor{comment}{**\ 作用:\ 告诉系统头文件应该暴露哪些POSIX/XSI标准的功能}}
+\DoxyCodeLine{00082\ \textcolor{comment}{**}}
+\DoxyCodeLine{00083\ \textcolor{comment}{**\ 值的含义:}}
+\DoxyCodeLine{00084\ \textcolor{comment}{**\ -\/\ 500:\ Single\ Unix\ Specification\ version\ 1\ (SUSv1)}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**\ -\/\ 600:\ Single\ Unix\ Specification\ version\ 3\ (SUSv3),\ 对应POSIX.1-\/2001}}
+\DoxyCodeLine{00086\ \textcolor{comment}{**\ -\/\ 700:\ Single\ Unix\ Specification\ version\ 4\ (SUSv4),\ 对应POSIX.1-\/2008}}
+\DoxyCodeLine{00087\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#if\ !defined(\_XOPEN\_SOURCE)}}
+\DoxyCodeLine{00089\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00090\ \textcolor{comment}{**\ 如果\_XOPEN\_SOURCE未定义,则定义为600}}
+\DoxyCodeLine{00091\ \textcolor{comment}{**}}
+\DoxyCodeLine{00092\ \textcolor{comment}{**\ 600对应POSIX.1-\/2001标准,提供了:}}
+\DoxyCodeLine{00093\ \textcolor{comment}{**\ -\/\ 线程支持(pthread)}}
+\DoxyCodeLine{00094\ \textcolor{comment}{**\ -\/\ 实时扩展}}
+\DoxyCodeLine{00095\ \textcolor{comment}{**\ -\/\ 高级I/O功能}}
+\DoxyCodeLine{00096\ \textcolor{comment}{**\ -\/\ 更多的数学函数等}}
+\DoxyCodeLine{00097\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#define\ \_XOPEN\_SOURCE\ 600}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#elif\ \_XOPEN\_SOURCE\ ==\ 0}}
+\DoxyCodeLine{00101\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00102\ \textcolor{comment}{**\ 特殊处理:\ 如果\_XOPEN\_SOURCE被显式定义为0}}
+\DoxyCodeLine{00103\ \textcolor{comment}{**}}
+\DoxyCodeLine{00104\ \textcolor{comment}{**\ 用途:\ 允许用户通过编译选项\ -\/D\_XOPEN\_SOURCE=0\ 来完全禁用XOPEN功能}}
+\DoxyCodeLine{00105\ \textcolor{comment}{**\ 这种情况下,取消该宏的定义,让系统使用默认行为}}
+\DoxyCodeLine{00106\ \textcolor{comment}{**}}
+\DoxyCodeLine{00107\ \textcolor{comment}{**\ 高级C用法说明:}}
+\DoxyCodeLine{00108\ \textcolor{comment}{**\ \#undef:\ 预处理指令,用于取消之前定义的宏}}
+\DoxyCodeLine{00109\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#undef\ \_XOPEN\_SOURCE\ }\textcolor{comment}{/*\ use\ -\/D\_XOPEN\_SOURCE=0\ to\ undefine\ it\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00111\ \textcolor{comment}{/*\ 使用\ -\/D\_XOPEN\_SOURCE=0\ 来取消定义它\ */}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00115\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00116\ \textcolor{comment}{**\ 大文件支持(Large\ File\ Support,\ LFS)}}
+\DoxyCodeLine{00117\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00118\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00121\ \textcolor{comment}{**\ Allows\ manipulation\ of\ large\ files\ in\ gcc\ and\ some\ other\ compilers}}
+\DoxyCodeLine{00122\ \textcolor{comment}{**\ 允许在gcc和其他一些编译器中操作大文件}}
+\DoxyCodeLine{00123\ \textcolor{comment}{**}}
+\DoxyCodeLine{00124\ \textcolor{comment}{**\ 背景知识:}}
+\DoxyCodeLine{00125\ \textcolor{comment}{**\ 在32位系统中,文件偏移量(offset)通常是32位的long类型,最大只能表示2GB}}
+\DoxyCodeLine{00126\ \textcolor{comment}{**\ 为了支持大于2GB的文件,需要使用64位的off\_t类型}}
+\DoxyCodeLine{00127\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00130\ \textcolor{comment}{**\ 条件:\ 同时满足以下条件才启用大文件支持}}
+\DoxyCodeLine{00131\ \textcolor{comment}{**\ 1.\ !defined(LUA\_32BITS):\ 不是32位Lua(即64位或允许64位文件操作)}}
+\DoxyCodeLine{00132\ \textcolor{comment}{**\ 2.\ !defined(\_FILE\_OFFSET\_BITS):\ \_FILE\_OFFSET\_BITS尚未定义}}
+\DoxyCodeLine{00133\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#if\ !defined(LUA\_32BITS)\ \&\&\ !defined(\_FILE\_OFFSET\_BITS)}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00137\ \textcolor{comment}{**\ \_LARGEFILE\_SOURCE:\ 启用大文件相关的函数}}
+\DoxyCodeLine{00138\ \textcolor{comment}{**}}
+\DoxyCodeLine{00139\ \textcolor{comment}{**\ 作用:\ 使系统头文件提供处理大文件的额外函数,例如:}}
+\DoxyCodeLine{00140\ \textcolor{comment}{**\ -\/\ fseeko64()\ /\ ftello64():\ 64位版本的文件定位函数}}
+\DoxyCodeLine{00141\ \textcolor{comment}{**\ -\/\ 等等}}
+\DoxyCodeLine{00142\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#define\ \_LARGEFILE\_SOURCE\ 1}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00146\ \textcolor{comment}{**\ \_FILE\_OFFSET\_BITS:\ 设置文件偏移量的位数}}
+\DoxyCodeLine{00147\ \textcolor{comment}{**}}
+\DoxyCodeLine{00148\ \textcolor{comment}{**\ 作用:\ 定义为64时,会发生以下转换:}}
+\DoxyCodeLine{00149\ \textcolor{comment}{**\ -\/\ off\_t\ 类型从32位变为64位}}
+\DoxyCodeLine{00150\ \textcolor{comment}{**\ -\/\ fopen/fseek等函数会自动使用64位版本}}
+\DoxyCodeLine{00151\ \textcolor{comment}{**\ -\/\ 无需修改代码,只需重新编译即可支持大文件}}
+\DoxyCodeLine{00152\ \textcolor{comment}{**}}
+\DoxyCodeLine{00153\ \textcolor{comment}{**\ 这是一种透明的大文件支持机制,称为LFS\ (Large\ File\ Summit)}}
+\DoxyCodeLine{00154\ \textcolor{comment}{**}}
+\DoxyCodeLine{00155\ \textcolor{comment}{**\ 技术细节:}}
+\DoxyCodeLine{00156\ \textcolor{comment}{**\ 当定义\_FILE\_OFFSET\_BITS为64时,预处理器会将标准函数映射到64位版本:}}
+\DoxyCodeLine{00157\ \textcolor{comment}{**\ -\/\ fopen\ →\ fopen64}}
+\DoxyCodeLine{00158\ \textcolor{comment}{**\ -\/\ lseek\ →\ lseek64}}
+\DoxyCodeLine{00159\ \textcolor{comment}{**\ -\/\ stat\ →\ stat64}}
+\DoxyCodeLine{00160\ \textcolor{comment}{**\ 等等}}
+\DoxyCodeLine{00161\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#define\ \_FILE\_OFFSET\_BITS\ 64}}
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00166\ \textcolor{comment}{/*\ 结束\ !defined(LUA\_USE\_C89)\ 条件编译块\ */}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00169\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00170\ \textcolor{comment}{**\ Windows平台特定设置}}
+\DoxyCodeLine{00171\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00172\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00175\ \textcolor{comment}{**\ Windows\ stuff}}
+\DoxyCodeLine{00176\ \textcolor{comment}{**\ Windows相关设置}}
+\DoxyCodeLine{00177\ \textcolor{comment}{**}}
+\DoxyCodeLine{00178\ \textcolor{comment}{**\ 说明:}}
+\DoxyCodeLine{00179\ \textcolor{comment}{**\ Windows使用的是不同的C运行时库(CRT\ -\/\ C\ Runtime\ Library)}}
+\DoxyCodeLine{00180\ \textcolor{comment}{**\ 需要特殊的宏定义来控制编译行为}}
+\DoxyCodeLine{00181\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00184\ \textcolor{comment}{**\ 条件:\ 如果在Windows平台编译}}
+\DoxyCodeLine{00185\ \textcolor{comment}{**\ \_WIN32:\ Windows平台的标准预定义宏(包括32位和64位Windows)}}
+\DoxyCodeLine{00186\ \textcolor{comment}{**\ 注意:\ 即使是64位Windows,\_WIN32也会被定义}}
+\DoxyCodeLine{00187\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)\ }\textcolor{comment}{/*\ \{\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00191\ \textcolor{comment}{**\ \_CRT\_SECURE\_NO\_WARNINGS\ 宏的处理}}
+\DoxyCodeLine{00192\ \textcolor{comment}{**}}
+\DoxyCodeLine{00193\ \textcolor{comment}{**\ 背景:}}
+\DoxyCodeLine{00194\ \textcolor{comment}{**\ Microsoft的C运行时库(CRT)会对某些标准C函数发出安全警告,例如:}}
+\DoxyCodeLine{00195\ \textcolor{comment}{**\ -\/\ strcpy\ →\ strcpy\_s\ (安全版本)}}
+\DoxyCodeLine{00196\ \textcolor{comment}{**\ -\/\ sprintf\ →\ sprintf\_s}}
+\DoxyCodeLine{00197\ \textcolor{comment}{**\ -\/\ fopen\ →\ fopen\_s}}
+\DoxyCodeLine{00198\ \textcolor{comment}{**\ 等等}}
+\DoxyCodeLine{00199\ \textcolor{comment}{**}}
+\DoxyCodeLine{00200\ \textcolor{comment}{**\ 这些警告信息类似于:}}
+\DoxyCodeLine{00201\ \textcolor{comment}{**\ "{}warning\ C4996:\ 'strcpy':\ This\ function\ may\ be\ unsafe.}}
+\DoxyCodeLine{00202\ \textcolor{comment}{**\ \ Consider\ using\ strcpy\_s\ instead."{}}}
+\DoxyCodeLine{00203\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\#if\ !defined(\_CRT\_SECURE\_NO\_WARNINGS)}}
+\DoxyCodeLine{00205\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00206\ \textcolor{comment}{**\ 定义此宏以禁用这些安全警告}}
+\DoxyCodeLine{00207\ \textcolor{comment}{**}}
+\DoxyCodeLine{00208\ \textcolor{comment}{**\ 原因:}}
+\DoxyCodeLine{00209\ \textcolor{comment}{**\ 1.\ Lua代码需要跨平台编译,使用标准ISO\ C函数}}
+\DoxyCodeLine{00210\ \textcolor{comment}{**\ 2.\ Microsoft特定的"{}安全"{}函数(如strcpy\_s)不是标准C,会破坏可移植性}}
+\DoxyCodeLine{00211\ \textcolor{comment}{**\ 3.\ Lua有自己的安全检查机制}}
+\DoxyCodeLine{00212\ \textcolor{comment}{**}}
+\DoxyCodeLine{00213\ \textcolor{comment}{**\ 技术说明:}}
+\DoxyCodeLine{00214\ \textcolor{comment}{**\ \_CRT\_SECURE\_NO\_WARNINGS是Microsoft\ Visual\ C++特有的宏}}
+\DoxyCodeLine{00215\ \textcolor{comment}{**\ 其他编译器会忽略这个宏定义}}
+\DoxyCodeLine{00216\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\#define\ \_CRT\_SECURE\_NO\_WARNINGS\ }\textcolor{comment}{/*\ avoid\ warnings\ about\ ISO\ C\ functions\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 避免关于ISO\ C函数的警告\ */}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00222\ \textcolor{comment}{/*\ 结束\ defined(\_WIN32)\ 条件编译块\ */}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00225\ \textcolor{comment}{/*\ 结束头文件保护\ */}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00228\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00229\ \textcolor{comment}{**\ 详细总结说明}}
+\DoxyCodeLine{00230\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00231\ \textcolor{comment}{**}}
+\DoxyCodeLine{00232\ \textcolor{comment}{**\ 一、文件的整体作用}}
+\DoxyCodeLine{00233\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00234\ \textcolor{comment}{**\ lprefix.h是Lua源码的"{}先锋"{}头文件,它的职责是在编译开始前设置好环境,}}
+\DoxyCodeLine{00235\ \textcolor{comment}{**\ 确保后续的所有代码都能在正确的标准和特性下编译。}}
+\DoxyCodeLine{00236\ \textcolor{comment}{**}}
+\DoxyCodeLine{00237\ \textcolor{comment}{**\ 类比:\ 就像演出前的舞台准备工作,必须在演员登场前完成。}}
+\DoxyCodeLine{00238\ \textcolor{comment}{**}}
+\DoxyCodeLine{00239\ \textcolor{comment}{**}}
+\DoxyCodeLine{00240\ \textcolor{comment}{**\ 二、关键技术点详解}}
+\DoxyCodeLine{00241\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00242\ \textcolor{comment}{**}}
+\DoxyCodeLine{00243\ \textcolor{comment}{**\ 1.\ 条件编译\ (Conditional\ Compilation)}}
+\DoxyCodeLine{00244\ \textcolor{comment}{**\ \ \ \ -\/\ \#if,\ \#ifdef,\ \#ifndef,\ \#elif,\ \#else,\ \#endif}}
+\DoxyCodeLine{00245\ \textcolor{comment}{**\ \ \ \ -\/\ 作用:\ 根据不同条件编译不同的代码}}
+\DoxyCodeLine{00246\ \textcolor{comment}{**\ \ \ \ -\/\ 优势:\ 一套源码适配多个平台,无需维护多个版本}}
+\DoxyCodeLine{00247\ \textcolor{comment}{**}}
+\DoxyCodeLine{00248\ \textcolor{comment}{**\ 2.\ 预处理器宏\ (Preprocessor\ Macros)}}
+\DoxyCodeLine{00249\ \textcolor{comment}{**\ \ \ \ -\/\ \#define:\ 定义宏}}
+\DoxyCodeLine{00250\ \textcolor{comment}{**\ \ \ \ -\/\ \#undef:\ 取消宏定义}}
+\DoxyCodeLine{00251\ \textcolor{comment}{**\ \ \ \ -\/\ 预处理器在真正编译前处理这些指令,进行文本替换}}
+\DoxyCodeLine{00252\ \textcolor{comment}{**}}
+\DoxyCodeLine{00253\ \textcolor{comment}{**\ 3.\ 特性测试宏\ (Feature\ Test\ Macros)}}
+\DoxyCodeLine{00254\ \textcolor{comment}{**\ \ \ \ -\/\ \_XOPEN\_SOURCE,\ \_POSIX\_C\_SOURCE等}}
+\DoxyCodeLine{00255\ \textcolor{comment}{**\ \ \ \ -\/\ 作用:\ 控制系统头文件暴露哪些功能}}
+\DoxyCodeLine{00256\ \textcolor{comment}{**\ \ \ \ -\/\ 必须在包含系统头文件前定义}}
+\DoxyCodeLine{00257\ \textcolor{comment}{**}}
+\DoxyCodeLine{00258\ \textcolor{comment}{**\ 4.\ 头文件保护\ (Include\ Guards)}}
+\DoxyCodeLine{00259\ \textcolor{comment}{**\ \ \ \ -\/\ 防止重复包含导致的重复定义错误}}
+\DoxyCodeLine{00260\ \textcolor{comment}{**\ \ \ \ -\/\ 标准模式:\ \#ifndef\ XXX\_h,\ \#define\ XXX\_h,\ ...,\ \#endif}}
+\DoxyCodeLine{00261\ \textcolor{comment}{**}}
+\DoxyCodeLine{00262\ \textcolor{comment}{**}}
+\DoxyCodeLine{00263\ \textcolor{comment}{**\ 三、不同平台的适配策略}}
+\DoxyCodeLine{00264\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00265\ \textcolor{comment}{**}}
+\DoxyCodeLine{00266\ \textcolor{comment}{**\ 1.\ Unix/Linux系统:}}
+\DoxyCodeLine{00267\ \textcolor{comment}{**\ \ \ \ -\/\ 启用POSIX.1-\/2001标准\ (\_XOPEN\_SOURCE=600)}}
+\DoxyCodeLine{00268\ \textcolor{comment}{**\ \ \ \ -\/\ 启用大文件支持\ (64位文件偏移量)}}
+\DoxyCodeLine{00269\ \textcolor{comment}{**}}
+\DoxyCodeLine{00270\ \textcolor{comment}{**\ 2.\ Windows系统:}}
+\DoxyCodeLine{00271\ \textcolor{comment}{**\ \ \ \ -\/\ 禁用Microsoft特有的安全警告}}
+\DoxyCodeLine{00272\ \textcolor{comment}{**\ \ \ \ -\/\ 保持ISO\ C标准函数的使用}}
+\DoxyCodeLine{00273\ \textcolor{comment}{**}}
+\DoxyCodeLine{00274\ \textcolor{comment}{**\ 3.\ 严格C89模式:}}
+\DoxyCodeLine{00275\ \textcolor{comment}{**\ \ \ \ -\/\ 如果定义了LUA\_USE\_C89,则不做任何扩展}}
+\DoxyCodeLine{00276\ \textcolor{comment}{**\ \ \ \ -\/\ 严格遵循1989年的C标准}}
+\DoxyCodeLine{00277\ \textcolor{comment}{**}}
+\DoxyCodeLine{00278\ \textcolor{comment}{**}}
+\DoxyCodeLine{00279\ \textcolor{comment}{**\ 四、为什么这些设置很重要}}
+\DoxyCodeLine{00280\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00281\ \textcolor{comment}{**}}
+\DoxyCodeLine{00282\ \textcolor{comment}{**\ 1.\ 可移植性:}}
+\DoxyCodeLine{00283\ \textcolor{comment}{**\ \ \ \ -\/\ Lua需要在多种系统上编译:Linux,\ Windows,\ macOS,\ BSD等}}
+\DoxyCodeLine{00284\ \textcolor{comment}{**\ \ \ \ -\/\ 不同系统有不同的默认行为和可用功能}}
+\DoxyCodeLine{00285\ \textcolor{comment}{**\ \ \ \ -\/\ 通过统一设置,确保代码在各平台表现一致}}
+\DoxyCodeLine{00286\ \textcolor{comment}{**}}
+\DoxyCodeLine{00287\ \textcolor{comment}{**\ 2.\ 功能完整性:}}
+\DoxyCodeLine{00288\ \textcolor{comment}{**\ \ \ \ -\/\ 不设置\_XOPEN\_SOURCE,某些POSIX函数可能不可用}}
+\DoxyCodeLine{00289\ \textcolor{comment}{**\ \ \ \ -\/\ 不设置\_FILE\_OFFSET\_BITS=64,无法处理大文件}}
+\DoxyCodeLine{00290\ \textcolor{comment}{**}}
+\DoxyCodeLine{00291\ \textcolor{comment}{**\ 3.\ 编译顺畅:}}
+\DoxyCodeLine{00292\ \textcolor{comment}{**\ \ \ \ -\/\ 在Windows上避免大量烦人的警告信息}}
+\DoxyCodeLine{00293\ \textcolor{comment}{**\ \ \ \ -\/\ 使编译过程更干净、更专业}}
+\DoxyCodeLine{00294\ \textcolor{comment}{**}}
+\DoxyCodeLine{00295\ \textcolor{comment}{**}}
+\DoxyCodeLine{00296\ \textcolor{comment}{**\ 五、学习要点}}
+\DoxyCodeLine{00297\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00298\ \textcolor{comment}{**}}
+\DoxyCodeLine{00299\ \textcolor{comment}{**\ 1.\ C语言的编译过程:}}
+\DoxyCodeLine{00300\ \textcolor{comment}{**\ \ \ \ 源代码\ →\ 预处理\ →\ 编译\ →\ 汇编\ →\ 链接\ →\ 可执行文件}}
+\DoxyCodeLine{00301\ \textcolor{comment}{**\ \ \ \ 本文件影响的是"{}预处理"{}阶段}}
+\DoxyCodeLine{00302\ \textcolor{comment}{**}}
+\DoxyCodeLine{00303\ \textcolor{comment}{**\ 2.\ 跨平台编程的基本思路:}}
+\DoxyCodeLine{00304\ \textcolor{comment}{**\ \ \ \ -\/\ 使用条件编译适配不同平台}}
+\DoxyCodeLine{00305\ \textcolor{comment}{**\ \ \ \ -\/\ 使用标准C函数保证可移植性}}
+\DoxyCodeLine{00306\ \textcolor{comment}{**\ \ \ \ -\/\ 通过特性宏启用需要的系统功能}}
+\DoxyCodeLine{00307\ \textcolor{comment}{**}}
+\DoxyCodeLine{00308\ \textcolor{comment}{**\ 3.\ 头文件的重要性:}}
+\DoxyCodeLine{00309\ \textcolor{comment}{**\ \ \ \ -\/\ 头文件的包含顺序很重要}}
+\DoxyCodeLine{00310\ \textcolor{comment}{**\ \ \ \ -\/\ 某些宏必须在包含标准库前定义}}
+\DoxyCodeLine{00311\ \textcolor{comment}{**\ \ \ \ -\/\ lprefix.h就是为了解决这个"{}先后顺序"{}问题}}
+\DoxyCodeLine{00312\ \textcolor{comment}{**}}
+\DoxyCodeLine{00313\ \textcolor{comment}{**}}
+\DoxyCodeLine{00314\ \textcolor{comment}{**\ 六、实际应用场景}}
+\DoxyCodeLine{00315\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00316\ \textcolor{comment}{**}}
+\DoxyCodeLine{00317\ \textcolor{comment}{**\ 当Lua需要:}}
+\DoxyCodeLine{00318\ \textcolor{comment}{**\ -\/\ 读写超过2GB的文件\ →\ 需要\_FILE\_OFFSET\_BITS=64}}
+\DoxyCodeLine{00319\ \textcolor{comment}{**\ -\/\ 使用多线程(pthread)\ →\ 需要\_XOPEN\_SOURCE=600}}
+\DoxyCodeLine{00320\ \textcolor{comment}{**\ -\/\ 在Windows上编译\ →\ 需要禁用CRT安全警告}}
+\DoxyCodeLine{00321\ \textcolor{comment}{**}}
+\DoxyCodeLine{00322\ \textcolor{comment}{**\ 如果不正确设置这些宏:}}
+\DoxyCodeLine{00323\ \textcolor{comment}{**\ -\/\ 在32位系统可能无法处理大文件}}
+\DoxyCodeLine{00324\ \textcolor{comment}{**\ -\/\ 某些POSIX函数编译失败}}
+\DoxyCodeLine{00325\ \textcolor{comment}{**\ -\/\ Windows上出现大量警告影响开发}}
+\DoxyCodeLine{00326\ \textcolor{comment}{**}}
+\DoxyCodeLine{00327\ \textcolor{comment}{**}}
+\DoxyCodeLine{00328\ \textcolor{comment}{**\ 七、扩展阅读建议}}
+\DoxyCodeLine{00329\ \textcolor{comment}{**\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00330\ \textcolor{comment}{**}}
+\DoxyCodeLine{00331\ \textcolor{comment}{**\ 1.\ POSIX标准:\ 了解类Unix系统的标准接口}}
+\DoxyCodeLine{00332\ \textcolor{comment}{**\ 2.\ C预处理器:\ 深入理解\#define,\ \#if等指令}}
+\DoxyCodeLine{00333\ \textcolor{comment}{**\ 3.\ 大文件支持(LFS):\ 理解32位系统的文件大小限制}}
+\DoxyCodeLine{00334\ \textcolor{comment}{**\ 4.\ 跨平台编程:\ 学习如何编写可移植的C代码}}
+\DoxyCodeLine{00335\ \textcolor{comment}{**}}
+\DoxyCodeLine{00336\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00337\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

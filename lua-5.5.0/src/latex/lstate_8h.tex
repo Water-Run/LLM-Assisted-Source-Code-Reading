@@ -1,0 +1,800 @@
+\doxysection{lstate.\+h File Reference}
+\hypertarget{lstate_8h}{}\label{lstate_8h}\index{lstate.h@{lstate.h}}
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}ltm.\+h"{}}\newline
+{\ttfamily \#include "{}lzio.\+h"{}}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+Include dependency graph for lstate.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=319pt]{lstate_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structstringtable}{stringtable}}
+\item 
+struct \mbox{\hyperlink{structCallInfo}{Call\+Info}}
+\item 
+struct \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}
+\item 
+struct \mbox{\hyperlink{structLX}{LX}}
+\item 
+struct \mbox{\hyperlink{structglobal__State}{global\+\_\+\+State}}
+\item 
+union \mbox{\hyperlink{unionGCUnion}{GCUnion}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aab879b1429bb9a48168253ab32cd270b}{yieldable}}(L)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aa36c58fe1f92b6539e2a9b525a2fdde9}{get\+Ccalls}}(L)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aeb39a01d2065f4d8df78714df6aa7a34}{incnny}}(L)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a233692af4a2d35e617ee8ac5453cc23a}{decnny}}(L)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_ab3498e69c4fc9444e2cf6dd2bf7df228}{nyci}}~(0x10000 \texorpdfstring{$\vert$}{|} 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}{l\+\_\+signalT}}~sig\+\_\+atomic\+\_\+t
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a9e690b8e4047af306d2dd1f78a9094d7}{EXTRA\+\_\+\+STACK}}~5
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aa8382779dd8eeb2dea3deb97dec0ed1c}{STRCACHE\+\_\+N}}~53
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a3e028bcc45ab536a37bb6860caf3d2ca}{STRCACHE\+\_\+M}}~2
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a8f869ebbbd09a2c657864e11e3d88453}{BASIC\+\_\+\+STACK\+\_\+\+SIZE}}~(2\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{lua_8h_ad0180b89de8a4425cb2a1a3e3f793aa5}{LUA\+\_\+\+MINSTACK}})
+\item 
+\#define \mbox{\hyperlink{lstate_8h_af46c33c03bed22bb612529b48ffb656c}{stacksize}}(th)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a52c54e51ee8ad2218ac72b745afc2f7d}{KGC\+\_\+\+INC}}~0 /\texorpdfstring{$\ast$}{*} incremental gc \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a2b7105bf537968e67b18a29d2175aaf8}{KGC\+\_\+\+GENMINOR}}~1 /\texorpdfstring{$\ast$}{*} generational gc in minor (regular) mode \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a225a98e118bcf4cab4ba6bdfee6e3e42}{KGC\+\_\+\+GENMAJOR}}~2 /\texorpdfstring{$\ast$}{*} generational in major mode \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a1254a763f2cd943844db903c00bea76c}{MAXRESULTS}}~250
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a8fe2c3df2dd6412c5ea8c4cdf8ff37af}{CIST\+\_\+\+NRESULTS}}~0xffu
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aa09100e167c1d6edb37bcd1ebe6f3bbc}{CIST\+\_\+\+CCMT}}~8  /\texorpdfstring{$\ast$}{*} the offset, not the mask \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a11ae52002523d2e01aefef58490d8971}{MAX\+\_\+\+CCMT}}~(0xfu $<$$<$ \mbox{\hyperlink{lstate_8h_aa09100e167c1d6edb37bcd1ebe6f3bbc}{CIST\+\_\+\+CCMT}})
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\+\_\+\+RECST}}~12  /\texorpdfstring{$\ast$}{*} the offset, not the mask \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}{CIST\+\_\+C}}~(1u $<$$<$ (\mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\+\_\+\+RECST}} + 3))
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a904429a93589ded1b35375edb7668d10}{CIST\+\_\+\+FRESH}}~(\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}}, \mbox{\hyperlink{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}{CIST\+\_\+C}}) $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_ac3cc1f13105b667291cba63d71ef8b88}{CIST\+\_\+\+CLSRET}}~(\mbox{\hyperlink{lstate_8h_a904429a93589ded1b35375edb7668d10}{CIST\+\_\+\+FRESH}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_afd863e3780d6ee3ce080970843e381fc}{CIST\+\_\+\+TBC}}~(\mbox{\hyperlink{lstate_8h_ac3cc1f13105b667291cba63d71ef8b88}{CIST\+\_\+\+CLSRET}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{CIST\+\_\+\+OAH}}~(\mbox{\hyperlink{lstate_8h_afd863e3780d6ee3ce080970843e381fc}{CIST\+\_\+\+TBC}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1}{CIST\+\_\+\+HOOKED}}~(\mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{CIST\+\_\+\+OAH}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a4b2deea0fb7c8f4b21151e5f105de6dc}{CIST\+\_\+\+YPCALL}}~(\mbox{\hyperlink{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1}{CIST\+\_\+\+HOOKED}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a0b8ca2af9b603d2807b3377f97038e8f}{CIST\+\_\+\+TAIL}}~(\mbox{\hyperlink{lstate_8h_a4b2deea0fb7c8f4b21151e5f105de6dc}{CIST\+\_\+\+YPCALL}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a2ee8b2631d186257649cce9f39e17aae}{CIST\+\_\+\+HOOKYIELD}}~(\mbox{\hyperlink{lstate_8h_a0b8ca2af9b603d2807b3377f97038e8f}{CIST\+\_\+\+TAIL}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a6238abb19ba287875358e796aacb9473}{CIST\+\_\+\+FIN}}~(\mbox{\hyperlink{lstate_8h_a2ee8b2631d186257649cce9f39e17aae}{CIST\+\_\+\+HOOKYIELD}} $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a98db1f4300251c6b1f0d882de2d3012d}{get\+\_\+nresults}}(cs)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_ab2f418628c2dcc0d97ffa7051d549272}{getcistrecst}}(ci)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a435d5e6427bd0959a2d2a8c7e72fe30e}{setcistrecst}}(ci,  st)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a489eab424b094f54dd7f6b35e2cf68a2}{is\+Lua}}(ci)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_abf81b7132f7940af70784ccaf75a0e49}{is\+Luacode}}(ci)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_aa9a9b60c553b53dadb819679acdc7627}{setoah}}(ci,  v)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a96d05084469c01ba26b5a797f09b2175}{getoah}}(ci)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a103db2de6edf3420c6c6c9a282562406}{G}}(L)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_abab2ce94a84ce3bc9771bdc6b2c5be47}{mainthread}}(\mbox{\hyperlink{lstate_8h_a103db2de6edf3420c6c6c9a282562406}{G}})
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a73de055f096a56fda5c309ae707566ff}{completestate}}(g)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\+\_\+u}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_af6c16f3aa27ad97ea1bcaa31e05e0b06}{gco2ts}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a55e9a228ad0d3a82ee9cfc353002fd8a}{gco2u}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_adaac0379079b200986d6ae72b65aefaf}{gco2lcl}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a1dcf2ea170c68fe70adb5af7ae04c71e}{gco2ccl}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a003658bade3405a30fe2cf7fee2f7e10}{gco2cl}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a4f233ba369144fad9fd5fc6c513da1ac}{gco2t}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a8792af5dd4539a71f6ed8ddb31d079c3}{gco2p}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a52c467e11bd40cad5ca78372f7f67b4d}{gco2th}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a1633a3ec133e64956014aafd04e31cce}{gco2upv}}(o)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a254ca29aba03e47440082d4591a9734e}{obj2gco}}(v)
+\item 
+\#define \mbox{\hyperlink{lstate_8h_a27490dbb57469f3fa83a73d4b7a79df2}{gettotalbytes}}(g)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Call\+Info \mbox{\hyperlink{lstate_8h_a8385a34ef0855af12719434f90ae78be}{Call\+Info}}
+\item 
+typedef struct stringtable \mbox{\hyperlink{lstate_8h_a30fbba34f6a57f628f9b4617cb5e6e85}{stringtable}}
+\item 
+typedef struct LX \mbox{\hyperlink{lstate_8h_ac58513cb1c781750265c8643a2e037b0}{LX}}
+\item 
+typedef struct global\+\_\+\+State \mbox{\hyperlink{lstate_8h_a483e748c0bb89880075d6442bc8bd4c2}{global\+\_\+\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_af1b915fc323a9a154d892b1c16b8cc6c}{lua\+E\+\_\+setdebt}} (\mbox{\hyperlink{structglobal__State}{global\+\_\+\+State}} \texorpdfstring{$\ast$}{*}g, \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} debt)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_a0882226c718293b23af460f7e2faeef0}{lua\+E\+\_\+freethread}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L1)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}} \mbox{\hyperlink{lstate_8h_acdeac67586482760b5920b53116cd3db}{lua\+E\+\_\+threadsize}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lstate_8h_a7ba70ad48c8d96907703b54ff8da8036}{lua\+E\+\_\+extend\+CI}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_a5f4d20913889e46b69f0a54b10a9a545}{lua\+E\+\_\+shrink\+CI}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_a46f2404bfe7c23f34535a155f5ab380a}{lua\+E\+\_\+checkcstack}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_ab0a7818dc5fb3e9ab38ad91329b6e3f2}{lua\+E\+\_\+inc\+Cstack}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_a42e5b1838bc6dc0e4545059556df0842}{lua\+E\+\_\+warning}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}msg, int tocont)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lstate_8h_a19ac557deb44046d082cf5d052831bbb}{lua\+E\+\_\+warnerror}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}where)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}} \mbox{\hyperlink{lstate_8h_a94299bb0dd983822a1e95962f2f6a038}{lua\+E\+\_\+resetthread}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}} status)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lstate_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lstate_8h_a8f869ebbbd09a2c657864e11e3d88453}\index{lstate.h@{lstate.h}!BASIC\_STACK\_SIZE@{BASIC\_STACK\_SIZE}}
+\index{BASIC\_STACK\_SIZE@{BASIC\_STACK\_SIZE}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{BASIC\_STACK\_SIZE}{BASIC\_STACK\_SIZE}}
+{\footnotesize\ttfamily \label{lstate_8h_a8f869ebbbd09a2c657864e11e3d88453} 
+\#define BASIC\+\_\+\+STACK\+\_\+\+SIZE~(2\texorpdfstring{$\ast$}{*}\mbox{\hyperlink{lua_8h_ad0180b89de8a4425cb2a1a3e3f793aa5}{LUA\+\_\+\+MINSTACK}})}
+
+\Hypertarget{lstate_8h_a34b04e38154abb464adc00abd6760e37}\index{lstate.h@{lstate.h}!cast\_u@{cast\_u}}
+\index{cast\_u@{cast\_u}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{cast\_u}{cast\_u}}
+{\footnotesize\ttfamily \label{lstate_8h_a34b04e38154abb464adc00abd6760e37} 
+\#define cast\+\_\+u(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\textcolor{keyword}{union}\ \mbox{\hyperlink{unionGCUnion}{GCUnion}}\ *,\ (o))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}\index{lstate.h@{lstate.h}!CIST\_C@{CIST\_C}}
+\index{CIST\_C@{CIST\_C}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_C}{CIST\_C}}
+{\footnotesize\ttfamily \label{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1} 
+\#define CIST\+\_\+C~(1u $<$$<$ (\mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\+\_\+\+RECST}} + 3))}
+
+\Hypertarget{lstate_8h_aa09100e167c1d6edb37bcd1ebe6f3bbc}\index{lstate.h@{lstate.h}!CIST\_CCMT@{CIST\_CCMT}}
+\index{CIST\_CCMT@{CIST\_CCMT}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_CCMT}{CIST\_CCMT}}
+{\footnotesize\ttfamily \label{lstate_8h_aa09100e167c1d6edb37bcd1ebe6f3bbc} 
+\#define CIST\+\_\+\+CCMT~8  /\texorpdfstring{$\ast$}{*} the offset, not the mask \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lstate_8h_ac3cc1f13105b667291cba63d71ef8b88}\index{lstate.h@{lstate.h}!CIST\_CLSRET@{CIST\_CLSRET}}
+\index{CIST\_CLSRET@{CIST\_CLSRET}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_CLSRET}{CIST\_CLSRET}}
+{\footnotesize\ttfamily \label{lstate_8h_ac3cc1f13105b667291cba63d71ef8b88} 
+\#define CIST\+\_\+\+CLSRET~(\mbox{\hyperlink{lstate_8h_a904429a93589ded1b35375edb7668d10}{CIST\+\_\+\+FRESH}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a6238abb19ba287875358e796aacb9473}\index{lstate.h@{lstate.h}!CIST\_FIN@{CIST\_FIN}}
+\index{CIST\_FIN@{CIST\_FIN}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_FIN}{CIST\_FIN}}
+{\footnotesize\ttfamily \label{lstate_8h_a6238abb19ba287875358e796aacb9473} 
+\#define CIST\+\_\+\+FIN~(\mbox{\hyperlink{lstate_8h_a2ee8b2631d186257649cce9f39e17aae}{CIST\+\_\+\+HOOKYIELD}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a904429a93589ded1b35375edb7668d10}\index{lstate.h@{lstate.h}!CIST\_FRESH@{CIST\_FRESH}}
+\index{CIST\_FRESH@{CIST\_FRESH}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_FRESH}{CIST\_FRESH}}
+{\footnotesize\ttfamily \label{lstate_8h_a904429a93589ded1b35375edb7668d10} 
+\#define CIST\+\_\+\+FRESH~(\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}}, \mbox{\hyperlink{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}{CIST\+\_\+C}}) $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1}\index{lstate.h@{lstate.h}!CIST\_HOOKED@{CIST\_HOOKED}}
+\index{CIST\_HOOKED@{CIST\_HOOKED}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_HOOKED}{CIST\_HOOKED}}
+{\footnotesize\ttfamily \label{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1} 
+\#define CIST\+\_\+\+HOOKED~(\mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{CIST\+\_\+\+OAH}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a2ee8b2631d186257649cce9f39e17aae}\index{lstate.h@{lstate.h}!CIST\_HOOKYIELD@{CIST\_HOOKYIELD}}
+\index{CIST\_HOOKYIELD@{CIST\_HOOKYIELD}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_HOOKYIELD}{CIST\_HOOKYIELD}}
+{\footnotesize\ttfamily \label{lstate_8h_a2ee8b2631d186257649cce9f39e17aae} 
+\#define CIST\+\_\+\+HOOKYIELD~(\mbox{\hyperlink{lstate_8h_a0b8ca2af9b603d2807b3377f97038e8f}{CIST\+\_\+\+TAIL}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a8fe2c3df2dd6412c5ea8c4cdf8ff37af}\index{lstate.h@{lstate.h}!CIST\_NRESULTS@{CIST\_NRESULTS}}
+\index{CIST\_NRESULTS@{CIST\_NRESULTS}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_NRESULTS}{CIST\_NRESULTS}}
+{\footnotesize\ttfamily \label{lstate_8h_a8fe2c3df2dd6412c5ea8c4cdf8ff37af} 
+\#define CIST\+\_\+\+NRESULTS~0xffu}
+
+\Hypertarget{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}\index{lstate.h@{lstate.h}!CIST\_OAH@{CIST\_OAH}}
+\index{CIST\_OAH@{CIST\_OAH}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_OAH}{CIST\_OAH}}
+{\footnotesize\ttfamily \label{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615} 
+\#define CIST\+\_\+\+OAH~(\mbox{\hyperlink{lstate_8h_afd863e3780d6ee3ce080970843e381fc}{CIST\+\_\+\+TBC}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}\index{lstate.h@{lstate.h}!CIST\_RECST@{CIST\_RECST}}
+\index{CIST\_RECST@{CIST\_RECST}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_RECST}{CIST\_RECST}}
+{\footnotesize\ttfamily \label{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3} 
+\#define CIST\+\_\+\+RECST~12  /\texorpdfstring{$\ast$}{*} the offset, not the mask \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lstate_8h_a0b8ca2af9b603d2807b3377f97038e8f}\index{lstate.h@{lstate.h}!CIST\_TAIL@{CIST\_TAIL}}
+\index{CIST\_TAIL@{CIST\_TAIL}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_TAIL}{CIST\_TAIL}}
+{\footnotesize\ttfamily \label{lstate_8h_a0b8ca2af9b603d2807b3377f97038e8f} 
+\#define CIST\+\_\+\+TAIL~(\mbox{\hyperlink{lstate_8h_a4b2deea0fb7c8f4b21151e5f105de6dc}{CIST\+\_\+\+YPCALL}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_afd863e3780d6ee3ce080970843e381fc}\index{lstate.h@{lstate.h}!CIST\_TBC@{CIST\_TBC}}
+\index{CIST\_TBC@{CIST\_TBC}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_TBC}{CIST\_TBC}}
+{\footnotesize\ttfamily \label{lstate_8h_afd863e3780d6ee3ce080970843e381fc} 
+\#define CIST\+\_\+\+TBC~(\mbox{\hyperlink{lstate_8h_ac3cc1f13105b667291cba63d71ef8b88}{CIST\+\_\+\+CLSRET}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a4b2deea0fb7c8f4b21151e5f105de6dc}\index{lstate.h@{lstate.h}!CIST\_YPCALL@{CIST\_YPCALL}}
+\index{CIST\_YPCALL@{CIST\_YPCALL}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CIST\_YPCALL}{CIST\_YPCALL}}
+{\footnotesize\ttfamily \label{lstate_8h_a4b2deea0fb7c8f4b21151e5f105de6dc} 
+\#define CIST\+\_\+\+YPCALL~(\mbox{\hyperlink{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1}{CIST\+\_\+\+HOOKED}} $<$$<$ 1)}
+
+\Hypertarget{lstate_8h_a73de055f096a56fda5c309ae707566ff}\index{lstate.h@{lstate.h}!completestate@{completestate}}
+\index{completestate@{completestate}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{completestate}{completestate}}
+{\footnotesize\ttfamily \label{lstate_8h_a73de055f096a56fda5c309ae707566ff} 
+\#define completestate(\begin{DoxyParamCaption}\item[{}]{g}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lobject_8h_a39af019fafa202841da3bf7c427bf090}{ttisnil}}(\&g-\/>nilvalue)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a233692af4a2d35e617ee8ac5453cc23a}\index{lstate.h@{lstate.h}!decnny@{decnny}}
+\index{decnny@{decnny}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{decnny}{decnny}}
+{\footnotesize\ttfamily \label{lstate_8h_a233692af4a2d35e617ee8ac5453cc23a} 
+\#define decnny(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((L)-\/>nCcalls\ -\/=\ 0x10000)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a9e690b8e4047af306d2dd1f78a9094d7}\index{lstate.h@{lstate.h}!EXTRA\_STACK@{EXTRA\_STACK}}
+\index{EXTRA\_STACK@{EXTRA\_STACK}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{EXTRA\_STACK}{EXTRA\_STACK}}
+{\footnotesize\ttfamily \label{lstate_8h_a9e690b8e4047af306d2dd1f78a9094d7} 
+\#define EXTRA\+\_\+\+STACK~5}
+
+\Hypertarget{lstate_8h_a103db2de6edf3420c6c6c9a282562406}\index{lstate.h@{lstate.h}!G@{G}}
+\index{G@{G}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{G}{G}}
+{\footnotesize\ttfamily \label{lstate_8h_a103db2de6edf3420c6c6c9a282562406} 
+\#define G(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(L-\/>l\_G)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a1dcf2ea170c68fe70adb5af7ae04c71e}\index{lstate.h@{lstate.h}!gco2ccl@{gco2ccl}}
+\index{gco2ccl@{gco2ccl}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2ccl}{gco2ccl}}
+{\footnotesize\ttfamily \label{lstate_8h_a1dcf2ea170c68fe70adb5af7ae04c71e} 
+\#define gco2ccl(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_a2361d923ddb7fc1468b978fe043e35c2}{LUA\_VCCL}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>cl.c))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a003658bade3405a30fe2cf7fee2f7e10}\index{lstate.h@{lstate.h}!gco2cl@{gco2cl}}
+\index{gco2cl@{gco2cl}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2cl}{gco2cl}}
+{\footnotesize\ttfamily \label{lstate_8h_a003658bade3405a30fe2cf7fee2f7e10} 
+\#define gco2cl(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lobject_8h_a40d12e88a0d8249d226109e0d6d70dd6}{novariant}}((o)-\/>tt)\ ==\ \mbox{\hyperlink{lua_8h_adaa7fa6e2561c1bc428ba8d265171494}{LUA\_TFUNCTION}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>cl))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_adaac0379079b200986d6ae72b65aefaf}\index{lstate.h@{lstate.h}!gco2lcl@{gco2lcl}}
+\index{gco2lcl@{gco2lcl}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2lcl}{gco2lcl}}
+{\footnotesize\ttfamily \label{lstate_8h_adaac0379079b200986d6ae72b65aefaf} 
+\#define gco2lcl(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_a5d0e6e41ea93960667095501aa5745c1}{LUA\_VLCL}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>cl.l))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a8792af5dd4539a71f6ed8ddb31d079c3}\index{lstate.h@{lstate.h}!gco2p@{gco2p}}
+\index{gco2p@{gco2p}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2p}{gco2p}}
+{\footnotesize\ttfamily \label{lstate_8h_a8792af5dd4539a71f6ed8ddb31d079c3} 
+\#define gco2p(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_a1c6c32cba3e6d0c897f68ceb273dd757}{LUA\_VPROTO}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>p))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a4f233ba369144fad9fd5fc6c513da1ac}\index{lstate.h@{lstate.h}!gco2t@{gco2t}}
+\index{gco2t@{gco2t}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2t}{gco2t}}
+{\footnotesize\ttfamily \label{lstate_8h_a4f233ba369144fad9fd5fc6c513da1ac} 
+\#define gco2t(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_afaf24d5b79b9027ad768d023778669df}{LUA\_VTABLE}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>h))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a52c467e11bd40cad5ca78372f7f67b4d}\index{lstate.h@{lstate.h}!gco2th@{gco2th}}
+\index{gco2th@{gco2th}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2th}{gco2th}}
+{\footnotesize\ttfamily \label{lstate_8h_a52c467e11bd40cad5ca78372f7f67b4d} 
+\#define gco2th(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_ad224258ccc4e8f79f148d54d32ddbd00}{LUA\_VTHREAD}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>th))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_af6c16f3aa27ad97ea1bcaa31e05e0b06}\index{lstate.h@{lstate.h}!gco2ts@{gco2ts}}
+\index{gco2ts@{gco2ts}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2ts}{gco2ts}}
+{\footnotesize\ttfamily \label{lstate_8h_af6c16f3aa27ad97ea1bcaa31e05e0b06} 
+\#define gco2ts(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lobject_8h_a40d12e88a0d8249d226109e0d6d70dd6}{novariant}}((o)-\/>tt)\ ==\ \mbox{\hyperlink{lua_8h_a57de20d87bb5131a3159f2bd52e3fab6}{LUA\_TSTRING}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>ts))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a55e9a228ad0d3a82ee9cfc353002fd8a}\index{lstate.h@{lstate.h}!gco2u@{gco2u}}
+\index{gco2u@{gco2u}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2u}{gco2u}}
+{\footnotesize\ttfamily \label{lstate_8h_a55e9a228ad0d3a82ee9cfc353002fd8a} 
+\#define gco2u(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_af45b44d4031e7e869195dd97759d2ca3}{LUA\_VUSERDATA}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>u))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a1633a3ec133e64956014aafd04e31cce}\index{lstate.h@{lstate.h}!gco2upv@{gco2upv}}
+\index{gco2upv@{gco2upv}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gco2upv}{gco2upv}}
+{\footnotesize\ttfamily \label{lstate_8h_a1633a3ec133e64956014aafd04e31cce} 
+\#define gco2upv(\begin{DoxyParamCaption}\item[{}]{o}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}((o)-\/>tt\ ==\ \mbox{\hyperlink{lobject_8h_ae982db94518ed52587579ed70d822ad5}{LUA\_VUPVAL}},\ \&((\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(o))-\/>upv))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a98db1f4300251c6b1f0d882de2d3012d}\index{lstate.h@{lstate.h}!get\_nresults@{get\_nresults}}
+\index{get\_nresults@{get\_nresults}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{get\_nresults}{get\_nresults}}
+{\footnotesize\ttfamily \label{lstate_8h_a98db1f4300251c6b1f0d882de2d3012d} 
+\#define get\+\_\+nresults(\begin{DoxyParamCaption}\item[{}]{cs}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}((cs)\ \&\ \mbox{\hyperlink{lstate_8h_a8fe2c3df2dd6412c5ea8c4cdf8ff37af}{CIST\_NRESULTS}})\ -\/\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_aa36c58fe1f92b6539e2a9b525a2fdde9}\index{lstate.h@{lstate.h}!getCcalls@{getCcalls}}
+\index{getCcalls@{getCcalls}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{getCcalls}{getCcalls}}
+{\footnotesize\ttfamily \label{lstate_8h_aa36c58fe1f92b6539e2a9b525a2fdde9} 
+\#define get\+Ccalls(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((L)-\/>nCcalls\ \&\ 0xffff)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_ab2f418628c2dcc0d97ffa7051d549272}\index{lstate.h@{lstate.h}!getcistrecst@{getcistrecst}}
+\index{getcistrecst@{getcistrecst}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{getcistrecst}{getcistrecst}}
+{\footnotesize\ttfamily \label{lstate_8h_ab2f418628c2dcc0d97ffa7051d549272} 
+\#define getcistrecst(\begin{DoxyParamCaption}\item[{}]{ci}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((ci)-\/>callstatus\ >>\ \mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\_RECST}})\ \&\ 7)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a96d05084469c01ba26b5a797f09b2175}\index{lstate.h@{lstate.h}!getoah@{getoah}}
+\index{getoah@{getoah}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{getoah}{getoah}}
+{\footnotesize\ttfamily \label{lstate_8h_a96d05084469c01ba26b5a797f09b2175} 
+\#define getoah(\begin{DoxyParamCaption}\item[{}]{ci}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((ci)-\/>callstatus\ \&\ \mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{CIST\_OAH}})\ ?\ 1\ :\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a27490dbb57469f3fa83a73d4b7a79df2}\index{lstate.h@{lstate.h}!gettotalbytes@{gettotalbytes}}
+\index{gettotalbytes@{gettotalbytes}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{gettotalbytes}{gettotalbytes}}
+{\footnotesize\ttfamily \label{lstate_8h_a27490dbb57469f3fa83a73d4b7a79df2} 
+\#define gettotalbytes(\begin{DoxyParamCaption}\item[{}]{g}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((g)-\/>GCtotalbytes\ -\/\ (g)-\/>GCdebt)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_aeb39a01d2065f4d8df78714df6aa7a34}\index{lstate.h@{lstate.h}!incnny@{incnny}}
+\index{incnny@{incnny}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{incnny}{incnny}}
+{\footnotesize\ttfamily \label{lstate_8h_aeb39a01d2065f4d8df78714df6aa7a34} 
+\#define incnny(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((L)-\/>nCcalls\ +=\ 0x10000)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a489eab424b094f54dd7f6b35e2cf68a2}\index{lstate.h@{lstate.h}!isLua@{isLua}}
+\index{isLua@{isLua}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{isLua}{isLua}}
+{\footnotesize\ttfamily \label{lstate_8h_a489eab424b094f54dd7f6b35e2cf68a2} 
+\#define is\+Lua(\begin{DoxyParamCaption}\item[{}]{ci}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(!((ci)-\/>callstatus\ \&\ \mbox{\hyperlink{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}{CIST\_C}}))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_abf81b7132f7940af70784ccaf75a0e49}\index{lstate.h@{lstate.h}!isLuacode@{isLuacode}}
+\index{isLuacode@{isLuacode}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{isLuacode}{isLuacode}}
+{\footnotesize\ttfamily \label{lstate_8h_abf81b7132f7940af70784ccaf75a0e49} 
+\#define is\+Luacode(\begin{DoxyParamCaption}\item[{}]{ci}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(!((ci)-\/>callstatus\ \&\ (\mbox{\hyperlink{lstate_8h_a9bd55a931fefd2ddeb3d63b245fc39f1}{CIST\_C}}\ |\ \mbox{\hyperlink{lstate_8h_a800d75f1a5d7a4a9b2fc810cdeedffb1}{CIST\_HOOKED}})))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a225a98e118bcf4cab4ba6bdfee6e3e42}\index{lstate.h@{lstate.h}!KGC\_GENMAJOR@{KGC\_GENMAJOR}}
+\index{KGC\_GENMAJOR@{KGC\_GENMAJOR}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{KGC\_GENMAJOR}{KGC\_GENMAJOR}}
+{\footnotesize\ttfamily \label{lstate_8h_a225a98e118bcf4cab4ba6bdfee6e3e42} 
+\#define KGC\+\_\+\+GENMAJOR~2 /\texorpdfstring{$\ast$}{*} generational in major mode \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lstate_8h_a2b7105bf537968e67b18a29d2175aaf8}\index{lstate.h@{lstate.h}!KGC\_GENMINOR@{KGC\_GENMINOR}}
+\index{KGC\_GENMINOR@{KGC\_GENMINOR}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{KGC\_GENMINOR}{KGC\_GENMINOR}}
+{\footnotesize\ttfamily \label{lstate_8h_a2b7105bf537968e67b18a29d2175aaf8} 
+\#define KGC\+\_\+\+GENMINOR~1 /\texorpdfstring{$\ast$}{*} generational gc in minor (regular) mode \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lstate_8h_a52c54e51ee8ad2218ac72b745afc2f7d}\index{lstate.h@{lstate.h}!KGC\_INC@{KGC\_INC}}
+\index{KGC\_INC@{KGC\_INC}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{KGC\_INC}{KGC\_INC}}
+{\footnotesize\ttfamily \label{lstate_8h_a52c54e51ee8ad2218ac72b745afc2f7d} 
+\#define KGC\+\_\+\+INC~0 /\texorpdfstring{$\ast$}{*} incremental gc \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0}\index{lstate.h@{lstate.h}!l\_signalT@{l\_signalT}}
+\index{l\_signalT@{l\_signalT}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{l\_signalT}{l\_signalT}}
+{\footnotesize\ttfamily \label{lstate_8h_a671695c87339f30600d0f0f27a2cd2f0} 
+\#define l\+\_\+signalT~sig\+\_\+atomic\+\_\+t}
+
+\Hypertarget{lstate_8h_abab2ce94a84ce3bc9771bdc6b2c5be47}\index{lstate.h@{lstate.h}!mainthread@{mainthread}}
+\index{mainthread@{mainthread}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{mainthread}{mainthread}}
+{\footnotesize\ttfamily \label{lstate_8h_abab2ce94a84ce3bc9771bdc6b2c5be47} 
+\#define mainthread(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{lstate_8h_a103db2de6edf3420c6c6c9a282562406}{G}}}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\&(\mbox{\hyperlink{lstate_8h_a103db2de6edf3420c6c6c9a282562406}{G}})-\/>mainth.l)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a11ae52002523d2e01aefef58490d8971}\index{lstate.h@{lstate.h}!MAX\_CCMT@{MAX\_CCMT}}
+\index{MAX\_CCMT@{MAX\_CCMT}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_CCMT}{MAX\_CCMT}}
+{\footnotesize\ttfamily \label{lstate_8h_a11ae52002523d2e01aefef58490d8971} 
+\#define MAX\+\_\+\+CCMT~(0xfu $<$$<$ \mbox{\hyperlink{lstate_8h_aa09100e167c1d6edb37bcd1ebe6f3bbc}{CIST\+\_\+\+CCMT}})}
+
+\Hypertarget{lstate_8h_a1254a763f2cd943844db903c00bea76c}\index{lstate.h@{lstate.h}!MAXRESULTS@{MAXRESULTS}}
+\index{MAXRESULTS@{MAXRESULTS}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{MAXRESULTS}{MAXRESULTS}}
+{\footnotesize\ttfamily \label{lstate_8h_a1254a763f2cd943844db903c00bea76c} 
+\#define MAXRESULTS~250}
+
+\Hypertarget{lstate_8h_ab3498e69c4fc9444e2cf6dd2bf7df228}\index{lstate.h@{lstate.h}!nyci@{nyci}}
+\index{nyci@{nyci}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{nyci}{nyci}}
+{\footnotesize\ttfamily \label{lstate_8h_ab3498e69c4fc9444e2cf6dd2bf7df228} 
+\#define nyci~(0x10000 \texorpdfstring{$\vert$}{|} 1)}
+
+\Hypertarget{lstate_8h_a254ca29aba03e47440082d4591a9734e}\index{lstate.h@{lstate.h}!obj2gco@{obj2gco}}
+\index{obj2gco@{obj2gco}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{obj2gco}{obj2gco}}
+{\footnotesize\ttfamily \label{lstate_8h_a254ca29aba03e47440082d4591a9734e} 
+\#define obj2gco(\begin{DoxyParamCaption}\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(\mbox{\hyperlink{lobject_8h_a40d12e88a0d8249d226109e0d6d70dd6}{novariant}}((v)-\/>tt)\ >=\ \mbox{\hyperlink{lua_8h_a57de20d87bb5131a3159f2bd52e3fab6}{LUA\_TSTRING}},\ \&(\mbox{\hyperlink{lstate_8h_a34b04e38154abb464adc00abd6760e37}{cast\_u}}(v)-\/>gc))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a435d5e6427bd0959a2d2a8c7e72fe30e}\index{lstate.h@{lstate.h}!setcistrecst@{setcistrecst}}
+\index{setcistrecst@{setcistrecst}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{setcistrecst}{setcistrecst}}
+{\footnotesize\ttfamily \label{lstate_8h_a435d5e6427bd0959a2d2a8c7e72fe30e} 
+\#define setcistrecst(\begin{DoxyParamCaption}\item[{}]{ci}{, }\item[{}]{st}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{llimits_8h_afac1404af62451f8653440ecb6e773fc}{check\_exp}}(((st)\ \&\ 7)\ ==\ (st),\ \ \ \textcolor{comment}{/*\ status\ must\ fit\ in\ three\ bits\ */}\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ((ci)-\/>callstatus\ =\ ((ci)-\/>callstatus\ \&\ \string~(7u\ <<\ \mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\_RECST}}))\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ (\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\_uint32}},\ st)\ <<\ \mbox{\hyperlink{lstate_8h_a1fa434ea6208584101bfe6ca760c79d3}{CIST\_RECST}})))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_aa9a9b60c553b53dadb819679acdc7627}\index{lstate.h@{lstate.h}!setoah@{setoah}}
+\index{setoah@{setoah}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{setoah}{setoah}}
+{\footnotesize\ttfamily \label{lstate_8h_aa9a9b60c553b53dadb819679acdc7627} 
+\#define setoah(\begin{DoxyParamCaption}\item[{}]{ci}{, }\item[{}]{v}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ ((ci)-\/>callstatus\ =\ ((v)\ ?\ (ci)-\/>callstatus\ |\ \mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{CIST\_OAH}}\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (ci)-\/>callstatus\ \&\ \mbox{\hyperlink{lstate_8h_aa79d6ca436cdf0651af29bf3a10e8615}{\string~CIST\_OAH}}))}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_af46c33c03bed22bb612529b48ffb656c}\index{lstate.h@{lstate.h}!stacksize@{stacksize}}
+\index{stacksize@{stacksize}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{stacksize}{stacksize}}
+{\footnotesize\ttfamily \label{lstate_8h_af46c33c03bed22bb612529b48ffb656c} 
+\#define stacksize(\begin{DoxyParamCaption}\item[{}]{th}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\_int}}((th)-\/>stack\_last.p\ -\/\ (th)-\/>stack.p)}
+
+\end{DoxyCode}
+\Hypertarget{lstate_8h_a3e028bcc45ab536a37bb6860caf3d2ca}\index{lstate.h@{lstate.h}!STRCACHE\_M@{STRCACHE\_M}}
+\index{STRCACHE\_M@{STRCACHE\_M}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{STRCACHE\_M}{STRCACHE\_M}}
+{\footnotesize\ttfamily \label{lstate_8h_a3e028bcc45ab536a37bb6860caf3d2ca} 
+\#define STRCACHE\+\_\+M~2}
+
+\Hypertarget{lstate_8h_aa8382779dd8eeb2dea3deb97dec0ed1c}\index{lstate.h@{lstate.h}!STRCACHE\_N@{STRCACHE\_N}}
+\index{STRCACHE\_N@{STRCACHE\_N}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{STRCACHE\_N}{STRCACHE\_N}}
+{\footnotesize\ttfamily \label{lstate_8h_aa8382779dd8eeb2dea3deb97dec0ed1c} 
+\#define STRCACHE\+\_\+N~53}
+
+\Hypertarget{lstate_8h_aab879b1429bb9a48168253ab32cd270b}\index{lstate.h@{lstate.h}!yieldable@{yieldable}}
+\index{yieldable@{yieldable}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{yieldable}{yieldable}}
+{\footnotesize\ttfamily \label{lstate_8h_aab879b1429bb9a48168253ab32cd270b} 
+\#define yieldable(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((L)-\/>nCcalls\ \&\ 0xffff0000)\ ==\ 0)}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{lstate_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lstate_8h_a8385a34ef0855af12719434f90ae78be}\index{lstate.h@{lstate.h}!CallInfo@{CallInfo}}
+\index{CallInfo@{CallInfo}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{CallInfo}{CallInfo}}
+{\footnotesize\ttfamily \label{lstate_8h_a8385a34ef0855af12719434f90ae78be} 
+typedef struct Call\+Info Call\+Info}
+
+\Hypertarget{lstate_8h_a483e748c0bb89880075d6442bc8bd4c2}\index{lstate.h@{lstate.h}!global\_State@{global\_State}}
+\index{global\_State@{global\_State}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{global\_State}{global\_State}}
+{\footnotesize\ttfamily \label{lstate_8h_a483e748c0bb89880075d6442bc8bd4c2} 
+typedef struct global\+\_\+\+State global\+\_\+\+State}
+
+\Hypertarget{lstate_8h_ac58513cb1c781750265c8643a2e037b0}\index{lstate.h@{lstate.h}!LX@{LX}}
+\index{LX@{LX}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{LX}{LX}}
+{\footnotesize\ttfamily \label{lstate_8h_ac58513cb1c781750265c8643a2e037b0} 
+typedef struct LX LX}
+
+\Hypertarget{lstate_8h_a30fbba34f6a57f628f9b4617cb5e6e85}\index{lstate.h@{lstate.h}!stringtable@{stringtable}}
+\index{stringtable@{stringtable}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{stringtable}{stringtable}}
+{\footnotesize\ttfamily \label{lstate_8h_a30fbba34f6a57f628f9b4617cb5e6e85} 
+typedef struct stringtable stringtable}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lstate_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lstate_8h_a46f2404bfe7c23f34535a155f5ab380a}\index{lstate.h@{lstate.h}!luaE\_checkcstack@{luaE\_checkcstack}}
+\index{luaE\_checkcstack@{luaE\_checkcstack}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_checkcstack()}{luaE\_checkcstack()}}
+{\footnotesize\ttfamily \label{lstate_8h_a46f2404bfe7c23f34535a155f5ab380a} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+checkcstack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a46f2404bfe7c23f34535a155f5ab380a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a46f2404bfe7c23f34535a155f5ab380a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_a7ba70ad48c8d96907703b54ff8da8036}\index{lstate.h@{lstate.h}!luaE\_extendCI@{luaE\_extendCI}}
+\index{luaE\_extendCI@{luaE\_extendCI}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_extendCI()}{luaE\_extendCI()}}
+{\footnotesize\ttfamily \label{lstate_8h_a7ba70ad48c8d96907703b54ff8da8036} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{structCallInfo}{Call\+Info}} \texorpdfstring{$\ast$}{*} lua\+E\+\_\+extend\+CI (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lstate_8h_a0882226c718293b23af460f7e2faeef0}\index{lstate.h@{lstate.h}!luaE\_freethread@{luaE\_freethread}}
+\index{luaE\_freethread@{luaE\_freethread}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_freethread()}{luaE\_freethread()}}
+{\footnotesize\ttfamily \label{lstate_8h_a0882226c718293b23af460f7e2faeef0} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+freethread (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L1}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a0882226c718293b23af460f7e2faeef0_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_ab0a7818dc5fb3e9ab38ad91329b6e3f2}\index{lstate.h@{lstate.h}!luaE\_incCstack@{luaE\_incCstack}}
+\index{luaE\_incCstack@{luaE\_incCstack}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_incCstack()}{luaE\_incCstack()}}
+{\footnotesize\ttfamily \label{lstate_8h_ab0a7818dc5fb3e9ab38ad91329b6e3f2} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+inc\+Cstack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_ab0a7818dc5fb3e9ab38ad91329b6e3f2_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_a94299bb0dd983822a1e95962f2f6a038}\index{lstate.h@{lstate.h}!luaE\_resetthread@{luaE\_resetthread}}
+\index{luaE\_resetthread@{luaE\_resetthread}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_resetthread()}{luaE\_resetthread()}}
+{\footnotesize\ttfamily \label{lstate_8h_a94299bb0dd983822a1e95962f2f6a038} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}} lua\+E\+\_\+resetthread (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}}]{status}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a94299bb0dd983822a1e95962f2f6a038_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a94299bb0dd983822a1e95962f2f6a038_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_af1b915fc323a9a154d892b1c16b8cc6c}\index{lstate.h@{lstate.h}!luaE\_setdebt@{luaE\_setdebt}}
+\index{luaE\_setdebt@{luaE\_setdebt}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_setdebt()}{luaE\_setdebt()}}
+{\footnotesize\ttfamily \label{lstate_8h_af1b915fc323a9a154d892b1c16b8cc6c} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+setdebt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structglobal__State}{global\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{g}{, }\item[{\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}}]{debt}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_af1b915fc323a9a154d892b1c16b8cc6c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_a5f4d20913889e46b69f0a54b10a9a545}\index{lstate.h@{lstate.h}!luaE\_shrinkCI@{luaE\_shrinkCI}}
+\index{luaE\_shrinkCI@{luaE\_shrinkCI}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_shrinkCI()}{luaE\_shrinkCI()}}
+{\footnotesize\ttfamily \label{lstate_8h_a5f4d20913889e46b69f0a54b10a9a545} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+shrink\+CI (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstate_8h_a5f4d20913889e46b69f0a54b10a9a545_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_acdeac67586482760b5920b53116cd3db}\index{lstate.h@{lstate.h}!luaE\_threadsize@{luaE\_threadsize}}
+\index{luaE\_threadsize@{luaE\_threadsize}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_threadsize()}{luaE\_threadsize()}}
+{\footnotesize\ttfamily \label{lstate_8h_acdeac67586482760b5920b53116cd3db} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\+\_\+mem}} lua\+E\+\_\+threadsize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lstate_8h_a19ac557deb44046d082cf5d052831bbb}\index{lstate.h@{lstate.h}!luaE\_warnerror@{luaE\_warnerror}}
+\index{luaE\_warnerror@{luaE\_warnerror}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_warnerror()}{luaE\_warnerror()}}
+{\footnotesize\ttfamily \label{lstate_8h_a19ac557deb44046d082cf5d052831bbb} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+warnerror (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{where}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{lstate_8h_a19ac557deb44046d082cf5d052831bbb_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lstate_8h_a42e5b1838bc6dc0e4545059556df0842}\index{lstate.h@{lstate.h}!luaE\_warning@{luaE\_warning}}
+\index{luaE\_warning@{luaE\_warning}!lstate.h@{lstate.h}}
+\doxysubsubsection{\texorpdfstring{luaE\_warning()}{luaE\_warning()}}
+{\footnotesize\ttfamily \label{lstate_8h_a42e5b1838bc6dc0e4545059556df0842} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+E\+\_\+warning (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{, }\item[{int}]{tocont}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{lstate_8h_a42e5b1838bc6dc0e4545059556df0842_icgraph}
+\end{center}
+\end{figure}

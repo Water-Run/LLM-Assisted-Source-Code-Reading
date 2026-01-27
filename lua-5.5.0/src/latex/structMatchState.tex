@@ -1,0 +1,99 @@
+\doxysection{Match\+State Struct Reference}
+\hypertarget{structMatchState}{}\label{structMatchState}\index{MatchState@{MatchState}}
+
+
+Collaboration diagram for Match\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structMatchState__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structMatchState_a8ad3eceb7c5e8dc9c07834470a4a31f4}{src\+\_\+init}}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structMatchState_a28b9c3fdaacf56755b78a95b0d1e2b88}{src\+\_\+end}}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structMatchState_a7d233530eb40e29567481e0331dee9d9}{p\+\_\+end}}
+\item 
+\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structMatchState_a242a722a5ff777f100831cbf8752ca3b}{L}}
+\item 
+int \mbox{\hyperlink{structMatchState_a1b16149bce367183f56b87cae0dc89bd}{matchdepth}}
+\item 
+int \mbox{\hyperlink{structMatchState_a0f87e2f7accab0805741673e93654d7e}{level}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structMatchState_a2b63cea9c88925a59ba9680d8c615dd7}{init}}\\
+\>ptrdiff\_t \mbox{\hyperlink{structMatchState_af4c1ae5e7b90e726401874e9b2059a32}{len}}\\
+\} \mbox{\hyperlink{structMatchState_acf707adcdaf7826f1db81b231df6017f}{capture}} \mbox{[}\mbox{\hyperlink{lstrlib_8c_a7cecfa7bbfb47e8a8598a9bfbfbcab54}{LUA\_MAXCAPTURES}}\mbox{]}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structMatchState_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structMatchState_acf707adcdaf7826f1db81b231df6017f}\index{MatchState@{MatchState}!capture@{capture}}
+\index{capture@{capture}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structMatchState_acf707adcdaf7826f1db81b231df6017f} 
+struct  \{ ... \}  Match\+State\+::capture\mbox{[}\mbox{\hyperlink{lstrlib_8c_a7cecfa7bbfb47e8a8598a9bfbfbcab54}{LUA\+\_\+\+MAXCAPTURES}}\mbox{]}}
+
+\Hypertarget{structMatchState_a2b63cea9c88925a59ba9680d8c615dd7}\index{MatchState@{MatchState}!init@{init}}
+\index{init@{init}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{init}{init}}
+{\footnotesize\ttfamily \label{structMatchState_a2b63cea9c88925a59ba9680d8c615dd7} 
+const char\texorpdfstring{$\ast$}{*} Match\+State\+::init}
+
+\Hypertarget{structMatchState_a242a722a5ff777f100831cbf8752ca3b}\index{MatchState@{MatchState}!L@{L}}
+\index{L@{L}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{L}{L}}
+{\footnotesize\ttfamily \label{structMatchState_a242a722a5ff777f100831cbf8752ca3b} 
+\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}}\texorpdfstring{$\ast$}{*} Match\+State\+::L}
+
+\Hypertarget{structMatchState_af4c1ae5e7b90e726401874e9b2059a32}\index{MatchState@{MatchState}!len@{len}}
+\index{len@{len}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{len}{len}}
+{\footnotesize\ttfamily \label{structMatchState_af4c1ae5e7b90e726401874e9b2059a32} 
+ptrdiff\+\_\+t Match\+State\+::len}
+
+\Hypertarget{structMatchState_a0f87e2f7accab0805741673e93654d7e}\index{MatchState@{MatchState}!level@{level}}
+\index{level@{level}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily \label{structMatchState_a0f87e2f7accab0805741673e93654d7e} 
+int Match\+State\+::level}
+
+\Hypertarget{structMatchState_a1b16149bce367183f56b87cae0dc89bd}\index{MatchState@{MatchState}!matchdepth@{matchdepth}}
+\index{matchdepth@{matchdepth}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{matchdepth}{matchdepth}}
+{\footnotesize\ttfamily \label{structMatchState_a1b16149bce367183f56b87cae0dc89bd} 
+int Match\+State\+::matchdepth}
+
+\Hypertarget{structMatchState_a7d233530eb40e29567481e0331dee9d9}\index{MatchState@{MatchState}!p\_end@{p\_end}}
+\index{p\_end@{p\_end}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{p\_end}{p\_end}}
+{\footnotesize\ttfamily \label{structMatchState_a7d233530eb40e29567481e0331dee9d9} 
+const char\texorpdfstring{$\ast$}{*} Match\+State\+::p\+\_\+end}
+
+\Hypertarget{structMatchState_a28b9c3fdaacf56755b78a95b0d1e2b88}\index{MatchState@{MatchState}!src\_end@{src\_end}}
+\index{src\_end@{src\_end}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{src\_end}{src\_end}}
+{\footnotesize\ttfamily \label{structMatchState_a28b9c3fdaacf56755b78a95b0d1e2b88} 
+const char\texorpdfstring{$\ast$}{*} Match\+State\+::src\+\_\+end}
+
+\Hypertarget{structMatchState_a8ad3eceb7c5e8dc9c07834470a4a31f4}\index{MatchState@{MatchState}!src\_init@{src\_init}}
+\index{src\_init@{src\_init}!MatchState@{MatchState}}
+\doxysubsubsection{\texorpdfstring{src\_init}{src\_init}}
+{\footnotesize\ttfamily \label{structMatchState_a8ad3eceb7c5e8dc9c07834470a4a31f4} 
+const char\texorpdfstring{$\ast$}{*} Match\+State\+::src\+\_\+init}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lstrlib_8c}{lstrlib.\+c}}\end{DoxyCompactItemize}

@@ -1,0 +1,1326 @@
+\doxysection{lauxlib.\+h File Reference}
+\hypertarget{lauxlib_8h}{}\label{lauxlib_8h}\index{lauxlib.h@{lauxlib.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}luaconf.\+h"{}}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+Include dependency graph for lauxlib.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=261pt]{lauxlib_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structluaL__Reg}{lua\+L\+\_\+\+Reg}}
+\item 
+struct \mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}}
+\item 
+struct \mbox{\hyperlink{structluaL__Stream}{lua\+L\+\_\+\+Stream}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a074d53b3afd2b899d4b986c9643fb41a}{LUA\+\_\+\+GNAME}}~"{}\+\_\+\+G"{}
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ab8d4418d33cd59728435db95ac2caf5a}{LUA\+\_\+\+ERRFILE}}~(\mbox{\hyperlink{lua_8h_a295ea44b6036e266b06e5de0f8ff24e0}{LUA\+\_\+\+ERRERR}}+1)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a0fbee1a8156dc622618c9f6048281a73}{LUA\+\_\+\+LOADED\+\_\+\+TABLE}}~"{}\+\_\+\+LOADED"{}
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ab654a257ab8f9de4ba519a64a9a9ea91}{LUA\+\_\+\+PRELOAD\+\_\+\+TABLE}}~"{}\+\_\+\+PRELOAD"{}
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ae6c79b83e1d493d4ab680e74e5a85a6a}{LUAL\+\_\+\+NUMSIZES}}~(sizeof(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}})\texorpdfstring{$\ast$}{*}16 + sizeof(\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}}))
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_aa538485cd28f143fabea2325b9ecd477}{lua\+L\+\_\+checkversion}}(L)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a3bfb758f2ac7c9ecb758e1aeaaa82d3d}{LUA\+\_\+\+NOREF}}~(-\/2)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a004a6b76c047f3b94890a08dbdcbbee7}{LUA\+\_\+\+REFNIL}}~(-\/1)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a023c745560d0ed613efb6eada57a3c13}{lua\+L\+\_\+loadfile}}(L,  f)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ad575a4fd1f53fa454b5d9745fedecdc4}{lua\+L\+\_\+newlibtable}}(L,  l)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a5088ff720ec66200d83eb78467b77239}{lua\+L\+\_\+newlib}}(L,  l)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a48ce6cd86a7448e97f258097a7abc44d}{lua\+L\+\_\+argcheck}}(L,  cond,  arg,  extramsg)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ad13737dbd230fffc0b9925b1c728c58e}{lua\+L\+\_\+argexpected}}(L,  cond,  arg,  tname)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ad9917d22c79651fdd73d42c146b5056f}{lua\+L\+\_\+checkstring}}(L,  n)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a732bc5882c4a5da46b236649ab6db47b}{lua\+L\+\_\+optstring}}(L,  n,  d)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a2bee94954917c5bccb05d6578f3c675b}{lua\+L\+\_\+typename}}(L,  i)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_aa49a7a47a683d6e7868ede50ceb826be}{lua\+L\+\_\+dofile}}(L,  fn)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a1a0639bfde6b1e2f6181af45b0137cf5}{lua\+L\+\_\+dostring}}(L,  s)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a201407aa41ff74577c67308372a130d9}{lua\+L\+\_\+getmetatable}}(L,  n)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_aca033280b0176012ef290131876f706e}{lua\+L\+\_\+opt}}(L,  f,  n,  d)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ae210c8b2a9a27ee62b2e846e93ae876f}{lua\+L\+\_\+loadbuffer}}(L,  s,  sz,  n)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a4ee75eac6035f69679e51545457e5072}{lua\+L\+\_\+intop}}(op,  v1,  v2)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a8666135f7a1412f5eaa14857aec279f0}{lua\+L\+\_\+pushfail}}(L)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_ab43380e8ecfabde7c32aec748df1cf59}{lua\+L\+\_\+bufflen}}(bf)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a3328ae8405aac1707d4b400d0d2c26dd}{lua\+L\+\_\+buffaddr}}(bf)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a63935c5b4cf5d45930c875f6cc5e1432}{lua\+L\+\_\+addchar}}(B,  c)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a7c0adb7401e0be1a843946cee0556684}{lua\+L\+\_\+addsize}}(B,  s)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a1f4e8f07742faa5e6c25a971a53f1e7b}{lua\+L\+\_\+buffsub}}(B,  s)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_acc49fd35fabb25016f7de3256eb9bc6c}{lua\+L\+\_\+prepbuffer}}(B)
+\item 
+\#define \mbox{\hyperlink{lauxlib_8h_a36f3babeb54bee1ebba63fe4fa94189a}{LUA\+\_\+\+FILEHANDLE}}~"{}FILE\texorpdfstring{$\ast$}{*}"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct lua\+L\+\_\+\+Buffer \mbox{\hyperlink{lauxlib_8h_aaed907641807460fcee0e1cb9a9e9ed6}{lua\+L\+\_\+\+Buffer}}
+\item 
+typedef struct lua\+L\+\_\+\+Reg \mbox{\hyperlink{lauxlib_8h_ab5ca0c51890e3970d0db1df2a1922b34}{lua\+L\+\_\+\+Reg}}
+\item 
+typedef struct lua\+L\+\_\+\+Stream \mbox{\hyperlink{lauxlib_8h_a21bf593878812ad2cc1b962ae5efc064}{lua\+L\+\_\+\+Stream}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a8ad94df78305955cad1c698ea9d1eee9}{lua\+L\+\_\+checkversion\+\_\+}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} ver, size\+\_\+t sz)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_ae01c86cfe3518580b473e089ba15b621}{lua\+L\+\_\+getmetafield}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int obj, const char \texorpdfstring{$\ast$}{*}e)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_afda229e5f738702176f38feca764d264}{lua\+L\+\_\+callmeta}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int obj, const char \texorpdfstring{$\ast$}{*}e)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a64d366034d114de946f1b93199847dab}{lua\+L\+\_\+tolstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int idx, size\+\_\+t \texorpdfstring{$\ast$}{*}len)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_ac607576dd107a3120cd51948989f1ed2}{lua\+L\+\_\+argerror}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, const char \texorpdfstring{$\ast$}{*}extramsg)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_aaa48a92e16c27c06e9c56e526e70f111}{lua\+L\+\_\+typeerror}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, const char \texorpdfstring{$\ast$}{*}tname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_afd30f08bd397c584ea503c124035103c}{lua\+L\+\_\+checklstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, size\+\_\+t \texorpdfstring{$\ast$}{*}l)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a3c6aea515eecf2037714697651d3b53e}{lua\+L\+\_\+optlstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, const char \texorpdfstring{$\ast$}{*}def, size\+\_\+t \texorpdfstring{$\ast$}{*}l)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} \mbox{\hyperlink{lauxlib_8h_a9f2c941bb5eb7d3a7746f35c4fe3cced}{lua\+L\+\_\+checknumber}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} \mbox{\hyperlink{lauxlib_8h_afa696696945ee6215c0033656ee64e97}{lua\+L\+\_\+optnumber}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} def)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} \mbox{\hyperlink{lauxlib_8h_aa15bea412c49bfdee1f3dbff096ce7d2}{lua\+L\+\_\+checkinteger}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} \mbox{\hyperlink{lauxlib_8h_ab10ff110a5ba19b4385947de7834ee3c}{lua\+L\+\_\+optinteger}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} def)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a155357d9b5e6eb614b511bab6e3d0e73}{lua\+L\+\_\+checkstack}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int sz, const char \texorpdfstring{$\ast$}{*}msg)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a0f8f78c4edc5cbf890690b3cf9615dc8}{lua\+L\+\_\+checktype}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, int t)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a8ebfe706b773eaaf50283e6583d4642e}{lua\+L\+\_\+checkany}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a2664eb7bcc85bbf6eeded2a81cf09b01}{lua\+L\+\_\+newmetatable}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}tname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_ae3907fc11c3e2af69f00ab4a37872cae}{lua\+L\+\_\+setmetatable}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}tname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a002893351c161d943c16a31ae957c6d0}{lua\+L\+\_\+testudata}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int ud, const char \texorpdfstring{$\ast$}{*}tname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a4be5678b50e3688ce06f874b5bb14bce}{lua\+L\+\_\+checkudata}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int ud, const char \texorpdfstring{$\ast$}{*}tname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a5c4217e3b5b3ce9d51c6c5c01483e57f}{lua\+L\+\_\+where}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int lvl)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a6c51d83d29244779392551388913e08a}{lua\+L\+\_\+error}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}fmt,...)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a7a3959469b5643d9ea2313eb11a3946f}{lua\+L\+\_\+checkoption}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int arg, const char \texorpdfstring{$\ast$}{*}def, const char \texorpdfstring{$\ast$}{*}const lst\mbox{[}$\,$\mbox{]})
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a86309080a5d45b232bcc240b45d06942}{lua\+L\+\_\+fileresult}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int stat, const char \texorpdfstring{$\ast$}{*}fname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a3db3f3a0c7de522b5e494c3ad06186d8}{lua\+L\+\_\+execresult}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int stat)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_adecf6b65f5f0b64474242cea355f7d10}{lua\+L\+\_\+alloc}} (void \texorpdfstring{$\ast$}{*}ud, void \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t osize, size\+\_\+t nsize)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a1adeae26be7c2e3001c3583f43f70720}{lua\+L\+\_\+ref}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int t)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_ad5e8303f3809d26c336c3e18879b7f4e}{lua\+L\+\_\+unref}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int t, int ref)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a6ac3b2572d5ce635c4617aed2a0eb649}{lua\+L\+\_\+loadfilex}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}filename, const char \texorpdfstring{$\ast$}{*}mode)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a2db65a9ca6172ebe477811ca278f2e73}{lua\+L\+\_\+loadbufferx}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}buff, size\+\_\+t sz, const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}mode)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_ac1503e3f7db09148f426164834c37a57}{lua\+L\+\_\+loadstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_abe0d4e1d9eb077cdeca0f58e80174f89}{lua\+L\+\_\+newstate}} (void)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} unsigned \mbox{\hyperlink{lauxlib_8h_a70e1f6ad1af3b87eaca17f7104fb91d2}{lua\+L\+\_\+makeseed}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} \mbox{\hyperlink{lauxlib_8h_aa525c1b6aa90c90d684ef64cf2215e21}{lua\+L\+\_\+len}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int idx)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a5dcf12b98ab3ef52b7885a27f48fadea}{lua\+L\+\_\+addgsub}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}b, const char \texorpdfstring{$\ast$}{*}s, const char \texorpdfstring{$\ast$}{*}p, const char \texorpdfstring{$\ast$}{*}r)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_ac3eedb8425d056c08d479393ff14ad89}{lua\+L\+\_\+gsub}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}s, const char \texorpdfstring{$\ast$}{*}p, const char \texorpdfstring{$\ast$}{*}r)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a4cab22d0cb403fa6b94f2542f4303096}{lua\+L\+\_\+setfuncs}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const \mbox{\hyperlink{structluaL__Reg}{lua\+L\+\_\+\+Reg}} \texorpdfstring{$\ast$}{*}l, int nup)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int \mbox{\hyperlink{lauxlib_8h_a4cd66d7b986316711233243a268e8e04}{lua\+L\+\_\+getsubtable}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int idx, const char \texorpdfstring{$\ast$}{*}fname)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a67bf3728d34d2c9badb2bd2f57c75233}{lua\+L\+\_\+traceback}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L1, const char \texorpdfstring{$\ast$}{*}msg, int level)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a3cb8205f86c838d8f82b7d2360b1b0f4}{lua\+L\+\_\+requiref}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}modname, \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\+\_\+\+CFunction}} openf, int glb)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a0830ef75e335f6d7590b0e058f82a5eb}{lua\+L\+\_\+buffinit}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a082637c5dec7407810f30dee5ff842b9}{lua\+L\+\_\+prepbuffsize}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B, size\+\_\+t sz)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a0d56993399c45ae61ebb9b448dc30538}{lua\+L\+\_\+addlstring}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B, const char \texorpdfstring{$\ast$}{*}s, size\+\_\+t l)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_aced031f9a3f68375e9f80315933d9a88}{lua\+L\+\_\+addstring}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B, const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a59a8ac34826fee305ad56101d97aee18}{lua\+L\+\_\+addvalue}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_a3a1f80033814e2057583a7d24cee23b4}{lua\+L\+\_\+pushresult}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \mbox{\hyperlink{lauxlib_8h_aae36c3a2c184f1b2619ad7f99f2b4c16}{lua\+L\+\_\+pushresultsize}} (\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B, size\+\_\+t sz)
+\item 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lauxlib_8h_a392923321d3058f7cdd17b60dfcfab41}{lua\+L\+\_\+buffinitsize}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}B, size\+\_\+t sz)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lauxlib_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lauxlib_8h_ab8d4418d33cd59728435db95ac2caf5a}\index{lauxlib.h@{lauxlib.h}!LUA\_ERRFILE@{LUA\_ERRFILE}}
+\index{LUA\_ERRFILE@{LUA\_ERRFILE}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_ERRFILE}{LUA\_ERRFILE}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ab8d4418d33cd59728435db95ac2caf5a} 
+\#define LUA\+\_\+\+ERRFILE~(\mbox{\hyperlink{lua_8h_a295ea44b6036e266b06e5de0f8ff24e0}{LUA\+\_\+\+ERRERR}}+1)}
+
+\Hypertarget{lauxlib_8h_a36f3babeb54bee1ebba63fe4fa94189a}\index{lauxlib.h@{lauxlib.h}!LUA\_FILEHANDLE@{LUA\_FILEHANDLE}}
+\index{LUA\_FILEHANDLE@{LUA\_FILEHANDLE}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_FILEHANDLE}{LUA\_FILEHANDLE}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a36f3babeb54bee1ebba63fe4fa94189a} 
+\#define LUA\+\_\+\+FILEHANDLE~"{}FILE\texorpdfstring{$\ast$}{*}"{}}
+
+\Hypertarget{lauxlib_8h_a074d53b3afd2b899d4b986c9643fb41a}\index{lauxlib.h@{lauxlib.h}!LUA\_GNAME@{LUA\_GNAME}}
+\index{LUA\_GNAME@{LUA\_GNAME}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_GNAME}{LUA\_GNAME}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a074d53b3afd2b899d4b986c9643fb41a} 
+\#define LUA\+\_\+\+GNAME~"{}\+\_\+\+G"{}}
+
+\Hypertarget{lauxlib_8h_a0fbee1a8156dc622618c9f6048281a73}\index{lauxlib.h@{lauxlib.h}!LUA\_LOADED\_TABLE@{LUA\_LOADED\_TABLE}}
+\index{LUA\_LOADED\_TABLE@{LUA\_LOADED\_TABLE}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_LOADED\_TABLE}{LUA\_LOADED\_TABLE}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a0fbee1a8156dc622618c9f6048281a73} 
+\#define LUA\+\_\+\+LOADED\+\_\+\+TABLE~"{}\+\_\+\+LOADED"{}}
+
+\Hypertarget{lauxlib_8h_a3bfb758f2ac7c9ecb758e1aeaaa82d3d}\index{lauxlib.h@{lauxlib.h}!LUA\_NOREF@{LUA\_NOREF}}
+\index{LUA\_NOREF@{LUA\_NOREF}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_NOREF}{LUA\_NOREF}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3bfb758f2ac7c9ecb758e1aeaaa82d3d} 
+\#define LUA\+\_\+\+NOREF~(-\/2)}
+
+\Hypertarget{lauxlib_8h_ab654a257ab8f9de4ba519a64a9a9ea91}\index{lauxlib.h@{lauxlib.h}!LUA\_PRELOAD\_TABLE@{LUA\_PRELOAD\_TABLE}}
+\index{LUA\_PRELOAD\_TABLE@{LUA\_PRELOAD\_TABLE}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_PRELOAD\_TABLE}{LUA\_PRELOAD\_TABLE}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ab654a257ab8f9de4ba519a64a9a9ea91} 
+\#define LUA\+\_\+\+PRELOAD\+\_\+\+TABLE~"{}\+\_\+\+PRELOAD"{}}
+
+\Hypertarget{lauxlib_8h_a004a6b76c047f3b94890a08dbdcbbee7}\index{lauxlib.h@{lauxlib.h}!LUA\_REFNIL@{LUA\_REFNIL}}
+\index{LUA\_REFNIL@{LUA\_REFNIL}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUA\_REFNIL}{LUA\_REFNIL}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a004a6b76c047f3b94890a08dbdcbbee7} 
+\#define LUA\+\_\+\+REFNIL~(-\/1)}
+
+\Hypertarget{lauxlib_8h_a63935c5b4cf5d45930c875f6cc5e1432}\index{lauxlib.h@{lauxlib.h}!luaL\_addchar@{luaL\_addchar}}
+\index{luaL\_addchar@{luaL\_addchar}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addchar}{luaL\_addchar}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a63935c5b4cf5d45930c875f6cc5e1432} 
+\#define lua\+L\+\_\+addchar(\begin{DoxyParamCaption}\item[{}]{B}{, }\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ ((void)((B)-\/>n\ <\ (B)-\/>size\ ||\ \mbox{\hyperlink{lauxlib_8c_a082637c5dec7407810f30dee5ff842b9}{luaL\_prepbuffsize}}((B),\ 1)),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ ((B)-\/>b[(B)-\/>n++]\ =\ (c)))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a7c0adb7401e0be1a843946cee0556684}\index{lauxlib.h@{lauxlib.h}!luaL\_addsize@{luaL\_addsize}}
+\index{luaL\_addsize@{luaL\_addsize}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addsize}{luaL\_addsize}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a7c0adb7401e0be1a843946cee0556684} 
+\#define lua\+L\+\_\+addsize(\begin{DoxyParamCaption}\item[{}]{B}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((B)-\/>n\ +=\ (s))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a48ce6cd86a7448e97f258097a7abc44d}\index{lauxlib.h@{lauxlib.h}!luaL\_argcheck@{luaL\_argcheck}}
+\index{luaL\_argcheck@{luaL\_argcheck}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_argcheck}{luaL\_argcheck}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a48ce6cd86a7448e97f258097a7abc44d} 
+\#define lua\+L\+\_\+argcheck(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{cond}{, }\item[{}]{arg}{, }\item[{}]{extramsg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((void)(\mbox{\hyperlink{luaconf_8h_a80cfa8350edf303de263ca15e45acde3}{luai\_likely}}(cond)\ ||\ \mbox{\hyperlink{lauxlib_8c_ac607576dd107a3120cd51948989f1ed2}{luaL\_argerror}}(L,\ (arg),\ (extramsg))))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ad13737dbd230fffc0b9925b1c728c58e}\index{lauxlib.h@{lauxlib.h}!luaL\_argexpected@{luaL\_argexpected}}
+\index{luaL\_argexpected@{luaL\_argexpected}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_argexpected}{luaL\_argexpected}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ad13737dbd230fffc0b9925b1c728c58e} 
+\#define lua\+L\+\_\+argexpected(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{cond}{, }\item[{}]{arg}{, }\item[{}]{tname}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((void)(\mbox{\hyperlink{luaconf_8h_a80cfa8350edf303de263ca15e45acde3}{luai\_likely}}(cond)\ ||\ \mbox{\hyperlink{lauxlib_8c_aaa48a92e16c27c06e9c56e526e70f111}{luaL\_typeerror}}(L,\ (arg),\ (tname))))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a3328ae8405aac1707d4b400d0d2c26dd}\index{lauxlib.h@{lauxlib.h}!luaL\_buffaddr@{luaL\_buffaddr}}
+\index{luaL\_buffaddr@{luaL\_buffaddr}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_buffaddr}{luaL\_buffaddr}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3328ae8405aac1707d4b400d0d2c26dd} 
+\#define lua\+L\+\_\+buffaddr(\begin{DoxyParamCaption}\item[{}]{bf}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((bf)-\/>b)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ab43380e8ecfabde7c32aec748df1cf59}\index{lauxlib.h@{lauxlib.h}!luaL\_bufflen@{luaL\_bufflen}}
+\index{luaL\_bufflen@{luaL\_bufflen}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_bufflen}{luaL\_bufflen}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ab43380e8ecfabde7c32aec748df1cf59} 
+\#define lua\+L\+\_\+bufflen(\begin{DoxyParamCaption}\item[{}]{bf}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((bf)-\/>n)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a1f4e8f07742faa5e6c25a971a53f1e7b}\index{lauxlib.h@{lauxlib.h}!luaL\_buffsub@{luaL\_buffsub}}
+\index{luaL\_buffsub@{luaL\_buffsub}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_buffsub}{luaL\_buffsub}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a1f4e8f07742faa5e6c25a971a53f1e7b} 
+\#define lua\+L\+\_\+buffsub(\begin{DoxyParamCaption}\item[{}]{B}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((B)-\/>n\ -\/=\ (s))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ad9917d22c79651fdd73d42c146b5056f}\index{lauxlib.h@{lauxlib.h}!luaL\_checkstring@{luaL\_checkstring}}
+\index{luaL\_checkstring@{luaL\_checkstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkstring}{luaL\_checkstring}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ad9917d22c79651fdd73d42c146b5056f} 
+\#define lua\+L\+\_\+checkstring(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lauxlib_8c_a84f77c4f62b1f42748cabbfd875cb36f}{luaL\_checklstring}}(L,\ (n),\ NULL))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_aa538485cd28f143fabea2325b9ecd477}\index{lauxlib.h@{lauxlib.h}!luaL\_checkversion@{luaL\_checkversion}}
+\index{luaL\_checkversion@{luaL\_checkversion}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkversion}{luaL\_checkversion}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aa538485cd28f143fabea2325b9ecd477} 
+\#define lua\+L\+\_\+checkversion(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{lauxlib_8c_a8ad94df78305955cad1c698ea9d1eee9}{luaL\_checkversion\_}}(L,\ \mbox{\hyperlink{lua_8h_a4c575ef5fb9bad1872613a9d832486a5}{LUA\_VERSION\_NUM}},\ \mbox{\hyperlink{lauxlib_8h_ae6c79b83e1d493d4ab680e74e5a85a6a}{LUAL\_NUMSIZES}})}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_aa49a7a47a683d6e7868ede50ceb826be}\index{lauxlib.h@{lauxlib.h}!luaL\_dofile@{luaL\_dofile}}
+\index{luaL\_dofile@{luaL\_dofile}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_dofile}{luaL\_dofile}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aa49a7a47a683d6e7868ede50ceb826be} 
+\#define lua\+L\+\_\+dofile(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{fn}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\mbox{\hyperlink{lauxlib_8h_a023c745560d0ed613efb6eada57a3c13}{luaL\_loadfile}}(L,\ fn)\ ||\ \mbox{\hyperlink{lua_8h_a589d7e3fd4c388d64056c88bf4672431}{lua\_pcall}}(L,\ 0,\ \mbox{\hyperlink{lua_8h_ace3545adc11664c2f2b152fbe8b6283c}{LUA\_MULTRET}},\ 0))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a1a0639bfde6b1e2f6181af45b0137cf5}\index{lauxlib.h@{lauxlib.h}!luaL\_dostring@{luaL\_dostring}}
+\index{luaL\_dostring@{luaL\_dostring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_dostring}{luaL\_dostring}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a1a0639bfde6b1e2f6181af45b0137cf5} 
+\#define lua\+L\+\_\+dostring(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{s}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\mbox{\hyperlink{lauxlib_8c_ac1503e3f7db09148f426164834c37a57}{luaL\_loadstring}}(L,\ s)\ ||\ \mbox{\hyperlink{lua_8h_a589d7e3fd4c388d64056c88bf4672431}{lua\_pcall}}(L,\ 0,\ \mbox{\hyperlink{lua_8h_ace3545adc11664c2f2b152fbe8b6283c}{LUA\_MULTRET}},\ 0))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a201407aa41ff74577c67308372a130d9}\index{lauxlib.h@{lauxlib.h}!luaL\_getmetatable@{luaL\_getmetatable}}
+\index{luaL\_getmetatable@{luaL\_getmetatable}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_getmetatable}{luaL\_getmetatable}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a201407aa41ff74577c67308372a130d9} 
+\#define lua\+L\+\_\+getmetatable(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lapi_8c_a8b47f1b5685c3f8018ba926abb99af24}{lua\_getfield}}(L,\ \mbox{\hyperlink{lua_8h_a3524c2bbc8fcf847dc083246b62945dd}{LUA\_REGISTRYINDEX}},\ (n)))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a4ee75eac6035f69679e51545457e5072}\index{lauxlib.h@{lauxlib.h}!luaL\_intop@{luaL\_intop}}
+\index{luaL\_intop@{luaL\_intop}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_intop}{luaL\_intop}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a4ee75eac6035f69679e51545457e5072} 
+\#define lua\+L\+\_\+intop(\begin{DoxyParamCaption}\item[{}]{op}{, }\item[{}]{v1}{, }\item[{}]{v2}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}})((\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}})(v1)\ op\ (\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\_Unsigned}})(v2)))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ae210c8b2a9a27ee62b2e846e93ae876f}\index{lauxlib.h@{lauxlib.h}!luaL\_loadbuffer@{luaL\_loadbuffer}}
+\index{luaL\_loadbuffer@{luaL\_loadbuffer}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_loadbuffer}{luaL\_loadbuffer}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ae210c8b2a9a27ee62b2e846e93ae876f} 
+\#define lua\+L\+\_\+loadbuffer(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{s}{, }\item[{}]{sz}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lauxlib_8c_a867ca33afe2cb3d07bfc238cbb438f61}{luaL\_loadbufferx}}(L,s,sz,n,NULL)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a023c745560d0ed613efb6eada57a3c13}\index{lauxlib.h@{lauxlib.h}!luaL\_loadfile@{luaL\_loadfile}}
+\index{luaL\_loadfile@{luaL\_loadfile}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_loadfile}{luaL\_loadfile}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a023c745560d0ed613efb6eada57a3c13} 
+\#define lua\+L\+\_\+loadfile(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{f}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lauxlib_8c_a6ac3b2572d5ce635c4617aed2a0eb649}{luaL\_loadfilex}}(L,f,NULL)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a5088ff720ec66200d83eb78467b77239}\index{lauxlib.h@{lauxlib.h}!luaL\_newlib@{luaL\_newlib}}
+\index{luaL\_newlib@{luaL\_newlib}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_newlib}{luaL\_newlib}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a5088ff720ec66200d83eb78467b77239} 
+\#define lua\+L\+\_\+newlib(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{l}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ (\mbox{\hyperlink{lauxlib_8h_aa538485cd28f143fabea2325b9ecd477}{luaL\_checkversion}}(L),\ \mbox{\hyperlink{lauxlib_8h_ad575a4fd1f53fa454b5d9745fedecdc4}{luaL\_newlibtable}}(L,l),\ \mbox{\hyperlink{lauxlib_8c_a4cab22d0cb403fa6b94f2542f4303096}{luaL\_setfuncs}}(L,l,0))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ad575a4fd1f53fa454b5d9745fedecdc4}\index{lauxlib.h@{lauxlib.h}!luaL\_newlibtable@{luaL\_newlibtable}}
+\index{luaL\_newlibtable@{luaL\_newlibtable}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_newlibtable}{luaL\_newlibtable}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ad575a4fd1f53fa454b5d9745fedecdc4} 
+\#define lua\+L\+\_\+newlibtable(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{l}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{lapi_8c_a7f93e3baf3101cad59ec61b7744a55d8}{lua\_createtable}}(L,\ 0,\ \textcolor{keyword}{sizeof}(l)/\textcolor{keyword}{sizeof}((l)[0])\ -\/\ 1)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_ae6c79b83e1d493d4ab680e74e5a85a6a}\index{lauxlib.h@{lauxlib.h}!LUAL\_NUMSIZES@{LUAL\_NUMSIZES}}
+\index{LUAL\_NUMSIZES@{LUAL\_NUMSIZES}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{LUAL\_NUMSIZES}{LUAL\_NUMSIZES}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ae6c79b83e1d493d4ab680e74e5a85a6a} 
+\#define LUAL\+\_\+\+NUMSIZES~(sizeof(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}})\texorpdfstring{$\ast$}{*}16 + sizeof(\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}}))}
+
+\Hypertarget{lauxlib_8h_aca033280b0176012ef290131876f706e}\index{lauxlib.h@{lauxlib.h}!luaL\_opt@{luaL\_opt}}
+\index{luaL\_opt@{luaL\_opt}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_opt}{luaL\_opt}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aca033280b0176012ef290131876f706e} 
+\#define lua\+L\+\_\+opt(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{f}{, }\item[{}]{n}{, }\item[{}]{d}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lua_8h_af51702bb75a31bb4a279953ee386d533}{lua\_isnoneornil}}(L,(n))\ ?\ (d)\ :\ f(L,(n)))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a732bc5882c4a5da46b236649ab6db47b}\index{lauxlib.h@{lauxlib.h}!luaL\_optstring@{luaL\_optstring}}
+\index{luaL\_optstring@{luaL\_optstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_optstring}{luaL\_optstring}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a732bc5882c4a5da46b236649ab6db47b} 
+\#define lua\+L\+\_\+optstring(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{n}{, }\item[{}]{d}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\mbox{\hyperlink{lauxlib_8c_a01a929d867927a2ffb2ed558ccb761be}{luaL\_optlstring}}(L,\ (n),\ (d),\ NULL))}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_acc49fd35fabb25016f7de3256eb9bc6c}\index{lauxlib.h@{lauxlib.h}!luaL\_prepbuffer@{luaL\_prepbuffer}}
+\index{luaL\_prepbuffer@{luaL\_prepbuffer}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_prepbuffer}{luaL\_prepbuffer}}
+{\footnotesize\ttfamily \label{lauxlib_8h_acc49fd35fabb25016f7de3256eb9bc6c} 
+\#define lua\+L\+\_\+prepbuffer(\begin{DoxyParamCaption}\item[{}]{B}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lauxlib_8c_a082637c5dec7407810f30dee5ff842b9}{luaL\_prepbuffsize}}(B,\ \mbox{\hyperlink{luaconf_8h_af360ad37a770dfdc29291a99c398f42d}{LUAL\_BUFFERSIZE}})}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a8666135f7a1412f5eaa14857aec279f0}\index{lauxlib.h@{lauxlib.h}!luaL\_pushfail@{luaL\_pushfail}}
+\index{luaL\_pushfail@{luaL\_pushfail}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_pushfail}{luaL\_pushfail}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a8666135f7a1412f5eaa14857aec279f0} 
+\#define lua\+L\+\_\+pushfail(\begin{DoxyParamCaption}\item[{}]{L}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_a1b4cd0d80f51e5545a97ca6c28c03c50}{lua\_pushnil}}(L)}
+
+\end{DoxyCode}
+\Hypertarget{lauxlib_8h_a2bee94954917c5bccb05d6578f3c675b}\index{lauxlib.h@{lauxlib.h}!luaL\_typename@{luaL\_typename}}
+\index{luaL\_typename@{luaL\_typename}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_typename}{luaL\_typename}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a2bee94954917c5bccb05d6578f3c675b} 
+\#define lua\+L\+\_\+typename(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_ade1fd7b7ed1bd88ecdffbc025a1eaebd}{lua\_typename}}(L,\ \mbox{\hyperlink{lapi_8c_a652b273947f0656686f998d8e90cd3ea}{lua\_type}}(L,(i)))}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{lauxlib_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lauxlib_8h_aaed907641807460fcee0e1cb9a9e9ed6}\index{lauxlib.h@{lauxlib.h}!luaL\_Buffer@{luaL\_Buffer}}
+\index{luaL\_Buffer@{luaL\_Buffer}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_Buffer}{luaL\_Buffer}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aaed907641807460fcee0e1cb9a9e9ed6} 
+typedef struct lua\+L\+\_\+\+Buffer lua\+L\+\_\+\+Buffer}
+
+\Hypertarget{lauxlib_8h_ab5ca0c51890e3970d0db1df2a1922b34}\index{lauxlib.h@{lauxlib.h}!luaL\_Reg@{luaL\_Reg}}
+\index{luaL\_Reg@{luaL\_Reg}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_Reg}{luaL\_Reg}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ab5ca0c51890e3970d0db1df2a1922b34} 
+typedef struct lua\+L\+\_\+\+Reg lua\+L\+\_\+\+Reg}
+
+\Hypertarget{lauxlib_8h_a21bf593878812ad2cc1b962ae5efc064}\index{lauxlib.h@{lauxlib.h}!luaL\_Stream@{luaL\_Stream}}
+\index{luaL\_Stream@{luaL\_Stream}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_Stream}{luaL\_Stream}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a21bf593878812ad2cc1b962ae5efc064} 
+typedef struct lua\+L\+\_\+\+Stream lua\+L\+\_\+\+Stream}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lauxlib_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lauxlib_8h_a5dcf12b98ab3ef52b7885a27f48fadea}\index{lauxlib.h@{lauxlib.h}!luaL\_addgsub@{luaL\_addgsub}}
+\index{luaL\_addgsub@{luaL\_addgsub}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addgsub()}{luaL\_addgsub()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a5dcf12b98ab3ef52b7885a27f48fadea} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+addgsub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{r}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a5dcf12b98ab3ef52b7885a27f48fadea_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{lauxlib_8h_a5dcf12b98ab3ef52b7885a27f48fadea_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a0d56993399c45ae61ebb9b448dc30538}\index{lauxlib.h@{lauxlib.h}!luaL\_addlstring@{luaL\_addlstring}}
+\index{luaL\_addlstring@{luaL\_addlstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addlstring()}{luaL\_addlstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a0d56993399c45ae61ebb9b448dc30538} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+addlstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{, }\item[{size\+\_\+t}]{l}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a0d56993399c45ae61ebb9b448dc30538_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_aced031f9a3f68375e9f80315933d9a88}\index{lauxlib.h@{lauxlib.h}!luaL\_addstring@{luaL\_addstring}}
+\index{luaL\_addstring@{luaL\_addstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addstring()}{luaL\_addstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aced031f9a3f68375e9f80315933d9a88} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+addstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{lauxlib_8h_aced031f9a3f68375e9f80315933d9a88_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_aced031f9a3f68375e9f80315933d9a88_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a59a8ac34826fee305ad56101d97aee18}\index{lauxlib.h@{lauxlib.h}!luaL\_addvalue@{luaL\_addvalue}}
+\index{luaL\_addvalue@{luaL\_addvalue}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_addvalue()}{luaL\_addvalue()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a59a8ac34826fee305ad56101d97aee18} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+addvalue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a59a8ac34826fee305ad56101d97aee18_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{lauxlib_8h_a59a8ac34826fee305ad56101d97aee18_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_adecf6b65f5f0b64474242cea355f7d10}\index{lauxlib.h@{lauxlib.h}!luaL\_alloc@{luaL\_alloc}}
+\index{luaL\_alloc@{luaL\_alloc}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_alloc()}{luaL\_alloc()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_adecf6b65f5f0b64474242cea355f7d10} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} lua\+L\+\_\+alloc (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ud}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{osize}{, }\item[{size\+\_\+t}]{nsize}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{lauxlib_8h_adecf6b65f5f0b64474242cea355f7d10_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ac607576dd107a3120cd51948989f1ed2}\index{lauxlib.h@{lauxlib.h}!luaL\_argerror@{luaL\_argerror}}
+\index{luaL\_argerror@{luaL\_argerror}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_argerror()}{luaL\_argerror()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ac607576dd107a3120cd51948989f1ed2} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+argerror (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{extramsg}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ac607576dd107a3120cd51948989f1ed2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{lauxlib_8h_ac607576dd107a3120cd51948989f1ed2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a0830ef75e335f6d7590b0e058f82a5eb}\index{lauxlib.h@{lauxlib.h}!luaL\_buffinit@{luaL\_buffinit}}
+\index{luaL\_buffinit@{luaL\_buffinit}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_buffinit()}{luaL\_buffinit()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a0830ef75e335f6d7590b0e058f82a5eb} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+buffinit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{lauxlib_8h_a0830ef75e335f6d7590b0e058f82a5eb_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{lauxlib_8h_a0830ef75e335f6d7590b0e058f82a5eb_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a392923321d3058f7cdd17b60dfcfab41}\index{lauxlib.h@{lauxlib.h}!luaL\_buffinitsize@{luaL\_buffinitsize}}
+\index{luaL\_buffinitsize@{luaL\_buffinitsize}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_buffinitsize()}{luaL\_buffinitsize()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a392923321d3058f7cdd17b60dfcfab41} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+buffinitsize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{size\+\_\+t}]{sz}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a392923321d3058f7cdd17b60dfcfab41_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_afda229e5f738702176f38feca764d264}\index{lauxlib.h@{lauxlib.h}!luaL\_callmeta@{luaL\_callmeta}}
+\index{luaL\_callmeta@{luaL\_callmeta}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_callmeta()}{luaL\_callmeta()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_afda229e5f738702176f38feca764d264} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+callmeta (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{obj}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{e}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_afda229e5f738702176f38feca764d264_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{lauxlib_8h_afda229e5f738702176f38feca764d264_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a8ebfe706b773eaaf50283e6583d4642e}\index{lauxlib.h@{lauxlib.h}!luaL\_checkany@{luaL\_checkany}}
+\index{luaL\_checkany@{luaL\_checkany}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkany()}{luaL\_checkany()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a8ebfe706b773eaaf50283e6583d4642e} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+checkany (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a8ebfe706b773eaaf50283e6583d4642e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_aa15bea412c49bfdee1f3dbff096ce7d2}\index{lauxlib.h@{lauxlib.h}!luaL\_checkinteger@{luaL\_checkinteger}}
+\index{luaL\_checkinteger@{luaL\_checkinteger}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkinteger()}{luaL\_checkinteger()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aa15bea412c49bfdee1f3dbff096ce7d2} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} lua\+L\+\_\+checkinteger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{lauxlib_8h_aa15bea412c49bfdee1f3dbff096ce7d2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{lauxlib_8h_aa15bea412c49bfdee1f3dbff096ce7d2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_afd30f08bd397c584ea503c124035103c}\index{lauxlib.h@{lauxlib.h}!luaL\_checklstring@{luaL\_checklstring}}
+\index{luaL\_checklstring@{luaL\_checklstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checklstring()}{luaL\_checklstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_afd30f08bd397c584ea503c124035103c} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+checklstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{l}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_afd30f08bd397c584ea503c124035103c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{lauxlib_8h_afd30f08bd397c584ea503c124035103c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a9f2c941bb5eb7d3a7746f35c4fe3cced}\index{lauxlib.h@{lauxlib.h}!luaL\_checknumber@{luaL\_checknumber}}
+\index{luaL\_checknumber@{luaL\_checknumber}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checknumber()}{luaL\_checknumber()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a9f2c941bb5eb7d3a7746f35c4fe3cced} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} lua\+L\+\_\+checknumber (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{lauxlib_8h_a9f2c941bb5eb7d3a7746f35c4fe3cced_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=299pt]{lauxlib_8h_a9f2c941bb5eb7d3a7746f35c4fe3cced_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a7a3959469b5643d9ea2313eb11a3946f}\index{lauxlib.h@{lauxlib.h}!luaL\_checkoption@{luaL\_checkoption}}
+\index{luaL\_checkoption@{luaL\_checkoption}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkoption()}{luaL\_checkoption()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a7a3959469b5643d9ea2313eb11a3946f} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+checkoption (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{def}{, }\item[{const char \texorpdfstring{$\ast$}{*}const}]{lst}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a7a3959469b5643d9ea2313eb11a3946f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a155357d9b5e6eb614b511bab6e3d0e73}\index{lauxlib.h@{lauxlib.h}!luaL\_checkstack@{luaL\_checkstack}}
+\index{luaL\_checkstack@{luaL\_checkstack}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkstack()}{luaL\_checkstack()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a155357d9b5e6eb614b511bab6e3d0e73} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+checkstack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{sz}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a155357d9b5e6eb614b511bab6e3d0e73_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a155357d9b5e6eb614b511bab6e3d0e73_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a0f8f78c4edc5cbf890690b3cf9615dc8}\index{lauxlib.h@{lauxlib.h}!luaL\_checktype@{luaL\_checktype}}
+\index{luaL\_checktype@{luaL\_checktype}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checktype()}{luaL\_checktype()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a0f8f78c4edc5cbf890690b3cf9615dc8} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+checktype (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{int}]{t}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{lauxlib_8h_a0f8f78c4edc5cbf890690b3cf9615dc8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a4be5678b50e3688ce06f874b5bb14bce}\index{lauxlib.h@{lauxlib.h}!luaL\_checkudata@{luaL\_checkudata}}
+\index{luaL\_checkudata@{luaL\_checkudata}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkudata()}{luaL\_checkudata()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a4be5678b50e3688ce06f874b5bb14bce} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} lua\+L\+\_\+checkudata (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{ud}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{tname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a4be5678b50e3688ce06f874b5bb14bce_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a8ad94df78305955cad1c698ea9d1eee9}\index{lauxlib.h@{lauxlib.h}!luaL\_checkversion\_@{luaL\_checkversion\_}}
+\index{luaL\_checkversion\_@{luaL\_checkversion\_}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_checkversion\_()}{luaL\_checkversion\_()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a8ad94df78305955cad1c698ea9d1eee9} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+checkversion\+\_\+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}}}]{ver}{, }\item[{size\+\_\+t}]{sz}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a8ad94df78305955cad1c698ea9d1eee9_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a6c51d83d29244779392551388913e08a}\index{lauxlib.h@{lauxlib.h}!luaL\_error@{luaL\_error}}
+\index{luaL\_error@{luaL\_error}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_error()}{luaL\_error()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a6c51d83d29244779392551388913e08a} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+error (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a6c51d83d29244779392551388913e08a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a6c51d83d29244779392551388913e08a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a3db3f3a0c7de522b5e494c3ad06186d8}\index{lauxlib.h@{lauxlib.h}!luaL\_execresult@{luaL\_execresult}}
+\index{luaL\_execresult@{luaL\_execresult}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_execresult()}{luaL\_execresult()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3db3f3a0c7de522b5e494c3ad06186d8} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+execresult (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{stat}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a3db3f3a0c7de522b5e494c3ad06186d8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a86309080a5d45b232bcc240b45d06942}\index{lauxlib.h@{lauxlib.h}!luaL\_fileresult@{luaL\_fileresult}}
+\index{luaL\_fileresult@{luaL\_fileresult}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_fileresult()}{luaL\_fileresult()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a86309080a5d45b232bcc240b45d06942} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+fileresult (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{stat}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a86309080a5d45b232bcc240b45d06942_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{lauxlib_8h_a86309080a5d45b232bcc240b45d06942_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ae01c86cfe3518580b473e089ba15b621}\index{lauxlib.h@{lauxlib.h}!luaL\_getmetafield@{luaL\_getmetafield}}
+\index{luaL\_getmetafield@{luaL\_getmetafield}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_getmetafield()}{luaL\_getmetafield()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ae01c86cfe3518580b473e089ba15b621} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+getmetafield (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{obj}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{e}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ae01c86cfe3518580b473e089ba15b621_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ae01c86cfe3518580b473e089ba15b621_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a4cd66d7b986316711233243a268e8e04}\index{lauxlib.h@{lauxlib.h}!luaL\_getsubtable@{luaL\_getsubtable}}
+\index{luaL\_getsubtable@{luaL\_getsubtable}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_getsubtable()}{luaL\_getsubtable()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a4cd66d7b986316711233243a268e8e04} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+getsubtable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{idx}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{lauxlib_8h_a4cd66d7b986316711233243a268e8e04_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a4cd66d7b986316711233243a268e8e04_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ac3eedb8425d056c08d479393ff14ad89}\index{lauxlib.h@{lauxlib.h}!luaL\_gsub@{luaL\_gsub}}
+\index{luaL\_gsub@{luaL\_gsub}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_gsub()}{luaL\_gsub()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ac3eedb8425d056c08d479393ff14ad89} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+gsub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{r}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ac3eedb8425d056c08d479393ff14ad89_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_aa525c1b6aa90c90d684ef64cf2215e21}\index{lauxlib.h@{lauxlib.h}!luaL\_len@{luaL\_len}}
+\index{luaL\_len@{luaL\_len}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_len()}{luaL\_len()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aa525c1b6aa90c90d684ef64cf2215e21} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} lua\+L\+\_\+len (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{idx}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_aa525c1b6aa90c90d684ef64cf2215e21_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a2db65a9ca6172ebe477811ca278f2e73}\index{lauxlib.h@{lauxlib.h}!luaL\_loadbufferx@{luaL\_loadbufferx}}
+\index{luaL\_loadbufferx@{luaL\_loadbufferx}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_loadbufferx()}{luaL\_loadbufferx()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a2db65a9ca6172ebe477811ca278f2e73} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+loadbufferx (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{buff}{, }\item[{size\+\_\+t}]{sz}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mode}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a2db65a9ca6172ebe477811ca278f2e73_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a6ac3b2572d5ce635c4617aed2a0eb649}\index{lauxlib.h@{lauxlib.h}!luaL\_loadfilex@{luaL\_loadfilex}}
+\index{luaL\_loadfilex@{luaL\_loadfilex}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_loadfilex()}{luaL\_loadfilex()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a6ac3b2572d5ce635c4617aed2a0eb649} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+loadfilex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mode}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a6ac3b2572d5ce635c4617aed2a0eb649_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ac1503e3f7db09148f426164834c37a57}\index{lauxlib.h@{lauxlib.h}!luaL\_loadstring@{luaL\_loadstring}}
+\index{luaL\_loadstring@{luaL\_loadstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_loadstring()}{luaL\_loadstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ac1503e3f7db09148f426164834c37a57} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+loadstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lauxlib_8h_a70e1f6ad1af3b87eaca17f7104fb91d2}\index{lauxlib.h@{lauxlib.h}!luaL\_makeseed@{luaL\_makeseed}}
+\index{luaL\_makeseed@{luaL\_makeseed}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_makeseed()}{luaL\_makeseed()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a70e1f6ad1af3b87eaca17f7104fb91d2} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} unsigned lua\+L\+\_\+makeseed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a70e1f6ad1af3b87eaca17f7104fb91d2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a2664eb7bcc85bbf6eeded2a81cf09b01}\index{lauxlib.h@{lauxlib.h}!luaL\_newmetatable@{luaL\_newmetatable}}
+\index{luaL\_newmetatable@{luaL\_newmetatable}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_newmetatable()}{luaL\_newmetatable()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a2664eb7bcc85bbf6eeded2a81cf09b01} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+newmetatable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{tname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a2664eb7bcc85bbf6eeded2a81cf09b01_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_abe0d4e1d9eb077cdeca0f58e80174f89}\index{lauxlib.h@{lauxlib.h}!luaL\_newstate@{luaL\_newstate}}
+\index{luaL\_newstate@{luaL\_newstate}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_newstate()}{luaL\_newstate()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_abe0d4e1d9eb077cdeca0f58e80174f89} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} lua\+L\+\_\+newstate (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_abe0d4e1d9eb077cdeca0f58e80174f89_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{lauxlib_8h_abe0d4e1d9eb077cdeca0f58e80174f89_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ab10ff110a5ba19b4385947de7834ee3c}\index{lauxlib.h@{lauxlib.h}!luaL\_optinteger@{luaL\_optinteger}}
+\index{luaL\_optinteger@{luaL\_optinteger}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_optinteger()}{luaL\_optinteger()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ab10ff110a5ba19b4385947de7834ee3c} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} lua\+L\+\_\+optinteger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}}}]{def}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ab10ff110a5ba19b4385947de7834ee3c_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a3c6aea515eecf2037714697651d3b53e}\index{lauxlib.h@{lauxlib.h}!luaL\_optlstring@{luaL\_optlstring}}
+\index{luaL\_optlstring@{luaL\_optlstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_optlstring()}{luaL\_optlstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3c6aea515eecf2037714697651d3b53e} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+optlstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{def}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{l}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a3c6aea515eecf2037714697651d3b53e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_afa696696945ee6215c0033656ee64e97}\index{lauxlib.h@{lauxlib.h}!luaL\_optnumber@{luaL\_optnumber}}
+\index{luaL\_optnumber@{luaL\_optnumber}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_optnumber()}{luaL\_optnumber()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_afa696696945ee6215c0033656ee64e97} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} lua\+L\+\_\+optnumber (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}}}]{def}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_afa696696945ee6215c0033656ee64e97_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a082637c5dec7407810f30dee5ff842b9}\index{lauxlib.h@{lauxlib.h}!luaL\_prepbuffsize@{luaL\_prepbuffsize}}
+\index{luaL\_prepbuffsize@{luaL\_prepbuffsize}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_prepbuffsize()}{luaL\_prepbuffsize()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a082637c5dec7407810f30dee5ff842b9} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+prepbuffsize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{size\+\_\+t}]{sz}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lauxlib_8h_a3a1f80033814e2057583a7d24cee23b4}\index{lauxlib.h@{lauxlib.h}!luaL\_pushresult@{luaL\_pushresult}}
+\index{luaL\_pushresult@{luaL\_pushresult}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_pushresult()}{luaL\_pushresult()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3a1f80033814e2057583a7d24cee23b4} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+pushresult (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a3a1f80033814e2057583a7d24cee23b4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{lauxlib_8h_a3a1f80033814e2057583a7d24cee23b4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_aae36c3a2c184f1b2619ad7f99f2b4c16}\index{lauxlib.h@{lauxlib.h}!luaL\_pushresultsize@{luaL\_pushresultsize}}
+\index{luaL\_pushresultsize@{luaL\_pushresultsize}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_pushresultsize()}{luaL\_pushresultsize()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aae36c3a2c184f1b2619ad7f99f2b4c16} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+pushresultsize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structluaL__Buffer}{lua\+L\+\_\+\+Buffer}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{size\+\_\+t}]{sz}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_aae36c3a2c184f1b2619ad7f99f2b4c16_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a1adeae26be7c2e3001c3583f43f70720}\index{lauxlib.h@{lauxlib.h}!luaL\_ref@{luaL\_ref}}
+\index{luaL\_ref@{luaL\_ref}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_ref()}{luaL\_ref()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a1adeae26be7c2e3001c3583f43f70720} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+ref (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{t}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a1adeae26be7c2e3001c3583f43f70720_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a3cb8205f86c838d8f82b7d2360b1b0f4}\index{lauxlib.h@{lauxlib.h}!luaL\_requiref@{luaL\_requiref}}
+\index{luaL\_requiref@{luaL\_requiref}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_requiref()}{luaL\_requiref()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a3cb8205f86c838d8f82b7d2360b1b0f4} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+requiref (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{modname}{, }\item[{\mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\+\_\+\+CFunction}}}]{openf}{, }\item[{int}]{glb}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a3cb8205f86c838d8f82b7d2360b1b0f4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{lauxlib_8h_a3cb8205f86c838d8f82b7d2360b1b0f4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a4cab22d0cb403fa6b94f2542f4303096}\index{lauxlib.h@{lauxlib.h}!luaL\_setfuncs@{luaL\_setfuncs}}
+\index{luaL\_setfuncs@{luaL\_setfuncs}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_setfuncs()}{luaL\_setfuncs()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a4cab22d0cb403fa6b94f2542f4303096} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+setfuncs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const \mbox{\hyperlink{structluaL__Reg}{lua\+L\+\_\+\+Reg}} \texorpdfstring{$\ast$}{*}}]{l}{, }\item[{int}]{nup}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a4cab22d0cb403fa6b94f2542f4303096_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{lauxlib_8h_a4cab22d0cb403fa6b94f2542f4303096_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ae3907fc11c3e2af69f00ab4a37872cae}\index{lauxlib.h@{lauxlib.h}!luaL\_setmetatable@{luaL\_setmetatable}}
+\index{luaL\_setmetatable@{luaL\_setmetatable}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_setmetatable()}{luaL\_setmetatable()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ae3907fc11c3e2af69f00ab4a37872cae} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+setmetatable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{tname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ae3907fc11c3e2af69f00ab4a37872cae_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a002893351c161d943c16a31ae957c6d0}\index{lauxlib.h@{lauxlib.h}!luaL\_testudata@{luaL\_testudata}}
+\index{luaL\_testudata@{luaL\_testudata}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_testudata()}{luaL\_testudata()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a002893351c161d943c16a31ae957c6d0} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void \texorpdfstring{$\ast$}{*} lua\+L\+\_\+testudata (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{ud}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{tname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a002893351c161d943c16a31ae957c6d0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{lauxlib_8h_a002893351c161d943c16a31ae957c6d0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a64d366034d114de946f1b93199847dab}\index{lauxlib.h@{lauxlib.h}!luaL\_tolstring@{luaL\_tolstring}}
+\index{luaL\_tolstring@{luaL\_tolstring}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_tolstring()}{luaL\_tolstring()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a64d366034d114de946f1b93199847dab} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} const char \texorpdfstring{$\ast$}{*} lua\+L\+\_\+tolstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{idx}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{len}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a64d366034d114de946f1b93199847dab_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a67bf3728d34d2c9badb2bd2f57c75233}\index{lauxlib.h@{lauxlib.h}!luaL\_traceback@{luaL\_traceback}}
+\index{luaL\_traceback@{luaL\_traceback}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_traceback()}{luaL\_traceback()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a67bf3728d34d2c9badb2bd2f57c75233} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+traceback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L1}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{, }\item[{int}]{level}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a67bf3728d34d2c9badb2bd2f57c75233_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_aaa48a92e16c27c06e9c56e526e70f111}\index{lauxlib.h@{lauxlib.h}!luaL\_typeerror@{luaL\_typeerror}}
+\index{luaL\_typeerror@{luaL\_typeerror}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_typeerror()}{luaL\_typeerror()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_aaa48a92e16c27c06e9c56e526e70f111} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} int lua\+L\+\_\+typeerror (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{arg}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{tname}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_aaa48a92e16c27c06e9c56e526e70f111_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_ad5e8303f3809d26c336c3e18879b7f4e}\index{lauxlib.h@{lauxlib.h}!luaL\_unref@{luaL\_unref}}
+\index{luaL\_unref@{luaL\_unref}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_unref()}{luaL\_unref()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_ad5e8303f3809d26c336c3e18879b7f4e} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+unref (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{t}{, }\item[{int}]{ref}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_ad5e8303f3809d26c336c3e18879b7f4e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lauxlib_8h_a5c4217e3b5b3ce9d51c6c5c01483e57f}\index{lauxlib.h@{lauxlib.h}!luaL\_where@{luaL\_where}}
+\index{luaL\_where@{luaL\_where}!lauxlib.h@{lauxlib.h}}
+\doxysubsubsection{\texorpdfstring{luaL\_where()}{luaL\_where()}}
+{\footnotesize\ttfamily \label{lauxlib_8h_a5c4217e3b5b3ce9d51c6c5c01483e57f} 
+\mbox{\hyperlink{luaconf_8h_a373d5a572c4c65a5f35a6e4ee9293c95}{LUALIB\+\_\+\+API}} void lua\+L\+\_\+where (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{lvl}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{lauxlib_8h_a5c4217e3b5b3ce9d51c6c5c01483e57f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lauxlib_8h_a5c4217e3b5b3ce9d51c6c5c01483e57f_icgraph}
+\end{center}
+\end{figure}

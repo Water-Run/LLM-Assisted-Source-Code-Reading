@@ -1,0 +1,70 @@
+\doxysection{lfunc.\+h}
+\hypertarget{lfunc_8h_source}{}\label{lfunc_8h_source}\mbox{\hyperlink{lfunc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ lfunc.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Auxiliary\ functions\ to\ manipulate\ prototypes\ and\ closures}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ lfunc\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ lfunc\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ sizeCclosure(n)\ \ \(\backslash\)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\ \ \ \ (offsetof(CClosure,\ upvalue)\ +\ sizeof(TValue)\ *\ cast\_uint(n))}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ sizeLclosure(n)\ \ \(\backslash\)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ (offsetof(LClosure,\ upvals)\ +\ sizeof(UpVal\ *)\ *\ cast\_uint(n))}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{/*\ test\ whether\ thread\ is\ in\ 'twups'\ list\ */}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ isintwups(L)\ \ \ \ (L-\/>twups\ !=\ L)}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ maximum\ number\ of\ upvalues\ in\ a\ closure\ (both\ C\ and\ Lua).\ (Value}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**\ must\ fit\ in\ a\ VM\ register.)}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ MAXUPVAL\ \ \ \ 255}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ upisopen(up)\ \ \ \ ((up)-\/>v.p\ !=\ \&(up)-\/>u.value)}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ uplevel(up)\ check\_exp(upisopen(up),\ cast(StkId,\ (up)-\/>v.p))}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00039\ \textcolor{comment}{**\ maximum\ number\ of\ misses\ before\ giving\ up\ the\ cache\ of\ closures}}
+\DoxyCodeLine{00040\ \textcolor{comment}{**\ in\ prototypes}}
+\DoxyCodeLine{00041\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ MAXMISS\ \ \ \ \ 10}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*\ special\ status\ to\ close\ upvalues\ preserving\ the\ top\ of\ the\ stack\ */}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ CLOSEKTOP\ \ \ (LUA\_ERRERR\ +\ 1)}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structProto}{Proto}}\ *\mbox{\hyperlink{lfunc_8h_aa121489107d36567d5470634a9d82b7d}{luaF\_newproto}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00051\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structCClosure}{CClosure}}\ *\mbox{\hyperlink{lfunc_8h_aabb26f76b398d53dd3c250c62745c969}{luaF\_newCclosure}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ nupvals);}
+\DoxyCodeLine{00052\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structLClosure}{LClosure}}\ *\mbox{\hyperlink{lfunc_8h_a827e3da2754fd3b4bc256d0651232c6e}{luaF\_newLclosure}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ nupvals);}
+\DoxyCodeLine{00053\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lfunc_8h_a7f4b654cb9bf35af338f3ae1b287bc39}{luaF\_initupvals}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structLClosure}{LClosure}}\ *cl);}
+\DoxyCodeLine{00054\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structUpVal}{UpVal}}\ *\mbox{\hyperlink{lfunc_8h_a7b5586d4c78d253a5c57ab884faf6ebd}{luaF\_findupval}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ level);}
+\DoxyCodeLine{00055\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lfunc_8h_a17478c6ccda97c8d77b4be5488c78c08}{luaF\_newtbcupval}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ level);}
+\DoxyCodeLine{00056\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lfunc_8h_aa58cb032e4a4e265b9b55b1bd1f181bb}{luaF\_closeupval}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ level);}
+\DoxyCodeLine{00057\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ \mbox{\hyperlink{lfunc_8h_a91b8bce70d268c0e59f5716c76c0aaf8}{luaF\_close}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ level,\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ status,\ \textcolor{keywordtype}{int}\ yy);}
+\DoxyCodeLine{00058\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lfunc_8h_a560691ba7dbb73952d36e6e4a87cb224}{luaF\_unlinkupval}}\ (\mbox{\hyperlink{structUpVal}{UpVal}}\ *uv);}
+\DoxyCodeLine{00059\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_aac8c50ca0aa51c80523376da77c2c4d8}{lu\_mem}}\ \mbox{\hyperlink{lfunc_8h_a1a6ddb7fe0555d63e1804e0ae3384126}{luaF\_protosize}}\ (\mbox{\hyperlink{structProto}{Proto}}\ *p);}
+\DoxyCodeLine{00060\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lfunc_8h_a0cc4051310ee836ef266607da3a58499}{luaF\_freeproto}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structProto}{Proto}}\ *f);}
+\DoxyCodeLine{00061\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{lfunc_8h_ae510827b619c7231d65f8c6a3080e981}{luaF\_getlocalname}}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structProto}{Proto}}\ *func,\ \textcolor{keywordtype}{int}\ local\_number,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pc);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

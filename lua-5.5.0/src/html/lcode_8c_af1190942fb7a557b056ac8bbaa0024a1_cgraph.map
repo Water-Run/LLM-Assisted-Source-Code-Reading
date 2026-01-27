@@ -1,0 +1,7 @@
+<map id="luaK_reserveregs" name="luaK_reserveregs">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,128,32"/>
+<area shape="rect" id="Node000002" href="$lcode_8c.html#afd941e61245bcb4d05bd3ba5b4ffec3b" title=" " alt="" coords="176,5,297,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,16,160,16,160,21,128,21"/>
+<area shape="rect" id="Node000003" href="$lparser_8c.html#a824424fa1d3f3295fc105d2d1c803f5b" title=" " alt="" coords="345,5,458,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="297,16,329,16,329,21,297,21"/>
+</map>

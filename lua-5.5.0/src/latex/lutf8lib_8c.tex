@@ -1,0 +1,124 @@
+\doxysection{lutf8lib.\+c File Reference}
+\hypertarget{lutf8lib_8c}{}\label{lutf8lib_8c}\index{lutf8lib.c@{lutf8lib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lutf8lib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lutf8lib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_ae4e6cc627940ab6f545638bf5cfda8b0}{lutf8lib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_afd8cf5fccc99a6307fb78c36dc004ab4}{MAXUNICODE}}~0x10\+FFFFu
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_af5f63b8995a31fcdd3f6900d79261245}{MAXUTF}}~0x7\+FFFFFFFu
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_a49134bce112ea72b47a94a459124e7e6}{MSGInvalid}}~"{}invalid UTF-\/8 code"{}
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_a35f1540b7f979fa56d09d136530c6505}{iscont}}(c)
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_a561d520fa7baec94fb749f92fe740de0}{iscontp}}(p)
+\item 
+\#define \mbox{\hyperlink{lutf8lib_8c_a2cf7ee81d838fa055a20870d91f8ab81}{UTF8\+PATT}}~"{}\mbox{[}\textbackslash{}0-\/\textbackslash{}x7\+F\textbackslash{}x\+C2-\/\textbackslash{}x\+FD\mbox{]}\mbox{[}\textbackslash{}x80-\/\textbackslash{}x\+BF\mbox{]}\texorpdfstring{$\ast$}{*}"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{lutf8lib_8c_ae1247f71bc4b3f3be7da9c9d5c7668b1}{luaopen\+\_\+utf8}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lutf8lib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lutf8lib_8c_a35f1540b7f979fa56d09d136530c6505}\index{lutf8lib.c@{lutf8lib.c}!iscont@{iscont}}
+\index{iscont@{iscont}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{iscont}{iscont}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_a35f1540b7f979fa56d09d136530c6505} 
+\#define iscont(\begin{DoxyParamCaption}\item[{}]{c}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((c)\ \&\ 0xC0)\ ==\ 0x80)}
+
+\end{DoxyCode}
+\Hypertarget{lutf8lib_8c_a561d520fa7baec94fb749f92fe740de0}\index{lutf8lib.c@{lutf8lib.c}!iscontp@{iscontp}}
+\index{iscontp@{iscontp}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{iscontp}{iscontp}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_a561d520fa7baec94fb749f92fe740de0} 
+\#define iscontp(\begin{DoxyParamCaption}\item[{}]{p}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lutf8lib_8c_a35f1540b7f979fa56d09d136530c6505}{iscont}}(*(p))}
+
+\end{DoxyCode}
+\Hypertarget{lutf8lib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{lutf8lib.c@{lutf8lib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{lutf8lib_8c_ae4e6cc627940ab6f545638bf5cfda8b0}\index{lutf8lib.c@{lutf8lib.c}!lutf8lib\_c@{lutf8lib\_c}}
+\index{lutf8lib\_c@{lutf8lib\_c}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{lutf8lib\_c}{lutf8lib\_c}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_ae4e6cc627940ab6f545638bf5cfda8b0} 
+\#define lutf8lib\+\_\+c}
+
+\Hypertarget{lutf8lib_8c_afd8cf5fccc99a6307fb78c36dc004ab4}\index{lutf8lib.c@{lutf8lib.c}!MAXUNICODE@{MAXUNICODE}}
+\index{MAXUNICODE@{MAXUNICODE}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{MAXUNICODE}{MAXUNICODE}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_afd8cf5fccc99a6307fb78c36dc004ab4} 
+\#define MAXUNICODE~0x10\+FFFFu}
+
+\Hypertarget{lutf8lib_8c_af5f63b8995a31fcdd3f6900d79261245}\index{lutf8lib.c@{lutf8lib.c}!MAXUTF@{MAXUTF}}
+\index{MAXUTF@{MAXUTF}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{MAXUTF}{MAXUTF}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_af5f63b8995a31fcdd3f6900d79261245} 
+\#define MAXUTF~0x7\+FFFFFFFu}
+
+\Hypertarget{lutf8lib_8c_a49134bce112ea72b47a94a459124e7e6}\index{lutf8lib.c@{lutf8lib.c}!MSGInvalid@{MSGInvalid}}
+\index{MSGInvalid@{MSGInvalid}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{MSGInvalid}{MSGInvalid}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_a49134bce112ea72b47a94a459124e7e6} 
+\#define MSGInvalid~"{}invalid UTF-\/8 code"{}}
+
+\Hypertarget{lutf8lib_8c_a2cf7ee81d838fa055a20870d91f8ab81}\index{lutf8lib.c@{lutf8lib.c}!UTF8PATT@{UTF8PATT}}
+\index{UTF8PATT@{UTF8PATT}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{UTF8PATT}{UTF8PATT}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_a2cf7ee81d838fa055a20870d91f8ab81} 
+\#define UTF8\+PATT~"{}\mbox{[}\textbackslash{}0-\/\textbackslash{}x7\+F\textbackslash{}x\+C2-\/\textbackslash{}x\+FD\mbox{]}\mbox{[}\textbackslash{}x80-\/\textbackslash{}x\+BF\mbox{]}\texorpdfstring{$\ast$}{*}"{}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lutf8lib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lutf8lib_8c_ae1247f71bc4b3f3be7da9c9d5c7668b1}\index{lutf8lib.c@{lutf8lib.c}!luaopen\_utf8@{luaopen\_utf8}}
+\index{luaopen\_utf8@{luaopen\_utf8}!lutf8lib.c@{lutf8lib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_utf8()}{luaopen\_utf8()}}
+{\footnotesize\ttfamily \label{lutf8lib_8c_ae1247f71bc4b3f3be7da9c9d5c7668b1} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+utf8 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lutf8lib_8c_ae1247f71bc4b3f3be7da9c9d5c7668b1_cgraph}
+\end{center}
+\end{figure}

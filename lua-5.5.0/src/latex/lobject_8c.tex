@@ -1,0 +1,389 @@
+\doxysection{lobject.\+c File Reference}
+\hypertarget{lobject_8c}{}\label{lobject_8c}\index{lobject.c@{lobject.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$float.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lctype.\+h"{}}\newline
+{\ttfamily \#include "{}ldebug.\+h"{}}\newline
+{\ttfamily \#include "{}ldo.\+h"{}}\newline
+{\ttfamily \#include "{}lmem.\+h"{}}\newline
+{\ttfamily \#include "{}lobject.\+h"{}}\newline
+{\ttfamily \#include "{}lstate.\+h"{}}\newline
+{\ttfamily \#include "{}lstring.\+h"{}}\newline
+{\ttfamily \#include "{}lvm.\+h"{}}\newline
+Include dependency graph for lobject.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structBuffFS}{Buff\+FS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a38dc0318b49040ead76a3cbd8bdc573f}{lobject\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lobject_8c_abf0b3947b59218777a8e928a10be205b}{LUA\+\_\+\+CORE}}
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a98d71ac135df4047b2f051fcc7a1f40f}{L\+\_\+\+MAXLENNUM}}~200
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a35cd00c271dac7479b5a1812648be3a6}{MAXBY10}}~\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\+\_\+\+Unsigned}}, LUA\+\_\+\+MAXINTEGER / 10)
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a3a297bd7005980375f9df0c1f8204aca}{MAXLASTD}}~\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\+\_\+int}}(LUA\+\_\+\+MAXINTEGER \% 10)
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a5df23b13777a59c7db57ba5ed55a5d98}{BUFVFS}}~\mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\+\_\+uint}}(\mbox{\hyperlink{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb}{LUA\+\_\+\+IDSIZE}} + \mbox{\hyperlink{lua_8h_a4a8323c50f7633a6f5247062518434df}{LUA\+\_\+\+N2\+SBUFFSZ}} + 95)
+\item 
+\#define \mbox{\hyperlink{lobject_8c_aa932c88a1737cf31f4e16c6d72254f59}{RETS}}~"{}..."{}       /\texorpdfstring{$\ast$}{*} 表示省略的内容 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a349316092037fdd0773335fab4e15ee8}{PRE}}~"{}\mbox{[}string \textbackslash{}"{}"{} /\texorpdfstring{$\ast$}{*} 前缀 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a63cb3834e6075ddad87f8ce324e53988}{POS}}~"{}\textbackslash{}"{}\mbox{]}"{}        /\texorpdfstring{$\ast$}{*} 后缀 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lobject_8c_a0cbd5d41f14d898a5bacbe8935b01d0c}{addstr}}(a,  b,  l)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Buff\+FS \mbox{\hyperlink{lobject_8c_a15e052831e7638ed8e7fc07b1bc1e67a}{Buff\+FS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{lobject_8c_a034de707ef0f402a5be98fd98c7fcd52}{lua\+O\+\_\+ceillog2}} (unsigned int x)
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{lobject_8c_a95619a9321a2a2f2630f250734986525}{lua\+O\+\_\+codeparam}} (unsigned int p)
+\item 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} \mbox{\hyperlink{lobject_8c_af3125a767113bc412a0abdf68f698436}{lua\+O\+\_\+applyparam}} (\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} p, \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} x)
+\item 
+int \mbox{\hyperlink{lobject_8c_aae42f4eba2d45e27d6f217f4497d106d}{lua\+O\+\_\+rawarith}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int op, const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}p1, const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}p2, \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}res)
+\item 
+void \mbox{\hyperlink{lobject_8c_a70e6a84042c5cf25f3812cba16e1fc3d}{lua\+O\+\_\+arith}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, int op, const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}p1, const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}p2, \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{Stk\+Id}} res)
+\item 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} \mbox{\hyperlink{lobject_8c_a4b35840325c43848d5949e44f6c371a6}{lua\+O\+\_\+hexavalue}} (int c)
+\item 
+size\+\_\+t \mbox{\hyperlink{lobject_8c_ab1956c979ca7ff39b07534390714505d}{lua\+O\+\_\+str2num}} (const char \texorpdfstring{$\ast$}{*}s, \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}o)
+\item 
+int \mbox{\hyperlink{lobject_8c_a685d166204b13aa36463f415c350ab4f}{lua\+O\+\_\+utf8esc}} (char \texorpdfstring{$\ast$}{*}buff, \mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}} x)
+\item 
+unsigned \mbox{\hyperlink{lobject_8c_a9136ddfe097a1202397216fb1c22e201}{lua\+O\+\_\+tostringbuff}} (const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}obj, char \texorpdfstring{$\ast$}{*}buff)
+\item 
+void \mbox{\hyperlink{lobject_8c_a53824ade5220a50d44148175f7787199}{lua\+O\+\_\+tostring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}obj)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lobject_8c_ae815c06421d341ce3c584d93ba9edc13}{lua\+O\+\_\+pushvfstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}fmt, va\+\_\+list argp)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lobject_8c_a65ca3be2a1f862455baaedd6a2275238}{lua\+O\+\_\+pushfstring}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, const char \texorpdfstring{$\ast$}{*}fmt,...)
+\item 
+void \mbox{\hyperlink{lobject_8c_ac331b4119bbeb45a8a7e5a1afe553b2e}{lua\+O\+\_\+chunkid}} (char \texorpdfstring{$\ast$}{*}out, const char \texorpdfstring{$\ast$}{*}source, size\+\_\+t srclen)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lobject_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lobject_8c_a0cbd5d41f14d898a5bacbe8935b01d0c}\index{lobject.c@{lobject.c}!addstr@{addstr}}
+\index{addstr@{addstr}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{addstr}{addstr}}
+{\footnotesize\ttfamily \label{lobject_8c_a0cbd5d41f14d898a5bacbe8935b01d0c} 
+\#define addstr(\begin{DoxyParamCaption}\item[{}]{a}{, }\item[{}]{b}{, }\item[{}]{l}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(memcpy(a,\ b,\ (l)\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char})),\ a\ +=\ (l))}
+
+\end{DoxyCode}
+\Hypertarget{lobject_8c_a5df23b13777a59c7db57ba5ed55a5d98}\index{lobject.c@{lobject.c}!BUFVFS@{BUFVFS}}
+\index{BUFVFS@{BUFVFS}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{BUFVFS}{BUFVFS}}
+{\footnotesize\ttfamily \label{lobject_8c_a5df23b13777a59c7db57ba5ed55a5d98} 
+\#define BUFVFS~\mbox{\hyperlink{llimits_8h_a6ce2ddc5b419ed6f302573db3cc03e56}{cast\+\_\+uint}}(\mbox{\hyperlink{luaconf_8h_a49c31c00aa2852af25a2c43046a21aeb}{LUA\+\_\+\+IDSIZE}} + \mbox{\hyperlink{lua_8h_a4a8323c50f7633a6f5247062518434df}{LUA\+\_\+\+N2\+SBUFFSZ}} + 95)}
+
+\Hypertarget{lobject_8c_a98d71ac135df4047b2f051fcc7a1f40f}\index{lobject.c@{lobject.c}!L\_MAXLENNUM@{L\_MAXLENNUM}}
+\index{L\_MAXLENNUM@{L\_MAXLENNUM}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{L\_MAXLENNUM}{L\_MAXLENNUM}}
+{\footnotesize\ttfamily \label{lobject_8c_a98d71ac135df4047b2f051fcc7a1f40f} 
+\#define L\+\_\+\+MAXLENNUM~200}
+
+\Hypertarget{lobject_8c_a38dc0318b49040ead76a3cbd8bdc573f}\index{lobject.c@{lobject.c}!lobject\_c@{lobject\_c}}
+\index{lobject\_c@{lobject\_c}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{lobject\_c}{lobject\_c}}
+{\footnotesize\ttfamily \label{lobject_8c_a38dc0318b49040ead76a3cbd8bdc573f} 
+\#define lobject\+\_\+c}
+
+\Hypertarget{lobject_8c_abf0b3947b59218777a8e928a10be205b}\index{lobject.c@{lobject.c}!LUA\_CORE@{LUA\_CORE}}
+\index{LUA\_CORE@{LUA\_CORE}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_CORE}{LUA\_CORE}}
+{\footnotesize\ttfamily \label{lobject_8c_abf0b3947b59218777a8e928a10be205b} 
+\#define LUA\+\_\+\+CORE}
+
+\Hypertarget{lobject_8c_a35cd00c271dac7479b5a1812648be3a6}\index{lobject.c@{lobject.c}!MAXBY10@{MAXBY10}}
+\index{MAXBY10@{MAXBY10}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{MAXBY10}{MAXBY10}}
+{\footnotesize\ttfamily \label{lobject_8c_a35cd00c271dac7479b5a1812648be3a6} 
+\#define MAXBY10~\mbox{\hyperlink{llimits_8h_af17d62ec9e237a7644de6b9b34a48a34}{cast}}(\mbox{\hyperlink{lua_8h_a2357bdcd9af1aaef0a6895a9c3b7eccf}{lua\+\_\+\+Unsigned}}, LUA\+\_\+\+MAXINTEGER / 10)}
+
+\Hypertarget{lobject_8c_a3a297bd7005980375f9df0c1f8204aca}\index{lobject.c@{lobject.c}!MAXLASTD@{MAXLASTD}}
+\index{MAXLASTD@{MAXLASTD}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{MAXLASTD}{MAXLASTD}}
+{\footnotesize\ttfamily \label{lobject_8c_a3a297bd7005980375f9df0c1f8204aca} 
+\#define MAXLASTD~\mbox{\hyperlink{llimits_8h_a37a9e2c4b53433d34bad0f12a1500c08}{cast\+\_\+int}}(LUA\+\_\+\+MAXINTEGER \% 10)}
+
+\Hypertarget{lobject_8c_a63cb3834e6075ddad87f8ce324e53988}\index{lobject.c@{lobject.c}!POS@{POS}}
+\index{POS@{POS}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{POS}{POS}}
+{\footnotesize\ttfamily \label{lobject_8c_a63cb3834e6075ddad87f8ce324e53988} 
+\#define POS~"{}\textbackslash{}"{}\mbox{]}"{}        /\texorpdfstring{$\ast$}{*} 后缀 \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lobject_8c_a349316092037fdd0773335fab4e15ee8}\index{lobject.c@{lobject.c}!PRE@{PRE}}
+\index{PRE@{PRE}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{PRE}{PRE}}
+{\footnotesize\ttfamily \label{lobject_8c_a349316092037fdd0773335fab4e15ee8} 
+\#define PRE~"{}\mbox{[}string \textbackslash{}"{}"{} /\texorpdfstring{$\ast$}{*} 前缀 \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lobject_8c_aa932c88a1737cf31f4e16c6d72254f59}\index{lobject.c@{lobject.c}!RETS@{RETS}}
+\index{RETS@{RETS}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{RETS}{RETS}}
+{\footnotesize\ttfamily \label{lobject_8c_aa932c88a1737cf31f4e16c6d72254f59} 
+\#define RETS~"{}..."{}       /\texorpdfstring{$\ast$}{*} 表示省略的内容 \texorpdfstring{$\ast$}{*}/}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{lobject_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lobject_8c_a15e052831e7638ed8e7fc07b1bc1e67a}\index{lobject.c@{lobject.c}!BuffFS@{BuffFS}}
+\index{BuffFS@{BuffFS}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{BuffFS}{BuffFS}}
+{\footnotesize\ttfamily \label{lobject_8c_a15e052831e7638ed8e7fc07b1bc1e67a} 
+typedef struct Buff\+FS Buff\+FS}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lobject_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lobject_8c_af3125a767113bc412a0abdf68f698436}\index{lobject.c@{lobject.c}!luaO\_applyparam@{luaO\_applyparam}}
+\index{luaO\_applyparam@{luaO\_applyparam}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_applyparam()}{luaO\_applyparam()}}
+{\footnotesize\ttfamily \label{lobject_8c_af3125a767113bc412a0abdf68f698436} 
+\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}} lua\+O\+\_\+applyparam (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}}}]{p}{, }\item[{\mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\+\_\+mem}}}]{x}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_af3125a767113bc412a0abdf68f698436_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a70e6a84042c5cf25f3812cba16e1fc3d}\index{lobject.c@{lobject.c}!luaO\_arith@{luaO\_arith}}
+\index{luaO\_arith@{luaO\_arith}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_arith()}{luaO\_arith()}}
+{\footnotesize\ttfamily \label{lobject_8c_a70e6a84042c5cf25f3812cba16e1fc3d} 
+void lua\+O\+\_\+arith (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{op}{, }\item[{const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{p1}{, }\item[{const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{p2}{, }\item[{\mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{Stk\+Id}}}]{res}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a70e6a84042c5cf25f3812cba16e1fc3d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{lobject_8c_a70e6a84042c5cf25f3812cba16e1fc3d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a034de707ef0f402a5be98fd98c7fcd52}\index{lobject.c@{lobject.c}!luaO\_ceillog2@{luaO\_ceillog2}}
+\index{luaO\_ceillog2@{luaO\_ceillog2}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_ceillog2()}{luaO\_ceillog2()}}
+{\footnotesize\ttfamily \label{lobject_8c_a034de707ef0f402a5be98fd98c7fcd52} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+O\+\_\+ceillog2 (\begin{DoxyParamCaption}\item[{unsigned int}]{x}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a034de707ef0f402a5be98fd98c7fcd52_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_ac331b4119bbeb45a8a7e5a1afe553b2e}\index{lobject.c@{lobject.c}!luaO\_chunkid@{luaO\_chunkid}}
+\index{luaO\_chunkid@{luaO\_chunkid}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_chunkid()}{luaO\_chunkid()}}
+{\footnotesize\ttfamily \label{lobject_8c_ac331b4119bbeb45a8a7e5a1afe553b2e} 
+void lua\+O\+\_\+chunkid (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{out}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{size\+\_\+t}]{srclen}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_ac331b4119bbeb45a8a7e5a1afe553b2e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a95619a9321a2a2f2630f250734986525}\index{lobject.c@{lobject.c}!luaO\_codeparam@{luaO\_codeparam}}
+\index{luaO\_codeparam@{luaO\_codeparam}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_codeparam()}{luaO\_codeparam()}}
+{\footnotesize\ttfamily \label{lobject_8c_a95619a9321a2a2f2630f250734986525} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+O\+\_\+codeparam (\begin{DoxyParamCaption}\item[{unsigned int}]{p}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{lobject_8c_a95619a9321a2a2f2630f250734986525_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a95619a9321a2a2f2630f250734986525_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a4b35840325c43848d5949e44f6c371a6}\index{lobject.c@{lobject.c}!luaO\_hexavalue@{luaO\_hexavalue}}
+\index{luaO\_hexavalue@{luaO\_hexavalue}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_hexavalue()}{luaO\_hexavalue()}}
+{\footnotesize\ttfamily \label{lobject_8c_a4b35840325c43848d5949e44f6c371a6} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} lua\+O\+\_\+hexavalue (\begin{DoxyParamCaption}\item[{int}]{c}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lobject_8c_a65ca3be2a1f862455baaedd6a2275238}\index{lobject.c@{lobject.c}!luaO\_pushfstring@{luaO\_pushfstring}}
+\index{luaO\_pushfstring@{luaO\_pushfstring}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_pushfstring()}{luaO\_pushfstring()}}
+{\footnotesize\ttfamily \label{lobject_8c_a65ca3be2a1f862455baaedd6a2275238} 
+const char \texorpdfstring{$\ast$}{*} lua\+O\+\_\+pushfstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a65ca3be2a1f862455baaedd6a2275238_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a65ca3be2a1f862455baaedd6a2275238_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_ae815c06421d341ce3c584d93ba9edc13}\index{lobject.c@{lobject.c}!luaO\_pushvfstring@{luaO\_pushvfstring}}
+\index{luaO\_pushvfstring@{luaO\_pushvfstring}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_pushvfstring()}{luaO\_pushvfstring()}}
+{\footnotesize\ttfamily \label{lobject_8c_ae815c06421d341ce3c584d93ba9edc13} 
+const char \texorpdfstring{$\ast$}{*} lua\+O\+\_\+pushvfstring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fmt}{, }\item[{va\+\_\+list}]{argp}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{lobject_8c_ae815c06421d341ce3c584d93ba9edc13_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_ae815c06421d341ce3c584d93ba9edc13_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_aae42f4eba2d45e27d6f217f4497d106d}\index{lobject.c@{lobject.c}!luaO\_rawarith@{luaO\_rawarith}}
+\index{luaO\_rawarith@{luaO\_rawarith}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_rawarith()}{luaO\_rawarith()}}
+{\footnotesize\ttfamily \label{lobject_8c_aae42f4eba2d45e27d6f217f4497d106d} 
+int lua\+O\+\_\+rawarith (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{int}]{op}{, }\item[{const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{p1}{, }\item[{const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{p2}{, }\item[{\mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{res}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{lobject_8c_aae42f4eba2d45e27d6f217f4497d106d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_ab1956c979ca7ff39b07534390714505d}\index{lobject.c@{lobject.c}!luaO\_str2num@{luaO\_str2num}}
+\index{luaO\_str2num@{luaO\_str2num}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_str2num()}{luaO\_str2num()}}
+{\footnotesize\ttfamily \label{lobject_8c_ab1956c979ca7ff39b07534390714505d} 
+size\+\_\+t lua\+O\+\_\+str2num (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{, }\item[{\mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{o}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{lobject_8c_ab1956c979ca7ff39b07534390714505d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a53824ade5220a50d44148175f7787199}\index{lobject.c@{lobject.c}!luaO\_tostring@{luaO\_tostring}}
+\index{luaO\_tostring@{luaO\_tostring}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_tostring()}{luaO\_tostring()}}
+{\footnotesize\ttfamily \label{lobject_8c_a53824ade5220a50d44148175f7787199} 
+void lua\+O\+\_\+tostring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{obj}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a53824ade5220a50d44148175f7787199_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a53824ade5220a50d44148175f7787199_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a9136ddfe097a1202397216fb1c22e201}\index{lobject.c@{lobject.c}!luaO\_tostringbuff@{luaO\_tostringbuff}}
+\index{luaO\_tostringbuff@{luaO\_tostringbuff}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_tostringbuff()}{luaO\_tostringbuff()}}
+{\footnotesize\ttfamily \label{lobject_8c_a9136ddfe097a1202397216fb1c22e201} 
+unsigned lua\+O\+\_\+tostringbuff (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*}}]{obj}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buff}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a9136ddfe097a1202397216fb1c22e201_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lobject_8c_a685d166204b13aa36463f415c350ab4f}\index{lobject.c@{lobject.c}!luaO\_utf8esc@{luaO\_utf8esc}}
+\index{luaO\_utf8esc@{luaO\_utf8esc}!lobject.c@{lobject.c}}
+\doxysubsubsection{\texorpdfstring{luaO\_utf8esc()}{luaO\_utf8esc()}}
+{\footnotesize\ttfamily \label{lobject_8c_a685d166204b13aa36463f415c350ab4f} 
+int lua\+O\+\_\+utf8esc (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{buff}{, }\item[{\mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\+\_\+uint32}}}]{x}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lobject_8c_a685d166204b13aa36463f415c350ab4f_icgraph}
+\end{center}
+\end{figure}

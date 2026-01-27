@@ -1,0 +1,360 @@
+\doxysection{lstrlib.\+c File Reference}
+\hypertarget{lstrlib_8c}{}\label{lstrlib_8c}\index{lstrlib.c@{lstrlib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$float.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lstrlib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lstrlib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structstr__Writer}{str\+\_\+\+Writer}}
+\item 
+struct \mbox{\hyperlink{structMatchState}{Match\+State}}
+\item 
+struct \mbox{\hyperlink{structGMatchState}{GMatch\+State}}
+\item 
+struct \mbox{\hyperlink{structHeader}{Header}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a7d519f7b443a6bce51922ce6bb0621a8}{lstrlib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a7cecfa7bbfb47e8a8598a9bfbfbcab54}{LUA\+\_\+\+MAXCAPTURES}}~32
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a414cda9a27ce2f01d4a6bb9a20787250}{CAP\+\_\+\+UNFINISHED}}~(-\/1)
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a921f0f27e58ca4be1e9b0cf12447e118}{CAP\+\_\+\+POSITION}}~(-\/2)
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a16241c11b1579d50b07598e91ed7327a}{MAXCCALLS}}~200
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a62bae5b2b26cf1e4fdf37e42d3c53df9}{L\+\_\+\+ESC}}~\textquotesingle{}\%\textquotesingle{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a2e1ba74d2e5a4b6bdb7e2b1d00f4f4c0}{SPECIALS}}~"{}\texorpdfstring{$^\wedge$}{\string^}\$\texorpdfstring{$\ast$}{*}+?.(\mbox{[}\%-\/"{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_ad6cc145aca66d79a348760712f5309ce}{MAX\+\_\+\+ITEMF}}~(110 + \mbox{\hyperlink{luaconf_8h_af41b220b80eae0908ca2e190ca024990}{l\+\_\+floatatt}}(MAX\+\_\+10\+\_\+\+EXP))
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a2ab154b213c5fed0a1ba90ac8c1232e8}{MAX\+\_\+\+ITEM}}~120
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a3257ee51bf9071c40429b56f83eecbd4}{L\+\_\+\+FMTFLAGSF}}~"{}-\/+\#0 "{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_af2f06117735bc253b63c275e31d3b886}{L\+\_\+\+FMTFLAGSX}}~"{}-\/\#0"{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a53610a28a12dce1300c8317fb2074102}{L\+\_\+\+FMTFLAGSI}}~"{}-\/+0 "{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_ad85fd151ad21c75856aa862bc8114970}{L\+\_\+\+FMTFLAGSU}}~"{}-\/0"{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_aa36fff02b7c0fcaaaa08baf44f204b1e}{L\+\_\+\+FMTFLAGSC}}~"{}-\/"{}
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a3703ed5438432f703bd9a5d7fa5f31e5}{MAX\+\_\+\+FORMAT}}~32
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a018375fe92d4433fa5e346266ff0fce0}{LUAL\+\_\+\+PACKPADBYTE}}~0x00
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a3b8c10300729d575cc5a024f4d047a31}{MAXINTSIZE}}~16
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a58e95dc1eb9d6ce16f515e77beeadd58}{NB}}~CHAR\+\_\+\+BIT
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_a71d9e511e7e302cd831e83581219e70d}{MC}}~((1 $<$$<$ \mbox{\hyperlink{lstrlib_8c_a58e95dc1eb9d6ce16f515e77beeadd58}{NB}}) -\/ 1)
+\item 
+\#define \mbox{\hyperlink{lstrlib_8c_aba1923a486465ba9dea97b9d1403ce18}{SZINT}}~((int)sizeof(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}}))
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Match\+State \mbox{\hyperlink{lstrlib_8c_aa2763c4d01615ca8073c5889d844559d}{Match\+State}}
+\item 
+typedef struct GMatch\+State \mbox{\hyperlink{lstrlib_8c_a470fb40b886615cdc88ff758c9cc7517}{GMatch\+State}}
+\item 
+typedef struct Header \mbox{\hyperlink{lstrlib_8c_aa8c0271842d616f53f294da8891f6485}{Header}}
+\item 
+typedef enum \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}{KOption}} \mbox{\hyperlink{lstrlib_8c_af99a797330eae00c0dbccd075acc9887}{KOption}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}{KOption}} \{ \newline
+\mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a755cdbd676161935bcff95ab0db4f635}{Kint}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a83c1e7fdcc4de50f9f5b98222401b591}{Kuint}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a15dc86646bf410c0d3ac998689ffe7f7}{Kfloat}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ae00a49db4df91528de680c14d36c8b9d}{Knumber}}
+, \newline
+\mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a30fccbf07b4bf9325210180265de6789}{Kdouble}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ab2624b4f2d20c51e0eb6c668077dcbcd}{Kchar}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45aa6aa8fb7b455739115fbd6c0dc3d4560}{Kstring}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ac4bf277f1cd2aaa95fe31d646e02aa37}{Kzstr}}
+, \newline
+\mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a4252bf39cf9d76c3e034e248ce7bed49}{Kpadding}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a2c01775a8eeb3f674f74c65786808279}{Kpaddalign}}
+, \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a0ca5045efff0f1f863cff5614e3e92b7}{Knop}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{lstrlib_8c_ab65aeff75cb100dde75e955c698c83b8}{luaopen\+\_\+string}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lstrlib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lstrlib_8c_a921f0f27e58ca4be1e9b0cf12447e118}\index{lstrlib.c@{lstrlib.c}!CAP\_POSITION@{CAP\_POSITION}}
+\index{CAP\_POSITION@{CAP\_POSITION}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{CAP\_POSITION}{CAP\_POSITION}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a921f0f27e58ca4be1e9b0cf12447e118} 
+\#define CAP\+\_\+\+POSITION~(-\/2)}
+
+\Hypertarget{lstrlib_8c_a414cda9a27ce2f01d4a6bb9a20787250}\index{lstrlib.c@{lstrlib.c}!CAP\_UNFINISHED@{CAP\_UNFINISHED}}
+\index{CAP\_UNFINISHED@{CAP\_UNFINISHED}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{CAP\_UNFINISHED}{CAP\_UNFINISHED}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a414cda9a27ce2f01d4a6bb9a20787250} 
+\#define CAP\+\_\+\+UNFINISHED~(-\/1)}
+
+\Hypertarget{lstrlib_8c_a62bae5b2b26cf1e4fdf37e42d3c53df9}\index{lstrlib.c@{lstrlib.c}!L\_ESC@{L\_ESC}}
+\index{L\_ESC@{L\_ESC}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_ESC}{L\_ESC}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a62bae5b2b26cf1e4fdf37e42d3c53df9} 
+\#define L\+\_\+\+ESC~\textquotesingle{}\%\textquotesingle{}}
+
+\Hypertarget{lstrlib_8c_aa36fff02b7c0fcaaaa08baf44f204b1e}\index{lstrlib.c@{lstrlib.c}!L\_FMTFLAGSC@{L\_FMTFLAGSC}}
+\index{L\_FMTFLAGSC@{L\_FMTFLAGSC}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_FMTFLAGSC}{L\_FMTFLAGSC}}
+{\footnotesize\ttfamily \label{lstrlib_8c_aa36fff02b7c0fcaaaa08baf44f204b1e} 
+\#define L\+\_\+\+FMTFLAGSC~"{}-\/"{}}
+
+\Hypertarget{lstrlib_8c_a3257ee51bf9071c40429b56f83eecbd4}\index{lstrlib.c@{lstrlib.c}!L\_FMTFLAGSF@{L\_FMTFLAGSF}}
+\index{L\_FMTFLAGSF@{L\_FMTFLAGSF}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_FMTFLAGSF}{L\_FMTFLAGSF}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a3257ee51bf9071c40429b56f83eecbd4} 
+\#define L\+\_\+\+FMTFLAGSF~"{}-\/+\#0 "{}}
+
+\Hypertarget{lstrlib_8c_a53610a28a12dce1300c8317fb2074102}\index{lstrlib.c@{lstrlib.c}!L\_FMTFLAGSI@{L\_FMTFLAGSI}}
+\index{L\_FMTFLAGSI@{L\_FMTFLAGSI}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_FMTFLAGSI}{L\_FMTFLAGSI}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a53610a28a12dce1300c8317fb2074102} 
+\#define L\+\_\+\+FMTFLAGSI~"{}-\/+0 "{}}
+
+\Hypertarget{lstrlib_8c_ad85fd151ad21c75856aa862bc8114970}\index{lstrlib.c@{lstrlib.c}!L\_FMTFLAGSU@{L\_FMTFLAGSU}}
+\index{L\_FMTFLAGSU@{L\_FMTFLAGSU}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_FMTFLAGSU}{L\_FMTFLAGSU}}
+{\footnotesize\ttfamily \label{lstrlib_8c_ad85fd151ad21c75856aa862bc8114970} 
+\#define L\+\_\+\+FMTFLAGSU~"{}-\/0"{}}
+
+\Hypertarget{lstrlib_8c_af2f06117735bc253b63c275e31d3b886}\index{lstrlib.c@{lstrlib.c}!L\_FMTFLAGSX@{L\_FMTFLAGSX}}
+\index{L\_FMTFLAGSX@{L\_FMTFLAGSX}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{L\_FMTFLAGSX}{L\_FMTFLAGSX}}
+{\footnotesize\ttfamily \label{lstrlib_8c_af2f06117735bc253b63c275e31d3b886} 
+\#define L\+\_\+\+FMTFLAGSX~"{}-\/\#0"{}}
+
+\Hypertarget{lstrlib_8c_a7d519f7b443a6bce51922ce6bb0621a8}\index{lstrlib.c@{lstrlib.c}!lstrlib\_c@{lstrlib\_c}}
+\index{lstrlib\_c@{lstrlib\_c}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{lstrlib\_c}{lstrlib\_c}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a7d519f7b443a6bce51922ce6bb0621a8} 
+\#define lstrlib\+\_\+c}
+
+\Hypertarget{lstrlib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{lstrlib.c@{lstrlib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{lstrlib_8c_a7cecfa7bbfb47e8a8598a9bfbfbcab54}\index{lstrlib.c@{lstrlib.c}!LUA\_MAXCAPTURES@{LUA\_MAXCAPTURES}}
+\index{LUA\_MAXCAPTURES@{LUA\_MAXCAPTURES}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_MAXCAPTURES}{LUA\_MAXCAPTURES}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a7cecfa7bbfb47e8a8598a9bfbfbcab54} 
+\#define LUA\+\_\+\+MAXCAPTURES~32}
+
+\Hypertarget{lstrlib_8c_a018375fe92d4433fa5e346266ff0fce0}\index{lstrlib.c@{lstrlib.c}!LUAL\_PACKPADBYTE@{LUAL\_PACKPADBYTE}}
+\index{LUAL\_PACKPADBYTE@{LUAL\_PACKPADBYTE}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{LUAL\_PACKPADBYTE}{LUAL\_PACKPADBYTE}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a018375fe92d4433fa5e346266ff0fce0} 
+\#define LUAL\+\_\+\+PACKPADBYTE~0x00}
+
+\Hypertarget{lstrlib_8c_a3703ed5438432f703bd9a5d7fa5f31e5}\index{lstrlib.c@{lstrlib.c}!MAX\_FORMAT@{MAX\_FORMAT}}
+\index{MAX\_FORMAT@{MAX\_FORMAT}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_FORMAT}{MAX\_FORMAT}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a3703ed5438432f703bd9a5d7fa5f31e5} 
+\#define MAX\+\_\+\+FORMAT~32}
+
+\Hypertarget{lstrlib_8c_a2ab154b213c5fed0a1ba90ac8c1232e8}\index{lstrlib.c@{lstrlib.c}!MAX\_ITEM@{MAX\_ITEM}}
+\index{MAX\_ITEM@{MAX\_ITEM}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_ITEM}{MAX\_ITEM}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a2ab154b213c5fed0a1ba90ac8c1232e8} 
+\#define MAX\+\_\+\+ITEM~120}
+
+\Hypertarget{lstrlib_8c_ad6cc145aca66d79a348760712f5309ce}\index{lstrlib.c@{lstrlib.c}!MAX\_ITEMF@{MAX\_ITEMF}}
+\index{MAX\_ITEMF@{MAX\_ITEMF}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_ITEMF}{MAX\_ITEMF}}
+{\footnotesize\ttfamily \label{lstrlib_8c_ad6cc145aca66d79a348760712f5309ce} 
+\#define MAX\+\_\+\+ITEMF~(110 + \mbox{\hyperlink{luaconf_8h_af41b220b80eae0908ca2e190ca024990}{l\+\_\+floatatt}}(MAX\+\_\+10\+\_\+\+EXP))}
+
+\Hypertarget{lstrlib_8c_a16241c11b1579d50b07598e91ed7327a}\index{lstrlib.c@{lstrlib.c}!MAXCCALLS@{MAXCCALLS}}
+\index{MAXCCALLS@{MAXCCALLS}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MAXCCALLS}{MAXCCALLS}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a16241c11b1579d50b07598e91ed7327a} 
+\#define MAXCCALLS~200}
+
+\Hypertarget{lstrlib_8c_a3b8c10300729d575cc5a024f4d047a31}\index{lstrlib.c@{lstrlib.c}!MAXINTSIZE@{MAXINTSIZE}}
+\index{MAXINTSIZE@{MAXINTSIZE}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MAXINTSIZE}{MAXINTSIZE}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a3b8c10300729d575cc5a024f4d047a31} 
+\#define MAXINTSIZE~16}
+
+\Hypertarget{lstrlib_8c_a71d9e511e7e302cd831e83581219e70d}\index{lstrlib.c@{lstrlib.c}!MC@{MC}}
+\index{MC@{MC}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MC}{MC}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a71d9e511e7e302cd831e83581219e70d} 
+\#define MC~((1 $<$$<$ \mbox{\hyperlink{lstrlib_8c_a58e95dc1eb9d6ce16f515e77beeadd58}{NB}}) -\/ 1)}
+
+\Hypertarget{lstrlib_8c_a58e95dc1eb9d6ce16f515e77beeadd58}\index{lstrlib.c@{lstrlib.c}!NB@{NB}}
+\index{NB@{NB}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{NB}{NB}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a58e95dc1eb9d6ce16f515e77beeadd58} 
+\#define NB~CHAR\+\_\+\+BIT}
+
+\Hypertarget{lstrlib_8c_a2e1ba74d2e5a4b6bdb7e2b1d00f4f4c0}\index{lstrlib.c@{lstrlib.c}!SPECIALS@{SPECIALS}}
+\index{SPECIALS@{SPECIALS}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{SPECIALS}{SPECIALS}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a2e1ba74d2e5a4b6bdb7e2b1d00f4f4c0} 
+\#define SPECIALS~"{}\texorpdfstring{$^\wedge$}{\string^}\$\texorpdfstring{$\ast$}{*}+?.(\mbox{[}\%-\/"{}}
+
+\Hypertarget{lstrlib_8c_aba1923a486465ba9dea97b9d1403ce18}\index{lstrlib.c@{lstrlib.c}!SZINT@{SZINT}}
+\index{SZINT@{SZINT}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{SZINT}{SZINT}}
+{\footnotesize\ttfamily \label{lstrlib_8c_aba1923a486465ba9dea97b9d1403ce18} 
+\#define SZINT~((int)sizeof(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}}))}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{lstrlib_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lstrlib_8c_a470fb40b886615cdc88ff758c9cc7517}\index{lstrlib.c@{lstrlib.c}!GMatchState@{GMatchState}}
+\index{GMatchState@{GMatchState}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{GMatchState}{GMatchState}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a470fb40b886615cdc88ff758c9cc7517} 
+typedef struct GMatch\+State GMatch\+State}
+
+\Hypertarget{lstrlib_8c_aa8c0271842d616f53f294da8891f6485}\index{lstrlib.c@{lstrlib.c}!Header@{Header}}
+\index{Header@{Header}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{Header}{Header}}
+{\footnotesize\ttfamily \label{lstrlib_8c_aa8c0271842d616f53f294da8891f6485} 
+typedef struct Header Header}
+
+\Hypertarget{lstrlib_8c_af99a797330eae00c0dbccd075acc9887}\index{lstrlib.c@{lstrlib.c}!KOption@{KOption}}
+\index{KOption@{KOption}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{KOption}{KOption}}
+{\footnotesize\ttfamily \label{lstrlib_8c_af99a797330eae00c0dbccd075acc9887} 
+typedef enum \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}{KOption}} \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}{KOption}}}
+
+\Hypertarget{lstrlib_8c_aa2763c4d01615ca8073c5889d844559d}\index{lstrlib.c@{lstrlib.c}!MatchState@{MatchState}}
+\index{MatchState@{MatchState}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{MatchState}{MatchState}}
+{\footnotesize\ttfamily \label{lstrlib_8c_aa2763c4d01615ca8073c5889d844559d} 
+typedef struct Match\+State Match\+State}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{lstrlib_8c_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}\index{lstrlib.c@{lstrlib.c}!KOption@{KOption}}
+\index{KOption@{KOption}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{KOption}{KOption}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45} 
+enum \mbox{\hyperlink{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45}{KOption}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kint@{Kint}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kint@{Kint}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a755cdbd676161935bcff95ab0db4f635}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a755cdbd676161935bcff95ab0db4f635} 
+Kint&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kuint@{Kuint}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kuint@{Kuint}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a83c1e7fdcc4de50f9f5b98222401b591}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a83c1e7fdcc4de50f9f5b98222401b591} 
+Kuint&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kfloat@{Kfloat}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kfloat@{Kfloat}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a15dc86646bf410c0d3ac998689ffe7f7}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a15dc86646bf410c0d3ac998689ffe7f7} 
+Kfloat&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Knumber@{Knumber}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Knumber@{Knumber}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ae00a49db4df91528de680c14d36c8b9d}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ae00a49db4df91528de680c14d36c8b9d} 
+Knumber&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kdouble@{Kdouble}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kdouble@{Kdouble}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a30fccbf07b4bf9325210180265de6789}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a30fccbf07b4bf9325210180265de6789} 
+Kdouble&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kchar@{Kchar}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kchar@{Kchar}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ab2624b4f2d20c51e0eb6c668077dcbcd}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ab2624b4f2d20c51e0eb6c668077dcbcd} 
+Kchar&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kstring@{Kstring}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kstring@{Kstring}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45aa6aa8fb7b455739115fbd6c0dc3d4560}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45aa6aa8fb7b455739115fbd6c0dc3d4560} 
+Kstring&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kzstr@{Kzstr}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kzstr@{Kzstr}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ac4bf277f1cd2aaa95fe31d646e02aa37}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45ac4bf277f1cd2aaa95fe31d646e02aa37} 
+Kzstr&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kpadding@{Kpadding}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kpadding@{Kpadding}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a4252bf39cf9d76c3e034e248ce7bed49}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a4252bf39cf9d76c3e034e248ce7bed49} 
+Kpadding&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kpaddalign@{Kpaddalign}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Kpaddalign@{Kpaddalign}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a2c01775a8eeb3f674f74c65786808279}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a2c01775a8eeb3f674f74c65786808279} 
+Kpaddalign&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Knop@{Knop}!lstrlib.c@{lstrlib.c}}\index{lstrlib.c@{lstrlib.c}!Knop@{Knop}}}\Hypertarget{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a0ca5045efff0f1f863cff5614e3e92b7}\label{lstrlib_8c_a367eae6d513d6ac0b1f851c0b17b7d45a0ca5045efff0f1f863cff5614e3e92b7} 
+Knop&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{lstrlib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lstrlib_8c_ab65aeff75cb100dde75e955c698c83b8}\index{lstrlib.c@{lstrlib.c}!luaopen\_string@{luaopen\_string}}
+\index{luaopen\_string@{luaopen\_string}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_string()}{luaopen\_string()}}
+{\footnotesize\ttfamily \label{lstrlib_8c_ab65aeff75cb100dde75e955c698c83b8} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+string (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-var-members}
+\Hypertarget{lstrlib_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{lstrlib_8c_a7c1d654b7b6114d7a0abc8d351dd1bcd}\index{lstrlib.c@{lstrlib.c}!dummy@{dummy}}
+\index{dummy@{dummy}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{dummy}{dummy}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a7c1d654b7b6114d7a0abc8d351dd1bcd} 
+int dummy}
+
+\Hypertarget{lstrlib_8c_a5831a9b38577f9ef9b30553737b5b7f9}\index{lstrlib.c@{lstrlib.c}!little@{little}}
+\index{little@{little}!lstrlib.c@{lstrlib.c}}
+\doxysubsubsection{\texorpdfstring{little}{little}}
+{\footnotesize\ttfamily \label{lstrlib_8c_a5831a9b38577f9ef9b30553737b5b7f9} 
+char little}
+

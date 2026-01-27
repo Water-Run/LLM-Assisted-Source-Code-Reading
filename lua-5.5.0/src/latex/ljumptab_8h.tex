@@ -1,0 +1,44 @@
+\doxysection{ljumptab.\+h File Reference}
+\hypertarget{ljumptab_8h}{}\label{ljumptab_8h}\index{ljumptab.h@{ljumptab.h}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ljumptab_8h_ae2328a135b54b42ce9ea3d808f6d7834}{vmdispatch}}(x)
+\item 
+\#define \mbox{\hyperlink{ljumptab_8h_a64ed762fd3da016b8792d4ac0d0cf17f}{vmcase}}(l)
+\item 
+\#define \mbox{\hyperlink{ljumptab_8h_a362451cac7ed1e9ebf8978cd761a01fb}{vmbreak}}~\mbox{\hyperlink{lvm_8c_ae2618898a2f8e320a173906bb811c9bd}{vmfetch}}(); \mbox{\hyperlink{ljumptab_8h_ae2328a135b54b42ce9ea3d808f6d7834}{vmdispatch}}(\mbox{\hyperlink{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc}{GET\+\_\+\+OPCODE}}(i));
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{ljumptab_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ljumptab_8h_a362451cac7ed1e9ebf8978cd761a01fb}\index{ljumptab.h@{ljumptab.h}!vmbreak@{vmbreak}}
+\index{vmbreak@{vmbreak}!ljumptab.h@{ljumptab.h}}
+\doxysubsubsection{\texorpdfstring{vmbreak}{vmbreak}}
+{\footnotesize\ttfamily \label{ljumptab_8h_a362451cac7ed1e9ebf8978cd761a01fb} 
+\#define vmbreak~\mbox{\hyperlink{lvm_8c_ae2618898a2f8e320a173906bb811c9bd}{vmfetch}}(); \mbox{\hyperlink{ljumptab_8h_ae2328a135b54b42ce9ea3d808f6d7834}{vmdispatch}}(\mbox{\hyperlink{lopcodes_8h_aaa146179c3677b790c5681dcd82f0acc}{GET\+\_\+\+OPCODE}}(i));}
+
+\Hypertarget{ljumptab_8h_a64ed762fd3da016b8792d4ac0d0cf17f}\index{ljumptab.h@{ljumptab.h}!vmcase@{vmcase}}
+\index{vmcase@{vmcase}!ljumptab.h@{ljumptab.h}}
+\doxysubsubsection{\texorpdfstring{vmcase}{vmcase}}
+{\footnotesize\ttfamily \label{ljumptab_8h_a64ed762fd3da016b8792d4ac0d0cf17f} 
+\#define vmcase(\begin{DoxyParamCaption}\item[{}]{l}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{L\_\#\#l:}
+
+\end{DoxyCode}
+\Hypertarget{ljumptab_8h_ae2328a135b54b42ce9ea3d808f6d7834}\index{ljumptab.h@{ljumptab.h}!vmdispatch@{vmdispatch}}
+\index{vmdispatch@{vmdispatch}!ljumptab.h@{ljumptab.h}}
+\doxysubsubsection{\texorpdfstring{vmdispatch}{vmdispatch}}
+{\footnotesize\ttfamily \label{ljumptab_8h_ae2328a135b54b42ce9ea3d808f6d7834} 
+\#define vmdispatch(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{goto}\ *disptab[x];}
+
+\end{DoxyCode}

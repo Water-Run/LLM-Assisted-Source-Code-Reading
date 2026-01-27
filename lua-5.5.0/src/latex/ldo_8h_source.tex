@@ -1,0 +1,104 @@
+\doxysection{ldo.\+h}
+\hypertarget{ldo_8h_source}{}\label{ldo_8h_source}\mbox{\hyperlink{ldo_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ \$Id:\ ldo.h\ \$}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ Stack\ and\ Call\ structure\ of\ Lua}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ See\ Copyright\ Notice\ in\ lua.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ ldo\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ ldo\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llimits_8h}{llimits.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lobject_8h}{lobject.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lstate_8h}{lstate.h}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lzio_8h}{lzio.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ Macro\ to\ check\ stack\ size\ and\ grow\ stack\ if\ needed.\ \ Parameters}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ 'pre'/'pos'\ allow\ the\ macro\ to\ preserve\ a\ pointer\ into\ the}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ stack\ across\ reallocations,\ doing\ the\ work\ only\ when\ needed.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ It\ also\ allows\ the\ running\ of\ one\ GC\ step\ when\ the\ stack\ is}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**\ reallocated.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**\ 'condmovestack'\ is\ used\ in\ heavy\ tests\ to\ force\ a\ stack\ reallocation}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ at\ every\ check.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#if\ !defined(HARDSTACKTESTS)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ condmovestack(L,pre,pos)\ \ \ \ ((void)0)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00030\ \textcolor{comment}{/*\ realloc\ stack\ keeping\ its\ size\ */}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ condmovestack(L,pre,pos)\ \ \(\backslash\)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\ \ \{\ int\ sz\_\ =\ stacksize(L);\ pre;\ luaD\_reallocstack((L),\ sz\_,\ 0);\ pos;\ \}}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ luaD\_checkstackaux(L,n,pre,pos)\ \ \(\backslash\)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \ \ if\ (l\_unlikely(L-\/>stack\_last.p\ -\/\ L-\/>top.p\ <=\ (n)))\ \(\backslash\)}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ pre;\ luaD\_growstack(L,\ n,\ 1);\ pos;\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \ \ else\ \{\ condmovestack(L,pre,pos);\ \}}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*\ In\ general,\ 'pre'/'pos'\ are\ empty\ (nothing\ to\ save)\ */}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ luaD\_checkstack(L,n)\ \ \ \ luaD\_checkstackaux(L,n,(void)0,(void)0)}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ savestack(L,pt)\ \ \ \ \ (cast\_charp(pt)\ -\/\ cast\_charp(L-\/>stack.p))}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ restorestack(L,n)\ \ \ cast(StkId,\ cast\_charp(L-\/>stack.p)\ +\ (n))}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*\ macro\ to\ check\ stack\ size,\ preserving\ 'p'\ */}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ checkstackp(L,n,p)\ \ \(\backslash\)}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ luaD\_checkstackaux(L,\ n,\ \(\backslash\)}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\ \ \ \ ptrdiff\_t\ t\_\_\ =\ savestack(L,\ p),\ \ }\textcolor{comment}{/*\ save\ 'p'\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\ \ \ \ p\ =\ restorestack(L,\ t\_\_))\ \ }\textcolor{comment}{/*\ 'pos'\ part:\ restore\ 'p'\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00057\ \textcolor{comment}{**\ Maximum\ depth\ for\ nested\ C\ calls,\ syntactical\ nested\ non-\/terminals,}}
+\DoxyCodeLine{00058\ \textcolor{comment}{**\ and\ other\ features\ implemented\ through\ recursion\ in\ C.\ (Value\ must}}
+\DoxyCodeLine{00059\ \textcolor{comment}{**\ fit\ in\ a\ 16-\/bit\ unsigned\ integer.\ It\ must\ also\ be\ compatible\ with}}
+\DoxyCodeLine{00060\ \textcolor{comment}{**\ the\ size\ of\ the\ C\ stack.)}}
+\DoxyCodeLine{00061\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#if\ !defined(LUAI\_MAXCCALLS)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ LUAI\_MAXCCALLS\ \ \ \ \ \ 200}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{/*\ type\ of\ protected\ functions,\ to\ be\ ran\ by\ 'runprotected'\ */}}
+\DoxyCodeLine{00068\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{ldo_8h_a078cb45ebb3f039a69795174f45d204c}{Pfunc}})\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\_noret}}\ \mbox{\hyperlink{ldo_8h_afddbc7b0278cd2f84d0948a0ceb08688}{luaD\_errerr}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00071\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_af1aa242d37b6ba942768541e7a87ca4e}{luaD\_seterrorobj}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ errcode,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ oldtop);}
+\DoxyCodeLine{00072\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ \mbox{\hyperlink{ldo_8h_acc74898376f56b9bc223ae78d100f898}{luaD\_protectedparser}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}\ *z,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mode);}
+\DoxyCodeLine{00075\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_a060cfb719bf195b2e3dc8dd643a4ff88}{luaD\_hook}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ event,\ \textcolor{keywordtype}{int}\ line,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fTransfer,\ \textcolor{keywordtype}{int}\ nTransfer);}
+\DoxyCodeLine{00077\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_a6c91c75f4177f4d5f7d45e934d4a8a02}{luaD\_hookcall}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci);}
+\DoxyCodeLine{00078\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ldo_8h_a7c249b63b687c83168f6647b36eff2f8}{luaD\_pretailcall}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ func,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ narg1,\ \textcolor{keywordtype}{int}\ delta);}
+\DoxyCodeLine{00080\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *\mbox{\hyperlink{ldo_8h_a35dac5e865b09bba0e4229d8ef75076a}{luaD\_precall}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ func,\ \textcolor{keywordtype}{int}\ nResults);}
+\DoxyCodeLine{00081\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_a4797364de1dd297aac52f9c10565523f}{luaD\_call}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ func,\ \textcolor{keywordtype}{int}\ nResults);}
+\DoxyCodeLine{00082\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_a5315637506edcbdd30e9271e75416ae1}{luaD\_callnoyield}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ func,\ \textcolor{keywordtype}{int}\ nResults);}
+\DoxyCodeLine{00083\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ \mbox{\hyperlink{ldo_8h_a9c0872e620bb95e9365f6437a99bd602}{luaD\_closeprotected}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ ptrdiff\_t\ level,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ status);}
+\DoxyCodeLine{00085\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ \mbox{\hyperlink{ldo_8h_ae7b562a20f9c279b33b2204ac7f3da32}{luaD\_pcall}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{ldo_8h_a078cb45ebb3f039a69795174f45d204c}{Pfunc}}\ func,\ \textcolor{keywordtype}{void}\ *u,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptrdiff\_t\ oldtop,\ ptrdiff\_t\ ef);}
+\DoxyCodeLine{00087\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_aad708050f55765598080827d799e60fb}{luaD\_poscall}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structCallInfo}{CallInfo}}\ *ci,\ \textcolor{keywordtype}{int}\ nres);}
+\DoxyCodeLine{00088\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ldo_8h_a5746aab4e55af0e04b32445e4673e7a9}{luaD\_reallocstack}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ newsize,\ \textcolor{keywordtype}{int}\ raiseerror);}
+\DoxyCodeLine{00089\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ldo_8h_a65231426ec94e3bca44e117d7198604a}{luaD\_growstack}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{int}\ raiseerror);}
+\DoxyCodeLine{00090\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_a14e1a8d3ba0e5f6d55decb8b48826750}{luaD\_shrinkstack}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00091\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ldo_8h_add74ee2069a98380598ae06b509db9a6}{luaD\_inctop}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00092\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ldo_8h_a6b356e00a8d62979af278c85cfc2a6c2}{luaD\_checkminstack}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\_noret}}\ \mbox{\hyperlink{ldo_8h_a2ae74fde0d38b7eb652fc0f74facedb9}{luaD\_throw}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ errcode);}
+\DoxyCodeLine{00095\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a9f743fcc9a5278cb9ee10355f09f7302}{l\_noret}}\ \mbox{\hyperlink{ldo_8h_ae1c52718b47b5542af8ad7e2d929890f}{luaD\_throwbaselevel}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ errcode);}
+\DoxyCodeLine{00096\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a6ea6ddb9c44a1569a72dffa564edd0ae}{TStatus}}\ \mbox{\hyperlink{ldo_8h_aae7efc01bf2929bb1f3f06f4c403c963}{luaD\_rawrunprotected}}\ (\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{ldo_8h_a078cb45ebb3f039a69795174f45d204c}{Pfunc}}\ f,\ \textcolor{keywordtype}{void}\ *ud);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00099\ }
+
+\end{DoxyCode}

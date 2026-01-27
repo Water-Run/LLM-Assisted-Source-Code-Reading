@@ -1,0 +1,176 @@
+\doxysection{loslib.\+c File Reference}
+\hypertarget{loslib_8c}{}\label{loslib_8c}\index{loslib.c@{loslib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for loslib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loslib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a3ec58cf7ef7bd5214b2688f74dcefb73}{loslib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{loslib_8c_ab7df836620acf65cb1f91c2e45ed1e31}{LUA\+\_\+\+STRFTIMEOPTIONS}}
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a7d2cb05e3c27f9dfa513dcb325e1b140}{l\+\_\+timet}}~\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}}
+\item 
+\#define \mbox{\hyperlink{loslib_8c_ac63906583780389e3d016c9034a5fe9e}{l\+\_\+pushtime}}(L,  t)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a2c49dbe9467c4507fe4cd12be63eb93f}{l\+\_\+gettime}}(L,  arg)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a9192df83917f8155b1cfdbebf4c5eb8e}{l\+\_\+gmtime}}(t,  r)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a733d73698128700785bb69ebed050054}{l\+\_\+localtime}}(t,  r)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a10daafc0532e819b74f297666fcc2d5f}{LUA\+\_\+\+TMPNAMBUFSIZE}}~L\+\_\+tmpnam
+\item 
+\#define \mbox{\hyperlink{loslib_8c_aff3a671e45c29852d5964e9cfa7b2319}{lua\+\_\+tmpnam}}(b,  e)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a668b8955f4af3e617800149142cbae8e}{l\+\_\+system}}(cmd)
+\item 
+\#define \mbox{\hyperlink{loslib_8c_a0c2f8d354bc43a99aaff9ba46dcf5258}{SIZETIMEFMT}}~250
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{loslib_8c_a03d1c1c58e52032aee542b65a2b1c3ca}{luaopen\+\_\+os}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{loslib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{loslib_8c_a2c49dbe9467c4507fe4cd12be63eb93f}\index{loslib.c@{loslib.c}!l\_gettime@{l\_gettime}}
+\index{l\_gettime@{l\_gettime}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_gettime}{l\_gettime}}
+{\footnotesize\ttfamily \label{loslib_8c_a2c49dbe9467c4507fe4cd12be63eb93f} 
+\#define l\+\_\+gettime(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{arg}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lauxlib_8c_aa15bea412c49bfdee1f3dbff096ce7d2}{luaL\_checkinteger}}(L,\ arg)}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_a9192df83917f8155b1cfdbebf4c5eb8e}\index{loslib.c@{loslib.c}!l\_gmtime@{l\_gmtime}}
+\index{l\_gmtime@{l\_gmtime}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_gmtime}{l\_gmtime}}
+{\footnotesize\ttfamily \label{loslib_8c_a9192df83917f8155b1cfdbebf4c5eb8e} 
+\#define l\+\_\+gmtime(\begin{DoxyParamCaption}\item[{}]{t}{, }\item[{}]{r}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)(r)-\/>tm\_sec,\ gmtime(t))}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_a733d73698128700785bb69ebed050054}\index{loslib.c@{loslib.c}!l\_localtime@{l\_localtime}}
+\index{l\_localtime@{l\_localtime}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_localtime}{l\_localtime}}
+{\footnotesize\ttfamily \label{loslib_8c_a733d73698128700785bb69ebed050054} 
+\#define l\+\_\+localtime(\begin{DoxyParamCaption}\item[{}]{t}{, }\item[{}]{r}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((void)(r)-\/>tm\_sec,\ localtime(t))}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_ac63906583780389e3d016c9034a5fe9e}\index{loslib.c@{loslib.c}!l\_pushtime@{l\_pushtime}}
+\index{l\_pushtime@{l\_pushtime}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_pushtime}{l\_pushtime}}
+{\footnotesize\ttfamily \label{loslib_8c_ac63906583780389e3d016c9034a5fe9e} 
+\#define l\+\_\+pushtime(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{t}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lapi_8c_adcec46ff05dfee9a3c4c05828b40c213}{lua\_pushinteger}}(L,(\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}})(t))}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_a668b8955f4af3e617800149142cbae8e}\index{loslib.c@{loslib.c}!l\_system@{l\_system}}
+\index{l\_system@{l\_system}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_system}{l\_system}}
+{\footnotesize\ttfamily \label{loslib_8c_a668b8955f4af3e617800149142cbae8e} 
+\#define l\+\_\+system(\begin{DoxyParamCaption}\item[{}]{cmd}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{system(cmd)\ \ \textcolor{comment}{/*\ default\ definition\ */}}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_a7d2cb05e3c27f9dfa513dcb325e1b140}\index{loslib.c@{loslib.c}!l\_timet@{l\_timet}}
+\index{l\_timet@{l\_timet}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{l\_timet}{l\_timet}}
+{\footnotesize\ttfamily \label{loslib_8c_a7d2cb05e3c27f9dfa513dcb325e1b140} 
+\#define l\+\_\+timet~\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}}}
+
+\Hypertarget{loslib_8c_a3ec58cf7ef7bd5214b2688f74dcefb73}\index{loslib.c@{loslib.c}!loslib\_c@{loslib\_c}}
+\index{loslib\_c@{loslib\_c}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{loslib\_c}{loslib\_c}}
+{\footnotesize\ttfamily \label{loslib_8c_a3ec58cf7ef7bd5214b2688f74dcefb73} 
+\#define loslib\+\_\+c}
+
+\Hypertarget{loslib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{loslib.c@{loslib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{loslib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+\Hypertarget{loslib_8c_ab7df836620acf65cb1f91c2e45ed1e31}\index{loslib.c@{loslib.c}!LUA\_STRFTIMEOPTIONS@{LUA\_STRFTIMEOPTIONS}}
+\index{LUA\_STRFTIMEOPTIONS@{LUA\_STRFTIMEOPTIONS}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_STRFTIMEOPTIONS}{LUA\_STRFTIMEOPTIONS}}
+{\footnotesize\ttfamily \label{loslib_8c_ab7df836620acf65cb1f91c2e45ed1e31} 
+\#define LUA\+\_\+\+STRFTIMEOPTIONS}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}aAbBcCdDeFgGhHIjmMnprRStTuUVwWxXyYzZ\%"{}}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}||"{}}\ \textcolor{stringliteral}{"{}EcECExEXEyEY"{}}\ \textcolor{stringliteral}{"{}OdOeOHOIOmOMOSOuOUOVOwOWOy"{}}\ \ \textcolor{comment}{/*\ two-\/char\ options\ */}}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_aff3a671e45c29852d5964e9cfa7b2319}\index{loslib.c@{loslib.c}!lua\_tmpnam@{lua\_tmpnam}}
+\index{lua\_tmpnam@{lua\_tmpnam}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{lua\_tmpnam}{lua\_tmpnam}}
+{\footnotesize\ttfamily \label{loslib_8c_aff3a671e45c29852d5964e9cfa7b2319} 
+\#define lua\+\_\+tmpnam(\begin{DoxyParamCaption}\item[{}]{b}{, }\item[{}]{e}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\ e\ =\ (tmpnam(b)\ ==\ NULL);\ \}}
+
+\end{DoxyCode}
+\Hypertarget{loslib_8c_a10daafc0532e819b74f297666fcc2d5f}\index{loslib.c@{loslib.c}!LUA\_TMPNAMBUFSIZE@{LUA\_TMPNAMBUFSIZE}}
+\index{LUA\_TMPNAMBUFSIZE@{LUA\_TMPNAMBUFSIZE}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_TMPNAMBUFSIZE}{LUA\_TMPNAMBUFSIZE}}
+{\footnotesize\ttfamily \label{loslib_8c_a10daafc0532e819b74f297666fcc2d5f} 
+\#define LUA\+\_\+\+TMPNAMBUFSIZE~L\+\_\+tmpnam}
+
+\Hypertarget{loslib_8c_a0c2f8d354bc43a99aaff9ba46dcf5258}\index{loslib.c@{loslib.c}!SIZETIMEFMT@{SIZETIMEFMT}}
+\index{SIZETIMEFMT@{SIZETIMEFMT}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{SIZETIMEFMT}{SIZETIMEFMT}}
+{\footnotesize\ttfamily \label{loslib_8c_a0c2f8d354bc43a99aaff9ba46dcf5258} 
+\#define SIZETIMEFMT~250}
+
+
+
+\label{doc-func-members}
+\Hypertarget{loslib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{loslib_8c_a03d1c1c58e52032aee542b65a2b1c3ca}\index{loslib.c@{loslib.c}!luaopen\_os@{luaopen\_os}}
+\index{luaopen\_os@{luaopen\_os}!loslib.c@{loslib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_os()}{luaopen\_os()}}
+{\footnotesize\ttfamily \label{loslib_8c_a03d1c1c58e52032aee542b65a2b1c3ca} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+os (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+

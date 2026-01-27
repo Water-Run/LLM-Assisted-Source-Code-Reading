@@ -1,0 +1,88 @@
+\doxysection{lcorolib.\+c File Reference}
+\hypertarget{lcorolib_8c}{}\label{lcorolib_8c}\index{lcorolib.c@{lcorolib.c}}
+{\ttfamily \#include "{}lprefix.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lauxlib.\+h"{}}\newline
+{\ttfamily \#include "{}lualib.\+h"{}}\newline
+{\ttfamily \#include "{}llimits.\+h"{}}\newline
+Include dependency graph for lcorolib.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lcorolib_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_a31c0a2b112d201fa0724ffc2b060bae9}{lcorolib\+\_\+c}}
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_a884b19ad6094d6238c4072a8064aeb12}{LUA\+\_\+\+LIB}}
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_adaddcee95d6b75c9dbd868c5d0712a3d}{COS\+\_\+\+RUN}}~0
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_a1383eeb3b35a1c6845dddb20f6231dee}{COS\+\_\+\+DEAD}}~1
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_a6a963efbed545bee5070e431283bf6ef}{COS\+\_\+\+YIELD}}~2
+\item 
+\#define \mbox{\hyperlink{lcorolib_8c_a22448f8c21d50901d6b61f24babfdeb5}{COS\+\_\+\+NORM}}~3
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int \mbox{\hyperlink{lcorolib_8c_a8515aa0d6a2e901a5397afd5e4250db2}{luaopen\+\_\+coroutine}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lcorolib_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lcorolib_8c_a1383eeb3b35a1c6845dddb20f6231dee}\index{lcorolib.c@{lcorolib.c}!COS\_DEAD@{COS\_DEAD}}
+\index{COS\_DEAD@{COS\_DEAD}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{COS\_DEAD}{COS\_DEAD}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a1383eeb3b35a1c6845dddb20f6231dee} 
+\#define COS\+\_\+\+DEAD~1}
+
+\Hypertarget{lcorolib_8c_a22448f8c21d50901d6b61f24babfdeb5}\index{lcorolib.c@{lcorolib.c}!COS\_NORM@{COS\_NORM}}
+\index{COS\_NORM@{COS\_NORM}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{COS\_NORM}{COS\_NORM}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a22448f8c21d50901d6b61f24babfdeb5} 
+\#define COS\+\_\+\+NORM~3}
+
+\Hypertarget{lcorolib_8c_adaddcee95d6b75c9dbd868c5d0712a3d}\index{lcorolib.c@{lcorolib.c}!COS\_RUN@{COS\_RUN}}
+\index{COS\_RUN@{COS\_RUN}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{COS\_RUN}{COS\_RUN}}
+{\footnotesize\ttfamily \label{lcorolib_8c_adaddcee95d6b75c9dbd868c5d0712a3d} 
+\#define COS\+\_\+\+RUN~0}
+
+\Hypertarget{lcorolib_8c_a6a963efbed545bee5070e431283bf6ef}\index{lcorolib.c@{lcorolib.c}!COS\_YIELD@{COS\_YIELD}}
+\index{COS\_YIELD@{COS\_YIELD}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{COS\_YIELD}{COS\_YIELD}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a6a963efbed545bee5070e431283bf6ef} 
+\#define COS\+\_\+\+YIELD~2}
+
+\Hypertarget{lcorolib_8c_a31c0a2b112d201fa0724ffc2b060bae9}\index{lcorolib.c@{lcorolib.c}!lcorolib\_c@{lcorolib\_c}}
+\index{lcorolib\_c@{lcorolib\_c}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{lcorolib\_c}{lcorolib\_c}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a31c0a2b112d201fa0724ffc2b060bae9} 
+\#define lcorolib\+\_\+c}
+
+\Hypertarget{lcorolib_8c_a884b19ad6094d6238c4072a8064aeb12}\index{lcorolib.c@{lcorolib.c}!LUA\_LIB@{LUA\_LIB}}
+\index{LUA\_LIB@{LUA\_LIB}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{LUA\_LIB}{LUA\_LIB}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a884b19ad6094d6238c4072a8064aeb12} 
+\#define LUA\+\_\+\+LIB}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lcorolib_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lcorolib_8c_a8515aa0d6a2e901a5397afd5e4250db2}\index{lcorolib.c@{lcorolib.c}!luaopen\_coroutine@{luaopen\_coroutine}}
+\index{luaopen\_coroutine@{luaopen\_coroutine}!lcorolib.c@{lcorolib.c}}
+\doxysubsubsection{\texorpdfstring{luaopen\_coroutine()}{luaopen\_coroutine()}}
+{\footnotesize\ttfamily \label{lcorolib_8c_a8515aa0d6a2e901a5397afd5e4250db2} 
+\mbox{\hyperlink{luaconf_8h_a8e877216dd2f0cf9a68255b494f82f50}{LUAMOD\+\_\+\+API}} int luaopen\+\_\+coroutine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{}\end{DoxyParamCaption})}
+

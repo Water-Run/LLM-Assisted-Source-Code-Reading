@@ -1,0 +1,1441 @@
+\doxysection{lobject.\+h}
+\hypertarget{lobject_8h_source}{}\label{lobject_8h_source}\mbox{\hyperlink{lobject_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00003\ \textcolor{comment}{**\ 文件概要说明}}
+\DoxyCodeLine{00004\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00005\ \textcolor{comment}{**}}
+\DoxyCodeLine{00006\ \textcolor{comment}{**\ 文件名:\ lobject.h}}
+\DoxyCodeLine{00007\ \textcolor{comment}{**\ 版本:\ \$Id:\ lobject.h\ \$}}
+\DoxyCodeLine{00008\ \textcolor{comment}{**\ 作用:\ Lua对象的类型定义}}
+\DoxyCodeLine{00009\ \textcolor{comment}{**\ 版权信息:\ 见lua.h}}
+\DoxyCodeLine{00010\ \textcolor{comment}{**}}
+\DoxyCodeLine{00011\ \textcolor{comment}{**\ 这个头文件是Lua虚拟机的核心文件之一,定义了Lua中所有基本数据类型的内部表示。}}
+\DoxyCodeLine{00012\ \textcolor{comment}{**}}
+\DoxyCodeLine{00013\ \textcolor{comment}{**\ 主要内容包括:}}
+\DoxyCodeLine{00014\ \textcolor{comment}{**\ 1.\ TValue结构\ -\/\ Lua中所有值的统一表示(带标签的值)}}
+\DoxyCodeLine{00015\ \textcolor{comment}{**\ 2.\ 各种基本类型的定义和操作宏:}}
+\DoxyCodeLine{00016\ \textcolor{comment}{**\ \ \ \ -\/\ nil\ (包括多种变体:标准nil、空槽、缺失键等)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{**\ \ \ \ -\/\ boolean\ (true/false)}}
+\DoxyCodeLine{00018\ \textcolor{comment}{**\ \ \ \ -\/\ number\ (整数和浮点数)}}
+\DoxyCodeLine{00019\ \textcolor{comment}{**\ \ \ \ -\/\ string\ (短字符串和长字符串)}}
+\DoxyCodeLine{00020\ \textcolor{comment}{**\ \ \ \ -\/\ userdata\ (轻量和完全userdata)}}
+\DoxyCodeLine{00021\ \textcolor{comment}{**\ \ \ \ -\/\ function\ (Lua闭包、C闭包、轻量C函数)}}
+\DoxyCodeLine{00022\ \textcolor{comment}{**\ \ \ \ -\/\ table\ (哈希表)}}
+\DoxyCodeLine{00023\ \textcolor{comment}{**\ \ \ \ -\/\ thread\ (协程)}}
+\DoxyCodeLine{00024\ \textcolor{comment}{**\ 3.\ 垃圾回收相关的结构和标记}}
+\DoxyCodeLine{00025\ \textcolor{comment}{**\ 4.\ 栈值(StackValue)的定义}}
+\DoxyCodeLine{00026\ \textcolor{comment}{**\ 5.\ 各种辅助宏用于类型检查、值设置和获取}}
+\DoxyCodeLine{00027\ \textcolor{comment}{**}}
+\DoxyCodeLine{00028\ \textcolor{comment}{**\ 核心设计思想:}}
+\DoxyCodeLine{00029\ \textcolor{comment}{**\ -\/\ 使用"{}带标签的值"{}(Tagged\ Value)设计,每个值包含实际数据和类型标签}}
+\DoxyCodeLine{00030\ \textcolor{comment}{**\ -\/\ 类型标签使用位运算编码类型信息和变体信息}}
+\DoxyCodeLine{00031\ \textcolor{comment}{**\ -\/\ 通过宏提供类型安全的访问接口}}
+\DoxyCodeLine{00032\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00033\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ lobject\_h}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ lobject\_h}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdarg.h>}\ \textcolor{comment}{//\ 标准库头文件,提供可变参数列表支持(va\_list,\ va\_start等)}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{llimits_8h}{llimits.h}}"{}}\ \textcolor{comment}{//\ Lua的限制和平台相关定义(如整数类型、内存限制等)}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lua_8h}{lua.h}}"{}}\ \ \ \ \ \textcolor{comment}{//\ Lua的公共API定义}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00044\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00045\ \textcolor{comment}{**\ 额外的可回收对象类型}}
+\DoxyCodeLine{00046\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00047\ \textcolor{comment}{**}}
+\DoxyCodeLine{00048\ \textcolor{comment}{**\ 这些是Lua内部使用的类型,不直接暴露给用户}}
+\DoxyCodeLine{00049\ \textcolor{comment}{**\ LUA\_NUMTYPES是在lua.h中定义的基本类型数量}}
+\DoxyCodeLine{00050\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00051\ \textcolor{comment}{/*\ upvalues\ -\/\ 上值,用于实现闭包的捕获变量\ */}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ LUA\_TUPVAL\ LUA\_NUMTYPES}}
+\DoxyCodeLine{00053\ \textcolor{comment}{/*\ function\ prototypes\ -\/\ 函数原型,存储函数的字节码和元信息\ */}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ LUA\_TPROTO\ (LUA\_NUMTYPES\ +\ 1)}}
+\DoxyCodeLine{00055\ \textcolor{comment}{/*\ removed\ keys\ in\ tables\ -\/\ 表中被删除的键,用于垃圾回收优化\ */}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ LUA\_TDEADKEY\ (LUA\_NUMTYPES\ +\ 2)}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00059\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00060\ \textcolor{comment}{**\ 所有可能类型的总数(包括LUA\_TNONE但不包括DEADKEY)}}
+\DoxyCodeLine{00061\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00062\ \textcolor{comment}{**}}
+\DoxyCodeLine{00063\ \textcolor{comment}{**\ LUA\_TNONE通常值为-\/1,表示"{}无类型"{}}}
+\DoxyCodeLine{00064\ \textcolor{comment}{**\ DEADKEY是内部使用的特殊标记,不计入总数}}
+\DoxyCodeLine{00065\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ LUA\_TOTALTYPES\ (LUA\_TPROTO\ +\ 2)}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00069\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00070\ \textcolor{comment}{**\ 标签值(Tagged\ Values)的标签位使用说明}}
+\DoxyCodeLine{00071\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00072\ \textcolor{comment}{**}}
+\DoxyCodeLine{00073\ \textcolor{comment}{**\ 每个TValue都有一个tt\_字段(类型标签),是一个字节(8位):}}
+\DoxyCodeLine{00074\ \textcolor{comment}{**\ -\/\ 位\ 0-\/3:\ 实际类型标签(LUA\_T*常量,如LUA\_TNIL,\ LUA\_TNUMBER等)}}
+\DoxyCodeLine{00075\ \textcolor{comment}{**\ -\/\ 位\ 4-\/5:\ 变体位(用于区分同一类型的不同变体,如整数vs浮点数)}}
+\DoxyCodeLine{00076\ \textcolor{comment}{**\ -\/\ 位\ 6:\ \ \ 是否可回收标记(1表示需要垃圾回收)}}
+\DoxyCodeLine{00077\ \textcolor{comment}{**\ -\/\ 位\ 7:\ \ \ 保留}}
+\DoxyCodeLine{00078\ \textcolor{comment}{**}}
+\DoxyCodeLine{00079\ \textcolor{comment}{**\ 这种设计允许在一个字节内编码类型、变体和GC信息}}
+\DoxyCodeLine{00080\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00083\ \textcolor{comment}{**\ 为类型添加变体位}}
+\DoxyCodeLine{00084\ \textcolor{comment}{**\ 参数:\ t\ -\/\ 基础类型,\ v\ -\/\ 变体值(0-\/3)}}
+\DoxyCodeLine{00085\ \textcolor{comment}{**\ 返回:\ 带变体的类型标签}}
+\DoxyCodeLine{00086\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ makevariant(t,\ v)\ ((t)\ |\ ((v)\ <<\ 4))}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00090\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00091\ \textcolor{comment}{**\ 所有Lua值的联合体}}
+\DoxyCodeLine{00092\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00093\ \textcolor{comment}{**}}
+\DoxyCodeLine{00094\ \textcolor{comment}{**\ Value联合体可以存储任何Lua值的实际数据}}
+\DoxyCodeLine{00095\ \textcolor{comment}{**\ 使用联合体可以节省内存,因为一个值同时只能是一种类型}}
+\DoxyCodeLine{00096\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00097\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionValue}{Value}}}
+\DoxyCodeLine{00098\ \{}
+\DoxyCodeLine{00099\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{unionValue_a1809643a2deb85a2e8d690b8e1488481}{gc}};\ \textcolor{comment}{/*\ 可回收对象(字符串、表、函数等)\ */}}
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{unionValue_aa001f39a25c7d85a27cbdbab2d386ccd}{p}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 轻量用户数据(light\ userdata)\ -\/\ 不需要GC的C指针\ */}}
+\DoxyCodeLine{00101\ \ \ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}\ \mbox{\hyperlink{unionValue_acc94eaa63b3acf650541fcd09025f2ad}{f}};\ \ \ \ \ \textcolor{comment}{/*\ 轻量C函数\ -\/\ 直接存储函数指针\ */}}
+\DoxyCodeLine{00102\ \ \ \mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}}\ \mbox{\hyperlink{unionValue_a0d6f6bd1f2576b712e95aaffa0f87bab}{i}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ 整数(通常是64位整数)\ */}}
+\DoxyCodeLine{00103\ \ \ \mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}}\ \mbox{\hyperlink{unionValue_ae8663f45c016d5fbf827cb308b2f3df8}{n}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 浮点数(通常是double)\ */}}
+\DoxyCodeLine{00104\ \ \ \textcolor{comment}{/*\ 未使用,但可避免未初始化值的警告\ */}}
+\DoxyCodeLine{00105\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{unionValue_aa6fc4345b43257a82c278a07adcf59dc}{ub}};\ \textcolor{comment}{/*\ 无符号字节\ */}}
+\DoxyCodeLine{00106\ \}\ \mbox{\hyperlink{unionValue}{Value}};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00109\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00110\ \textcolor{comment}{**\ 带标签的值(Tagged\ Values)}}
+\DoxyCodeLine{00111\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00112\ \textcolor{comment}{**}}
+\DoxyCodeLine{00113\ \textcolor{comment}{**\ 这是Lua中值的基本表示:一个实际值加上其类型标签}}
+\DoxyCodeLine{00114\ \textcolor{comment}{**}}
+\DoxyCodeLine{00115\ \textcolor{comment}{**\ TValue是整个Lua虚拟机最核心的数据结构:}}
+\DoxyCodeLine{00116\ \textcolor{comment}{**\ -\/\ value\_:\ 存储实际数据的Value联合体}}
+\DoxyCodeLine{00117\ \textcolor{comment}{**\ -\/\ tt\_:\ 类型标签字节,编码类型、变体和GC信息}}
+\DoxyCodeLine{00118\ \textcolor{comment}{**}}
+\DoxyCodeLine{00119\ \textcolor{comment}{**\ 这种设计的优点:}}
+\DoxyCodeLine{00120\ \textcolor{comment}{**\ 1.\ 统一表示所有类型}}
+\DoxyCodeLine{00121\ \textcolor{comment}{**\ 2.\ 类型检查快速(只需检查一个字节)}}
+\DoxyCodeLine{00122\ \textcolor{comment}{**\ 3.\ 内存效率高(联合体只占用最大成员的空间)}}
+\DoxyCodeLine{00123\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{comment}{/*\ TValue的字段定义宏\ */}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ TValuefields\ \(\backslash\)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\ \ Value\ value\_;\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\ \ lu\_byte\ tt\_}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{/*\ TValue结构体\ */}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTValue}{TValue}}}
+\DoxyCodeLine{00132\ \{}
+\DoxyCodeLine{00133\ \ \ \mbox{\hyperlink{structTValue_ab8256d9daa6c5ba0d03dcfcf997357f7}{TValuefields}};\ \textcolor{comment}{/*\ 展开为:\ Value\ value\_;\ lu\_byte\ tt\_;\ */}}
+\DoxyCodeLine{00134\ \}\ \mbox{\hyperlink{structTValue}{TValue}};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{comment}{/*\ 获取TValue的value\_字段\ */}}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#define\ val\_(o)\ ((o)-\/>value\_)}}
+\DoxyCodeLine{00138\ \textcolor{comment}{/*\ 获取原始值(无类型检查)\ */}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#define\ valraw(o)\ (val\_(o))}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{comment}{/*\ 获取TValue的原始类型标签(包含所有位信息)\ */}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#define\ rawtt(o)\ ((o)-\/>tt\_)}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00145\ \textcolor{comment}{**\ 无变体的类型标签(仅保留位0-\/3)}}
+\DoxyCodeLine{00146\ \textcolor{comment}{**\ 用于获取基础类型,忽略变体信息}}
+\DoxyCodeLine{00147\ \textcolor{comment}{**\ 0x0F\ =\ 0b00001111,保留低4位}}
+\DoxyCodeLine{00148\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#define\ novariant(t)\ ((t)\ \&\ 0x0F)}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00152\ \textcolor{comment}{**\ 带变体的类型标签(位0-\/5)}}
+\DoxyCodeLine{00153\ \textcolor{comment}{**\ 0x3F\ =\ 0b00111111,保留低6位(类型+变体)}}
+\DoxyCodeLine{00154\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#define\ withvariant(t)\ ((t)\ \&\ 0x3F)}}
+\DoxyCodeLine{00156\ \textcolor{comment}{/*\ 获取TValue的完整类型标签(类型+变体)\ */}}
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\#define\ ttypetag(o)\ withvariant(rawtt(o))}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{comment}{/*\ 获取TValue的基础类型(无变体)\ */}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\#define\ ttype(o)\ (novariant(rawtt(o)))}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00163\ \textcolor{comment}{**\ 类型测试宏}}
+\DoxyCodeLine{00164\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00165\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00166\ \textcolor{comment}{/*\ 检查标签是否完全匹配(包括变体)\ */}}
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#define\ checktag(o,\ t)\ (rawtt(o)\ ==\ (t))}}
+\DoxyCodeLine{00168\ \textcolor{comment}{/*\ 检查基础类型是否匹配(忽略变体)\ */}}
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#define\ checktype(o,\ t)\ (ttype(o)\ ==\ (t))}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00172\ \textcolor{comment}{**\ 内部测试宏}}
+\DoxyCodeLine{00173\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00174\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00177\ \textcolor{comment}{**\ 检查可回收对象的标签是否与原始值匹配}}
+\DoxyCodeLine{00178\ \textcolor{comment}{**\ 用于调试,确保GC对象的类型信息一致}}
+\DoxyCodeLine{00179\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\#define\ righttt(obj)\ (ttypetag(obj)\ ==\ gcvalue(obj)-\/>tt)}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00183\ \textcolor{comment}{**\ 检查值的"{}活性"{}(liveness)}}
+\DoxyCodeLine{00184\ \textcolor{comment}{**}}
+\DoxyCodeLine{00185\ \textcolor{comment}{**\ 任何被程序操作的值要么是:}}
+\DoxyCodeLine{00186\ \textcolor{comment}{**\ 1.\ 不可回收的(如数字、布尔值)}}
+\DoxyCodeLine{00187\ \textcolor{comment}{**\ 2.\ 可回收对象且标签正确且未死亡}}
+\DoxyCodeLine{00188\ \textcolor{comment}{**}}
+\DoxyCodeLine{00189\ \textcolor{comment}{**\ 'L\ ==\ NULL'选项允许在L不可用时使用此宏}}
+\DoxyCodeLine{00190\ \textcolor{comment}{**}}
+\DoxyCodeLine{00191\ \textcolor{comment}{**\ 这个宏在调试版本中用于运行时检查,确保不会访问已被GC回收的对象}}
+\DoxyCodeLine{00192\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\#define\ checkliveness(L,\ obj)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\ \ ((void)L,\ lua\_longassert(!iscollectable(obj)\ ||\ \(\backslash\)}}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (righttt(obj)\ \&\&\ (L\ ==\ NULL\ ||\ !isdead(G(L),\ gcvalue(obj))))))}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00198\ \textcolor{comment}{**\ 值设置宏}}
+\DoxyCodeLine{00199\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00200\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \textcolor{comment}{/*\ 设置值的类型标签\ */}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#define\ settt\_(o,\ t)\ ((o)-\/>tt\_\ =\ (t))}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00206\ \textcolor{comment}{**\ 主要的值复制宏(从obj2复制到obj1)}}
+\DoxyCodeLine{00207\ \textcolor{comment}{**}}
+\DoxyCodeLine{00208\ \textcolor{comment}{**\ 步骤:}}
+\DoxyCodeLine{00209\ \textcolor{comment}{**\ 1.\ 创建临时指针避免宏参数副作用}}
+\DoxyCodeLine{00210\ \textcolor{comment}{**\ 2.\ 复制value\_字段(实际数据)}}
+\DoxyCodeLine{00211\ \textcolor{comment}{**\ 3.\ 复制tt\_字段(类型标签)}}
+\DoxyCodeLine{00212\ \textcolor{comment}{**\ 4.\ 检查活性(调试版本)}}
+\DoxyCodeLine{00213\ \textcolor{comment}{**\ 5.\ 断言不是非标准nil}}
+\DoxyCodeLine{00214\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#define\ setobj(L,\ obj1,\ obj2)\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io1\ =\ (obj1);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\ \ \ \ const\ TValue\ *io2\ =\ (obj2);\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\ \ \ \ io1-\/>value\_\ =\ io2-\/>value\_;\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\ \ \ \ settt\_(io1,\ io2-\/>tt\_);\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io1);\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\ \ \ \ lua\_assert(!isnonstrictnil(io1));\ \(\backslash\)}}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00226\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00227\ \textcolor{comment}{**\ 不同类型的赋值操作}}
+\DoxyCodeLine{00228\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00229\ \textcolor{comment}{**}}
+\DoxyCodeLine{00230\ \textcolor{comment}{**\ 根据源和目标的不同,使用不同的赋值宏}}
+\DoxyCodeLine{00231\ \textcolor{comment}{**\ (目前它们大多相同,但将来可能不同,例如写屏障的不同处理)}}
+\DoxyCodeLine{00232\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \textcolor{comment}{/*\ 从栈到栈\ -\/\ s2v将StackValue转换为TValue\ */}}
+\DoxyCodeLine{00235\ \textcolor{preprocessor}{\#define\ setobjs2s(L,\ o1,\ o2)\ setobj(L,\ s2v(o1),\ s2v(o2))}}
+\DoxyCodeLine{00236\ \textcolor{comment}{/*\ 到栈(不是从同一个栈)\ */}}
+\DoxyCodeLine{00237\ \textcolor{preprocessor}{\#define\ setobj2s(L,\ o1,\ o2)\ setobj(L,\ s2v(o1),\ o2)}}
+\DoxyCodeLine{00238\ \textcolor{comment}{/*\ 从表到同一个表\ */}}
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\#define\ setobjt2t\ setobj}}
+\DoxyCodeLine{00240\ \textcolor{comment}{/*\ 到新对象\ */}}
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\#define\ setobj2n\ setobj}}
+\DoxyCodeLine{00242\ \textcolor{comment}{/*\ 到表\ */}}
+\DoxyCodeLine{00243\ \textcolor{preprocessor}{\#define\ setobj2t\ setobj}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00246\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00247\ \textcolor{comment}{**\ Lua栈中的条目}}
+\DoxyCodeLine{00248\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00249\ \textcolor{comment}{**}}
+\DoxyCodeLine{00250\ \textcolor{comment}{**\ StackValue是栈槽的表示,它是一个联合体:}}
+\DoxyCodeLine{00251\ \textcolor{comment}{**\ 1.\ val:\ 普通的TValue}}
+\DoxyCodeLine{00252\ \textcolor{comment}{**\ 2.\ tbclist:\ 用于"{}to-\/be-\/closed"{}变量的链表节点}}
+\DoxyCodeLine{00253\ \textcolor{comment}{**}}
+\DoxyCodeLine{00254\ \textcolor{comment}{**\ "{}to-\/be-\/closed"{}变量是Lua\ 5.4引入的特性,允许在作用域结束时}}
+\DoxyCodeLine{00255\ \textcolor{comment}{**\ 自动调用清理函数(类似于其他语言的defer或RAII)}}
+\DoxyCodeLine{00256\ \textcolor{comment}{**}}
+\DoxyCodeLine{00257\ \textcolor{comment}{**\ delta字段用于链接到下一个tbc变量。由于delta是unsigned\ short,}}
+\DoxyCodeLine{00258\ \textcolor{comment}{**\ 如果距离太大,会使用虚拟条目(delta==0)}}
+\DoxyCodeLine{00259\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00260\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionStackValue}{StackValue}}}
+\DoxyCodeLine{00261\ \{}
+\DoxyCodeLine{00262\ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ \mbox{\hyperlink{unionStackValue_a8427f32076f2a9ad8db716da1deeb468}{val}};\ \textcolor{comment}{/*\ 栈上的普通值\ */}}
+\DoxyCodeLine{00263\ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00264\ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \mbox{\hyperlink{unionStackValue_a26033019ebf5144b31ae1c442c539cd4}{TValuefields}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 和TValue相同的字段\ */}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ \mbox{\hyperlink{unionStackValue_a7771cd1552c09ee6ed38b626b2159c14}{delta}};\ \textcolor{comment}{/*\ 到链表中下一个tbc变量的距离\ */}}
+\DoxyCodeLine{00267\ \ \ \}\ \mbox{\hyperlink{unionStackValue_a9a0057a5ab930ec0bb2ad624f6c5e4ca}{tbclist}};}
+\DoxyCodeLine{00268\ \}\ \mbox{\hyperlink{unionStackValue}{StackValue}};}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00271\ \textcolor{comment}{**\ 栈元素索引}}
+\DoxyCodeLine{00272\ \textcolor{comment}{**\ StkId是指向栈槽的指针,用于索引和操作栈上的值}}
+\DoxyCodeLine{00273\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00274\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{unionStackValue}{StackValue}}\ *\mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}};}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00277\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00278\ \textcolor{comment}{**\ 栈重分配时的指针处理}}
+\DoxyCodeLine{00279\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00280\ \textcolor{comment}{**}}
+\DoxyCodeLine{00281\ \textcolor{comment}{**\ 当栈需要扩容时,所有指向栈的指针都会失效}}
+\DoxyCodeLine{00282\ \textcolor{comment}{**\ StkIdRel允许在重分配期间将指针转换为偏移量,重分配后再转回指针}}
+\DoxyCodeLine{00283\ \textcolor{comment}{**}}
+\DoxyCodeLine{00284\ \textcolor{comment}{**\ 这是一个联合体:}}
+\DoxyCodeLine{00285\ \textcolor{comment}{**\ -\/\ p:\ 实际指针(正常使用)}}
+\DoxyCodeLine{00286\ \textcolor{comment}{**\ -\/\ offset:\ 偏移量(重分配期间使用)}}
+\DoxyCodeLine{00287\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00288\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union}}
+\DoxyCodeLine{00289\ \{}
+\DoxyCodeLine{00290\ \ \ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ \mbox{\hyperlink{unionStkIdRel_a217d7edba31898cdfe8fdd91df893d26}{p}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 实际指针\ */}}
+\DoxyCodeLine{00291\ \ \ ptrdiff\_t\ \mbox{\hyperlink{unionStkIdRel_aa5b9278d862af81303c5ce9f9b62943b}{offset}};\ \textcolor{comment}{/*\ 栈重分配时使用的偏移量\ */}}
+\DoxyCodeLine{00292\ \}\ \mbox{\hyperlink{unionStkIdRel}{StkIdRel}};}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00295\ \textcolor{comment}{**\ 将StackValue转换为TValue}}
+\DoxyCodeLine{00296\ \textcolor{comment}{**\ 因为StackValue的第一个成员是val(TValue),所以取其地址即可}}
+\DoxyCodeLine{00297\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00298\ \textcolor{preprocessor}{\#define\ s2v(o)\ (\&(o)-\/>val)}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00301\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00302\ \textcolor{comment}{**\ Nil类型}}
+\DoxyCodeLine{00303\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00304\ \textcolor{comment}{**}}
+\DoxyCodeLine{00305\ \textcolor{comment}{**\ Lua\ 5.4引入了多种nil变体,用于不同的内部目的:}}
+\DoxyCodeLine{00306\ \textcolor{comment}{**\ 1.\ LUA\_VNIL:\ 标准的nil值}}
+\DoxyCodeLine{00307\ \textcolor{comment}{**\ 2.\ LUA\_VEMPTY:\ 空槽(表中未使用的位置)}}
+\DoxyCodeLine{00308\ \textcolor{comment}{**\ 3.\ LUA\_VABSTKEY:\ 表中不存在的键}}
+\DoxyCodeLine{00309\ \textcolor{comment}{**\ 4.\ LUA\_VNOTABLE:\ 快速get访问非表时的信号}}
+\DoxyCodeLine{00310\ \textcolor{comment}{**}}
+\DoxyCodeLine{00311\ \textcolor{comment}{**\ 这些变体在语义上都等同于nil,但在内部实现中有不同用途}}
+\DoxyCodeLine{00312\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \textcolor{comment}{/*\ 标准nil\ */}}
+\DoxyCodeLine{00315\ \textcolor{preprocessor}{\#define\ LUA\_VNIL\ makevariant(LUA\_TNIL,\ 0)}}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \textcolor{comment}{/*\ 空槽(可能与包含nil的槽不同)\ */}}
+\DoxyCodeLine{00318\ \textcolor{preprocessor}{\#define\ LUA\_VEMPTY\ makevariant(LUA\_TNIL,\ 1)}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \textcolor{comment}{/*\ 表访问中键不存在时返回的值(缺失键)\ */}}
+\DoxyCodeLine{00321\ \textcolor{preprocessor}{\#define\ LUA\_VABSTKEY\ makevariant(LUA\_TNIL,\ 2)}}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \textcolor{comment}{/*\ 用于表示快速get正在访问非表对象的特殊变体\ */}}
+\DoxyCodeLine{00324\ \textcolor{preprocessor}{\#define\ LUA\_VNOTABLE\ makevariant(LUA\_TNIL,\ 3)}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00327\ \textcolor{comment}{**\ 测试任何种类的nil}}
+\DoxyCodeLine{00328\ \textcolor{comment}{**\ checktype忽略变体位,所以匹配所有nil变体}}
+\DoxyCodeLine{00329\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00330\ \textcolor{preprocessor}{\#define\ ttisnil(v)\ checktype((v),\ LUA\_TNIL)}}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00333\ \textcolor{comment}{**\ 测试表访问结果的宏}}
+\DoxyCodeLine{00334\ \textcolor{comment}{**}}
+\DoxyCodeLine{00335\ \textcolor{comment}{**\ 形式上,应该区分LUA\_VEMPTY/LUA\_VABSTKEY/LUA\_VNOTABLE和其他标签}}
+\DoxyCodeLine{00336\ \textcolor{comment}{**\ 但由于当前nil等价于LUA\_VEMPTY,简单测试是否为nil即可}}
+\DoxyCodeLine{00337\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00338\ \textcolor{preprocessor}{\#define\ tagisempty(tag)\ (novariant(tag)\ ==\ LUA\_TNIL)}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \textcolor{comment}{/*\ 测试标准nil\ */}}
+\DoxyCodeLine{00341\ \textcolor{preprocessor}{\#define\ ttisstrictnil(o)\ checktag((o),\ LUA\_VNIL)}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \textcolor{comment}{/*\ 将对象设置为nil\ */}}
+\DoxyCodeLine{00344\ \textcolor{preprocessor}{\#define\ setnilvalue(obj)\ settt\_(obj,\ LUA\_VNIL)}}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \textcolor{comment}{/*\ 测试是否为缺失键\ */}}
+\DoxyCodeLine{00347\ \textcolor{preprocessor}{\#define\ isabstkey(v)\ checktag((v),\ LUA\_VABSTKEY)}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00350\ \textcolor{comment}{**\ 测试非标准nil的宏(仅用于断言)}}
+\DoxyCodeLine{00351\ \textcolor{comment}{**\ 用于调试,检测意外的nil变体}}
+\DoxyCodeLine{00352\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00353\ \textcolor{preprocessor}{\#define\ isnonstrictnil(v)\ (ttisnil(v)\ \&\&\ !ttisstrictnil(v))}}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00356\ \textcolor{comment}{**\ 默认情况下,任何种类的nil都被视为空}}
+\DoxyCodeLine{00357\ \textcolor{comment}{**\ (在任何定义中,与缺失键关联的值也必须被接受为空)}}
+\DoxyCodeLine{00358\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00359\ \textcolor{preprocessor}{\#define\ isempty(v)\ ttisnil(v)}}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00362\ \textcolor{comment}{**\ 缺失键的常量定义}}
+\DoxyCodeLine{00363\ \textcolor{comment}{**\ \{NULL\},\ LUA\_VABSTKEY\ 初始化一个TValue为缺失键}}
+\DoxyCodeLine{00364\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00365\ \textcolor{preprocessor}{\#define\ ABSTKEYCONSTANT\ \{NULL\},\ LUA\_VABSTKEY}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \textcolor{comment}{/*\ 将条目标记为空\ */}}
+\DoxyCodeLine{00368\ \textcolor{preprocessor}{\#define\ setempty(v)\ settt\_(v,\ LUA\_VEMPTY)}}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00371\ \textcolor{comment}{**\ 布尔值}}
+\DoxyCodeLine{00372\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00373\ \textcolor{comment}{**}}
+\DoxyCodeLine{00374\ \textcolor{comment}{**\ 布尔类型有两个变体:false和true}}
+\DoxyCodeLine{00375\ \textcolor{comment}{**\ 使用变体位区分,而不是在value\_中存储0/1}}
+\DoxyCodeLine{00376\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ \textcolor{comment}{/*\ false变体\ */}}
+\DoxyCodeLine{00379\ \textcolor{preprocessor}{\#define\ LUA\_VFALSE\ makevariant(LUA\_TBOOLEAN,\ 0)}}
+\DoxyCodeLine{00380\ \textcolor{comment}{/*\ true变体\ */}}
+\DoxyCodeLine{00381\ \textcolor{preprocessor}{\#define\ LUA\_VTRUE\ makevariant(LUA\_TBOOLEAN,\ 1)}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \textcolor{comment}{/*\ 测试是否为布尔类型\ */}}
+\DoxyCodeLine{00384\ \textcolor{preprocessor}{\#define\ ttisboolean(o)\ checktype((o),\ LUA\_TBOOLEAN)}}
+\DoxyCodeLine{00385\ \textcolor{comment}{/*\ 测试是否为false\ */}}
+\DoxyCodeLine{00386\ \textcolor{preprocessor}{\#define\ ttisfalse(o)\ checktag((o),\ LUA\_VFALSE)}}
+\DoxyCodeLine{00387\ \textcolor{comment}{/*\ 测试是否为true\ */}}
+\DoxyCodeLine{00388\ \textcolor{preprocessor}{\#define\ ttistrue(o)\ checktag((o),\ LUA\_VTRUE)}}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00391\ \textcolor{comment}{**\ 测试值在条件语句中是否为假}}
+\DoxyCodeLine{00392\ \textcolor{comment}{**\ 在Lua中,只有false和nil为假}}
+\DoxyCodeLine{00393\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00394\ \textcolor{preprocessor}{\#define\ l\_isfalse(o)\ (ttisfalse(o)\ ||\ ttisnil(o))}}
+\DoxyCodeLine{00395\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00396\ \textcolor{comment}{**\ 测试标签是否表示假值}}
+\DoxyCodeLine{00397\ \textcolor{comment}{**\ 用于优化,直接从标签判断而不需要完整的TValue}}
+\DoxyCodeLine{00398\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00399\ \textcolor{preprocessor}{\#define\ tagisfalse(t)\ ((t)\ ==\ LUA\_VFALSE\ ||\ novariant(t)\ ==\ LUA\_TNIL)}}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ \textcolor{comment}{/*\ 设置为false\ */}}
+\DoxyCodeLine{00402\ \textcolor{preprocessor}{\#define\ setbfvalue(obj)\ settt\_(obj,\ LUA\_VFALSE)}}
+\DoxyCodeLine{00403\ \textcolor{comment}{/*\ 设置为true\ */}}
+\DoxyCodeLine{00404\ \textcolor{preprocessor}{\#define\ setbtvalue(obj)\ settt\_(obj,\ LUA\_VTRUE)}}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00407\ \textcolor{comment}{**\ 线程(协程)}}
+\DoxyCodeLine{00408\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00409\ \textcolor{comment}{**}}
+\DoxyCodeLine{00410\ \textcolor{comment}{**\ Lua的协程在内部称为"{}线程"{}(thread)}}
+\DoxyCodeLine{00411\ \textcolor{comment}{**\ 每个协程有自己的栈和执行状态}}
+\DoxyCodeLine{00412\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \textcolor{comment}{/*\ 线程类型标签(可回收)\ */}}
+\DoxyCodeLine{00415\ \textcolor{preprocessor}{\#define\ LUA\_VTHREAD\ makevariant(LUA\_TTHREAD,\ 0)}}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \textcolor{comment}{/*\ 测试是否为线程,ctb添加可回收标记\ */}}
+\DoxyCodeLine{00418\ \textcolor{preprocessor}{\#define\ ttisthread(o)\ checktag((o),\ ctb(LUA\_VTHREAD))}}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00421\ \textcolor{comment}{**\ 获取线程值}}
+\DoxyCodeLine{00422\ \textcolor{comment}{**\ check\_exp进行类型检查,gco2th将GCObject转换为lua\_State}}
+\DoxyCodeLine{00423\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00424\ \textcolor{preprocessor}{\#define\ thvalue(o)\ check\_exp(ttisthread(o),\ gco2th(val\_(o).gc))}}
+\DoxyCodeLine{00425\ }
+\DoxyCodeLine{00426\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00427\ \textcolor{comment}{**\ 设置线程值}}
+\DoxyCodeLine{00428\ \textcolor{comment}{**\ obj2gco将lua\_State转换为GCObject}}
+\DoxyCodeLine{00429\ \textcolor{comment}{**\ ctb添加可回收标记}}
+\DoxyCodeLine{00430\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00431\ \textcolor{preprocessor}{\#define\ setthvalue(L,\ obj,\ x)\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00432\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00433\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00434\ \textcolor{preprocessor}{\ \ \ \ lua\_State\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00435\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00436\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(LUA\_VTHREAD));\ \(\backslash\)}}
+\DoxyCodeLine{00437\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00438\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00439\ }
+\DoxyCodeLine{00440\ \textcolor{comment}{/*\ 设置栈上的线程值\ */}}
+\DoxyCodeLine{00441\ \textcolor{preprocessor}{\#define\ setthvalue2s(L,\ o,\ t)\ setthvalue(L,\ s2v(o),\ t)}}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00443\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00444\ \textcolor{comment}{**\ 可回收对象}}
+\DoxyCodeLine{00445\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00446\ \textcolor{comment}{**}}
+\DoxyCodeLine{00447\ \textcolor{comment}{**\ 所有需要垃圾回收的对象都有一个公共头部}}
+\DoxyCodeLine{00448\ \textcolor{comment}{**\ 这允许GC遍历所有对象而不需要知道具体类型}}
+\DoxyCodeLine{00449\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00450\ }
+\DoxyCodeLine{00451\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00452\ \textcolor{comment}{**\ 所有可回收对象的公共头部(宏形式,用于包含在其他对象中)}}
+\DoxyCodeLine{00453\ \textcolor{comment}{**}}
+\DoxyCodeLine{00454\ \textcolor{comment}{**\ next:\ 指向下一个GC对象的指针,用于形成GC链表}}
+\DoxyCodeLine{00455\ \textcolor{comment}{**\ tt:\ 类型标签(与TValue中的tt\_相同)}}
+\DoxyCodeLine{00456\ \textcolor{comment}{**\ marked:\ GC标记字节,用于三色标记算法}}
+\DoxyCodeLine{00457\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00458\ \textcolor{preprocessor}{\#define\ CommonHeader\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00459\ \textcolor{preprocessor}{\ \ struct\ GCObject\ *next;\ \(\backslash\)}}
+\DoxyCodeLine{00460\ \textcolor{preprocessor}{\ \ lu\_byte\ tt;\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00461\ \textcolor{preprocessor}{\ \ lu\_byte\ marked}}
+\DoxyCodeLine{00462\ }
+\DoxyCodeLine{00463\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00464\ \textcolor{comment}{**\ 所有可回收对象的公共类型}}
+\DoxyCodeLine{00465\ \textcolor{comment}{**\ 这是一个基类型,实际对象会在此基础上添加更多字段}}
+\DoxyCodeLine{00466\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00467\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structGCObject}{GCObject}}}
+\DoxyCodeLine{00468\ \{}
+\DoxyCodeLine{00469\ \ \ \mbox{\hyperlink{structGCObject_af27f3b17495ada2a250831a5424ed971}{CommonHeader}};}
+\DoxyCodeLine{00470\ \}\ \mbox{\hyperlink{structGCObject}{GCObject}};}
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00472\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00473\ \textcolor{comment}{**\ 可回收类型的位标记}}
+\DoxyCodeLine{00474\ \textcolor{comment}{**\ 第6位设为1表示此类型需要垃圾回收}}
+\DoxyCodeLine{00475\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00476\ \textcolor{preprocessor}{\#define\ BIT\_ISCOLLECTABLE\ (1\ <<\ 6)}}
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00478\ \textcolor{comment}{/*\ 测试对象是否可回收\ */}}
+\DoxyCodeLine{00479\ \textcolor{preprocessor}{\#define\ iscollectable(o)\ (rawtt(o)\ \&\ BIT\_ISCOLLECTABLE)}}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00482\ \textcolor{comment}{**\ 标记类型为可回收}}
+\DoxyCodeLine{00483\ \textcolor{comment}{**\ ctb\ =\ "{}collectable\ tag\ bit"{}}}
+\DoxyCodeLine{00484\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00485\ \textcolor{preprocessor}{\#define\ ctb(t)\ ((t)\ |\ BIT\_ISCOLLECTABLE)}}
+\DoxyCodeLine{00486\ }
+\DoxyCodeLine{00487\ \textcolor{comment}{/*\ 获取GC对象指针(带类型检查)\ */}}
+\DoxyCodeLine{00488\ \textcolor{preprocessor}{\#define\ gcvalue(o)\ check\_exp(iscollectable(o),\ val\_(o).gc)}}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00490\ \textcolor{comment}{/*\ 获取原始GC对象指针(无类型检查)\ */}}
+\DoxyCodeLine{00491\ \textcolor{preprocessor}{\#define\ gcvalueraw(v)\ ((v).gc)}}
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00493\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00494\ \textcolor{comment}{**\ 设置GC对象值}}
+\DoxyCodeLine{00495\ \textcolor{comment}{**\ 自动从GCObject的tt字段获取类型并添加可回收标记}}
+\DoxyCodeLine{00496\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00497\ \textcolor{preprocessor}{\#define\ setgcovalue(L,\ obj,\ x)\ \(\backslash\)}}
+\DoxyCodeLine{00498\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00499\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00500\ \textcolor{preprocessor}{\ \ \ \ GCObject\ *i\_g\ =\ (x);\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00501\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ i\_g;\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00502\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(i\_g-\/>tt));\ \ \(\backslash\)}}
+\DoxyCodeLine{00503\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00506\ \textcolor{comment}{**\ 数字}}
+\DoxyCodeLine{00507\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00508\ \textcolor{comment}{**}}
+\DoxyCodeLine{00509\ \textcolor{comment}{**\ Lua\ 5.3+支持两种数字类型:}}
+\DoxyCodeLine{00510\ \textcolor{comment}{**\ 1.\ 整数(通常是64位有符号整数)}}
+\DoxyCodeLine{00511\ \textcolor{comment}{**\ 2.\ 浮点数(通常是double)}}
+\DoxyCodeLine{00512\ \textcolor{comment}{**}}
+\DoxyCodeLine{00513\ \textcolor{comment}{**\ 使用变体位区分这两种数字类型}}
+\DoxyCodeLine{00514\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \textcolor{comment}{/*\ 数字类型的变体标签\ */}}
+\DoxyCodeLine{00517\ \textcolor{preprocessor}{\#define\ LUA\_VNUMINT\ makevariant(LUA\_TNUMBER,\ 0)\ }\textcolor{comment}{/*\ 整数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00518\ \textcolor{preprocessor}{\#define\ LUA\_VNUMFLT\ makevariant(LUA\_TNUMBER,\ 1)\ }\textcolor{comment}{/*\ 浮点数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00520\ \textcolor{comment}{/*\ 测试是否为数字(整数或浮点数)\ */}}
+\DoxyCodeLine{00521\ \textcolor{preprocessor}{\#define\ ttisnumber(o)\ checktype((o),\ LUA\_TNUMBER)}}
+\DoxyCodeLine{00522\ \textcolor{comment}{/*\ 测试是否为浮点数\ */}}
+\DoxyCodeLine{00523\ \textcolor{preprocessor}{\#define\ ttisfloat(o)\ checktag((o),\ LUA\_VNUMFLT)}}
+\DoxyCodeLine{00524\ \textcolor{comment}{/*\ 测试是否为整数\ */}}
+\DoxyCodeLine{00525\ \textcolor{preprocessor}{\#define\ ttisinteger(o)\ checktag((o),\ LUA\_VNUMINT)}}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00527\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00528\ \textcolor{comment}{**\ 获取数字值(统一返回浮点数)}}
+\DoxyCodeLine{00529\ \textcolor{comment}{**\ 如果是整数,使用cast\_num转换为浮点数}}
+\DoxyCodeLine{00530\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00531\ \textcolor{preprocessor}{\#define\ nvalue(o)\ check\_exp(ttisnumber(o),\ \(\backslash\)}}
+\DoxyCodeLine{00532\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ttisinteger(o)\ ?\ cast\_num(ivalue(o))\ :\ fltvalue(o)))}}
+\DoxyCodeLine{00533\ \textcolor{comment}{/*\ 获取浮点数值\ */}}
+\DoxyCodeLine{00534\ \textcolor{preprocessor}{\#define\ fltvalue(o)\ check\_exp(ttisfloat(o),\ val\_(o).n)}}
+\DoxyCodeLine{00535\ \textcolor{comment}{/*\ 获取整数值\ */}}
+\DoxyCodeLine{00536\ \textcolor{preprocessor}{\#define\ ivalue(o)\ check\_exp(ttisinteger(o),\ val\_(o).i)}}
+\DoxyCodeLine{00537\ }
+\DoxyCodeLine{00538\ \textcolor{comment}{/*\ 获取原始浮点数(无类型检查)\ */}}
+\DoxyCodeLine{00539\ \textcolor{preprocessor}{\#define\ fltvalueraw(v)\ ((v).n)}}
+\DoxyCodeLine{00540\ \textcolor{comment}{/*\ 获取原始整数(无类型检查)\ */}}
+\DoxyCodeLine{00541\ \textcolor{preprocessor}{\#define\ ivalueraw(v)\ ((v).i)}}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00543\ \textcolor{comment}{/*\ 设置浮点数值\ */}}
+\DoxyCodeLine{00544\ \textcolor{preprocessor}{\#define\ setfltvalue(obj,\ x)\ \ \(\backslash\)}}
+\DoxyCodeLine{00545\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00546\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00547\ \textcolor{preprocessor}{\ \ \ \ val\_(io).n\ =\ (x);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00548\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ LUA\_VNUMFLT);\ \(\backslash\)}}
+\DoxyCodeLine{00549\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00550\ }
+\DoxyCodeLine{00551\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00552\ \textcolor{comment}{**\ 改变浮点数值(假设已经是浮点数)}}
+\DoxyCodeLine{00553\ \textcolor{comment}{**\ 用于优化,避免重新设置类型标签}}
+\DoxyCodeLine{00554\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00555\ \textcolor{preprocessor}{\#define\ chgfltvalue(obj,\ x)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00556\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00557\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00558\ \textcolor{preprocessor}{\ \ \ \ lua\_assert(ttisfloat(io));\ \(\backslash\)}}
+\DoxyCodeLine{00559\ \textcolor{preprocessor}{\ \ \ \ val\_(io).n\ =\ (x);\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00560\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00561\ }
+\DoxyCodeLine{00562\ \textcolor{comment}{/*\ 设置整数值\ */}}
+\DoxyCodeLine{00563\ \textcolor{preprocessor}{\#define\ setivalue(obj,\ x)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00564\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00565\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00566\ \textcolor{preprocessor}{\ \ \ \ val\_(io).i\ =\ (x);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00567\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ LUA\_VNUMINT);\ \(\backslash\)}}
+\DoxyCodeLine{00568\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00570\ \textcolor{comment}{/*\ 改变整数值(假设已经是整数)\ */}}
+\DoxyCodeLine{00571\ \textcolor{preprocessor}{\#define\ chgivalue(obj,\ x)\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00572\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00573\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00574\ \textcolor{preprocessor}{\ \ \ \ lua\_assert(ttisinteger(io));\ \(\backslash\)}}
+\DoxyCodeLine{00575\ \textcolor{preprocessor}{\ \ \ \ val\_(io).i\ =\ (x);\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00576\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00577\ }
+\DoxyCodeLine{00578\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00579\ \textcolor{comment}{**\ 字符串}}
+\DoxyCodeLine{00580\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00581\ \textcolor{comment}{**}}
+\DoxyCodeLine{00582\ \textcolor{comment}{**\ Lua有两种字符串类型:}}
+\DoxyCodeLine{00583\ \textcolor{comment}{**\ 1.\ 短字符串(short\ strings):\ 长度较小,被内部化(interned),相同内容}}
+\DoxyCodeLine{00584\ \textcolor{comment}{**\ \ \ \ 的字符串只存储一份,通过哈希表管理}}
+\DoxyCodeLine{00585\ \textcolor{comment}{**\ 2.\ 长字符串(long\ strings):\ 长度较大,不内部化}}
+\DoxyCodeLine{00586\ \textcolor{comment}{**}}
+\DoxyCodeLine{00587\ \textcolor{comment}{**\ 短字符串可以通过指针比较相等性(因为相同字符串只有一个实例)}}
+\DoxyCodeLine{00588\ \textcolor{comment}{**\ 长字符串需要逐字节比较}}
+\DoxyCodeLine{00589\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00590\ }
+\DoxyCodeLine{00591\ \textcolor{comment}{/*\ 字符串类型的变体标签\ */}}
+\DoxyCodeLine{00592\ \textcolor{preprocessor}{\#define\ LUA\_VSHRSTR\ makevariant(LUA\_TSTRING,\ 0)\ }\textcolor{comment}{/*\ 短字符串\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00593\ \textcolor{preprocessor}{\#define\ LUA\_VLNGSTR\ makevariant(LUA\_TSTRING,\ 1)\ }\textcolor{comment}{/*\ 长字符串\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00594\ }
+\DoxyCodeLine{00595\ \textcolor{comment}{/*\ 测试是否为字符串\ */}}
+\DoxyCodeLine{00596\ \textcolor{preprocessor}{\#define\ ttisstring(o)\ checktype((o),\ LUA\_TSTRING)}}
+\DoxyCodeLine{00597\ \textcolor{comment}{/*\ 测试是否为短字符串\ */}}
+\DoxyCodeLine{00598\ \textcolor{preprocessor}{\#define\ ttisshrstring(o)\ checktag((o),\ ctb(LUA\_VSHRSTR))}}
+\DoxyCodeLine{00599\ \textcolor{comment}{/*\ 测试是否为长字符串\ */}}
+\DoxyCodeLine{00600\ \textcolor{preprocessor}{\#define\ ttislngstring(o)\ checktag((o),\ ctb(LUA\_VLNGSTR))}}
+\DoxyCodeLine{00601\ }
+\DoxyCodeLine{00602\ \textcolor{comment}{/*\ 获取原始TString指针,gco2ts将GCObject转换为TString\ */}}
+\DoxyCodeLine{00603\ \textcolor{preprocessor}{\#define\ tsvalueraw(v)\ (gco2ts((v).gc))}}
+\DoxyCodeLine{00604\ }
+\DoxyCodeLine{00605\ \textcolor{comment}{/*\ 获取TString指针(带类型检查)\ */}}
+\DoxyCodeLine{00606\ \textcolor{preprocessor}{\#define\ tsvalue(o)\ check\_exp(ttisstring(o),\ gco2ts(val\_(o).gc))}}
+\DoxyCodeLine{00607\ }
+\DoxyCodeLine{00608\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00609\ \textcolor{comment}{**\ 设置字符串值}}
+\DoxyCodeLine{00610\ \textcolor{comment}{**\ 从TString的tt字段获取类型(短或长字符串)}}
+\DoxyCodeLine{00611\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00612\ \textcolor{preprocessor}{\#define\ setsvalue(L,\ obj,\ x)\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00613\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00614\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00615\ \textcolor{preprocessor}{\ \ \ \ TString\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00616\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \(\backslash\)}}
+\DoxyCodeLine{00617\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(x\_-\/>tt));\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00618\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00619\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00620\ }
+\DoxyCodeLine{00621\ \textcolor{comment}{/*\ 设置栈上的字符串\ */}}
+\DoxyCodeLine{00622\ \textcolor{preprocessor}{\#define\ setsvalue2s(L,\ o,\ s)\ setsvalue(L,\ s2v(o),\ s)}}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00624\ \textcolor{comment}{/*\ 设置新对象的字符串\ */}}
+\DoxyCodeLine{00625\ \textcolor{preprocessor}{\#define\ setsvalue2n\ setsvalue}}
+\DoxyCodeLine{00626\ }
+\DoxyCodeLine{00627\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00628\ \textcolor{comment}{**\ 长字符串的种类(存储在shrlen字段中)}}
+\DoxyCodeLine{00629\ \textcolor{comment}{**}}
+\DoxyCodeLine{00630\ \textcolor{comment}{**\ shrlen是signed\ byte,对长字符串使用负值表示类型:}}
+\DoxyCodeLine{00631\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00632\ \textcolor{preprocessor}{\#define\ LSTRREG\ -\/1\ }\textcolor{comment}{/*\ 常规长字符串(由Lua管理)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00633\ \textcolor{preprocessor}{\#define\ LSTRFIX\ -\/2\ }\textcolor{comment}{/*\ 固定的外部长字符串(不会被GC)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00634\ \textcolor{preprocessor}{\#define\ LSTRMEM\ -\/3\ }\textcolor{comment}{/*\ 外部长字符串,带释放函数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00635\ }
+\DoxyCodeLine{00636\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00637\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00638\ \textcolor{comment}{**\ 字符串值的头部}}
+\DoxyCodeLine{00639\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00640\ \textcolor{comment}{**}}
+\DoxyCodeLine{00641\ \textcolor{comment}{**\ TString结构存储字符串的元信息和内容}}
+\DoxyCodeLine{00642\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00643\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTString}{TString}}}
+\DoxyCodeLine{00644\ \{}
+\DoxyCodeLine{00645\ \ \ \mbox{\hyperlink{structTString_a46677057221656f98fa80eb77089de45}{CommonHeader}};\ \ \ \ \ \ \textcolor{comment}{/*\ GC头部\ */}}
+\DoxyCodeLine{00646\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structTString_a11878b0fae7367ad203a0c470ee54fa1}{extra}};\ \ \ \ \ \textcolor{comment}{/*\ 短字符串:保留字标记;\ 长字符串:"{}有哈希值"{}标记\ */}}
+\DoxyCodeLine{00647\ \ \ \mbox{\hyperlink{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb}{ls\_byte}}\ \mbox{\hyperlink{structTString_a4daff60502f0255ec75513191424a9c7}{shrlen}};\ \ \ \ \textcolor{comment}{/*\ 短字符串:长度;\ 长字符串:负值表示类型\ */}}
+\DoxyCodeLine{00648\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structTString_a57f69ac2b4c4eb34f5521ffd68d90b5f}{hash}};\ \textcolor{comment}{/*\ 字符串的哈希值\ */}}
+\DoxyCodeLine{00649\ \ \ \textcolor{keyword}{union}}
+\DoxyCodeLine{00650\ \ \ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structTString_a25f3ee23e67e10eba379fa4f31dec5d2}{lnglen}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 长字符串的长度\ */}}
+\DoxyCodeLine{00652\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structTString_adb99ad67b6bc67f62fac7d69b88f07fd}{hnext}};\ \textcolor{comment}{/*\ 哈希表链表(用于短字符串)\ */}}
+\DoxyCodeLine{00653\ \ \ \}\ \mbox{\hyperlink{structTString_ada0c4b3ed24fc7a9f778259c7475e276}{u}};}
+\DoxyCodeLine{00654\ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structTString_ab794bd2b18ab7a16fa3f3b16669801d7}{contents}};\ \ \ \textcolor{comment}{/*\ 长字符串:指向内容的指针;\ 短字符串:未使用\ */}}
+\DoxyCodeLine{00655\ \ \ \mbox{\hyperlink{lua_8h_a2ba24df8972a4a52ebd3517c62e0830d}{lua\_Alloc}}\ \mbox{\hyperlink{structTString_acad92742e5915e44fdbbeed12b3c244d}{falloc}};\ \textcolor{comment}{/*\ 外部字符串的释放函数\ */}}
+\DoxyCodeLine{00656\ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structTString_a4754301957abb501d3525ed5796611d6}{ud}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 外部字符串的用户数据\ */}}
+\DoxyCodeLine{00657\ \}\ \mbox{\hyperlink{structTString}{TString}};}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \textcolor{comment}{/*\ 测试是否为短字符串(shrlen非负)\ */}}
+\DoxyCodeLine{00660\ \textcolor{preprocessor}{\#define\ strisshr(ts)\ ((ts)-\/>shrlen\ >=\ 0)}}
+\DoxyCodeLine{00661\ \textcolor{comment}{/*\ 测试是否为外部字符串\ */}}
+\DoxyCodeLine{00662\ \textcolor{preprocessor}{\#define\ isextstr(ts)\ (ttislngstring(ts)\ \&\&\ tsvalue(ts)-\/>shrlen\ !=\ LSTRREG)}}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00665\ \textcolor{comment}{**\ 从TString获取实际字符串(字节数组)}}
+\DoxyCodeLine{00666\ \textcolor{comment}{**}}
+\DoxyCodeLine{00667\ \textcolor{comment}{**\ 通用版本和短/长字符串的特化版本:}}
+\DoxyCodeLine{00668\ \textcolor{comment}{**\ -\/\ 短字符串:内容紧跟在TString结构后面}}
+\DoxyCodeLine{00669\ \textcolor{comment}{**\ -\/\ 长字符串:内容通过contents指针访问}}
+\DoxyCodeLine{00670\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00671\ \textcolor{comment}{/*\ 获取短字符串内容(转换为char指针)\ */}}
+\DoxyCodeLine{00672\ \textcolor{preprocessor}{\#define\ rawgetshrstr(ts)\ (cast\_charp(\&(ts)-\/>contents))}}
+\DoxyCodeLine{00673\ \textcolor{comment}{/*\ 获取短字符串(带检查)\ */}}
+\DoxyCodeLine{00674\ \textcolor{preprocessor}{\#define\ getshrstr(ts)\ check\_exp(strisshr(ts),\ rawgetshrstr(ts))}}
+\DoxyCodeLine{00675\ \textcolor{comment}{/*\ 获取长字符串\ */}}
+\DoxyCodeLine{00676\ \textcolor{preprocessor}{\#define\ getlngstr(ts)\ check\_exp(!strisshr(ts),\ (ts)-\/>contents)}}
+\DoxyCodeLine{00677\ \textcolor{comment}{/*\ 获取字符串(自动判断类型)\ */}}
+\DoxyCodeLine{00678\ \textcolor{preprocessor}{\#define\ getstr(ts)\ (strisshr(ts)\ ?\ rawgetshrstr(ts)\ :\ (ts)-\/>contents)}}
+\DoxyCodeLine{00679\ }
+\DoxyCodeLine{00680\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00681\ \textcolor{comment}{**\ 从TString获取字符串长度}}
+\DoxyCodeLine{00682\ \textcolor{comment}{**\ cast\_sizet将signed/unsigned转换为size\_t}}
+\DoxyCodeLine{00683\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00684\ \textcolor{preprocessor}{\#define\ tsslen(ts)\ \(\backslash\)}}
+\DoxyCodeLine{00685\ \textcolor{preprocessor}{\ \ (strisshr(ts)\ ?\ cast\_sizet((ts)-\/>shrlen)\ :\ (ts)-\/>u.lnglen)}}
+\DoxyCodeLine{00686\ }
+\DoxyCodeLine{00687\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00688\ \textcolor{comment}{**\ 获取字符串和长度}}
+\DoxyCodeLine{00689\ \textcolor{comment}{**}}
+\DoxyCodeLine{00690\ \textcolor{comment}{**\ 这个宏同时返回字符串指针和设置长度变量}}
+\DoxyCodeLine{00691\ \textcolor{comment}{**\ 使用cast\_void使表达式没有值,只有副作用(设置len)}}
+\DoxyCodeLine{00692\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00693\ \textcolor{preprocessor}{\#define\ getlstr(ts,\ len)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00694\ \textcolor{preprocessor}{\ \ (strisshr(ts)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00695\ \textcolor{preprocessor}{\ \ \ \ \ \ \ ?\ (cast\_void((len)\ =\ cast\_sizet((ts)-\/>shrlen)),\ rawgetshrstr(ts))\ \(\backslash\)}}
+\DoxyCodeLine{00696\ \textcolor{preprocessor}{\ \ \ \ \ \ \ :\ (cast\_void((len)\ =\ (ts)-\/>u.lnglen),\ (ts)-\/>contents))}}
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00698\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00699\ \textcolor{comment}{**\ 用户数据(Userdata)}}
+\DoxyCodeLine{00700\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00701\ \textcolor{comment}{**}}
+\DoxyCodeLine{00702\ \textcolor{comment}{**\ Lua支持两种用户数据:}}
+\DoxyCodeLine{00703\ \textcolor{comment}{**\ 1.\ 轻量用户数据(light\ userdata):\ 只是一个C指针,不需要GC}}
+\DoxyCodeLine{00704\ \textcolor{comment}{**\ 2.\ 完全用户数据(full\ userdata):\ 由Lua管理的内存块,可以有元表和用户值}}
+\DoxyCodeLine{00705\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00706\ }
+\DoxyCodeLine{00707\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00708\ \textcolor{comment}{**\ 轻量用户数据应该是用户数据的变体,但为了兼容性,它们是不同的类型}}
+\DoxyCodeLine{00709\ \textcolor{comment}{**}}
+\DoxyCodeLine{00710\ \textcolor{comment}{**\ 在Lua\ 5.0-\/5.2中,轻量用户数据是单独的类型}}
+\DoxyCodeLine{00711\ \textcolor{comment}{**\ 为了向后兼容,5.3+仍保持这种设计}}
+\DoxyCodeLine{00712\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00713\ \textcolor{preprocessor}{\#define\ LUA\_VLIGHTUSERDATA\ makevariant(LUA\_TLIGHTUSERDATA,\ 0)}}
+\DoxyCodeLine{00714\ }
+\DoxyCodeLine{00715\ \textcolor{comment}{/*\ 完全用户数据\ */}}
+\DoxyCodeLine{00716\ \textcolor{preprocessor}{\#define\ LUA\_VUSERDATA\ makevariant(LUA\_TUSERDATA,\ 0)}}
+\DoxyCodeLine{00717\ }
+\DoxyCodeLine{00718\ \textcolor{comment}{/*\ 测试是否为轻量用户数据\ */}}
+\DoxyCodeLine{00719\ \textcolor{preprocessor}{\#define\ ttislightuserdata(o)\ checktag((o),\ LUA\_VLIGHTUSERDATA)}}
+\DoxyCodeLine{00720\ \textcolor{comment}{/*\ 测试是否为完全用户数据\ */}}
+\DoxyCodeLine{00721\ \textcolor{preprocessor}{\#define\ ttisfulluserdata(o)\ checktag((o),\ ctb(LUA\_VUSERDATA))}}
+\DoxyCodeLine{00722\ }
+\DoxyCodeLine{00723\ \textcolor{comment}{/*\ 获取轻量用户数据的指针\ */}}
+\DoxyCodeLine{00724\ \textcolor{preprocessor}{\#define\ pvalue(o)\ check\_exp(ttislightuserdata(o),\ val\_(o).p)}}
+\DoxyCodeLine{00725\ \textcolor{comment}{/*\ 获取完全用户数据,gco2u转换为Udata\ */}}
+\DoxyCodeLine{00726\ \textcolor{preprocessor}{\#define\ uvalue(o)\ check\_exp(ttisfulluserdata(o),\ gco2u(val\_(o).gc))}}
+\DoxyCodeLine{00727\ }
+\DoxyCodeLine{00728\ \textcolor{comment}{/*\ 获取原始指针\ */}}
+\DoxyCodeLine{00729\ \textcolor{preprocessor}{\#define\ pvalueraw(v)\ ((v).p)}}
+\DoxyCodeLine{00730\ }
+\DoxyCodeLine{00731\ \textcolor{comment}{/*\ 设置轻量用户数据\ */}}
+\DoxyCodeLine{00732\ \textcolor{preprocessor}{\#define\ setpvalue(obj,\ x)\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00733\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00734\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00735\ \textcolor{preprocessor}{\ \ \ \ val\_(io).p\ =\ (x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00736\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ LUA\_VLIGHTUSERDATA);\ \(\backslash\)}}
+\DoxyCodeLine{00737\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00739\ \textcolor{comment}{/*\ 设置完全用户数据\ */}}
+\DoxyCodeLine{00740\ \textcolor{preprocessor}{\#define\ setuvalue(L,\ obj,\ x)\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00741\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00742\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00743\ \textcolor{preprocessor}{\ \ \ \ Udata\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00744\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00745\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(LUA\_VUSERDATA));\ \(\backslash\)}}
+\DoxyCodeLine{00746\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00747\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00748\ }
+\DoxyCodeLine{00749\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00750\ \textcolor{comment}{**\ 确保此类型后的地址总是完全对齐}}
+\DoxyCodeLine{00751\ \textcolor{comment}{**}}
+\DoxyCodeLine{00752\ \textcolor{comment}{**\ LUAI\_MAXALIGN是平台相关的最大对齐类型(如double或long\ long)}}
+\DoxyCodeLine{00753\ \textcolor{comment}{**\ 这确保用户数据的字节数据有正确的对齐}}
+\DoxyCodeLine{00754\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00755\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionUValue}{UValue}}}
+\DoxyCodeLine{00756\ \{}
+\DoxyCodeLine{00757\ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ \mbox{\hyperlink{unionUValue_afaa156bae31b8f21eb9743c2a757ce89}{uv}};\ \ \ \ \ \textcolor{comment}{/*\ 用户值\ */}}
+\DoxyCodeLine{00758\ \ \ \mbox{\hyperlink{unionUValue_a3257500ea5d9b5b592f1ff8f31f1dda3}{LUAI\_MAXALIGN}};\ \textcolor{comment}{/*\ 确保udata字节的最大对齐\ */}}
+\DoxyCodeLine{00759\ \}\ \mbox{\hyperlink{unionUValue}{UValue}};}
+\DoxyCodeLine{00760\ }
+\DoxyCodeLine{00761\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00762\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00763\ \textcolor{comment}{**\ 带用户值的用户数据头部}}
+\DoxyCodeLine{00764\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00765\ \textcolor{comment}{**}}
+\DoxyCodeLine{00766\ \textcolor{comment}{**\ 用户数据可以关联多个"{}用户值"{}(user\ values),这些是Lua值,}}
+\DoxyCodeLine{00767\ \textcolor{comment}{**\ 可以从用户数据访问,主要用于存储与用户数据相关的Lua对象}}
+\DoxyCodeLine{00768\ \textcolor{comment}{**}}
+\DoxyCodeLine{00769\ \textcolor{comment}{**\ 内存区域紧跟在此结构末尾}}
+\DoxyCodeLine{00770\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00771\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUdata}{Udata}}}
+\DoxyCodeLine{00772\ \{}
+\DoxyCodeLine{00773\ \ \ \mbox{\hyperlink{structUdata_aaa6ffd32850e8506f6fa4c441702d374}{CommonHeader}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC头部\ */}}
+\DoxyCodeLine{00774\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ \mbox{\hyperlink{structUdata_a676537b4656a8bdcf2e61f88ed5f6848}{nuvalue}};\ \ \textcolor{comment}{/*\ 用户值的数量\ */}}
+\DoxyCodeLine{00775\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structUdata_abc467c0c1ec8511376150eb728514dc5}{len}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 字节数(用户数据块的大小)\ */}}
+\DoxyCodeLine{00776\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTable}{Table}}\ *\mbox{\hyperlink{structUdata_a39f828bdcf3f046e285ffbecfcaea56b}{metatable}};\ \textcolor{comment}{/*\ 元表\ */}}
+\DoxyCodeLine{00777\ \ \ \mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{structUdata_af984abb747b485c84ea97362d843d897}{gclist}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC链表\ */}}
+\DoxyCodeLine{00778\ \ \ \mbox{\hyperlink{unionUValue}{UValue}}\ \mbox{\hyperlink{structUdata_abfc560a8436c8a9c238b175706beab7b}{uv}}[1];\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 用户值数组(柔性数组)\ */}}
+\DoxyCodeLine{00779\ \}\ \mbox{\hyperlink{structUdata}{Udata}};}
+\DoxyCodeLine{00780\ }
+\DoxyCodeLine{00781\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00782\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00783\ \textcolor{comment}{**\ 无用户值的用户数据头部}}
+\DoxyCodeLine{00784\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00785\ \textcolor{comment}{**}}
+\DoxyCodeLine{00786\ \textcolor{comment}{**\ 没有用户值的用户数据在GC期间不需要变灰,因此不需要gclist字段}}
+\DoxyCodeLine{00787\ \textcolor{comment}{**}}
+\DoxyCodeLine{00788\ \textcolor{comment}{**\ 为简化代码,总是使用Udata,但确保不访问无用户值时的gclist}}
+\DoxyCodeLine{00789\ \textcolor{comment}{**\ 这个结构仅用于计算此表示的正确大小}}
+\DoxyCodeLine{00790\ \textcolor{comment}{**\ (末尾的bindata字段确保后续二进制数据的正确对齐)}}
+\DoxyCodeLine{00791\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00792\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUdata0}{Udata0}}}
+\DoxyCodeLine{00793\ \{}
+\DoxyCodeLine{00794\ \ \ \mbox{\hyperlink{structUdata0_ac6c257c24240939a6026e1c2bb755502}{CommonHeader}};}
+\DoxyCodeLine{00795\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ \mbox{\hyperlink{structUdata0_a46a84ae455cc55d4c8379ff4480b9e4f}{nuvalue}};\ \textcolor{comment}{/*\ 用户值数量(总是0)\ */}}
+\DoxyCodeLine{00796\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structUdata0_af08d0105d68e5babd31e76745c5aa1e9}{len}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 字节数\ */}}
+\DoxyCodeLine{00797\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTable}{Table}}\ *\mbox{\hyperlink{structUdata0_af7639961b49bdd3c3f3e695c2f035b24}{metatable}};}
+\DoxyCodeLine{00798\ \ \ \textcolor{keyword}{union}}
+\DoxyCodeLine{00799\ \ \ \{}
+\DoxyCodeLine{00800\ \ \ \ \ \mbox{\hyperlink{structUdata0_a0931d5764b287f7d4f6e2a0b3fdd46f7}{LUAI\_MAXALIGN}};}
+\DoxyCodeLine{00801\ \ \ \}\ \mbox{\hyperlink{structUdata0_a1a561b22c16bc76f669e976afee7d386}{bindata}};\ \textcolor{comment}{/*\ 确保对齐\ */}}
+\DoxyCodeLine{00802\ \}\ \mbox{\hyperlink{structUdata0}{Udata0}};}
+\DoxyCodeLine{00803\ }
+\DoxyCodeLine{00804\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00805\ \textcolor{comment}{**\ 计算用户数据内存区域的偏移量}}
+\DoxyCodeLine{00806\ \textcolor{comment}{**}}
+\DoxyCodeLine{00807\ \textcolor{comment}{**\ nuv==0时使用Udata0布局(无gclist),否则使用Udata布局}}
+\DoxyCodeLine{00808\ \textcolor{comment}{**\ offsetof是C标准库宏,计算结构体成员的偏移量}}
+\DoxyCodeLine{00809\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00810\ \textcolor{preprocessor}{\#define\ udatamemoffset(nuv)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00811\ \textcolor{preprocessor}{\ \ ((nuv)\ ==\ 0\ ?\ offsetof(Udata0,\ bindata)\ \(\backslash\)}}
+\DoxyCodeLine{00812\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ offsetof(Udata,\ uv)\ +\ (sizeof(UValue)\ *\ (nuv)))}}
+\DoxyCodeLine{00813\ }
+\DoxyCodeLine{00814\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00815\ \textcolor{comment}{**\ 获取Udata内存块的地址}}
+\DoxyCodeLine{00816\ \textcolor{comment}{**\ cast\_charp转换为char指针以进行字节级算术}}
+\DoxyCodeLine{00817\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00818\ \textcolor{preprocessor}{\#define\ getudatamem(u)\ (cast\_charp(u)\ +\ udatamemoffset((u)-\/>nuvalue))}}
+\DoxyCodeLine{00819\ }
+\DoxyCodeLine{00820\ \textcolor{comment}{/*\ 计算用户数据的大小(头部+用户值+用户内存)\ */}}
+\DoxyCodeLine{00821\ \textcolor{preprocessor}{\#define\ sizeudata(nuv,\ nb)\ (udatamemoffset(nuv)\ +\ (nb))}}
+\DoxyCodeLine{00822\ }
+\DoxyCodeLine{00823\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00824\ \textcolor{comment}{**\ 函数原型(Prototypes)}}
+\DoxyCodeLine{00825\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00826\ \textcolor{comment}{**}}
+\DoxyCodeLine{00827\ \textcolor{comment}{**\ Proto存储Lua函数的编译后信息:}}
+\DoxyCodeLine{00828\ \textcolor{comment}{**\ -\/\ 字节码指令}}
+\DoxyCodeLine{00829\ \textcolor{comment}{**\ -\/\ 常量}}
+\DoxyCodeLine{00830\ \textcolor{comment}{**\ -\/\ 调试信息}}
+\DoxyCodeLine{00831\ \textcolor{comment}{**\ -\/\ 嵌套函数}}
+\DoxyCodeLine{00832\ \textcolor{comment}{**\ -\/\ 上值描述}}
+\DoxyCodeLine{00833\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00834\ }
+\DoxyCodeLine{00835\ \textcolor{comment}{/*\ 原型类型标签\ */}}
+\DoxyCodeLine{00836\ \textcolor{preprocessor}{\#define\ LUA\_VPROTO\ makevariant(LUA\_TPROTO,\ 0)}}
+\DoxyCodeLine{00837\ }
+\DoxyCodeLine{00838\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00839\ \textcolor{comment}{**\ 指令类型}}
+\DoxyCodeLine{00840\ \textcolor{comment}{**\ l\_uint32通常是uint32\_t,一条指令占4字节}}
+\DoxyCodeLine{00841\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00842\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\_uint32}}\ \mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}};}
+\DoxyCodeLine{00843\ }
+\DoxyCodeLine{00844\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00845\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00846\ \textcolor{comment}{**\ 函数原型的上值描述}}
+\DoxyCodeLine{00847\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00848\ \textcolor{comment}{**}}
+\DoxyCodeLine{00849\ \textcolor{comment}{**\ 上值是闭包捕获的外部局部变量}}
+\DoxyCodeLine{00850\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00851\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUpvaldesc}{Upvaldesc}}}
+\DoxyCodeLine{00852\ \{}
+\DoxyCodeLine{00853\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structUpvaldesc_a8870289fbc6611275d093ef1c08cf9ed}{name}};\ \ \ \textcolor{comment}{/*\ 上值名称(用于调试信息)\ */}}
+\DoxyCodeLine{00854\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structUpvaldesc_a1e5182ac7b8b72848ed71b7b4844e3d1}{instack}};\ \textcolor{comment}{/*\ 是否在栈中(寄存器),否则在外部函数的上值列表中\ */}}
+\DoxyCodeLine{00855\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structUpvaldesc_a8478ecca9cb593200c562a0837aedfac}{idx}};\ \ \ \ \ \textcolor{comment}{/*\ 上值的索引(在栈中或在外部函数列表中)\ */}}
+\DoxyCodeLine{00856\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structUpvaldesc_a1315fb98c5f398c3f3323967cb9ec7ba}{kind}};\ \ \ \ \textcolor{comment}{/*\ 对应变量的种类(常规、常量等)\ */}}
+\DoxyCodeLine{00857\ \}\ \mbox{\hyperlink{structUpvaldesc}{Upvaldesc}};}
+\DoxyCodeLine{00858\ }
+\DoxyCodeLine{00859\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00860\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00861\ \textcolor{comment}{**\ 函数原型的局部变量描述}}
+\DoxyCodeLine{00862\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00863\ \textcolor{comment}{**}}
+\DoxyCodeLine{00864\ \textcolor{comment}{**\ 用于调试信息,记录变量的作用域}}
+\DoxyCodeLine{00865\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00866\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structLocVar}{LocVar}}}
+\DoxyCodeLine{00867\ \{}
+\DoxyCodeLine{00868\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structLocVar_acf62684d78349320b90b4acfa3b6d22a}{varname}};\ \textcolor{comment}{/*\ 变量名\ */}}
+\DoxyCodeLine{00869\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structLocVar_ac5a8bf5a59430eea070db5b1a97d8b88}{startpc}};\ \ \ \ \ \ \textcolor{comment}{/*\ 变量激活的第一个指令位置\ */}}
+\DoxyCodeLine{00870\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structLocVar_af7f0f7d509579ffec5610e329f85693b}{endpc}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 变量失效的第一个指令位置\ */}}
+\DoxyCodeLine{00871\ \}\ \mbox{\hyperlink{structLocVar}{LocVar}};}
+\DoxyCodeLine{00872\ }
+\DoxyCodeLine{00873\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00874\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00875\ \textcolor{comment}{**\ 绝对行信息关联}}
+\DoxyCodeLine{00876\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00877\ \textcolor{comment}{**}}
+\DoxyCodeLine{00878\ \textcolor{comment}{**\ 为给定指令(pc)关联绝对源代码行号}}
+\DoxyCodeLine{00879\ \textcolor{comment}{**}}
+\DoxyCodeLine{00880\ \textcolor{comment}{**\ lineinfo数组为每条指令给出与前一条指令的行差}}
+\DoxyCodeLine{00881\ \textcolor{comment}{**\ 当差值太大无法放入一个字节时,Lua保存该指令的绝对行号}}
+\DoxyCodeLine{00882\ \textcolor{comment}{**\ (Lua也周期性保存绝对行号,以加速行号计算:可以在绝对行数组中}}
+\DoxyCodeLine{00883\ \textcolor{comment}{**\ 使用二分查找,但必须线性遍历lineinfo数组)}}
+\DoxyCodeLine{00884\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00885\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structAbsLineInfo}{AbsLineInfo}}}
+\DoxyCodeLine{00886\ \{}
+\DoxyCodeLine{00887\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structAbsLineInfo_aadedc41698239b3660609c2d2319f46f}{pc}};\ \ \ \textcolor{comment}{/*\ 程序计数器(指令索引)\ */}}
+\DoxyCodeLine{00888\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structAbsLineInfo_aeaae3dad0ef96232c843f79d378e6272}{line}};\ \textcolor{comment}{/*\ 对应的绝对行号\ */}}
+\DoxyCodeLine{00889\ \}\ \mbox{\hyperlink{structAbsLineInfo}{AbsLineInfo}};}
+\DoxyCodeLine{00890\ }
+\DoxyCodeLine{00891\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00892\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00893\ \textcolor{comment}{**\ 原型中的标志}}
+\DoxyCodeLine{00894\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00895\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00896\ \textcolor{preprocessor}{\#define\ PF\_VAHID\ 1\ }\textcolor{comment}{/*\ 函数有隐藏的可变参数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00897\ \textcolor{preprocessor}{\#define\ PF\_VATAB\ 2\ }\textcolor{comment}{/*\ 函数有可变参数表\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00898\ \textcolor{preprocessor}{\#define\ PF\_FIXED\ 4\ }\textcolor{comment}{/*\ 原型的部分在固定内存中\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00899\ }
+\DoxyCodeLine{00900\ \textcolor{comment}{/*\ 可变参数函数要么有隐藏参数,要么有可变参数表\ */}}
+\DoxyCodeLine{00901\ \textcolor{preprocessor}{\#define\ isvararg(p)\ ((p)-\/>flag\ \&\ (PF\_VAHID\ |\ PF\_VATAB))}}
+\DoxyCodeLine{00902\ }
+\DoxyCodeLine{00903\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00904\ \textcolor{comment}{**\ 标记函数需要可变参数表}}
+\DoxyCodeLine{00905\ \textcolor{comment}{**\ (PF\_VAHID标志稍后会被清除)}}
+\DoxyCodeLine{00906\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00907\ \textcolor{preprocessor}{\#define\ needvatab(p)\ ((p)-\/>flag\ |=\ PF\_VATAB)}}
+\DoxyCodeLine{00908\ }
+\DoxyCodeLine{00909\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00910\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00911\ \textcolor{comment}{**\ 函数原型结构}}
+\DoxyCodeLine{00912\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00913\ \textcolor{comment}{**}}
+\DoxyCodeLine{00914\ \textcolor{comment}{**\ 这是Lua函数编译后的表示,包含执行所需的所有信息}}
+\DoxyCodeLine{00915\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00916\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structProto}{Proto}}}
+\DoxyCodeLine{00917\ \{}
+\DoxyCodeLine{00918\ \ \ \mbox{\hyperlink{structProto_a5b0bf6a93e383f0a873573b9c99dfb95}{CommonHeader}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC头部\ */}}
+\DoxyCodeLine{00919\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structProto_a3f106f177af6c68ffd8b042713266b98}{numparams}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 固定(命名)参数的数量\ */}}
+\DoxyCodeLine{00920\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structProto_a16d8b2f349f89bdeabda995cf96c1fb0}{flag}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 标志(可变参数等)\ */}}
+\DoxyCodeLine{00921\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structProto_a9c9ed4e9d996233f75cdf56b912e4803}{maxstacksize}};\ \ \ \ \ \textcolor{comment}{/*\ 此函数需要的寄存器数量\ */}}
+\DoxyCodeLine{00922\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a6ecec897497ba7d94df6ef69289ef5c0}{sizeupvalues}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ upvalues数组的大小\ */}}
+\DoxyCodeLine{00923\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a5bd719e0486168f6ecd4b01bf41a7444}{sizek}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ k数组的大小(常量数)\ */}}
+\DoxyCodeLine{00924\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a43e4d3849b5859112d93bdc2534a7cc0}{sizecode}};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ code数组的大小(指令数)\ */}}
+\DoxyCodeLine{00925\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a65303ae1d815313f3358a578113fcc6e}{sizelineinfo}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ lineinfo数组的大小\ */}}
+\DoxyCodeLine{00926\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a73ddad1a18b7c46be46ec32aa2a08632}{sizep}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ p数组的大小(嵌套函数数)\ */}}
+\DoxyCodeLine{00927\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_ac2ab37e941e8866687f44f7b2f4b95a9}{sizelocvars}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ locvars数组的大小\ */}}
+\DoxyCodeLine{00928\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a48c289d2c5198fb3bb997196943e9902}{sizeabslineinfo}};\ \ \ \ \ \ \textcolor{comment}{/*\ abslineinfo数组的大小\ */}}
+\DoxyCodeLine{00929\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a62cf1c61b70bfaa4f1fb839b7398160b}{linedefined}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 函数定义开始的行号\ */}}
+\DoxyCodeLine{00930\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structProto_a9ef7fae1b22b11f5a145cfee8150059c}{lastlinedefined}};\ \ \ \ \ \ \textcolor{comment}{/*\ 函数定义结束的行号\ */}}
+\DoxyCodeLine{00931\ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *\mbox{\hyperlink{structProto_ae292fb0c0558679704933824ce96eac2}{k}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 函数使用的常量数组\ */}}
+\DoxyCodeLine{00932\ \ \ \mbox{\hyperlink{lobject_8h_aa81d2e7f7263ef29946852d4966a192e}{Instruction}}\ *\mbox{\hyperlink{structProto_a53b66e4e4ac4b612a41b67a0ace9b6a5}{code}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 操作码数组(字节码)\ */}}
+\DoxyCodeLine{00933\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structProto}{Proto}}\ **\mbox{\hyperlink{structProto_a54dc8e2e8973007794fa0ab0e4a71461}{p}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 函数内定义的函数数组\ */}}
+\DoxyCodeLine{00934\ \ \ \mbox{\hyperlink{structUpvaldesc}{Upvaldesc}}\ *\mbox{\hyperlink{structProto_a028070514796b4accbd99c59e6b83930}{upvalues}};\ \ \ \ \ \ \textcolor{comment}{/*\ 上值信息数组\ */}}
+\DoxyCodeLine{00935\ \ \ \mbox{\hyperlink{llimits_8h_aab58a246c9e0a85c4c2ed0fd8d6724bb}{ls\_byte}}\ *\mbox{\hyperlink{structProto_a4d8b6a245668e28870027f70a98cce98}{lineinfo}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 源代码行信息(调试)\ */}}
+\DoxyCodeLine{00936\ \ \ \mbox{\hyperlink{structAbsLineInfo}{AbsLineInfo}}\ *\mbox{\hyperlink{structProto_a012268f6cdec514d296b50356decff4e}{abslineinfo}};\ \textcolor{comment}{/*\ 绝对行信息(调试)\ */}}
+\DoxyCodeLine{00937\ \ \ \mbox{\hyperlink{structLocVar}{LocVar}}\ *\mbox{\hyperlink{structProto_a41d627972548e1a6aaf358480ed46f69}{locvars}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 局部变量信息(调试)\ */}}
+\DoxyCodeLine{00938\ \ \ \mbox{\hyperlink{structTString}{TString}}\ *\mbox{\hyperlink{structProto_a92b6ec319e7aa1ee8b8ff7807353ad96}{source}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 源文件名(调试)\ */}}
+\DoxyCodeLine{00939\ \ \ \mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{structProto_a7991ec396b493a42b5c7f38b4e162959}{gclist}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC链表\ */}}
+\DoxyCodeLine{00940\ \}\ \mbox{\hyperlink{structProto}{Proto}};}
+\DoxyCodeLine{00941\ }
+\DoxyCodeLine{00942\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{00943\ \textcolor{comment}{**\ 函数}}
+\DoxyCodeLine{00944\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{00945\ \textcolor{comment}{**}}
+\DoxyCodeLine{00946\ \textcolor{comment}{**\ Lua支持多种函数类型:}}
+\DoxyCodeLine{00947\ \textcolor{comment}{**\ 1.\ Lua闭包(LClosure):\ Lua函数,带上值}}
+\DoxyCodeLine{00948\ \textcolor{comment}{**\ 2.\ C闭包(CClosure):\ C函数,带上值}}
+\DoxyCodeLine{00949\ \textcolor{comment}{**\ 3.\ 轻量C函数(light\ C\ function):\ 直接的C函数指针,无上值}}
+\DoxyCodeLine{00950\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00951\ }
+\DoxyCodeLine{00952\ \textcolor{comment}{/*\ 上值类型标签\ */}}
+\DoxyCodeLine{00953\ \textcolor{preprocessor}{\#define\ LUA\_VUPVAL\ makevariant(LUA\_TUPVAL,\ 0)}}
+\DoxyCodeLine{00954\ }
+\DoxyCodeLine{00955\ \textcolor{comment}{/*\ 函数类型的变体标签\ */}}
+\DoxyCodeLine{00956\ \textcolor{preprocessor}{\#define\ LUA\_VLCL\ makevariant(LUA\_TFUNCTION,\ 0)\ }\textcolor{comment}{/*\ Lua闭包\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00957\ \textcolor{preprocessor}{\#define\ LUA\_VLCF\ makevariant(LUA\_TFUNCTION,\ 1)\ }\textcolor{comment}{/*\ 轻量C函数\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00958\ \textcolor{preprocessor}{\#define\ LUA\_VCCL\ makevariant(LUA\_TFUNCTION,\ 2)\ }\textcolor{comment}{/*\ C闭包\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00959\ }
+\DoxyCodeLine{00960\ \textcolor{comment}{/*\ 测试是否为函数\ */}}
+\DoxyCodeLine{00961\ \textcolor{preprocessor}{\#define\ ttisfunction(o)\ checktype(o,\ LUA\_TFUNCTION)}}
+\DoxyCodeLine{00962\ \textcolor{comment}{/*\ 测试是否为Lua闭包\ */}}
+\DoxyCodeLine{00963\ \textcolor{preprocessor}{\#define\ ttisLclosure(o)\ checktag((o),\ ctb(LUA\_VLCL))}}
+\DoxyCodeLine{00964\ \textcolor{comment}{/*\ 测试是否为轻量C函数\ */}}
+\DoxyCodeLine{00965\ \textcolor{preprocessor}{\#define\ ttislcf(o)\ checktag((o),\ LUA\_VLCF)}}
+\DoxyCodeLine{00966\ \textcolor{comment}{/*\ 测试是否为C闭包\ */}}
+\DoxyCodeLine{00967\ \textcolor{preprocessor}{\#define\ ttisCclosure(o)\ checktag((o),\ ctb(LUA\_VCCL))}}
+\DoxyCodeLine{00968\ \textcolor{comment}{/*\ 测试是否为闭包(Lua或C)\ */}}
+\DoxyCodeLine{00969\ \textcolor{preprocessor}{\#define\ ttisclosure(o)\ (ttisLclosure(o)\ ||\ ttisCclosure(o))}}
+\DoxyCodeLine{00970\ }
+\DoxyCodeLine{00971\ \textcolor{comment}{/*\ 测试是否为Lua函数\ */}}
+\DoxyCodeLine{00972\ \textcolor{preprocessor}{\#define\ isLfunction(o)\ ttisLclosure(o)}}
+\DoxyCodeLine{00973\ }
+\DoxyCodeLine{00974\ \textcolor{comment}{/*\ 获取闭包(自动判断类型),gco2cl转换为Closure\ */}}
+\DoxyCodeLine{00975\ \textcolor{preprocessor}{\#define\ clvalue(o)\ check\_exp(ttisclosure(o),\ gco2cl(val\_(o).gc))}}
+\DoxyCodeLine{00976\ \textcolor{comment}{/*\ 获取Lua闭包,gco2lcl转换为LClosure\ */}}
+\DoxyCodeLine{00977\ \textcolor{preprocessor}{\#define\ clLvalue(o)\ check\_exp(ttisLclosure(o),\ gco2lcl(val\_(o).gc))}}
+\DoxyCodeLine{00978\ \textcolor{comment}{/*\ 获取轻量C函数指针\ */}}
+\DoxyCodeLine{00979\ \textcolor{preprocessor}{\#define\ fvalue(o)\ check\_exp(ttislcf(o),\ val\_(o).f)}}
+\DoxyCodeLine{00980\ \textcolor{comment}{/*\ 获取C闭包,gco2ccl转换为CClosure\ */}}
+\DoxyCodeLine{00981\ \textcolor{preprocessor}{\#define\ clCvalue(o)\ check\_exp(ttisCclosure(o),\ gco2ccl(val\_(o).gc))}}
+\DoxyCodeLine{00982\ }
+\DoxyCodeLine{00983\ \textcolor{comment}{/*\ 获取原始函数指针\ */}}
+\DoxyCodeLine{00984\ \textcolor{preprocessor}{\#define\ fvalueraw(v)\ ((v).f)}}
+\DoxyCodeLine{00985\ }
+\DoxyCodeLine{00986\ \textcolor{comment}{/*\ 设置Lua闭包\ */}}
+\DoxyCodeLine{00987\ \textcolor{preprocessor}{\#define\ setclLvalue(L,\ obj,\ x)\ \(\backslash\)}}
+\DoxyCodeLine{00988\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00989\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00990\ \textcolor{preprocessor}{\ \ \ \ LClosure\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00991\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \(\backslash\)}}
+\DoxyCodeLine{00992\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(LUA\_VLCL));\ \(\backslash\)}}
+\DoxyCodeLine{00993\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00994\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{00995\ }
+\DoxyCodeLine{00996\ \textcolor{comment}{/*\ 设置栈上的Lua闭包\ */}}
+\DoxyCodeLine{00997\ \textcolor{preprocessor}{\#define\ setclLvalue2s(L,\ o,\ cl)\ setclLvalue(L,\ s2v(o),\ cl)}}
+\DoxyCodeLine{00998\ }
+\DoxyCodeLine{00999\ \textcolor{comment}{/*\ 设置轻量C函数\ */}}
+\DoxyCodeLine{01000\ \textcolor{preprocessor}{\#define\ setfvalue(obj,\ x)\ \(\backslash\)}}
+\DoxyCodeLine{01001\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01002\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \(\backslash\)}}
+\DoxyCodeLine{01003\ \textcolor{preprocessor}{\ \ \ \ val\_(io).f\ =\ (x);\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01004\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ LUA\_VLCF);\ \(\backslash\)}}
+\DoxyCodeLine{01005\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01006\ }
+\DoxyCodeLine{01007\ \textcolor{comment}{/*\ 设置C闭包\ */}}
+\DoxyCodeLine{01008\ \textcolor{preprocessor}{\#define\ setclCvalue(L,\ obj,\ x)\ \(\backslash\)}}
+\DoxyCodeLine{01009\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01010\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01011\ \textcolor{preprocessor}{\ \ \ \ CClosure\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01012\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \(\backslash\)}}
+\DoxyCodeLine{01013\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(LUA\_VCCL));\ \(\backslash\)}}
+\DoxyCodeLine{01014\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01015\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01016\ }
+\DoxyCodeLine{01017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01018\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01019\ \textcolor{comment}{**\ Lua闭包的上值}}
+\DoxyCodeLine{01020\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01021\ \textcolor{comment}{**}}
+\DoxyCodeLine{01022\ \textcolor{comment}{**\ 上值(UpVal)用于实现闭包对外部局部变量的捕获}}
+\DoxyCodeLine{01023\ \textcolor{comment}{**}}
+\DoxyCodeLine{01024\ \textcolor{comment}{**\ 上值可以是"{}开放的"{}或"{}关闭的"{}:}}
+\DoxyCodeLine{01025\ \textcolor{comment}{**\ -\/\ 开放的上值:指向仍在栈上的变量}}
+\DoxyCodeLine{01026\ \textcolor{comment}{**\ -\/\ 关闭的上值:变量已离开栈,值被复制到上值对象中}}
+\DoxyCodeLine{01027\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01028\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUpVal}{UpVal}}}
+\DoxyCodeLine{01029\ \{}
+\DoxyCodeLine{01030\ \ \ \mbox{\hyperlink{structUpVal_a4e31d0a4bda814a7173a9ef5ca88ba3c}{CommonHeader}};\ \textcolor{comment}{/*\ GC头部\ */}}
+\DoxyCodeLine{01031\ \ \ \textcolor{keyword}{union}}
+\DoxyCodeLine{01032\ \ \ \{}
+\DoxyCodeLine{01033\ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ *\mbox{\hyperlink{structUpVal_a8e9dff354074323b0df2bd0795b6e9d3}{p}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 指向栈或自己的value(开放/关闭)\ */}}
+\DoxyCodeLine{01034\ \ \ \ \ ptrdiff\_t\ \mbox{\hyperlink{structUpVal_a5181153fb4139bfe1246bfff44700216}{offset}};\ \textcolor{comment}{/*\ 栈重分配时使用的偏移量\ */}}
+\DoxyCodeLine{01035\ \ \ \}\ \mbox{\hyperlink{structUpVal_ae884e7120e776fd0699a9bdc02403480}{v}};}
+\DoxyCodeLine{01036\ \ \ \textcolor{keyword}{union}}
+\DoxyCodeLine{01037\ \ \ \{}
+\DoxyCodeLine{01038\ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{01039\ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ (当开放时)\ */}}
+\DoxyCodeLine{01040\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUpVal}{UpVal}}\ *\mbox{\hyperlink{structUpVal_ad60d3e0af32d663d3cde2e033bbdefd8}{next}};\ \ \ \ \ \ \textcolor{comment}{/*\ 链表\ */}}
+\DoxyCodeLine{01041\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUpVal}{UpVal}}\ **\mbox{\hyperlink{structUpVal_af88c50a2df90e5e84a6abedde641771a}{previous}};\ \textcolor{comment}{/*\ 双向链表\ */}}
+\DoxyCodeLine{01042\ \ \ \ \ \}\ \mbox{\hyperlink{structUpVal_a1f7fa9c8703aad994bd21edad8b0c027}{open}};}
+\DoxyCodeLine{01043\ \ \ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ \mbox{\hyperlink{structUpVal_abc22d06bbcaf3f197af9c6069c562505}{value}};\ \textcolor{comment}{/*\ 值(当关闭时)\ */}}
+\DoxyCodeLine{01044\ \ \ \}\ \mbox{\hyperlink{structUpVal_a3e874535cf761992620ec6b3a1ddedd7}{u}};}
+\DoxyCodeLine{01045\ \}\ \mbox{\hyperlink{structUpVal}{UpVal}};}
+\DoxyCodeLine{01046\ }
+\DoxyCodeLine{01047\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01048\ \textcolor{comment}{**\ 闭包头部宏}}
+\DoxyCodeLine{01049\ \textcolor{comment}{**\ 所有闭包(Lua和C)共享的头部}}
+\DoxyCodeLine{01050\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01051\ \textcolor{preprocessor}{\#define\ ClosureHeader\ \(\backslash\)}}
+\DoxyCodeLine{01052\ \textcolor{preprocessor}{\ \ CommonHeader;\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01053\ \textcolor{preprocessor}{\ \ lu\_byte\ nupvalues;\ \ \(\backslash\)}}
+\DoxyCodeLine{01054\ \textcolor{preprocessor}{\ \ GCObject\ *gclist}}
+\DoxyCodeLine{01055\ }
+\DoxyCodeLine{01056\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01057\ \textcolor{comment}{**\ C闭包}}
+\DoxyCodeLine{01058\ \textcolor{comment}{**}}
+\DoxyCodeLine{01059\ \textcolor{comment}{**\ C闭包是C函数加上上值}}
+\DoxyCodeLine{01060\ \textcolor{comment}{**\ 上值可以存储任意Lua值,用于在调用间保持状态}}
+\DoxyCodeLine{01061\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01062\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structCClosure}{CClosure}}}
+\DoxyCodeLine{01063\ \{}
+\DoxyCodeLine{01064\ \ \ \mbox{\hyperlink{structCClosure_a552c31467816a1fafbd719cf83ff9cba}{ClosureHeader}};\ \ \ \ \ \textcolor{comment}{/*\ 闭包头部\ */}}
+\DoxyCodeLine{01065\ \ \ \mbox{\hyperlink{lua_8h_a878b7e392e78661a374cf1c3073029b9}{lua\_CFunction}}\ \mbox{\hyperlink{structCClosure_a1ba64febc8e6adc43fdbb82583852000}{f}};\ \ \ \textcolor{comment}{/*\ C函数指针\ */}}
+\DoxyCodeLine{01066\ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ \mbox{\hyperlink{structCClosure_a75d6bfc66f8ed48b3dd67007be84174f}{upvalue}}[1];\ \textcolor{comment}{/*\ 上值列表(柔性数组)\ */}}
+\DoxyCodeLine{01067\ \}\ \mbox{\hyperlink{structCClosure}{CClosure}};}
+\DoxyCodeLine{01068\ }
+\DoxyCodeLine{01069\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01070\ \textcolor{comment}{**\ Lua闭包}}
+\DoxyCodeLine{01071\ \textcolor{comment}{**}}
+\DoxyCodeLine{01072\ \textcolor{comment}{**\ Lua闭包是函数原型加上上值}}
+\DoxyCodeLine{01073\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01074\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structLClosure}{LClosure}}}
+\DoxyCodeLine{01075\ \{}
+\DoxyCodeLine{01076\ \ \ \mbox{\hyperlink{structLClosure_a6014e6d418f56b1ec866c449cab16044}{ClosureHeader}};\ \ \ \ \textcolor{comment}{/*\ 闭包头部\ */}}
+\DoxyCodeLine{01077\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structProto}{Proto}}\ *\mbox{\hyperlink{structLClosure_a4cf173817d3897b0e70822e70d241d6c}{p}};\ \ \textcolor{comment}{/*\ 函数原型\ */}}
+\DoxyCodeLine{01078\ \ \ \mbox{\hyperlink{structUpVal}{UpVal}}\ *\mbox{\hyperlink{structLClosure_a94886e7c7df838f5fab36575b0554682}{upvals}}[1];\ \textcolor{comment}{/*\ 上值列表(柔性数组)\ */}}
+\DoxyCodeLine{01079\ \}\ \mbox{\hyperlink{structLClosure}{LClosure}};}
+\DoxyCodeLine{01080\ }
+\DoxyCodeLine{01081\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01082\ \textcolor{comment}{**\ 闭包联合体}}
+\DoxyCodeLine{01083\ \textcolor{comment}{**}}
+\DoxyCodeLine{01084\ \textcolor{comment}{**\ 允许将Closure*转换为CClosure*或LClosure*}}
+\DoxyCodeLine{01085\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01086\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionClosure}{Closure}}}
+\DoxyCodeLine{01087\ \{}
+\DoxyCodeLine{01088\ \ \ \mbox{\hyperlink{structCClosure}{CClosure}}\ \mbox{\hyperlink{unionClosure_ace9dac5a62b61db682ef0cd86b3b44b1}{c}};\ \textcolor{comment}{/*\ C闭包\ */}}
+\DoxyCodeLine{01089\ \ \ \mbox{\hyperlink{structLClosure}{LClosure}}\ \mbox{\hyperlink{unionClosure_a8c338ec7dc76078cbee5887857de713c}{l}};\ \textcolor{comment}{/*\ Lua闭包\ */}}
+\DoxyCodeLine{01090\ \}\ \mbox{\hyperlink{unionClosure}{Closure}};}
+\DoxyCodeLine{01091\ }
+\DoxyCodeLine{01092\ \textcolor{comment}{/*\ 获取Lua闭包的原型\ */}}
+\DoxyCodeLine{01093\ \textcolor{preprocessor}{\#define\ getproto(o)\ (clLvalue(o)-\/>p)}}
+\DoxyCodeLine{01094\ }
+\DoxyCodeLine{01095\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{01096\ \textcolor{comment}{**\ 表(Tables)}}
+\DoxyCodeLine{01097\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01098\ \textcolor{comment}{**}}
+\DoxyCodeLine{01099\ \textcolor{comment}{**\ Lua的表是关联数组,同时支持:}}
+\DoxyCodeLine{01100\ \textcolor{comment}{**\ -\/\ 数组部分:用于整数键的快速访问}}
+\DoxyCodeLine{01101\ \textcolor{comment}{**\ -\/\ 哈希部分:用于其他类型的键}}
+\DoxyCodeLine{01102\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01103\ }
+\DoxyCodeLine{01104\ \textcolor{comment}{/*\ 表类型标签\ */}}
+\DoxyCodeLine{01105\ \textcolor{preprocessor}{\#define\ LUA\_VTABLE\ makevariant(LUA\_TTABLE,\ 0)}}
+\DoxyCodeLine{01106\ }
+\DoxyCodeLine{01107\ \textcolor{comment}{/*\ 测试是否为表\ */}}
+\DoxyCodeLine{01108\ \textcolor{preprocessor}{\#define\ ttistable(o)\ checktag((o),\ ctb(LUA\_VTABLE))}}
+\DoxyCodeLine{01109\ }
+\DoxyCodeLine{01110\ \textcolor{comment}{/*\ 获取表,gco2t转换为Table\ */}}
+\DoxyCodeLine{01111\ \textcolor{preprocessor}{\#define\ hvalue(o)\ check\_exp(ttistable(o),\ gco2t(val\_(o).gc))}}
+\DoxyCodeLine{01112\ }
+\DoxyCodeLine{01113\ \textcolor{comment}{/*\ 设置表值\ */}}
+\DoxyCodeLine{01114\ \textcolor{preprocessor}{\#define\ sethvalue(L,\ obj,\ x)\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01115\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01116\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\ =\ (obj);\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01117\ \textcolor{preprocessor}{\ \ \ \ Table\ *x\_\ =\ (x);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01118\ \textcolor{preprocessor}{\ \ \ \ val\_(io).gc\ =\ obj2gco(x\_);\ \ \ \(\backslash\)}}
+\DoxyCodeLine{01119\ \textcolor{preprocessor}{\ \ \ \ settt\_(io,\ ctb(LUA\_VTABLE));\ \(\backslash\)}}
+\DoxyCodeLine{01120\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io);\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01121\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01122\ }
+\DoxyCodeLine{01123\ \textcolor{comment}{/*\ 设置栈上的表\ */}}
+\DoxyCodeLine{01124\ \textcolor{preprocessor}{\#define\ sethvalue2s(L,\ o,\ h)\ sethvalue(L,\ s2v(o),\ h)}}
+\DoxyCodeLine{01125\ }
+\DoxyCodeLine{01126\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01127\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01128\ \textcolor{comment}{**\ 哈希表的节点}}
+\DoxyCodeLine{01129\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01130\ \textcolor{comment}{**}}
+\DoxyCodeLine{01131\ \textcolor{comment}{**\ 一对TValue(键-\/值对)加上一个next字段用于链接冲突条目}}
+\DoxyCodeLine{01132\ \textcolor{comment}{**}}
+\DoxyCodeLine{01133\ \textcolor{comment}{**\ 键的字段(key\_tt和key\_val)的分布不形成正规的TValue,}}
+\DoxyCodeLine{01134\ \textcolor{comment}{**\ 这允许Node在4字节和8字节对齐中都有更小的大小}}
+\DoxyCodeLine{01135\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01136\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionNode}{Node}}}
+\DoxyCodeLine{01137\ \{}
+\DoxyCodeLine{01138\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNode_1_1NodeKey}{NodeKey}}}
+\DoxyCodeLine{01139\ \ \ \{}
+\DoxyCodeLine{01140\ \ \ \ \ \mbox{\hyperlink{structNode_1_1NodeKey_ad7940273d82fb786627ede300d3e7b46}{TValuefields}};\ \ \ \textcolor{comment}{/*\ 值的字段\ */}}
+\DoxyCodeLine{01141\ \ \ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structNode_1_1NodeKey_afdbcc530a117bbf2b90c4f35ad257110}{key\_tt}};\ \textcolor{comment}{/*\ 键类型\ */}}
+\DoxyCodeLine{01142\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structNode_1_1NodeKey_ace566bb6e78ae2d0cdb2a3c6da79cfb6}{next}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ 链接冲突条目(索引,不是指针)\ */}}
+\DoxyCodeLine{01143\ \ \ \ \ \mbox{\hyperlink{unionValue}{Value}}\ \mbox{\hyperlink{structNode_1_1NodeKey_abac9092163e037bc154ad58f454fbca9}{key\_val}};\ \ \textcolor{comment}{/*\ 键值\ */}}
+\DoxyCodeLine{01144\ \ \ \}\ \mbox{\hyperlink{unionNode_a8f1edb039f176596b777da8f537c1071}{u}};}
+\DoxyCodeLine{01145\ \ \ \mbox{\hyperlink{structTValue}{TValue}}\ \mbox{\hyperlink{unionNode_a79460c331faee0ef988637e92749e866}{i\_val}};\ \textcolor{comment}{/*\ 直接访问节点值作为正规TValue\ */}}
+\DoxyCodeLine{01146\ \}\ \mbox{\hyperlink{unionNode}{Node}};}
+\DoxyCodeLine{01147\ }
+\DoxyCodeLine{01148\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01149\ \textcolor{comment}{**\ 将值复制到键中}}
+\DoxyCodeLine{01150\ \textcolor{comment}{**\ 注意:键的布局与TValue不同,需要分别复制字段}}
+\DoxyCodeLine{01151\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01152\ \textcolor{preprocessor}{\#define\ setnodekey(node,\ obj)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01153\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01154\ \textcolor{preprocessor}{\ \ \ \ Node\ *n\_\ =\ (node);\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01155\ \textcolor{preprocessor}{\ \ \ \ const\ TValue\ *io\_\ =\ (obj);\ \ \ \(\backslash\)}}
+\DoxyCodeLine{01156\ \textcolor{preprocessor}{\ \ \ \ n\_-\/>u.key\_val\ =\ io\_-\/>value\_;\ \(\backslash\)}}
+\DoxyCodeLine{01157\ \textcolor{preprocessor}{\ \ \ \ n\_-\/>u.key\_tt\ =\ io\_-\/>tt\_;\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01158\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01159\ }
+\DoxyCodeLine{01160\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01161\ \textcolor{comment}{**\ 从键复制值到TValue}}
+\DoxyCodeLine{01162\ \textcolor{comment}{**\ 重新组装分散的键字段为正规TValue}}
+\DoxyCodeLine{01163\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01164\ \textcolor{preprocessor}{\#define\ getnodekey(L,\ obj,\ node)\ \(\backslash\)}}
+\DoxyCodeLine{01165\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01166\ \textcolor{preprocessor}{\ \ \ \ TValue\ *io\_\ =\ (obj);\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01167\ \textcolor{preprocessor}{\ \ \ \ const\ Node\ *n\_\ =\ (node);\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01168\ \textcolor{preprocessor}{\ \ \ \ io\_-\/>value\_\ =\ n\_-\/>u.key\_val;\ \(\backslash\)}}
+\DoxyCodeLine{01169\ \textcolor{preprocessor}{\ \ \ \ io\_-\/>tt\_\ =\ n\_-\/>u.key\_tt;\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01170\ \textcolor{preprocessor}{\ \ \ \ checkliveness(L,\ io\_);\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01171\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01172\ }
+\DoxyCodeLine{01173\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01174\ \textcolor{comment}{**\ 表结构}}
+\DoxyCodeLine{01175\ \textcolor{comment}{**}}
+\DoxyCodeLine{01176\ \textcolor{comment}{**\ Lua的表使用混合存储策略:}}
+\DoxyCodeLine{01177\ \textcolor{comment}{**\ -\/\ array:\ 数组部分,用于整数键1..asize}}
+\DoxyCodeLine{01178\ \textcolor{comment}{**\ -\/\ node:\ 哈希部分,用于其他键}}
+\DoxyCodeLine{01179\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01180\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTable}{Table}}}
+\DoxyCodeLine{01181\ \{}
+\DoxyCodeLine{01182\ \ \ \mbox{\hyperlink{structTable_aeceeffe77c9ef26aeca656183fc50110}{CommonHeader}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC头部\ */}}
+\DoxyCodeLine{01183\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structTable_a643cf38ebbab9e5af99ff8a980ffbae5}{flags}};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 1<<p表示标签方法(p)不存在(优化)\ */}}
+\DoxyCodeLine{01184\ \ \ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{structTable_aed057d880ebe0f38f65e626f646adf6a}{lsizenode}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ node数组槽位数的log2\ */}}
+\DoxyCodeLine{01185\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structTable_ab4290d33cf4cc8c47868f8640300970a}{asize}};\ \ \ \ \ \ \textcolor{comment}{/*\ array数组的槽位数\ */}}
+\DoxyCodeLine{01186\ \ \ \mbox{\hyperlink{unionValue}{Value}}\ *\mbox{\hyperlink{structTable_ad22ad0fad7ad6116de3dcc89fba94747}{array}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 数组部分\ */}}
+\DoxyCodeLine{01187\ \ \ \mbox{\hyperlink{unionNode}{Node}}\ *\mbox{\hyperlink{structTable_a519f179c707cb4e93bb66d09151c89e5}{node}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 哈希部分\ */}}
+\DoxyCodeLine{01188\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTable}{Table}}\ *\mbox{\hyperlink{structTable_a99c20fa696fb6a4e89890efa3819ebdc}{metatable}};\ \textcolor{comment}{/*\ 元表\ */}}
+\DoxyCodeLine{01189\ \ \ \mbox{\hyperlink{structGCObject}{GCObject}}\ *\mbox{\hyperlink{structTable_a1b6f3d76efed2011a36ee7c78f65aa70}{gclist}};\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ GC链表\ */}}
+\DoxyCodeLine{01190\ \}\ \mbox{\hyperlink{structTable}{Table}};}
+\DoxyCodeLine{01191\ }
+\DoxyCodeLine{01192\ }
+\DoxyCodeLine{01193\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01194\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01195\ \textcolor{comment}{**\ 操作节点中键的宏}}
+\DoxyCodeLine{01196\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01197\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01198\ \textcolor{comment}{/*\ 获取节点的键类型\ */}}
+\DoxyCodeLine{01199\ \textcolor{preprocessor}{\#define\ keytt(node)\ ((node)-\/>u.key\_tt)}}
+\DoxyCodeLine{01200\ \textcolor{comment}{/*\ 获取节点的键值\ */}}
+\DoxyCodeLine{01201\ \textcolor{preprocessor}{\#define\ keyval(node)\ ((node)-\/>u.key\_val)}}
+\DoxyCodeLine{01202\ }
+\DoxyCodeLine{01203\ \textcolor{comment}{/*\ 测试键是否为nil\ */}}
+\DoxyCodeLine{01204\ \textcolor{preprocessor}{\#define\ keyisnil(node)\ (keytt(node)\ ==\ LUA\_TNIL)}}
+\DoxyCodeLine{01205\ \textcolor{comment}{/*\ 测试键是否为整数\ */}}
+\DoxyCodeLine{01206\ \textcolor{preprocessor}{\#define\ keyisinteger(node)\ (keytt(node)\ ==\ LUA\_VNUMINT)}}
+\DoxyCodeLine{01207\ \textcolor{comment}{/*\ 获取整数键的值\ */}}
+\DoxyCodeLine{01208\ \textcolor{preprocessor}{\#define\ keyival(node)\ (keyval(node).i)}}
+\DoxyCodeLine{01209\ \textcolor{comment}{/*\ 测试键是否为短字符串\ */}}
+\DoxyCodeLine{01210\ \textcolor{preprocessor}{\#define\ keyisshrstr(node)\ (keytt(node)\ ==\ ctb(LUA\_VSHRSTR))}}
+\DoxyCodeLine{01211\ \textcolor{comment}{/*\ 获取字符串键的值,gco2ts转换为TString\ */}}
+\DoxyCodeLine{01212\ \textcolor{preprocessor}{\#define\ keystrval(node)\ (gco2ts(keyval(node).gc))}}
+\DoxyCodeLine{01213\ }
+\DoxyCodeLine{01214\ \textcolor{comment}{/*\ 将键设为nil\ */}}
+\DoxyCodeLine{01215\ \textcolor{preprocessor}{\#define\ setnilkey(node)\ (keytt(node)\ =\ LUA\_TNIL)}}
+\DoxyCodeLine{01216\ }
+\DoxyCodeLine{01217\ \textcolor{comment}{/*\ 测试键是否为可回收类型\ */}}
+\DoxyCodeLine{01218\ \textcolor{preprocessor}{\#define\ keyiscollectable(n)\ (keytt(n)\ \&\ BIT\_ISCOLLECTABLE)}}
+\DoxyCodeLine{01219\ }
+\DoxyCodeLine{01220\ \textcolor{comment}{/*\ 获取键的GC对象\ */}}
+\DoxyCodeLine{01221\ \textcolor{preprocessor}{\#define\ gckey(n)\ (keyval(n).gc)}}
+\DoxyCodeLine{01222\ \textcolor{comment}{/*\ 获取键的GC对象(如果可回收),否则NULL\ */}}
+\DoxyCodeLine{01223\ \textcolor{preprocessor}{\#define\ gckeyN(n)\ (keyiscollectable(n)\ ?\ gckey(n)\ :\ NULL)}}
+\DoxyCodeLine{01224\ }
+\DoxyCodeLine{01225\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01226\ \textcolor{comment}{**\ 表中的死键}}
+\DoxyCodeLine{01227\ \textcolor{comment}{**}}
+\DoxyCodeLine{01228\ \textcolor{comment}{**\ 死键保持LUA\_TDEADKEY标签但保留原始gcvalue}}
+\DoxyCodeLine{01229\ \textcolor{comment}{**\ 这将它们与常规键区分开,但允许在特殊搜索时找到它们}}
+\DoxyCodeLine{01230\ \textcolor{comment}{**\ (next需要这个来找到遍历期间从表中删除的键)}}
+\DoxyCodeLine{01231\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01232\ \textcolor{preprocessor}{\#define\ setdeadkey(node)\ (keytt(node)\ =\ LUA\_TDEADKEY)}}
+\DoxyCodeLine{01233\ \textcolor{preprocessor}{\#define\ keyisdead(node)\ (keytt(node)\ ==\ LUA\_TDEADKEY)}}
+\DoxyCodeLine{01234\ }
+\DoxyCodeLine{01235\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{01236\ \textcolor{comment}{**\ 哈希辅助宏}}
+\DoxyCodeLine{01237\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01238\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01239\ }
+\DoxyCodeLine{01240\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01241\ \textcolor{comment}{**\ 哈希的模运算(大小总是2的幂)}}
+\DoxyCodeLine{01242\ \textcolor{comment}{**}}
+\DoxyCodeLine{01243\ \textcolor{comment}{**\ 使用位运算优化取模:对于2的幂,s\ \%\ size\ ==\ s\ \&\ (size-\/1)}}
+\DoxyCodeLine{01244\ \textcolor{comment}{**\ check\_exp确保size确实是2的幂}}
+\DoxyCodeLine{01245\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01246\ \textcolor{preprocessor}{\#define\ lmod(s,\ size)\ \(\backslash\)}}
+\DoxyCodeLine{01247\ \textcolor{preprocessor}{\ \ (check\_exp((size\ \&\ (size\ -\/\ 1))\ ==\ 0,\ (cast\_uint(s)\ \&\ cast\_uint((size)\ -\/\ 1))))}}
+\DoxyCodeLine{01248\ }
+\DoxyCodeLine{01249\ \textcolor{comment}{/*\ 2的x次幂\ */}}
+\DoxyCodeLine{01250\ \textcolor{preprocessor}{\#define\ twoto(x)\ (1u\ <<\ (x))}}
+\DoxyCodeLine{01251\ \textcolor{comment}{/*\ 获取哈希表节点数组的大小\ */}}
+\DoxyCodeLine{01252\ \textcolor{preprocessor}{\#define\ sizenode(t)\ (twoto((t)-\/>lsizenode))}}
+\DoxyCodeLine{01253\ }
+\DoxyCodeLine{01254\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01255\ \textcolor{comment}{**\ luaO\_utf8esc函数缓冲区的大小}}
+\DoxyCodeLine{01256\ \textcolor{comment}{**\ UTF-\/8编码最多需要6字节,加上终止符和一些余量}}
+\DoxyCodeLine{01257\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01258\ \textcolor{preprocessor}{\#define\ UTF8BUFFSZ\ 8}}
+\DoxyCodeLine{01259\ }
+\DoxyCodeLine{01260\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01261\ \textcolor{comment}{**\ 正确调用luaO\_pushvfstring的宏}}
+\DoxyCodeLine{01262\ \textcolor{comment}{**}}
+\DoxyCodeLine{01263\ \textcolor{comment}{**\ 这个宏处理可变参数:}}
+\DoxyCodeLine{01264\ \textcolor{comment}{**\ 1.\ 使用va\_start初始化参数列表}}
+\DoxyCodeLine{01265\ \textcolor{comment}{**\ 2.\ 调用luaO\_pushvfstring}}
+\DoxyCodeLine{01266\ \textcolor{comment}{**\ 3.\ 使用va\_end清理}}
+\DoxyCodeLine{01267\ \textcolor{comment}{**\ 4.\ 如果返回NULL(内存错误),抛出异常}}
+\DoxyCodeLine{01268\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01269\ \textcolor{preprocessor}{\#define\ pushvfstring(L,\ argp,\ fmt,\ msg)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01270\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01271\ \textcolor{preprocessor}{\ \ \ \ va\_start(argp,\ fmt);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01272\ \textcolor{preprocessor}{\ \ \ \ msg\ =\ luaO\_pushvfstring(L,\ fmt,\ argp);\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01273\ \textcolor{preprocessor}{\ \ \ \ va\_end(argp);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01274\ \textcolor{preprocessor}{\ \ \ \ if\ (msg\ ==\ NULL)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01275\ \textcolor{preprocessor}{\ \ \ \ \ \ luaD\_throw(L,\ LUA\_ERRMEM);\ }\textcolor{comment}{/*\ 只在va\_end之后\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{01276\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{01277\ }
+\DoxyCodeLine{01278\ \textcolor{comment}{/*\ ============================================================================}}
+\DoxyCodeLine{01279\ \textcolor{comment}{**\ 函数声明}}
+\DoxyCodeLine{01280\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01281\ \textcolor{comment}{**}}
+\DoxyCodeLine{01282\ \textcolor{comment}{**\ LUAI\_FUNC标记为Lua内部函数(通常是静态或有限可见性)}}
+\DoxyCodeLine{01283\ \textcolor{comment}{**}}
+\DoxyCodeLine{01284\ \textcolor{comment}{**\ 这些函数在lobject.c中实现,提供对象操作的核心功能}}
+\DoxyCodeLine{01285\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01286\ }
+\DoxyCodeLine{01287\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01288\ \textcolor{comment}{**\ UTF-\/8转义序列}}
+\DoxyCodeLine{01289\ \textcolor{comment}{**\ buff:\ 输出缓冲区,\ x:\ Unicode码点}}
+\DoxyCodeLine{01290\ \textcolor{comment}{**\ 返回:\ 写入的字节数}}
+\DoxyCodeLine{01291\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01292\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lobject_8h_a88804f6fb1465815836b0f7f8422963a}{luaO\_utf8esc}}(\textcolor{keywordtype}{char}\ *buff,\ \mbox{\hyperlink{llimits_8h_abeb00a444eb1dc99a4a2baee15bd898a}{l\_uint32}}\ x);}
+\DoxyCodeLine{01293\ }
+\DoxyCodeLine{01294\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01295\ \textcolor{comment}{**\ 计算不小于x的最小的2的幂的指数}}
+\DoxyCodeLine{01296\ \textcolor{comment}{**\ 例如:\ x=5返回3\ (因为2\string^3=8>=5)}}
+\DoxyCodeLine{01297\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01298\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{lobject_8h_a86e18e1d1ffe3936a7ae560949f38bf6}{luaO\_ceillog2}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ x);}
+\DoxyCodeLine{01299\ }
+\DoxyCodeLine{01300\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01301\ \textcolor{comment}{**\ 编码参数p}}
+\DoxyCodeLine{01302\ \textcolor{comment}{**\ 用于压缩存储某些参数}}
+\DoxyCodeLine{01303\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01304\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{lobject_8h_a7192b29182ab427925ba216f29045929}{luaO\_codeparam}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ p);}
+\DoxyCodeLine{01305\ }
+\DoxyCodeLine{01306\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01307\ \textcolor{comment}{**\ 应用编码参数p到值x}}
+\DoxyCodeLine{01308\ \textcolor{comment}{**\ 解压缩编码的参数}}
+\DoxyCodeLine{01309\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01310\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\_mem}}\ \mbox{\hyperlink{lobject_8h_a3e8492fa8195572b47d5534f486d0481}{luaO\_applyparam}}(\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ p,\ \mbox{\hyperlink{llimits_8h_a24fc195087e262c99a4cf0f9b346a684}{l\_mem}}\ x);}
+\DoxyCodeLine{01311\ }
+\DoxyCodeLine{01312\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01313\ \textcolor{comment}{**\ 原始算术运算(不触发元方法)}}
+\DoxyCodeLine{01314\ \textcolor{comment}{**\ L:\ Lua状态,\ op:\ 操作符,\ p1,p2:\ 操作数,\ res:\ 结果}}
+\DoxyCodeLine{01315\ \textcolor{comment}{**\ 返回:\ 1成功,\ 0失败}}
+\DoxyCodeLine{01316\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01317\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{lobject_8h_a5ea49a125e2848e4303dc10929302865}{luaO\_rawarith}}(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ op,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,}
+\DoxyCodeLine{01318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \mbox{\hyperlink{structTValue}{TValue}}\ *res);}
+\DoxyCodeLine{01319\ }
+\DoxyCodeLine{01320\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01321\ \textcolor{comment}{**\ 算术运算(可能触发元方法)}}
+\DoxyCodeLine{01322\ \textcolor{comment}{**\ L:\ Lua状态,\ op:\ 操作符,\ p1,p2:\ 操作数,\ res:\ 结果栈位置}}
+\DoxyCodeLine{01323\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01324\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lobject_8h_afb09097c7bc4723a274863f6a811edf5}{luaO\_arith}}(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keywordtype}{int}\ op,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p1,}
+\DoxyCodeLine{01325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *p2,\ \mbox{\hyperlink{lobject_8h_a75170ac0f54a6beb06b8a7f9db47d073}{StkId}}\ res);}
+\DoxyCodeLine{01326\ }
+\DoxyCodeLine{01327\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01328\ \textcolor{comment}{**\ 字符串转数字}}
+\DoxyCodeLine{01329\ \textcolor{comment}{**\ s:\ 字符串,\ o:\ 输出TValue}}
+\DoxyCodeLine{01330\ \textcolor{comment}{**\ 返回:\ 转换的字符数(0表示失败)}}
+\DoxyCodeLine{01331\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01332\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{lobject_8h_ab56d8211e48dc3c70c3fa21d92d009af}{luaO\_str2num}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \mbox{\hyperlink{structTValue}{TValue}}\ *o);}
+\DoxyCodeLine{01333\ }
+\DoxyCodeLine{01334\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01335\ \textcolor{comment}{**\ 对象转字符串(到缓冲区)}}
+\DoxyCodeLine{01336\ \textcolor{comment}{**\ obj:\ 对象,\ buff:\ 缓冲区}}
+\DoxyCodeLine{01337\ \textcolor{comment}{**\ 返回:\ 字符串长度}}
+\DoxyCodeLine{01338\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01339\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{lobject_8h_ab9ec50dab06ea554796a8faf9789c60a}{luaO\_tostringbuff}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structTValue}{TValue}}\ *obj,\ \textcolor{keywordtype}{char}\ *buff);}
+\DoxyCodeLine{01340\ }
+\DoxyCodeLine{01341\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01342\ \textcolor{comment}{**\ 十六进制字符的值}}
+\DoxyCodeLine{01343\ \textcolor{comment}{**\ c:\ 字符('0'-\/'9','a'-\/'f','A'-\/'F')}}
+\DoxyCodeLine{01344\ \textcolor{comment}{**\ 返回:\ 0-\/15的值}}
+\DoxyCodeLine{01345\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01346\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}}\ \mbox{\hyperlink{lobject_8h_abbc83c2712bceea2ebd8bb05c6ca519f}{luaO\_hexavalue}}(\textcolor{keywordtype}{int}\ c);}
+\DoxyCodeLine{01347\ }
+\DoxyCodeLine{01348\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01349\ \textcolor{comment}{**\ 对象转字符串(就地转换TValue)}}
+\DoxyCodeLine{01350\ \textcolor{comment}{**\ L:\ Lua状态,\ obj:\ 对象}}
+\DoxyCodeLine{01351\ \textcolor{comment}{**\ 副作用:\ obj可能被转换为字符串}}
+\DoxyCodeLine{01352\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01353\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lobject_8h_a007d2c6293fee953f3af21f60f8133ba}{luaO\_tostring}}(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \mbox{\hyperlink{structTValue}{TValue}}\ *obj);}
+\DoxyCodeLine{01354\ }
+\DoxyCodeLine{01355\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01356\ \textcolor{comment}{**\ 格式化字符串(可变参数版本)}}
+\DoxyCodeLine{01357\ \textcolor{comment}{**\ L:\ Lua状态,\ fmt:\ 格式字符串,\ argp:\ 参数列表}}
+\DoxyCodeLine{01358\ \textcolor{comment}{**\ 返回:\ 结果字符串(压入栈),NULL表示内存错误}}
+\DoxyCodeLine{01359\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01360\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{lobject_8h_ad2cbc19197e7919389c664165c287d7b}{luaO\_pushvfstring}}(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,}
+\DoxyCodeLine{01361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ argp);}
+\DoxyCodeLine{01362\ }
+\DoxyCodeLine{01363\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01364\ \textcolor{comment}{**\ 格式化字符串}}
+\DoxyCodeLine{01365\ \textcolor{comment}{**\ L:\ Lua状态,\ fmt:\ 格式字符串,\ ...:\ 可变参数}}
+\DoxyCodeLine{01366\ \textcolor{comment}{**\ 返回:\ 结果字符串(压入栈)}}
+\DoxyCodeLine{01367\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01368\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{lobject_8h_a3f910c67f694b68c8edea330a1be6e11}{luaO\_pushfstring}}(\mbox{\hyperlink{structlua__State}{lua\_State}}\ *L,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fmt,\ ...);}
+\DoxyCodeLine{01369\ }
+\DoxyCodeLine{01370\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01371\ \textcolor{comment}{**\ 生成chunk标识符}}
+\DoxyCodeLine{01372\ \textcolor{comment}{**\ out:\ 输出缓冲区,\ source:\ 源字符串,\ srclen:\ 源长度}}
+\DoxyCodeLine{01373\ \textcolor{comment}{**\ 副作用:\ 在out中生成适合显示的chunk名称}}
+\DoxyCodeLine{01374\ \textcolor{comment}{*/}}
+\DoxyCodeLine{01375\ \mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\_FUNC}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{lobject_8h_aa83e4edb8b62b06537c43c2ec8b97221}{luaO\_chunkid}}(\textcolor{keywordtype}{char}\ *out,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *source,\ \textcolor{keywordtype}{size\_t}\ srclen);}
+\DoxyCodeLine{01376\ }
+\DoxyCodeLine{01377\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01378\ }
+\DoxyCodeLine{01379\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01380\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01381\ \textcolor{comment}{**\ 文件总结}}
+\DoxyCodeLine{01382\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01383\ \textcolor{comment}{**}}
+\DoxyCodeLine{01384\ \textcolor{comment}{**\ lobject.h\ 是Lua虚拟机的核心头文件,定义了Lua中所有值的内部表示。}}
+\DoxyCodeLine{01385\ \textcolor{comment}{**}}
+\DoxyCodeLine{01386\ \textcolor{comment}{**\ 核心概念总结:}}
+\DoxyCodeLine{01387\ \textcolor{comment}{**}}
+\DoxyCodeLine{01388\ \textcolor{comment}{**\ 1.\ **带标签的值(Tagged\ Value\ -\/\ TValue)**}}
+\DoxyCodeLine{01389\ \textcolor{comment}{**\ \ \ \ -\/\ Lua使用统一的TValue结构表示所有类型的值}}
+\DoxyCodeLine{01390\ \textcolor{comment}{**\ \ \ \ -\/\ 包含Value联合体(存储实际数据)和tt\_字节(类型标签)}}
+\DoxyCodeLine{01391\ \textcolor{comment}{**\ \ \ \ -\/\ 类型标签编码:基础类型(位0-\/3)、变体(位4-\/5)、GC标记(位6)}}
+\DoxyCodeLine{01392\ \textcolor{comment}{**}}
+\DoxyCodeLine{01393\ \textcolor{comment}{**\ 2.\ **类型系统**}}
+\DoxyCodeLine{01394\ \textcolor{comment}{**\ \ \ \ -\/\ 基本类型:nil,\ boolean,\ number,\ string,\ table,\ function,\ userdata,\ thread}}
+\DoxyCodeLine{01395\ \textcolor{comment}{**\ \ \ \ -\/\ 每种类型可能有多个变体(如整数vs浮点数,短字符串vs长字符串)}}
+\DoxyCodeLine{01396\ \textcolor{comment}{**\ \ \ \ -\/\ 使用位运算高效地编码和检查类型信息}}
+\DoxyCodeLine{01397\ \textcolor{comment}{**}}
+\DoxyCodeLine{01398\ \textcolor{comment}{**\ 3.\ **垃圾回收(GC)**}}
+\DoxyCodeLine{01399\ \textcolor{comment}{**\ \ \ \ -\/\ 可回收对象都有CommonHeader(next,\ tt,\ marked)}}
+\DoxyCodeLine{01400\ \textcolor{comment}{**\ \ \ \ -\/\ 使用可回收标记位(第6位)快速判断是否需要GC}}
+\DoxyCodeLine{01401\ \textcolor{comment}{**\ \ \ \ -\/\ 支持三色标记算法(marked字段)}}
+\DoxyCodeLine{01402\ \textcolor{comment}{**}}
+\DoxyCodeLine{01403\ \textcolor{comment}{**\ 4.\ **内存优化**}}
+\DoxyCodeLine{01404\ \textcolor{comment}{**\ \ \ \ -\/\ 使用联合体节省内存(一个值同时只是一种类型)}}
+\DoxyCodeLine{01405\ \textcolor{comment}{**\ \ \ \ -\/\ 字符串内部化(短字符串)减少重复}}
+\DoxyCodeLine{01406\ \textcolor{comment}{**\ \ \ \ -\/\ 表的混合存储(数组+哈希)优化访问效率}}
+\DoxyCodeLine{01407\ \textcolor{comment}{**}}
+\DoxyCodeLine{01408\ \textcolor{comment}{**\ 5.\ **高级特性支持**}}
+\DoxyCodeLine{01409\ \textcolor{comment}{**\ \ \ \ -\/\ 闭包通过UpVal实现,支持开放和关闭状态}}
+\DoxyCodeLine{01410\ \textcolor{comment}{**\ \ \ \ -\/\ 协程通过独立的栈和状态实现}}
+\DoxyCodeLine{01411\ \textcolor{comment}{**\ \ \ \ -\/\ 元表机制允许自定义类型行为}}
+\DoxyCodeLine{01412\ \textcolor{comment}{**\ \ \ \ -\/\ to-\/be-\/closed变量支持确定性资源清理}}
+\DoxyCodeLine{01413\ \textcolor{comment}{**}}
+\DoxyCodeLine{01414\ \textcolor{comment}{**\ 6.\ **宏设计模式**}}
+\DoxyCodeLine{01415\ \textcolor{comment}{**\ \ \ \ -\/\ 大量使用宏提供类型安全的访问接口}}
+\DoxyCodeLine{01416\ \textcolor{comment}{**\ \ \ \ -\/\ 宏在编译时展开,零运行时开销}}
+\DoxyCodeLine{01417\ \textcolor{comment}{**\ \ \ \ -\/\ check\_exp宏在调试版本提供运行时检查}}
+\DoxyCodeLine{01418\ \textcolor{comment}{**}}
+\DoxyCodeLine{01419\ \textcolor{comment}{**\ 7.\ **API设计原则**}}
+\DoxyCodeLine{01420\ \textcolor{comment}{**\ \ \ \ -\/\ 提供多层次的访问:raw(无检查)、带检查、高级封装}}
+\DoxyCodeLine{01421\ \textcolor{comment}{**\ \ \ \ -\/\ 使用命名约定区分不同用途(如setobj2s,\ setobj2t)}}
+\DoxyCodeLine{01422\ \textcolor{comment}{**\ \ \ \ -\/\ 考虑未来扩展性(如不同的赋值宏可能有不同的写屏障)}}
+\DoxyCodeLine{01423\ \textcolor{comment}{**}}
+\DoxyCodeLine{01424\ \textcolor{comment}{**\ 阅读建议:}}
+\DoxyCodeLine{01425\ \textcolor{comment}{**\ -\/\ 首先理解TValue和类型标签系统}}
+\DoxyCodeLine{01426\ \textcolor{comment}{**\ -\/\ 然后逐个类型深入(从简单到复杂:nil\ -\/>\ boolean\ -\/>\ number\ -\/>\ ...)}}
+\DoxyCodeLine{01427\ \textcolor{comment}{**\ -\/\ 注意各种宏的命名模式和设计意图}}
+\DoxyCodeLine{01428\ \textcolor{comment}{**\ -\/\ 结合lobject.c的实现代码加深理解}}
+\DoxyCodeLine{01429\ \textcolor{comment}{**}}
+\DoxyCodeLine{01430\ \textcolor{comment}{**\ 这个文件体现了Lua实现的核心设计哲学:}}
+\DoxyCodeLine{01431\ \textcolor{comment}{**\ -\/\ 简洁高效的数据表示}}
+\DoxyCodeLine{01432\ \textcolor{comment}{**\ -\/\ 统一的类型系统}}
+\DoxyCodeLine{01433\ \textcolor{comment}{**\ -\/\ 精心设计的内存管理}}
+\DoxyCodeLine{01434\ \textcolor{comment}{**\ -\/\ 通过C宏实现零成本抽象}}
+\DoxyCodeLine{01435\ \textcolor{comment}{**\ ============================================================================}}
+\DoxyCodeLine{01436\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

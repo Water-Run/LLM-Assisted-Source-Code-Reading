@@ -1,0 +1,234 @@
+\doxysection{lzio.\+h File Reference}
+\hypertarget{lzio_8h}{}\label{lzio_8h}\index{lzio.h@{lzio.h}}
+{\ttfamily \#include "{}lua.\+h"{}}\newline
+{\ttfamily \#include "{}lmem.\+h"{}}\newline
+Include dependency graph for lzio.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{lzio_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lzio_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structMbuffer}{Mbuffer}}
+\item 
+struct \mbox{\hyperlink{structZio}{Zio}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a8341bdc72db5a2f045e18440f9523008}{EOZ}}~(-\/1)   /\texorpdfstring{$\ast$}{*} end of stream \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{lzio_8h_aecca8ea1e6dc0c97b458f77c0e3491de}{zgetc}}(z)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a22367cbe48563efa737ffee3f2774ae2}{lua\+Z\+\_\+initbuffer}}(L,  buff)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_aa51f632cb0519368a65ada80b71ea1e3}{lua\+Z\+\_\+buffer}}(buff)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a072ede62ba384b9d5fdedbb80eaf3ee1}{lua\+Z\+\_\+sizebuffer}}(buff)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a26c3aeb9ce93f8559b0a596cf7bb1031}{lua\+Z\+\_\+bufflen}}(buff)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_ab9e4cabf75529d0c2f5a809f49a25281}{lua\+Z\+\_\+buffremove}}(buff,  i)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a53c928283083a162c79e0152048affe2}{lua\+Z\+\_\+resetbuffer}}(buff)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_ab158420acf019b3a45e8ae6e65b51fdb}{lua\+Z\+\_\+resizebuffer}}(L,  buff,  size)
+\item 
+\#define \mbox{\hyperlink{lzio_8h_a549577e88246e83e4578cabd2ea030ca}{lua\+Z\+\_\+freebuffer}}(L,  buff)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structZio}{Zio}} \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}
+\item 
+typedef struct Mbuffer \mbox{\hyperlink{lzio_8h_a0e88c2a527fb0ef0af49d0b8f34a0be9}{Mbuffer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void \mbox{\hyperlink{lzio_8h_a182323feac5ab7363dbf654d87f057d5}{lua\+Z\+\_\+init}} (\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}L, \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, \mbox{\hyperlink{lua_8h_a1708af7a68b7af536d43d126ca53b0f5}{lua\+\_\+\+Reader}} reader, void \texorpdfstring{$\ast$}{*}data)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} size\+\_\+t \mbox{\hyperlink{lzio_8h_a1f10428fa224047cec9e9b1756a0b733}{lua\+Z\+\_\+read}} (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, void \texorpdfstring{$\ast$}{*}b, size\+\_\+t n)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lzio_8h_a85ed74ee4752ed6e4fb6f0046d36dbc1}{lua\+Z\+\_\+getaddr}} (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z, size\+\_\+t n)
+\item 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int \mbox{\hyperlink{lzio_8h_a407faec289b7559f210ac784e11a59bb}{lua\+Z\+\_\+fill}} (\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}z)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{lzio_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{lzio_8h_a8341bdc72db5a2f045e18440f9523008}\index{lzio.h@{lzio.h}!EOZ@{EOZ}}
+\index{EOZ@{EOZ}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{EOZ}{EOZ}}
+{\footnotesize\ttfamily \label{lzio_8h_a8341bdc72db5a2f045e18440f9523008} 
+\#define EOZ~(-\/1)   /\texorpdfstring{$\ast$}{*} end of stream \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{lzio_8h_aa51f632cb0519368a65ada80b71ea1e3}\index{lzio.h@{lzio.h}!luaZ\_buffer@{luaZ\_buffer}}
+\index{luaZ\_buffer@{luaZ\_buffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_buffer}{luaZ\_buffer}}
+{\footnotesize\ttfamily \label{lzio_8h_aa51f632cb0519368a65ada80b71ea1e3} 
+\#define lua\+Z\+\_\+buffer(\begin{DoxyParamCaption}\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>buffer)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_a26c3aeb9ce93f8559b0a596cf7bb1031}\index{lzio.h@{lzio.h}!luaZ\_bufflen@{luaZ\_bufflen}}
+\index{luaZ\_bufflen@{luaZ\_bufflen}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_bufflen}{luaZ\_bufflen}}
+{\footnotesize\ttfamily \label{lzio_8h_a26c3aeb9ce93f8559b0a596cf7bb1031} 
+\#define lua\+Z\+\_\+bufflen(\begin{DoxyParamCaption}\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>n)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_ab9e4cabf75529d0c2f5a809f49a25281}\index{lzio.h@{lzio.h}!luaZ\_buffremove@{luaZ\_buffremove}}
+\index{luaZ\_buffremove@{luaZ\_buffremove}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_buffremove}{luaZ\_buffremove}}
+{\footnotesize\ttfamily \label{lzio_8h_ab9e4cabf75529d0c2f5a809f49a25281} 
+\#define lua\+Z\+\_\+buffremove(\begin{DoxyParamCaption}\item[{}]{buff}{, }\item[{}]{i}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>n\ -\/=\ \mbox{\hyperlink{llimits_8h_a025d385a5ce274fa6eade82b6e1458d1}{cast\_sizet}}(i))}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_a549577e88246e83e4578cabd2ea030ca}\index{lzio.h@{lzio.h}!luaZ\_freebuffer@{luaZ\_freebuffer}}
+\index{luaZ\_freebuffer@{luaZ\_freebuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_freebuffer}{luaZ\_freebuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_a549577e88246e83e4578cabd2ea030ca} 
+\#define lua\+Z\+\_\+freebuffer(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{lzio_8h_ab158420acf019b3a45e8ae6e65b51fdb}{luaZ\_resizebuffer}}(L,\ buff,\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_a22367cbe48563efa737ffee3f2774ae2}\index{lzio.h@{lzio.h}!luaZ\_initbuffer@{luaZ\_initbuffer}}
+\index{luaZ\_initbuffer@{luaZ\_initbuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_initbuffer}{luaZ\_initbuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_a22367cbe48563efa737ffee3f2774ae2} 
+\#define lua\+Z\+\_\+initbuffer(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>buffer\ =\ NULL,\ (buff)-\/>buffsize\ =\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_a53c928283083a162c79e0152048affe2}\index{lzio.h@{lzio.h}!luaZ\_resetbuffer@{luaZ\_resetbuffer}}
+\index{luaZ\_resetbuffer@{luaZ\_resetbuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_resetbuffer}{luaZ\_resetbuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_a53c928283083a162c79e0152048affe2} 
+\#define lua\+Z\+\_\+resetbuffer(\begin{DoxyParamCaption}\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>n\ =\ 0)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_ab158420acf019b3a45e8ae6e65b51fdb}\index{lzio.h@{lzio.h}!luaZ\_resizebuffer@{luaZ\_resizebuffer}}
+\index{luaZ\_resizebuffer@{luaZ\_resizebuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_resizebuffer}{luaZ\_resizebuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_ab158420acf019b3a45e8ae6e65b51fdb} 
+\#define lua\+Z\+\_\+resizebuffer(\begin{DoxyParamCaption}\item[{}]{L}{, }\item[{}]{buff}{, }\item[{}]{size}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((buff)-\/>buffer\ =\ \mbox{\hyperlink{lmem_8h_a5904278d180acc29faf199e1d76f3e85}{luaM\_reallocvchar}}(L,\ (buff)-\/>buffer,\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (buff)-\/>buffsize,\ size),\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ (buff)-\/>buffsize\ =\ size)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_a072ede62ba384b9d5fdedbb80eaf3ee1}\index{lzio.h@{lzio.h}!luaZ\_sizebuffer@{luaZ\_sizebuffer}}
+\index{luaZ\_sizebuffer@{luaZ\_sizebuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_sizebuffer}{luaZ\_sizebuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_a072ede62ba384b9d5fdedbb80eaf3ee1} 
+\#define lua\+Z\+\_\+sizebuffer(\begin{DoxyParamCaption}\item[{}]{buff}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((buff)-\/>buffsize)}
+
+\end{DoxyCode}
+\Hypertarget{lzio_8h_aecca8ea1e6dc0c97b458f77c0e3491de}\index{lzio.h@{lzio.h}!zgetc@{zgetc}}
+\index{zgetc@{zgetc}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{zgetc}{zgetc}}
+{\footnotesize\ttfamily \label{lzio_8h_aecca8ea1e6dc0c97b458f77c0e3491de} 
+\#define zgetc(\begin{DoxyParamCaption}\item[{}]{z}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(((z)-\/>n-\/-\/)>0\ ?\ \ \mbox{\hyperlink{llimits_8h_aa0c49a2b32329cc39df5ccafd1f720e0}{cast\_uchar}}(*(z)-\/>p++)\ :\ \mbox{\hyperlink{lzio_8c_a7d496b76e161e81d07f9200af4784cb2}{luaZ\_fill}}(z))}
+
+\end{DoxyCode}
+
+
+\label{doc-typedef-members}
+\Hypertarget{lzio_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{lzio_8h_a0e88c2a527fb0ef0af49d0b8f34a0be9}\index{lzio.h@{lzio.h}!Mbuffer@{Mbuffer}}
+\index{Mbuffer@{Mbuffer}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{Mbuffer}{Mbuffer}}
+{\footnotesize\ttfamily \label{lzio_8h_a0e88c2a527fb0ef0af49d0b8f34a0be9} 
+typedef struct Mbuffer Mbuffer}
+
+\Hypertarget{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}\index{lzio.h@{lzio.h}!ZIO@{ZIO}}
+\index{ZIO@{ZIO}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{ZIO}{ZIO}}
+{\footnotesize\ttfamily \label{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17} 
+typedef struct \mbox{\hyperlink{structZio}{Zio}} \mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{lzio_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{lzio_8h_a407faec289b7559f210ac784e11a59bb}\index{lzio.h@{lzio.h}!luaZ\_fill@{luaZ\_fill}}
+\index{luaZ\_fill@{luaZ\_fill}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_fill()}{luaZ\_fill()}}
+{\footnotesize\ttfamily \label{lzio_8h_a407faec289b7559f210ac784e11a59bb} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} int lua\+Z\+\_\+fill (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lzio_8h_a85ed74ee4752ed6e4fb6f0046d36dbc1}\index{lzio.h@{lzio.h}!luaZ\_getaddr@{luaZ\_getaddr}}
+\index{luaZ\_getaddr@{luaZ\_getaddr}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_getaddr()}{luaZ\_getaddr()}}
+{\footnotesize\ttfamily \label{lzio_8h_a85ed74ee4752ed6e4fb6f0046d36dbc1} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} const void \texorpdfstring{$\ast$}{*} lua\+Z\+\_\+getaddr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{size\+\_\+t}]{n}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lzio_8h_a182323feac5ab7363dbf654d87f057d5}\index{lzio.h@{lzio.h}!luaZ\_init@{luaZ\_init}}
+\index{luaZ\_init@{luaZ\_init}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_init()}{luaZ\_init()}}
+{\footnotesize\ttfamily \label{lzio_8h_a182323feac5ab7363dbf654d87f057d5} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} void lua\+Z\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlua__State}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}}]{L}{, }\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{\mbox{\hyperlink{lua_8h_a1708af7a68b7af536d43d126ca53b0f5}{lua\+\_\+\+Reader}}}]{reader}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{data}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{lzio_8h_a182323feac5ab7363dbf654d87f057d5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{lzio_8h_a1f10428fa224047cec9e9b1756a0b733}\index{lzio.h@{lzio.h}!luaZ\_read@{luaZ\_read}}
+\index{luaZ\_read@{luaZ\_read}!lzio.h@{lzio.h}}
+\doxysubsubsection{\texorpdfstring{luaZ\_read()}{luaZ\_read()}}
+{\footnotesize\ttfamily \label{lzio_8h_a1f10428fa224047cec9e9b1756a0b733} 
+\mbox{\hyperlink{llimits_8h_a3f43b35a70c93f2cfde1db42a5a24f1e}{LUAI\+\_\+\+FUNC}} size\+\_\+t lua\+Z\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lzio_8h_a3a6756c936bdfffa304b1d808ce7dc17}{ZIO}} \texorpdfstring{$\ast$}{*}}]{z}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{size\+\_\+t}]{n}{}\end{DoxyParamCaption})}
+

@@ -1,0 +1,21 @@
+<map id="lua_absindex" name="lua_absindex">
+<area shape="rect" id="Node000001" title=" " alt="" coords="540,107,638,133"/>
+<area shape="rect" id="Node000002" href="$lauxlib_8c.html#abfb23747df76e74d28ac48dabda0c3e1" title=" " alt="" coords="382,5,483,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="557,99,491,53,460,35,462,30,494,48,560,95"/>
+<area shape="rect" id="Node000003" href="$lauxlib_8c.html#a64d366034d114de946f1b93199847dab" title=" " alt="" coords="215,5,313,32"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="528,104,308,35,310,30,529,99"/>
+<area shape="rect" id="Node000004" href="$lauxlib_8c.html#a4cd66d7b986316711233243a268e8e04" title=" " alt="" coords="373,107,492,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="525,123,493,123,493,117,525,117"/>
+<area shape="rect" id="Node000008" href="$lauxlib_8c.html#a1adeae26be7c2e3001c3583f43f70720" title=" " alt="" coords="399,157,466,184"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="532,141,467,162,466,157,530,136"/>
+<area shape="rect" id="Node000009" href="$lauxlib_8c.html#ad5e8303f3809d26c336c3e18879b7f4e" title=" " alt="" coords="392,208,473,235"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="564,146,531,172,494,198,471,210,469,205,491,194,528,168,560,141"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="366,21,313,21,313,16,366,16"/>
+<area shape="rect" id="Node000005" href="$linit_8c.html#ad09996aefb08d65ffee01b1729919261" title=" " alt="" coords="5,81,155,108"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="369,105,325,97,237,92,155,93,155,88,237,87,325,92,370,100"/>
+<area shape="rect" id="Node000006" href="$lauxlib_8c.html#a3cb8205f86c838d8f82b7d2360b1b0f4" title=" " alt="" coords="216,107,312,133"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="357,123,312,123,312,117,357,117"/>
+<area shape="rect" id="Node000007" href="$loadlib_8c.html#ab732e1ec253c9b8dc0c2ce4d74cb0083" title=" " alt="" coords="203,157,325,184"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="372,141,312,159,310,154,371,136"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="201,114,155,108,156,102,201,109"/>
+</map>

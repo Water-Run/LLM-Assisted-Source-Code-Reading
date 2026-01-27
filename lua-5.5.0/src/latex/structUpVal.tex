@@ -1,0 +1,104 @@
+\doxysection{Up\+Val Struct Reference}
+\hypertarget{structUpVal}{}\label{structUpVal}\index{UpVal@{UpVal}}
+
+
+{\ttfamily \#include $<$lobject.\+h$>$}
+
+
+
+Collaboration diagram for Up\+Val\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{structUpVal__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structUpVal_a4e31d0a4bda814a7173a9ef5ca88ba3c}{Common\+Header}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>\mbox{\hyperlink{structTValue}{TValue}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structUpVal_a8e9dff354074323b0df2bd0795b6e9d3}{p}}\\
+\>ptrdiff\_t \mbox{\hyperlink{structUpVal_a5181153fb4139bfe1246bfff44700216}{offset}}\\
+\} \mbox{\hyperlink{structUpVal_ae884e7120e776fd0699a9bdc02403480}{v}}\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>struct \mbox{\hyperlink{structUpVal}{UpVal}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structUpVal_ad60d3e0af32d663d3cde2e033bbdefd8}{next}}\\
+\>\>struct \mbox{\hyperlink{structUpVal}{UpVal}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structUpVal_af88c50a2df90e5e84a6abedde641771a}{previous}}\\
+\>\} \mbox{\hyperlink{structUpVal_a1f7fa9c8703aad994bd21edad8b0c027}{open}}\\
+\>\mbox{\hyperlink{structTValue}{TValue}} \mbox{\hyperlink{structUpVal_abc22d06bbcaf3f197af9c6069c562505}{value}}\\
+\} \mbox{\hyperlink{structUpVal_a3e874535cf761992620ec6b3a1ddedd7}{u}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structUpVal_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structUpVal_a4e31d0a4bda814a7173a9ef5ca88ba3c}\index{UpVal@{UpVal}!CommonHeader@{CommonHeader}}
+\index{CommonHeader@{CommonHeader}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{CommonHeader}{CommonHeader}}
+{\footnotesize\ttfamily \label{structUpVal_a4e31d0a4bda814a7173a9ef5ca88ba3c} 
+Up\+Val\+::\+Common\+Header}
+
+\Hypertarget{structUpVal_ad60d3e0af32d663d3cde2e033bbdefd8}\index{UpVal@{UpVal}!next@{next}}
+\index{next@{next}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily \label{structUpVal_ad60d3e0af32d663d3cde2e033bbdefd8} 
+struct \mbox{\hyperlink{structUpVal}{Up\+Val}}\texorpdfstring{$\ast$}{*} Up\+Val\+::next}
+
+\Hypertarget{structUpVal_a5181153fb4139bfe1246bfff44700216}\index{UpVal@{UpVal}!offset@{offset}}
+\index{offset@{offset}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{offset}{offset}}
+{\footnotesize\ttfamily \label{structUpVal_a5181153fb4139bfe1246bfff44700216} 
+ptrdiff\+\_\+t Up\+Val\+::offset}
+
+\Hypertarget{structUpVal_a1f7fa9c8703aad994bd21edad8b0c027}\index{UpVal@{UpVal}!open@{open}}
+\index{open@{open}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structUpVal_a1f7fa9c8703aad994bd21edad8b0c027} 
+struct  \{ ... \}  Up\+Val\+::open}
+
+\Hypertarget{structUpVal_a8e9dff354074323b0df2bd0795b6e9d3}\index{UpVal@{UpVal}!p@{p}}
+\index{p@{p}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{p}{p}}
+{\footnotesize\ttfamily \label{structUpVal_a8e9dff354074323b0df2bd0795b6e9d3} 
+\mbox{\hyperlink{structTValue}{TValue}}\texorpdfstring{$\ast$}{*} Up\+Val\+::p}
+
+\Hypertarget{structUpVal_af88c50a2df90e5e84a6abedde641771a}\index{UpVal@{UpVal}!previous@{previous}}
+\index{previous@{previous}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{previous}{previous}}
+{\footnotesize\ttfamily \label{structUpVal_af88c50a2df90e5e84a6abedde641771a} 
+struct \mbox{\hyperlink{structUpVal}{Up\+Val}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Up\+Val\+::previous}
+
+\Hypertarget{structUpVal_a3e874535cf761992620ec6b3a1ddedd7}\index{UpVal@{UpVal}!u@{u}}
+\index{u@{u}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structUpVal_a3e874535cf761992620ec6b3a1ddedd7} 
+union  \{ ... \}  Up\+Val\+::u}
+
+\Hypertarget{structUpVal_ae884e7120e776fd0699a9bdc02403480}\index{UpVal@{UpVal}!v@{v}}
+\index{v@{v}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structUpVal_ae884e7120e776fd0699a9bdc02403480} 
+union  \{ ... \}  Up\+Val\+::v}
+
+\Hypertarget{structUpVal_abc22d06bbcaf3f197af9c6069c562505}\index{UpVal@{UpVal}!value@{value}}
+\index{value@{value}!UpVal@{UpVal}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{structUpVal_abc22d06bbcaf3f197af9c6069c562505} 
+\mbox{\hyperlink{structTValue}{TValue}} Up\+Val\+::value}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lobject_8h}{lobject.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,29 @@
+<map id="lualib.h" name="lualib.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="554,5,616,32"/>
+<area shape="rect" id="Node000002" href="$lbaselib_8c.html" title=" " alt="" coords="5,80,82,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="539,26,344,46,219,62,93,83,83,85,82,80,92,77,218,57,343,41,538,21"/>
+<area shape="rect" id="Node000003" href="$lcorolib_8c.html" title=" " alt="" coords="106,80,179,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="538,28,384,50,192,83,180,85,179,80,191,77,383,45,538,23"/>
+<area shape="rect" id="Node000004" href="$ldblib_8c.html" title=" " alt="" coords="203,80,265,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="539,30,420,52,277,83,266,85,265,80,276,77,419,47,538,25"/>
+<area shape="rect" id="Node000005" href="$linit_8c.html" title=" " alt="" coords="289,80,342,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="539,34,355,83,343,86,341,81,353,77,538,29"/>
+<area shape="rect" id="Node000006" href="$liolib_8c.html" title=" " alt="" coords="366,80,425,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="540,40,426,83,424,78,538,35"/>
+<area shape="rect" id="Node000007" href="$lmathlib_8c.html" title=" " alt="" coords="449,80,526,107"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="557,44,506,82,503,77,554,39"/>
+<area shape="rect" id="Node000008" href="$loadlib_8c.html" title=" " alt="" coords="550,80,620,107"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="588,48,588,80,582,80,582,48"/>
+<area shape="rect" id="Node000009" href="$loslib_8c.html" title=" " alt="" coords="643,80,705,107"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="614,40,660,78,657,82,611,44"/>
+<area shape="rect" id="Node000010" href="$lstrlib_8c.html" title=" " alt="" coords="729,80,792,107"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="631,36,731,77,729,82,629,41"/>
+<area shape="rect" id="Node000011" href="$ltablib_8c.html" title=" " alt="" coords="817,80,883,107"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="632,30,817,80,816,85,630,35"/>
+<area shape="rect" id="Node000012" href="$lua_8c.html" title=" " alt="" coords="907,80,956,107"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="632,24,752,45,896,77,907,81,906,86,895,83,751,51,631,30"/>
+<area shape="rect" id="Node000013" href="$lua_8hpp.html" title=" " alt="" coords="980,80,1043,107"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="632,23,783,44,969,77,980,80,979,85,968,83,782,49,631,28"/>
+<area shape="rect" id="Node000014" href="$lutf8lib_8c.html" title=" " alt="" coords="1067,80,1137,107"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="632,21,818,41,937,57,1056,77,1067,80,1066,85,1055,83,936,63,817,46,631,27"/>
+</map>

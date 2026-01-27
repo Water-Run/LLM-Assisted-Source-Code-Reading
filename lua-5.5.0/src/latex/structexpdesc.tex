@@ -1,0 +1,151 @@
+\doxysection{expdesc Struct Reference}
+\hypertarget{structexpdesc}{}\label{structexpdesc}\index{expdesc@{expdesc}}
+
+
+{\ttfamily \#include $<$lparser.\+h$>$}
+
+
+
+Collaboration diagram for expdesc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{structexpdesc__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4e}{expkind}} \mbox{\hyperlink{structexpdesc_ae74b3577aad7833518986edca3db242c}{k}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\_Integer}} \mbox{\hyperlink{structexpdesc_ab9299c85deaf83fd3f37c0f7d29639e0}{ival}}\\
+\>\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\_Number}} \mbox{\hyperlink{structexpdesc_ad7e0406615f459c8df64b2b7b86e6a0a}{nval}}\\
+\>\mbox{\hyperlink{structTString}{TString}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structexpdesc_ad2c5bc52ce3eecf4eb5cce524ee56d67}{strval}}\\
+\>int \mbox{\hyperlink{structexpdesc_a0b2f77c33e2412d54ec90f71030121e2}{info}}\\
+\>struct \{\\
+\>\>short \mbox{\hyperlink{structexpdesc_a2333bf09cdfaeb847c56b2a13925ff11}{idx}}\\
+\>\>\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}} \mbox{\hyperlink{structexpdesc_aff73ceb852b920307d0adf7b42111d7b}{t}}\\
+\>\>\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}} \mbox{\hyperlink{structexpdesc_aec04a5d981ad75350b77911bb40f982f}{ro}}\\
+\>\>int \mbox{\hyperlink{structexpdesc_a7ac82b0b6cb960cb25cb79b959367af2}{keystr}}\\
+\>\} \mbox{\hyperlink{structexpdesc_a0dd496429fa8f15e5833add97c06106c}{ind}}\\
+\>struct \{\\
+\>\>\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\_byte}} \mbox{\hyperlink{structexpdesc_af19de25aff8a4e626089882273d06150}{ridx}}\\
+\>\>short \mbox{\hyperlink{structexpdesc_a6cf7c8b3430a7b1bb77557614bc116dc}{vidx}}\\
+\>\} \mbox{\hyperlink{structexpdesc_a1121f5b13a08314a4b3311149d6d66e5}{var}}\\
+\} \mbox{\hyperlink{structexpdesc_a6a46234a2cfe5da9432e8f9df9ce9d13}{u}}\\
+
+\end{tabbing}\item 
+int \mbox{\hyperlink{structexpdesc_a406e85dd954d4a5cec0c0f4a73e519bf}{t}}
+\item 
+int \mbox{\hyperlink{structexpdesc_afe6e22f2c18d75bc97add0e1f62e93e2}{f}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{structexpdesc_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structexpdesc_afe6e22f2c18d75bc97add0e1f62e93e2}\index{expdesc@{expdesc}!f@{f}}
+\index{f@{f}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{f}{f}}
+{\footnotesize\ttfamily \label{structexpdesc_afe6e22f2c18d75bc97add0e1f62e93e2} 
+int expdesc\+::f}
+
+\Hypertarget{structexpdesc_a2333bf09cdfaeb847c56b2a13925ff11}\index{expdesc@{expdesc}!idx@{idx}}
+\index{idx@{idx}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{idx}{idx}}
+{\footnotesize\ttfamily \label{structexpdesc_a2333bf09cdfaeb847c56b2a13925ff11} 
+short expdesc\+::idx}
+
+\Hypertarget{structexpdesc_a0dd496429fa8f15e5833add97c06106c}\index{expdesc@{expdesc}!ind@{ind}}
+\index{ind@{ind}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structexpdesc_a0dd496429fa8f15e5833add97c06106c} 
+struct  \{ ... \}  expdesc\+::ind}
+
+\Hypertarget{structexpdesc_a0b2f77c33e2412d54ec90f71030121e2}\index{expdesc@{expdesc}!info@{info}}
+\index{info@{info}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{info}{info}}
+{\footnotesize\ttfamily \label{structexpdesc_a0b2f77c33e2412d54ec90f71030121e2} 
+int expdesc\+::info}
+
+\Hypertarget{structexpdesc_ab9299c85deaf83fd3f37c0f7d29639e0}\index{expdesc@{expdesc}!ival@{ival}}
+\index{ival@{ival}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{ival}{ival}}
+{\footnotesize\ttfamily \label{structexpdesc_ab9299c85deaf83fd3f37c0f7d29639e0} 
+\mbox{\hyperlink{lua_8h_a362144baa0cfb14dc38fd21438053d73}{lua\+\_\+\+Integer}} expdesc\+::ival}
+
+\Hypertarget{structexpdesc_ae74b3577aad7833518986edca3db242c}\index{expdesc@{expdesc}!k@{k}}
+\index{k@{k}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{k}{k}}
+{\footnotesize\ttfamily \label{structexpdesc_ae74b3577aad7833518986edca3db242c} 
+\mbox{\hyperlink{lparser_8h_aecced501a9387ab3e6e50a9834615d4e}{expkind}} expdesc\+::k}
+
+\Hypertarget{structexpdesc_a7ac82b0b6cb960cb25cb79b959367af2}\index{expdesc@{expdesc}!keystr@{keystr}}
+\index{keystr@{keystr}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{keystr}{keystr}}
+{\footnotesize\ttfamily \label{structexpdesc_a7ac82b0b6cb960cb25cb79b959367af2} 
+int expdesc\+::keystr}
+
+\Hypertarget{structexpdesc_ad7e0406615f459c8df64b2b7b86e6a0a}\index{expdesc@{expdesc}!nval@{nval}}
+\index{nval@{nval}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{nval}{nval}}
+{\footnotesize\ttfamily \label{structexpdesc_ad7e0406615f459c8df64b2b7b86e6a0a} 
+\mbox{\hyperlink{lua_8h_af0a6ed3b852d680769cfc410a0672172}{lua\+\_\+\+Number}} expdesc\+::nval}
+
+\Hypertarget{structexpdesc_af19de25aff8a4e626089882273d06150}\index{expdesc@{expdesc}!ridx@{ridx}}
+\index{ridx@{ridx}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{ridx}{ridx}}
+{\footnotesize\ttfamily \label{structexpdesc_af19de25aff8a4e626089882273d06150} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} expdesc\+::ridx}
+
+\Hypertarget{structexpdesc_aec04a5d981ad75350b77911bb40f982f}\index{expdesc@{expdesc}!ro@{ro}}
+\index{ro@{ro}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{ro}{ro}}
+{\footnotesize\ttfamily \label{structexpdesc_aec04a5d981ad75350b77911bb40f982f} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} expdesc\+::ro}
+
+\Hypertarget{structexpdesc_ad2c5bc52ce3eecf4eb5cce524ee56d67}\index{expdesc@{expdesc}!strval@{strval}}
+\index{strval@{strval}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{strval}{strval}}
+{\footnotesize\ttfamily \label{structexpdesc_ad2c5bc52ce3eecf4eb5cce524ee56d67} 
+\mbox{\hyperlink{structTString}{TString}}\texorpdfstring{$\ast$}{*} expdesc\+::strval}
+
+\Hypertarget{structexpdesc_aff73ceb852b920307d0adf7b42111d7b}\index{expdesc@{expdesc}!t@{t}}
+\index{t@{t}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{t}{t}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structexpdesc_aff73ceb852b920307d0adf7b42111d7b} 
+\mbox{\hyperlink{llimits_8h_ae1fe9ac10d9803bd1d7bdf30b18bad68}{lu\+\_\+byte}} expdesc\+::t}
+
+\Hypertarget{structexpdesc_a406e85dd954d4a5cec0c0f4a73e519bf}\index{expdesc@{expdesc}!t@{t}}
+\index{t@{t}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{t}{t}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structexpdesc_a406e85dd954d4a5cec0c0f4a73e519bf} 
+int expdesc\+::t}
+
+\Hypertarget{structexpdesc_a6a46234a2cfe5da9432e8f9df9ce9d13}\index{expdesc@{expdesc}!u@{u}}
+\index{u@{u}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{structexpdesc_a6a46234a2cfe5da9432e8f9df9ce9d13} 
+union  \{ ... \}  expdesc\+::u}
+
+\Hypertarget{structexpdesc_a1121f5b13a08314a4b3311149d6d66e5}\index{expdesc@{expdesc}!var@{var}}
+\index{var@{var}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{[struct]}{[struct]}}
+{\footnotesize\ttfamily \label{structexpdesc_a1121f5b13a08314a4b3311149d6d66e5} 
+struct  \{ ... \}  expdesc\+::var}
+
+\Hypertarget{structexpdesc_a6cf7c8b3430a7b1bb77557614bc116dc}\index{expdesc@{expdesc}!vidx@{vidx}}
+\index{vidx@{vidx}!expdesc@{expdesc}}
+\doxysubsubsection{\texorpdfstring{vidx}{vidx}}
+{\footnotesize\ttfamily \label{structexpdesc_a6cf7c8b3430a7b1bb77557614bc116dc} 
+short expdesc\+::vidx}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lparser_8h}{lparser.\+h}}\end{DoxyCompactItemize}
