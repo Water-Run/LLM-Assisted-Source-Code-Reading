@@ -1,96 +1,776 @@
 /*
 ** $Id: lmem.h $
 ** Interface to Memory Manager
+** 内存管理器接口
 ** See Copyright Notice in lua.h
+** 版权声明见 lua.h
+*/
+
+/*
+** ============================================================================
+** 文件概要说明
+** ============================================================================
+**
+** 文件名: lmem.h
+** 功能: Lua 内存管理器的接口定义
+**
+** 主要职责:
+** 1. 提供统一的内存分配/释放接口,所有 Lua 的内存操作都通过这里
+** 2. 处理内存分配失败的情况(抛出 LUA_ERRMEM 错误)
+** 3. 提供安全的内存操作宏,防止整数溢出等问题
+** 4. 支持动态数组的增长和收缩
+** 5. 跟踪内存使用情况(通过 oldsize 和 size 参数)
+**
+** 设计思想:
+** - 所有内存操作都需要传入 lua_State *L,便于错误处理和内存统计
+** - 使用宏来简化常见的内存操作模式
+** - 在编译期检查可能的整数溢出问题
+** - 提供类型安全的内存分配接口
+**
+** 核心概念:
+** - block: 内存块指针
+** - oldsize/osize: 旧的内存大小(用于内存统计和释放)
+** - size/newsize: 新的内存大小
+** - tag: 对象标签,用于 GC 识别对象类型
+**
+** ============================================================================
 */
 
 #ifndef lmem_h
 #define lmem_h
 
+#include <stddef.h> /* 包含 size_t 等标准类型定义 */
 
-#include <stddef.h>
-
-#include "llimits.h"
-#include "lua.h"
-
-
-#define luaM_error(L)	luaD_throw(L, LUA_ERRMEM)
-
+#include "llimits.h" /* 包含 Lua 的限制定义,如 MAX_SIZET, cast_* 宏等 */
+#include "lua.h"     /* 包含 Lua 的核心定义,如 lua_State, LUA_ERRMEM 等 */
 
 /*
+** ----------------------------------------------------------------------------
+** luaM_error 宏
+** ----------------------------------------------------------------------------
+** 功能: 当内存分配失败时抛出内存错误
+**
+** 参数:
+**   L - lua_State 指针,Lua 虚拟机状态
+**
+** 实现说明:
+**   - 调用 luaD_throw 函数抛出 LUA_ERRMEM 类型的错误
+**   - luaD_throw 是 Lua 的异常处理机制,类似于 C++ 的 throw
+**   - LUA_ERRMEM 是预定义的内存错误代码
+**   - 这个宏被所有内存分配函数使用,确保内存不足时能够正确处理
+**
+** 使用场景:
+**   当 malloc/realloc 返回 NULL 时调用
+** ----------------------------------------------------------------------------
+*/
+#define luaM_error(L) luaD_throw(L, LUA_ERRMEM)
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_testsize 宏
+** ----------------------------------------------------------------------------
 ** This macro tests whether it is safe to multiply 'n' by the size of
 ** type 't' without overflows. Because 'e' is always constant, it avoids
 ** the runtime division MAX_SIZET/(e).
+** 这个宏测试将 'n' 乘以类型 't' 的大小是否会溢出。
+** 因为 'e' 总是常量,所以避免了运行时除法 MAX_SIZET/(e)。
+**
 ** (The macro is somewhat complex to avoid warnings:  The 'sizeof'
 ** comparison avoids a runtime comparison when overflow cannot occur.
 ** The compiler should be able to optimize the real test by itself, but
 ** when it does it, it may give a warning about "comparison is always
 ** false due to limited range of data type"; the +1 tricks the compiler,
 ** avoiding this warning but also this optimization.)
+** (这个宏有点复杂是为了避免编译警告:sizeof 比较可以在不可能溢出时避免运行时比较。
+** 编译器应该能够自己优化真正的测试,但当它这样做时,可能会给出
+** "由于数据类型范围有限,比较总是假"的警告;+1 是欺骗编译器的技巧,
+** 避免了这个警告,但也避免了这种优化。)
+**
+** 参数:
+**   n - 要分配的元素数量
+**   e - 每个元素的大小(通常是 sizeof(t))
+**
+** 返回:
+**   如果 n*e 会溢出则返回 true,否则返回 false
+**
+** 实现原理:
+**   1. sizeof(n) >= sizeof(size_t): 如果 n 的类型大小 >= size_t,可能溢出
+**   2. cast_sizet((n)) + 1 > MAX_SIZET/(e): 检查 n 是否过大
+**      - 原理: n*e > MAX_SIZET 等价于 n > MAX_SIZET/e
+**      - +1 是为了避免编译器警告(如注释所述)
+**
+** 为什么需要这个宏:
+**   在 32 位系统上,分配 1000000 个 int(每个 4 字节)需要 4MB
+**   如果 n 太大,n*sizeof(int) 可能溢出,导致分配的内存比预期小
+**   这个宏在编译时尽可能检测这种情况
+** ----------------------------------------------------------------------------
 */
-#define luaM_testsize(n,e)  \
-	(sizeof(n) >= sizeof(size_t) && cast_sizet((n)) + 1 > MAX_SIZET/(e))
-
-#define luaM_checksize(L,n,e)  \
-	(luaM_testsize(n,e) ? luaM_toobig(L) : cast_void(0))
-
+#define luaM_testsize(n, e) \
+  (sizeof(n) >= sizeof(size_t) && cast_sizet((n)) + 1 > MAX_SIZET / (e))
 
 /*
+** ----------------------------------------------------------------------------
+** luaM_checksize 宏
+** ----------------------------------------------------------------------------
+** 功能: 检查大小是否会溢出,如果会则调用 luaM_toobig 报错
+**
+** 参数:
+**   L - lua_State 指针
+**   n - 元素数量
+**   e - 元素大小
+**
+** 实现说明:
+**   - 使用三元运算符: 条件 ? 真值 : 假值
+**   - 如果 luaM_testsize(n,e) 为真(会溢出),调用 luaM_toobig(L) 报错
+**   - 否则,cast_void(0) 表示什么都不做(cast_void 是将表达式转为 void 类型)
+**   - 这是一个在分配内存前的安全检查
+** ----------------------------------------------------------------------------
+*/
+#define luaM_checksize(L, n, e) \
+  (luaM_testsize(n, e) ? luaM_toobig(L) : cast_void(0))
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_limitN 宏
+** ----------------------------------------------------------------------------
 ** Computes the minimum between 'n' and 'MAX_SIZET/sizeof(t)', so that
 ** the result is not larger than 'n' and cannot overflow a 'size_t'
 ** when multiplied by the size of type 't'. (Assumes that 'n' is an
 ** 'int' and that 'int' is not larger than 'size_t'.)
+** 计算 'n' 和 'MAX_SIZET/sizeof(t)' 之间的最小值,
+** 这样结果不会大于 'n',并且乘以类型 't' 的大小时不会溢出 'size_t'。
+** (假设 'n' 是 'int' 类型,并且 'int' 不大于 'size_t'。)
+**
+** 参数:
+**   n - 请求的元素数量
+**   t - 元素类型
+**
+** 返回:
+**   返回安全的元素数量(不会导致溢出)
+**
+** 实现原理:
+**   - 如果 n <= MAX_SIZET/sizeof(t),直接返回 n(安全)
+**   - 否则返回 MAX_SIZET/sizeof(t)(能分配的最大元素数)
+**   - cast_int 将结果转换回 int 类型
+**
+** 使用场景:
+**   用于限制动态数组增长的上限,防止请求过大的内存
+** ----------------------------------------------------------------------------
 */
-#define luaM_limitN(n,t)  \
-  ((cast_sizet(n) <= MAX_SIZET/sizeof(t)) ? (n) :  \
-     cast_int((MAX_SIZET/sizeof(t))))
-
+#define luaM_limitN(n, t) \
+  ((cast_sizet(n) <= MAX_SIZET / sizeof(t)) ? (n) : cast_int((MAX_SIZET / sizeof(t))))
 
 /*
+** ----------------------------------------------------------------------------
+** luaM_reallocvchar 宏
+** ----------------------------------------------------------------------------
 ** Arrays of chars do not need any test
+** 字符数组不需要任何测试
+**
+** 功能: 重新分配字符数组
+**
+** 参数:
+**   L - lua_State 指针
+**   b - 原内存块指针
+**   on - 旧的元素数量
+**   n - 新的元素数量
+**
+** 返回:
+**   char* 类型的新内存块指针
+**
+** 为什么字符数组不需要测试:
+**   - sizeof(char) 总是 1
+**   - n*sizeof(char) 就是 n,不会有乘法溢出的风险
+**   - 因此可以直接调用 luaM_saferealloc_ 而不需要检查
+**
+** luaM_saferealloc_ vs luaM_realloc_:
+**   - saferealloc 在失败时会抛出错误(更安全)
+**   - realloc 可能返回 NULL(需要调用者检查)
+** ----------------------------------------------------------------------------
 */
-#define luaM_reallocvchar(L,b,on,n)  \
-  cast_charp(luaM_saferealloc_(L, (b), (on)*sizeof(char), (n)*sizeof(char)))
+#define luaM_reallocvchar(L, b, on, n) \
+  cast_charp(luaM_saferealloc_(L, (b), (on) * sizeof(char), (n) * sizeof(char)))
 
-#define luaM_freemem(L, b, s)	luaM_free_(L, (b), (s))
-#define luaM_free(L, b)		luaM_free_(L, (b), sizeof(*(b)))
-#define luaM_freearray(L, b, n)   luaM_free_(L, (b), (n)*sizeof(*(b)))
+/*
+** ----------------------------------------------------------------------------
+** luaM_freemem 宏
+** ----------------------------------------------------------------------------
+** 功能: 释放指定大小的内存块
+**
+** 参数:
+**   L - lua_State 指针
+**   b - 要释放的内存块指针
+**   s - 内存块的大小(字节数)
+**
+** 说明:
+**   - 直接调用底层的 luaM_free_ 函数
+**   - 需要显式传入大小 s,用于内存统计
+**   - Lua 的内存管理器需要知道释放了多少内存,以便跟踪总内存使用量
+** ----------------------------------------------------------------------------
+*/
+#define luaM_freemem(L, b, s) luaM_free_(L, (b), (s))
 
-#define luaM_new(L,t)		cast(t*, luaM_malloc_(L, sizeof(t), 0))
-#define luaM_newvector(L,n,t)  \
-	cast(t*, luaM_malloc_(L, cast_sizet(n)*sizeof(t), 0))
-#define luaM_newvectorchecked(L,n,t) \
-  (luaM_checksize(L,n,sizeof(t)), luaM_newvector(L,n,t))
+/*
+** ----------------------------------------------------------------------------
+** luaM_free 宏
+** ----------------------------------------------------------------------------
+** 功能: 释放单个对象
+**
+** 参数:
+**   L - lua_State 指针
+**   b - 要释放的对象指针
+**
+** 说明:
+**   - sizeof(*(b)) 自动计算对象大小
+**   - *(b) 解引用 b,获取它指向的对象类型
+**   - 这样就不需要手动传入大小了,更方便且类型安全
+**
+** 示例:
+**   Node *node = luaM_new(L, Node);
+**   // ... 使用 node ...
+**   luaM_free(L, node);  // 自动知道要释放 sizeof(Node) 字节
+** ----------------------------------------------------------------------------
+*/
+#define luaM_free(L, b) luaM_free_(L, (b), sizeof(*(b)))
 
-#define luaM_newobject(L,tag,s)	luaM_malloc_(L, (s), tag)
+/*
+** ----------------------------------------------------------------------------
+** luaM_freearray 宏
+** ----------------------------------------------------------------------------
+** 功能: 释放对象数组
+**
+** 参数:
+**   L - lua_State 指针
+**   b - 数组指针
+**   n - 数组元素个数
+**
+** 说明:
+**   - (n)*sizeof(*(b)) 计算整个数组的大小
+**   - sizeof(*(b)) 获取单个元素的大小
+**   - 乘以 n 得到总大小
+**
+** 示例:
+**   int *array = luaM_newvector(L, 10, int);
+**   // ... 使用 array ...
+**   luaM_freearray(L, array, 10);  // 释放 10 个 int
+** ----------------------------------------------------------------------------
+*/
+#define luaM_freearray(L, b, n) luaM_free_(L, (b), (n) * sizeof(*(b)))
 
-#define luaM_newblock(L, size)	luaM_newvector(L, size, char)
+/*
+** ----------------------------------------------------------------------------
+** luaM_new 宏
+** ----------------------------------------------------------------------------
+** 功能: 分配单个对象
+**
+** 参数:
+**   L - lua_State 指针
+**   t - 对象类型
+**
+** 返回:
+**   t* 类型的指针,指向新分配的对象
+**
+** 说明:
+**   - sizeof(t) 获取类型大小
+**   - tag 参数传 0,表示这不是 GC 对象(或使用默认标签)
+**   - cast(t*, ...) 将返回的 void* 转换为 t* 类型
+**
+** 示例:
+**   typedef struct { int x; int y; } Point;
+**   Point *p = luaM_new(L, Point);  // 分配一个 Point 对象
+** ----------------------------------------------------------------------------
+*/
+#define luaM_new(L, t) cast(t *, luaM_malloc_(L, sizeof(t), 0))
 
-#define luaM_growvector(L,v,nelems,size,t,limit,e) \
-	((v)=cast(t *, luaM_growaux_(L,v,nelems,&(size),sizeof(t), \
-                         luaM_limitN(limit,t),e)))
+/*
+** ----------------------------------------------------------------------------
+** luaM_newvector 宏
+** ----------------------------------------------------------------------------
+** 功能: 分配对象数组(vector)
+**
+** 参数:
+**   L - lua_State 指针
+**   n - 元素数量
+**   t - 元素类型
+**
+** 返回:
+**   t* 类型的指针,指向新分配的数组
+**
+** 说明:
+**   - cast_sizet(n) 将 n 转换为 size_t 类型(防止负数等问题)
+**   - cast_sizet(n)*sizeof(t) 计算总大小
+**   - 注意:这个宏不检查溢出,如果需要检查应使用 luaM_newvectorchecked
+**
+** 示例:
+**   int *arr = luaM_newvector(L, 100, int);  // 分配 100 个 int
+** ----------------------------------------------------------------------------
+*/
+#define luaM_newvector(L, n, t) \
+  cast(t *, luaM_malloc_(L, cast_sizet(n) * sizeof(t), 0))
 
-#define luaM_reallocvector(L, v,oldn,n,t) \
-   (cast(t *, luaM_realloc_(L, v, cast_sizet(oldn) * sizeof(t), \
-                                  cast_sizet(n) * sizeof(t))))
+/*
+** ----------------------------------------------------------------------------
+** luaM_newvectorchecked 宏
+** ----------------------------------------------------------------------------
+** 功能: 安全地分配对象数组(带溢出检查)
+**
+** 参数:
+**   L - lua_State 指针
+**   n - 元素数量
+**   t - 元素类型
+**
+** 返回:
+**   t* 类型的指针,指向新分配的数组
+**
+** 说明:
+**   - 先调用 luaM_checksize 检查 n*sizeof(t) 是否会溢出
+**   - 然后调用 luaM_newvector 进行实际分配
+**   - 逗号运算符:先执行检查,然后执行分配,返回后者的结果
+**
+** 使用建议:
+**   - 当 n 来自外部输入(用户数据)时,应使用这个带检查的版本
+**   - 当 n 是内部常量或已知安全时,可以使用不带检查的版本
+** ----------------------------------------------------------------------------
+*/
+#define luaM_newvectorchecked(L, n, t) \
+  (luaM_checksize(L, n, sizeof(t)), luaM_newvector(L, n, t))
 
-#define luaM_shrinkvector(L,v,size,fs,t) \
-   ((v)=cast(t *, luaM_shrinkvector_(L, v, &(size), fs, sizeof(t))))
+/*
+** ----------------------------------------------------------------------------
+** luaM_newobject 宏
+** ----------------------------------------------------------------------------
+** 功能: 分配带标签的对象(主要用于 GC 对象)
+**
+** 参数:
+**   L - lua_State 指针
+**   tag - 对象标签(用于 GC 识别对象类型)
+**   s - 对象大小(字节数)
+**
+** 返回:
+**   void* 类型的指针(调用者需要自行转换)
+**
+** 说明:
+**   - tag 是 Lua GC 用来识别对象类型的标记
+**   - 例如:LUA_TSTRING, LUA_TTABLE, LUA_TFUNCTION 等
+**   - 带标签的对象会被 GC 跟踪和管理
+**   - s 是显式传入的大小,而不是通过 sizeof 推断
+**
+** 使用场景:
+**   主要用于创建 Lua 的核心对象类型(字符串、表、闭包等)
+** ----------------------------------------------------------------------------
+*/
+#define luaM_newobject(L, tag, s) luaM_malloc_(L, (s), tag)
 
-LUAI_FUNC l_noret luaM_toobig (lua_State *L);
+/*
+** ----------------------------------------------------------------------------
+** luaM_newblock 宏
+** ----------------------------------------------------------------------------
+** 功能: 分配指定大小的字节块
+**
+** 参数:
+**   L - lua_State 指针
+**   size - 块大小(字节数)
+**
+** 返回:
+**   char* 类型的指针
+**
+** 说明:
+**   - 本质上就是分配 size 个 char
+**   - char 类型保证是 1 字节,所以这就是分配原始字节块
+**   - 返回 char* 而不是 void*,方便进行字节级操作
+**
+** 使用场景:
+**   - 分配缓冲区
+**   - 分配未指定类型的原始内存
+** ----------------------------------------------------------------------------
+*/
+#define luaM_newblock(L, size) luaM_newvector(L, size, char)
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_growvector 宏
+** ----------------------------------------------------------------------------
+** 功能: 动态扩展数组容量
+**
+** 参数:
+**   L - lua_State 指针
+**   v - 数组指针(会被修改)
+**   nelems - 当前实际元素数量
+**   size - 数组容量(会被修改)
+**   t - 元素类型
+**   limit - 最大允许的容量
+**   e - 错误消息(当超过限制时使用)
+**
+** 说明:
+**   - 这是一个复杂的宏,用于实现类似 C++ vector 的自动增长
+**   - v 会被更新为新的指针(可能重新分配到不同地址)
+**   - size 会被更新为新的容量
+**   - nelems 不变(只是作为参考传入)
+**
+** 工作流程:
+**   1. 调用 luaM_growaux_ 函数,它会:
+**      - 判断是否需要增长
+**      - 计算新的容量(通常是翻倍)
+**      - 调用 realloc 重新分配内存
+**      - 更新 size 参数(通过指针)
+**   2. 将返回的 void* 转换为 t* 类型
+**   3. 赋值给 v
+**
+** luaM_limitN 的作用:
+**   - 确保 limit 不会大到导致溢出
+**   - 如果用户传入的 limit 太大,会被自动限制到安全值
+**
+** 示例:
+**   int *array = NULL;
+**   int capacity = 0;
+**   int count = 0;
+**   // 需要添加元素时:
+**   if (count >= capacity) {
+**     luaM_growvector(L, array, count, capacity, int, 10000, "array");
+**   }
+**   array[count++] = new_value;
+** ----------------------------------------------------------------------------
+*/
+#define luaM_growvector(L, v, nelems, size, t, limit, e)           \
+  ((v) = cast(t *, luaM_growaux_(L, v, nelems, &(size), sizeof(t), \
+                                 luaM_limitN(limit, t), e)))
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_reallocvector 宏
+** ----------------------------------------------------------------------------
+** 功能: 重新分配数组到指定大小
+**
+** 参数:
+**   L - lua_State 指针
+**   v - 原数组指针
+**   oldn - 旧的元素数量
+**   n - 新的元素数量
+**   t - 元素类型
+**
+** 返回:
+**   t* 类型的新数组指针
+**
+** 说明:
+**   - 与 luaM_growvector 不同,这个宏直接将数组调整到指定大小
+**   - 可以用于增长或收缩
+**   - cast_sizet 确保大小计算是 size_t 类型(避免负数等问题)
+**   - oldn*sizeof(t) 是旧大小,n*sizeof(t) 是新大小
+**
+** 使用场景:
+**   - 当明确知道新大小时使用
+**   - 例如:解析完数据后,将数组调整到实际需要的大小
+** ----------------------------------------------------------------------------
+*/
+#define luaM_reallocvector(L, v, oldn, n, t)                   \
+  (cast(t *, luaM_realloc_(L, v, cast_sizet(oldn) * sizeof(t), \
+                           cast_sizet(n) * sizeof(t))))
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_shrinkvector 宏
+** ----------------------------------------------------------------------------
+** 功能: 收缩数组到最终大小
+**
+** 参数:
+**   L - lua_State 指针
+**   v - 数组指针(会被修改)
+**   size - 当前容量(会被修改)
+**   fs - 最终大小(final size)
+**   t - 元素类型
+**
+** 说明:
+**   - 用于将数组收缩到实际使用的大小
+**   - v 和 size 都会被更新
+**   - 调用 luaM_shrinkvector_ 函数处理实际操作
+**
+** 使用场景:
+**   - 当数组填充完毕,需要释放多余的内存时
+**   - 例如:预分配了 1000 个位置,但实际只用了 500 个
+**
+** 与 luaM_reallocvector 的区别:
+**   - shrinkvector 专门用于收缩,可能有特殊优化
+**   - reallocvector 更通用,可以增长或收缩
+** ----------------------------------------------------------------------------
+*/
+#define luaM_shrinkvector(L, v, size, fs, t) \
+  ((v) = cast(t *, luaM_shrinkvector_(L, v, &(size), fs, sizeof(t))))
+
+/*
+** ============================================================================
+** 函数声明部分
+** ============================================================================
+** 以下是实际的函数声明(实现在 lmem.c 中)
+** LUAI_FUNC 是一个宏,定义函数的链接属性(通常是内部函数)
+** ============================================================================
+*/
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_toobig 函数
+** ----------------------------------------------------------------------------
+** 功能: 报告内存请求过大的错误
+**
+** 参数:
+**   L - lua_State 指针
+**
+** 返回:
+**   l_noret 表示这个函数不会返回(会抛出异常)
+**
+** 说明:
+**   - 当请求的内存大小超过系统限制时调用
+**   - 会生成错误消息并抛出异常
+**   - l_noret 是一个属性标记,告诉编译器这个函数不返回
+**     (类似 [[noreturn]] 或 __attribute__((noreturn)))
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC l_noret luaM_toobig(lua_State *L);
 
 /* not to be called directly */
-LUAI_FUNC void *luaM_realloc_ (lua_State *L, void *block, size_t oldsize,
-                                                          size_t size);
-LUAI_FUNC void *luaM_saferealloc_ (lua_State *L, void *block, size_t oldsize,
-                                                              size_t size);
-LUAI_FUNC void luaM_free_ (lua_State *L, void *block, size_t osize);
-LUAI_FUNC void *luaM_growaux_ (lua_State *L, void *block, int nelems,
-                               int *size, unsigned size_elem, int limit,
-                               const char *what);
-LUAI_FUNC void *luaM_shrinkvector_ (lua_State *L, void *block, int *nelem,
-                                    int final_n, unsigned size_elem);
-LUAI_FUNC void *luaM_malloc_ (lua_State *L, size_t size, int tag);
+/* 不应该直接调用 */
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_realloc_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 重新分配内存(底层函数,一般不直接调用)
+**
+** 参数:
+**   L - lua_State 指针
+**   block - 原内存块指针(如果是新分配则为 NULL)
+**   oldsize - 原内存块大小(如果是新分配则为 0)
+**   size - 新的大小(如果是释放则为 0)
+**
+** 返回:
+**   void* 类型的新内存块指针(失败时可能返回 NULL)
+**
+** 说明:
+**   - 这是所有内存操作的核心函数
+**   - 根据参数的不同组合,可以实现:
+**     * malloc: block=NULL, oldsize=0, size>0
+**     * free: block!=NULL, oldsize>0, size=0
+**     * realloc: block!=NULL, oldsize>0, size>0
+**   - 会调用用户提供的分配器(通过 lua_Alloc 函数)
+**   - 会更新 Lua 的内存使用统计
+**
+** 为什么需要 oldsize:
+**   - Lua 需要精确跟踪内存使用量
+**   - free 时需要知道释放了多少内存
+**   - realloc 时需要知道增加/减少了多少内存
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void *luaM_realloc_(lua_State *L, void *block, size_t oldsize,
+                              size_t size);
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_saferealloc_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 安全的重新分配内存(失败时抛出错误)
+**
+** 参数:
+**   L - lua_State 指针
+**   block - 原内存块指针
+**   oldsize - 原内存块大小
+**   size - 新的大小
+**
+** 返回:
+**   void* 类型的新内存块指针(保证不为 NULL)
+**
+** 说明:
+**   - 与 luaM_realloc_ 类似,但失败时会抛出 LUA_ERRMEM 错误
+**   - 调用者不需要检查返回值是否为 NULL
+**   - 内部实现:调用 luaM_realloc_,如果返回 NULL 则调用 luaM_error
+**
+** 使用场景:
+**   - 大多数内存分配都应该使用这个"安全"版本
+**   - 只有在需要自行处理分配失败的情况下才使用 luaM_realloc_
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void *luaM_saferealloc_(lua_State *L, void *block, size_t oldsize,
+                                  size_t size);
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_free_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 释放内存块
+**
+** 参数:
+**   L - lua_State 指针
+**   block - 要释放的内存块指针
+**   osize - 内存块的大小
+**
+** 说明:
+**   - 实际上就是调用 luaM_realloc_(L, block, osize, 0)
+**   - 将 size 参数设为 0 表示释放
+**   - 需要传入 osize 以便更新内存统计
+**
+** 注意:
+**   - 释放 NULL 指针是安全的(luaM_realloc_ 会处理)
+**   - 但 osize 应该正确,即使 block 为 NULL
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void luaM_free_(lua_State *L, void *block, size_t osize);
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_growaux_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 动态数组增长的辅助函数
+**
+** 参数:
+**   L - lua_State 指针
+**   block - 原数组指针
+**   nelems - 当前实际元素数量
+**   size - 当前容量指针(会被修改)
+**   size_elem - 单个元素的大小(字节数)
+**   limit - 最大允许的容量
+**   what - 对象名称(用于错误消息)
+**
+** 返回:
+**   void* 类型的新数组指针
+**
+** 说明:
+**   - 这是 luaM_growvector 宏的实际实现
+**   - 增长策略通常是容量翻倍(但不超过 limit)
+**   - 如果当前容量已经是 limit,则报错
+**   - size 参数是指针,函数会更新它指向的值
+**
+** 增长算法(典型实现):
+**   1. 如果 size >= limit,报错 "too many {what}"
+**   2. 计算新容量:newsize = size * 2(或 size + size/2,取决于实现)
+**   3. 如果 newsize > limit,设置 newsize = limit
+**   4. 调用 luaM_realloc_ 重新分配
+**   5. 更新 *size = newsize
+**   6. 返回新指针
+**
+** 参数 int 类型说明:
+**   - nelems, size, limit 都是 int 类型(不是 size_t)
+**   - 这是因为 Lua 内部使用 int 来表示数组索引
+**   - 假设 int 足够大(通常是 32 位,最多 20 亿+元素)
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void *luaM_growaux_(lua_State *L, void *block, int nelems,
+                              int *size, unsigned size_elem, int limit,
+                              const char *what);
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_shrinkvector_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 收缩数组的辅助函数
+**
+** 参数:
+**   L - lua_State 指针
+**   block - 原数组指针
+**   nelem - 当前容量指针(会被修改)
+**   final_n - 最终大小
+**   size_elem - 单个元素的大小(字节数)
+**
+** 返回:
+**   void* 类型的新数组指针(可能与原指针相同)
+**
+** 说明:
+**   - 将数组从 *nelem 个元素收缩到 final_n 个元素
+**   - 释放多余的内存
+**   - 更新 *nelem = final_n
+**
+** 优化:
+**   - 如果 final_n 与 *nelem 相差不大,可能不实际重新分配
+**   - 这样可以避免频繁的 realloc 调用
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void *luaM_shrinkvector_(lua_State *L, void *block, int *nelem,
+                                   int final_n, unsigned size_elem);
+
+/*
+** ----------------------------------------------------------------------------
+** luaM_malloc_ 函数
+** ----------------------------------------------------------------------------
+** 功能: 分配新内存块(底层函数)
+**
+** 参数:
+**   L - lua_State 指针
+**   size - 要分配的大小(字节数)
+**   tag - 对象标签(用于 GC,0 表示非 GC 对象)
+**
+** 返回:
+**   void* 类型的新内存块指针
+**
+** 说明:
+**   - 实际上是调用 luaM_realloc_(L, NULL, tag, size)
+**   - tag 参数在这里作为 oldsize 传递(有点 hack 的用法)
+**   - 对于 GC 对象,tag 包含了类型信息
+**   - 对于非 GC 对象,tag 通常是 0
+**
+** 为什么 tag 可以作为 oldsize:
+**   - 当 block=NULL 时,oldsize 参数的值不影响内存分配
+**   - 但 Lua 的分配器实现可能会检查这个值来识别对象类型
+**   - 这是一个实现细节,调用者只需知道传入正确的 tag
+** ----------------------------------------------------------------------------
+*/
+LUAI_FUNC void *luaM_malloc_(lua_State *L, size_t size, int tag);
 
 #endif
 
+/*
+** ============================================================================
+** 文件总结
+** ============================================================================
+**
+** 1. 设计模式:
+**    - 使用宏来封装常见的内存操作模式,提高代码可读性和类型安全
+**    - 所有内存操作都通过统一的接口(luaM_realloc_),便于跟踪和调试
+**    - 提供"安全"和"不安全"两个版本,灵活应对不同场景
+**
+** 2. 内存安全:
+**    - 编译时检查:luaM_testsize, luaM_checksize 在编译期尽可能检测溢出
+**    - 运行时检查:luaM_limitN 限制数组大小,防止运行时溢出
+**    - 错误处理:分配失败时抛出 LUA_ERRMEM 异常,而不是返回 NULL
+**
+** 3. 内存跟踪:
+**    - 所有函数都需要 oldsize 参数,用于精确统计内存使用
+**    - 这使得 Lua 能够实现内存限制、GC 触发等功能
+**    - 也便于调试内存泄漏和内存使用分析
+**
+** 4. GC 支持:
+**    - tag 参数用于标识对象类型,GC 据此判断如何处理对象
+**    - luaM_newobject 专门用于创建 GC 对象
+**
+** 5. 性能优化:
+**    - 使用宏避免函数调用开销
+**    - 动态数组增长策略(通常翻倍)减少 realloc 次数
+**    - sizeof 和 cast 等操作在编译期完成,零运行时开销
+**
+** 6. 可移植性:
+**    - 使用 stddef.h 的标准类型(size_t)
+**    - 通过 llimits.h 定义平台相关的限制和类型转换
+**    - cast_* 宏封装类型转换,避免编译警告
+**
+** 7. C 语言高级技巧:
+**    - 宏的高级用法:多行宏、逗号运算符、三元运算符
+**    - 类型推断:sizeof(*(p)) 自动获取指针指向的类型大小
+**    - 函数指针和回调:lua_Alloc(虽然不在这个文件中)
+**    - 属性标记:l_noret(__attribute__((noreturn)))
+**
+** 8. 使用建议:
+**    - 优先使用带类型的宏(luaM_new, luaM_newvector)而不是直接调用函数
+**    - 对外部输入使用带检查的版本(luaM_newvectorchecked)
+**    - 及时释放不再使用的内存,保持内存使用最小化
+**    - 使用 luaM_growvector 实现动态数组,避免手动管理容量
+**
+** 9. 学习要点:
+**    - 理解 Lua 如何统一管理所有内存操作
+**    - 学习如何设计类型安全的内存管理接口
+**    - 了解动态数组的实现原理和增长策略
+**    - 掌握如何使用宏来简化 API 并提高性能
+**
+** 10. 相关文件:
+**     - lmem.c: 本文件声明的函数的实现
+**     - llimits.h: 类型定义和限制常量
+**     - lgc.h: 垃圾回收器(使用 tag 信息)
+**     - lua.h: lua_State 和 lua_Alloc 的定义
+**
+** ============================================================================
+*/
