@@ -1,0 +1,141 @@
+\doxysection{Win\+UIGallery.\+Helpers.\+Navigation\+Helper Class Reference}
+\hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{}\label{classWinUIGallery_1_1Helpers_1_1NavigationHelper}\index{WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}}
+
+
+\doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper} aids in navigation between pages. It manages the backstack and integrates Suspension\+Manager to handle process lifetime management and state management when navigating between pages.  
+
+
+
+
+Inheritance diagram for Win\+UIGallery.\+Helpers.\+Navigation\+Helper\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classWinUIGallery_1_1Helpers_1_1NavigationHelper__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Win\+UIGallery.\+Helpers.\+Navigation\+Helper\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classWinUIGallery_1_1Helpers_1_1NavigationHelper__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_ac2bc303c6c874759413cbe31be1c7a6e}{Navigation\+Helper}} (Page page)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_aace601a026c27b8b34df0dcc69547636}{On\+Navigated\+To}} (Navigation\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Invoked when this page is about to be displayed in a Frame. This method calls \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_abc4138a63cfe72b55ae0690293df7c34}{Load\+State}, where all page specific navigation and process lifetime management logic should be placed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a89521c1ad935160f226bd8ce88fff7b7}{On\+Navigated\+From}} (Navigation\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Invoked when this page will no longer be displayed in a Frame. This method calls \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a929bc9a91072f0d4c97d962255fd1ddf}{Save\+State}, where all page specific navigation and process lifetime management logic should be placed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Events}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_abc4138a63cfe72b55ae0690293df7c34}\label{classWinUIGallery_1_1Helpers_1_1NavigationHelper_abc4138a63cfe72b55ae0690293df7c34} 
+\mbox{\hyperlink{namespaceWinUIGallery_1_1Helpers_aaae630290e4bbc71cd8656477fb3d6c8}{Load\+State\+Event\+Handler}}? {\bfseries Load\+State}
+\begin{DoxyCompactList}\small\item\em Handle this event to populate the page using content passed during navigation as well as any state that was saved by the Save\+State event handler. \end{DoxyCompactList}\item 
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a929bc9a91072f0d4c97d962255fd1ddf}\label{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a929bc9a91072f0d4c97d962255fd1ddf} 
+\mbox{\hyperlink{namespaceWinUIGallery_1_1Helpers_a65b3afbe91401d243aa10a2b8217b8fc}{Save\+State\+Event\+Handler}}? {\bfseries Save\+State}
+\begin{DoxyCompactList}\small\item\em Handle this event to save state that can be used by the Load\+State event handler. Save the state in case the application is suspended or the page is discarded from the navigation cache. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper} aids in navigation between pages. It manages the backstack and integrates Suspension\+Manager to handle process lifetime management and state management when navigating between pages. 
+
+To make use of \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper}, follow these two steps or start with a Basic\+Page or any other Page item template other than Blank\+Page.
+
+1) Create an instance of the \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper} somewhere such as in the constructor for the page and register a callback for the Load\+State and Save\+State events. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{public}\ MyPage()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ this.InitializeComponent();}
+\DoxyCodeLine{\ \ \ \ this.navigationHelper\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_ac2bc303c6c874759413cbe31be1c7a6e}{NavigationHelper}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\ \ \ \ this.navigationHelper.LoadState\ +=\ navigationHelper\_LoadState;}
+\DoxyCodeLine{\ \ \ \ this.navigationHelper.SaveState\ +=\ navigationHelper\_SaveState;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{private}\ \textcolor{keywordtype}{void}\ navigationHelper\_LoadState(\textcolor{keywordtype}{object}\ sender,\ LoadStateEventArgs\ e)}
+\DoxyCodeLine{\{\ \}}
+\DoxyCodeLine{\textcolor{keyword}{private}\ \textcolor{keywordtype}{void}\ navigationHelper\_SaveState(\textcolor{keywordtype}{object}\ sender,\ LoadStateEventArgs\ e)}
+\DoxyCodeLine{\{\ \}}
+
+\end{DoxyCode}
+
+
+2) Register the page to call into the Navigation\+Manager whenever the page participates in navigation by overriding the Microsoft.\+UI.\+Xaml.\+Controls.\+Page.\+On\+Navigated\+To and Microsoft.\+UI.\+Xaml.\+Controls.\+Page.\+On\+Navigated\+From events. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{protected}\ \textcolor{keyword}{override}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_aace601a026c27b8b34df0dcc69547636}{OnNavigatedTo}}(NavigationEventArgs\ e)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ navigationHelper.OnNavigatedTo(e);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{protected}\ \textcolor{keyword}{override}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a89521c1ad935160f226bd8ce88fff7b7}{OnNavigatedFrom}}(NavigationEventArgs\ e)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ navigationHelper.OnNavigatedFrom(e);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_ac2bc303c6c874759413cbe31be1c7a6e}\index{WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}!NavigationHelper@{NavigationHelper}}
+\index{NavigationHelper@{NavigationHelper}!WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}}
+\doxysubsubsection{\texorpdfstring{NavigationHelper()}{NavigationHelper()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Helpers_1_1NavigationHelper_ac2bc303c6c874759413cbe31be1c7a6e} 
+Win\+UIGallery.\+Helpers.\+Navigation\+Helper.\+Navigation\+Helper (\begin{DoxyParamCaption}\item[{Page}]{page}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes a new instance of the \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper}{Navigation\+Helper} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em page} & A reference to the current page used for navigation. This reference allows for frame manipulation.\\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a89521c1ad935160f226bd8ce88fff7b7}\index{WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}!OnNavigatedFrom@{OnNavigatedFrom}}
+\index{OnNavigatedFrom@{OnNavigatedFrom}!WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}}
+\doxysubsubsection{\texorpdfstring{OnNavigatedFrom()}{OnNavigatedFrom()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a89521c1ad935160f226bd8ce88fff7b7} 
+void Win\+UIGallery.\+Helpers.\+Navigation\+Helper.\+On\+Navigated\+From (\begin{DoxyParamCaption}\item[{Navigation\+Event\+Args}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Invoked when this page will no longer be displayed in a Frame. This method calls \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_a929bc9a91072f0d4c97d962255fd1ddf}{Save\+State}, where all page specific navigation and process lifetime management logic should be placed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Event data that describes how this page was reached. The Parameter property provides the group to be displayed.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1NavigationHelper_aace601a026c27b8b34df0dcc69547636}\index{WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}!OnNavigatedTo@{OnNavigatedTo}}
+\index{OnNavigatedTo@{OnNavigatedTo}!WinUIGallery.Helpers.NavigationHelper@{WinUIGallery.Helpers.NavigationHelper}}
+\doxysubsubsection{\texorpdfstring{OnNavigatedTo()}{OnNavigatedTo()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Helpers_1_1NavigationHelper_aace601a026c27b8b34df0dcc69547636} 
+void Win\+UIGallery.\+Helpers.\+Navigation\+Helper.\+On\+Navigated\+To (\begin{DoxyParamCaption}\item[{Navigation\+Event\+Args}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Invoked when this page is about to be displayed in a Frame. This method calls \doxylink{classWinUIGallery_1_1Helpers_1_1NavigationHelper_abc4138a63cfe72b55ae0690293df7c34}{Load\+State}, where all page specific navigation and process lifetime management logic should be placed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Event data that describes how this page was reached. The Parameter property provides the group to be displayed.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Win\+UIGallery/\+Helpers/Navigation\+Helper.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,9 @@
+<map id="WinUIGallery.Models.CategoryBase" name="WinUIGallery.Models.CategoryBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,237,83"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1Models_1_1Category.html" title=" " alt="" coords="286,5,488,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,50,313,30,314,35,210,55"/>
+<area shape="rect" id="Node000003" href="$classWinUIGallery_1_1Models_1_1Header.html" title=" " alt="" coords="292,56,482,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,67,291,67,291,72,252,72"/>
+<area shape="rect" id="Node000004" href="$classWinUIGallery_1_1Models_1_1Separator.html" title=" " alt="" coords="285,107,489,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,84,314,103,313,109,209,89"/>
+</map>

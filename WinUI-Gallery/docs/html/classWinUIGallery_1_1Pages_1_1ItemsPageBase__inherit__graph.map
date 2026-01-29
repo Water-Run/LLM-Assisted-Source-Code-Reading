@@ -1,0 +1,27 @@
+<map id="WinUIGallery.Pages.ItemsPageBase" name="WinUIGallery.Pages.ItemsPageBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="215,305,391,348"/>
+<area shape="rect" id="Node000004" href="$classWinUIGallery_1_1ControlPages_1_1FlipViewPage.html" title=" " alt="" coords="465,5,650,48"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="310,289,326,238,351,175,388,112,411,83,437,58,463,42,466,47,441,62,415,87,392,115,356,178,331,239,315,291"/>
+<area shape="rect" id="Node000005" href="$classWinUIGallery_1_1ControlPages_1_1GridViewPage.html" title=" " alt="" coords="465,72,650,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="316,290,336,251,362,206,396,162,437,125,464,110,466,115,441,129,400,166,367,209,340,254,321,292"/>
+<area shape="rect" id="Node000006" href="$classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage.html" title=" " alt="" coords="465,139,650,181"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="328,291,375,240,405,213,438,191,464,179,466,183,440,196,408,218,379,243,332,295"/>
+<area shape="rect" id="Node000007" href="$classWinUIGallery_1_1ControlPages_1_1ItemsViewPage.html" title=" " alt="" coords="465,205,650,248"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="356,295,438,258,472,246,473,251,440,262,358,300"/>
+<area shape="rect" id="Node000008" href="$classWinUIGallery_1_1ControlPages_1_1ListViewPage.html" title=" " alt="" coords="465,272,650,315"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="406,310,464,303,465,308,407,316"/>
+<area shape="rect" id="Node000009" href="$classWinUIGallery_1_1ControlPages_1_1ParallaxViewPage.html" title=" " alt="" coords="465,339,650,381"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="407,338,465,345,464,351,406,343"/>
+<area shape="rect" id="Node000010" href="$classWinUIGallery_1_1Pages_1_1AllControlsPage.html" title="A page that displays a grouped collection of items." alt="" coords="439,405,676,432"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="357,353,440,391,479,402,478,407,438,396,354,358"/>
+<area shape="rect" id="Node000011" href="$classWinUIGallery_1_1Pages_1_1HomePage.html" title=" " alt="" coords="454,456,662,483"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="335,358,382,402,410,424,440,442,469,453,467,458,438,446,407,428,378,406,331,362"/>
+<area shape="rect" id="Node000012" href="$classWinUIGallery_1_1Pages_1_1SearchResultsPage.html" title="This page displays search results when a global search is directed to this application." alt="" coords="466,507,650,549"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="325,360,372,428,404,463,440,492,467,506,464,511,438,497,400,467,368,431,321,363"/>
+<area shape="rect" id="Node000013" href="$classWinUIGallery_1_1Pages_1_1SectionPage.html" title="A page that displays an overview of a single group, including a preview of the items within the group..." alt="" coords="449,573,666,600"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="317,362,334,408,360,462,395,515,417,539,441,559,461,570,458,575,437,564,413,543,391,518,355,464,329,410,312,364"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="60,288,112,315"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,303,215,314,214,319,127,309"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,339,167,365"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="182,338,214,334,214,340,182,343"/>
+</map>

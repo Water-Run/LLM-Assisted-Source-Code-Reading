@@ -1,0 +1,131 @@
+\doxysection{tests/\+Win\+UIGallery.UITests Directory Reference}
+\hypertarget{dir_63587cc67a40ef33dd2494658d023974}{}\label{dir_63587cc67a40ef33dd2494658d023974}\index{tests/WinUIGallery.UITests Directory Reference@{tests/WinUIGallery.UITests Directory Reference}}
+Directory dependency graph for Win\+UIGallery.\+UITests\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{dir_63587cc67a40ef33dd2494658d023974_dep}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_228131d7a6959143839f9a0d5d1d86e2}{Tests}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md20}{}\doxysubsection{\texorpdfstring{UI Tests with Win\+App\+Driver}{UI Tests with Win\+App\+Driver}}\label{README.md_autotoc_md20}
+The UI Test repository is a collection of Win\+App\+Driver-\/based test scenarios that cover basic interactions with Win\+UI 3 controls. See the \href{https://learn.microsoft.com/windows/apps/design/controls/}{\texttt{Windows Platform controls reference}} for more information on available controls.
+
+The test scenarios are written to test the controls in the Win\+UI 3 Gallery app. The procedure below outlines the steps needed to build and deploy Win\+UI 3 Gallery and Win\+App\+Driver to run the UI Tests. These steps mirror what azure-\/pipelines.\+yml does in pipeline runs.\hypertarget{README.md_autotoc_md21}{}\doxysubsection{\texorpdfstring{Deploy Win\+UI 3 Gallery}{Deploy Win\+UI 3 Gallery}}\label{README.md_autotoc_md21}
+The easiest way to deploy the Win\+UI 3 Gallery for unit test execution is to simply build Win\+UIGallery.\+sln and F5 deploy it from within Visual Studio. Alternatively, the following commands can be used for automation.
+
+
+\begin{DoxyEnumerate}
+\item Generate the test signing certificate\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{PS>\ .\(\backslash\)scripts\(\backslash\)GenerateTestPfx.ps1}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Build and publish the Win\+UI 3 Gallery from the command line, e.\+g.\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>dotnet.exe\ publish\ WinUIGallery.sln\ /p:AppxPackageDir=AppxPackages\(\backslash\)\ /p:platform=x64\ /p:PublishProfile=./WinUIGallery/Properties/PublishProfiles/win-\/x64.pubxml}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Locate the Win\+UI 3 Gallery package output folder from above and deploy for testing\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{PS>\ .\(\backslash\)WinUIGallery\(\backslash\)AppxPackages\(\backslash\)WinUIGallery.Desktop\_Test\(\backslash\)Install.ps1}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md22}{}\doxysubsection{\texorpdfstring{Run Win\+App\+Driver}{Run Win\+App\+Driver}}\label{README.md_autotoc_md22}
+The test runner (vstest.\+console.\+exe and VS Test Explorer) should automatically launch Win\+App\+Driver. Alternatively, it can be launched manually to observe diagnostic output as follows\+:
+
+
+\begin{DoxyEnumerate}
+\item Download and install the latest version of Win\+App\+Driver from \href{https://github.com/microsoft/WinAppDriver/releases}{\texttt{here}}
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Run Win\+App\+Driver\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>C:\(\backslash\)Program\ Files\ (x86)\(\backslash\)Windows\ Application\ Driver\(\backslash\)WinAppDriver.exe}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md23}{}\doxysubsection{\texorpdfstring{Build and run/debug Tests}{Build and run/debug Tests}}\label{README.md_autotoc_md23}
+The easiest way to run/debug the UI tests is with Visual Studio, as follows\+:
+
+
+\begin{DoxyItemize}
+\item Open {\ttfamily Win\+UIGallery.\+sln} in Visual Studio
+\item Select {\bfseries{Test}} \texorpdfstring{$>$}{>} {\bfseries{Windows}} \texorpdfstring{$>$}{>} {\bfseries{Test Explorer}}
+\item Select {\bfseries{Run All}} on the test pane or through menu {\bfseries{Test}} \texorpdfstring{$>$}{>} {\bfseries{Run}} \texorpdfstring{$>$}{>} {\bfseries{All Tests}}
+\end{DoxyItemize}
+
+Once the project is successfully built, you can use the {\bfseries{Test Explorer}} to choose test scenarios to run/debug
+
+Alternatively, the following commands can be used for automation\+:
+
+
+\begin{DoxyEnumerate}
+\item Build UITests\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>dotnet\ build\ WinUIGallery.sln}
+\DoxyCodeLine{-\/-\/or-\/-\/}
+\DoxyCodeLine{>msbuild\ WinUIGallery.sln}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Run test cases built above on command line\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>dotnet\ test\ .\(\backslash\)WinUIGallery\(\backslash\)WinUIGallery.UITests.csproj}
+\DoxyCodeLine{-\/-\/or-\/-\/}
+\DoxyCodeLine{>vstest.console.exe\ .\(\backslash\)WinUIGallery.UITests\(\backslash\)bin\(\backslash\)x64\(\backslash\)Debug\(\backslash\)net7.0\(\backslash\)WinUIGallery.UITests.dll}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md24}{}\doxysubsection{\texorpdfstring{Test output}{Test output}}\label{README.md_autotoc_md24}
+In either scenario above (cmdline or VS), if the tests run successfully, you should see\+:
+
+
+\begin{DoxyItemize}
+\item The Win\+UI 3 Gallery launch and run with automated UI interactions
+\item vstest.\+console.\+exe spew or Test Explorer indications of test case status
+\item Optionally, Win\+App\+Driver console spew indicating successful launch of the test app
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md25}{}\doxysubsection{\texorpdfstring{Adding/\+Updating Test Scenarios}{Adding/\+Updating Test Scenarios}}\label{README.md_autotoc_md25}
+Please follow the guidelines below to maintain test reliability and reduce test execution time\+:
+
+
+\begin{DoxyEnumerate}
+\item Provide a complete set of interactions (if applicable) for each new control
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Aim for simple and reliable scenario using the least amount of test steps 
+\end{DoxyEnumerate}

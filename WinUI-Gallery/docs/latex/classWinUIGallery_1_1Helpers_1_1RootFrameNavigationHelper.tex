@@ -1,0 +1,78 @@
+\doxysection{Win\+UIGallery.\+Helpers.\+Root\+Frame\+Navigation\+Helper Class Reference}
+\hypertarget{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{}\label{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}\index{WinUIGallery.Helpers.RootFrameNavigationHelper@{WinUIGallery.Helpers.RootFrameNavigationHelper}}
+
+
+\doxylink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{Root\+Frame\+Navigation\+Helper} registers for standard mouse and keyboard shortcuts used to go back and forward. There should be only one \doxylink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{Root\+Frame\+Navigation\+Helper} per view, and it should be associated with the root frame.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a979ba5ac6d999c73c9f811bdaf517adf}{Root\+Frame\+Navigation\+Helper}} (Frame root\+Frame, Navigation\+View current\+Nav\+View)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the Root\+Navigation\+Helper class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a39214e06bb3125fc51594d87318d6c28}{Raise\+Key\+Pressed}} (uint key\+Code)
+\begin{DoxyCompactList}\small\item\em Invoked on every keystroke, including system keys such as Alt key combinations. Used to detect keyboard navigation between pages even when the page itself doesn\textquotesingle{}t have focus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{Root\+Frame\+Navigation\+Helper} registers for standard mouse and keyboard shortcuts used to go back and forward. There should be only one \doxylink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{Root\+Frame\+Navigation\+Helper} per view, and it should be associated with the root frame. 
+
+To make use of \doxylink{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper}{Root\+Frame\+Navigation\+Helper}, create an instance of the Root\+Navigation\+Helper such as in the constructor of your root page. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{public}\ MyRootPage()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ this.InitializeComponent();}
+\DoxyCodeLine{\ \ \ \ this.rootNavigationHelper\ =\ \textcolor{keyword}{new}\ RootNavigationHelper(MyFrame);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a979ba5ac6d999c73c9f811bdaf517adf}\index{WinUIGallery.Helpers.RootFrameNavigationHelper@{WinUIGallery.Helpers.RootFrameNavigationHelper}!RootFrameNavigationHelper@{RootFrameNavigationHelper}}
+\index{RootFrameNavigationHelper@{RootFrameNavigationHelper}!WinUIGallery.Helpers.RootFrameNavigationHelper@{WinUIGallery.Helpers.RootFrameNavigationHelper}}
+\doxysubsubsection{\texorpdfstring{RootFrameNavigationHelper()}{RootFrameNavigationHelper()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a979ba5ac6d999c73c9f811bdaf517adf} 
+Win\+UIGallery.\+Helpers.\+Root\+Frame\+Navigation\+Helper.\+Root\+Frame\+Navigation\+Helper (\begin{DoxyParamCaption}\item[{Frame}]{root\+Frame}{, }\item[{Navigation\+View}]{current\+Nav\+View}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes a new instance of the Root\+Navigation\+Helper class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root\+Frame} & A reference to the top-\/level frame. This reference allows for frame manipulation and to register navigation handlers.\\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a39214e06bb3125fc51594d87318d6c28}\index{WinUIGallery.Helpers.RootFrameNavigationHelper@{WinUIGallery.Helpers.RootFrameNavigationHelper}!RaiseKeyPressed@{RaiseKeyPressed}}
+\index{RaiseKeyPressed@{RaiseKeyPressed}!WinUIGallery.Helpers.RootFrameNavigationHelper@{WinUIGallery.Helpers.RootFrameNavigationHelper}}
+\doxysubsubsection{\texorpdfstring{RaiseKeyPressed()}{RaiseKeyPressed()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Helpers_1_1RootFrameNavigationHelper_a39214e06bb3125fc51594d87318d6c28} 
+void Win\+UIGallery.\+Helpers.\+Root\+Frame\+Navigation\+Helper.\+Raise\+Key\+Pressed (\begin{DoxyParamCaption}\item[{uint}]{key\+Code}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Invoked on every keystroke, including system keys such as Alt key combinations. Used to detect keyboard navigation between pages even when the page itself doesn\textquotesingle{}t have focus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & Instance that triggered the event.\\
+\hline
+{\em e} & Event data describing the conditions that led to the event.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Win\+UIGallery/\+Helpers/Navigation\+Helper.\+cs\end{DoxyCompactItemize}

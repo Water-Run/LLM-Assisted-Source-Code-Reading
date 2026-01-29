@@ -1,0 +1,5 @@
+<map id="WinUIGallery.Pages.ItemPage" name="WinUIGallery.Pages.ItemPage">
+<area shape="rect" id="Node000001" title="A page that displays details for a single item within a group." alt="" coords="5,80,205,107"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="79,5,131,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,48,108,80,102,80,102,48"/>
+</map>

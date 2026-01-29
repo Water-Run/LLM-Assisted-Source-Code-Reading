@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,118,32"/>
+<area shape="rect" id="Node000001" href="$classWinUIGallery_1_1TestBindableVector-1-g.html" title=" " alt="" coords="166,23,343,65"/>
+<area shape="poly" id="edge179_Node000000_Node000001" title=" " alt="" coords="133,25,166,30,165,35,133,31"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1TestBindableVectorView-1-g.html" title=" " alt="" coords="391,52,568,95"/>
+<area shape="poly" id="edge180_Node000001_Node000002" title=" " alt="" coords="359,55,391,59,390,64,358,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="184,89,325,116"/>
+<area shape="poly" id="edge181_Node000003_Node000002" title=" " alt="" coords="340,89,390,82,391,88,341,94"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="38,56,85,83"/>
+<area shape="poly" id="edge182_Node000004_Node000001" title=" " alt="" coords="100,62,165,53,165,58,100,67"/>
+</map>

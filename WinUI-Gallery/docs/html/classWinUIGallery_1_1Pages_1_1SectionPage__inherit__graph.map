@@ -1,0 +1,9 @@
+<map id="WinUIGallery.Pages.SectionPage" name="WinUIGallery.Pages.SectionPage">
+<area shape="rect" id="Node000001" title="A page that displays an overview of a single group, including a preview of the items within the group..." alt="" coords="5,171,223,197"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1Pages_1_1ItemsPageBase.html" title=" " alt="" coords="26,80,202,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,139,117,170,111,170,111,139"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="23,5,74,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="71,43,100,78,95,81,66,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="99,5,260,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="162,46,133,81,128,78,157,43"/>
+</map>

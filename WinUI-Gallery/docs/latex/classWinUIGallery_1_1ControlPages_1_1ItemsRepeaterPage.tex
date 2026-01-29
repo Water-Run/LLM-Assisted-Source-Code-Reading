@@ -1,0 +1,115 @@
+\doxysection{Win\+UIGallery.\+Control\+Pages.\+Items\+Repeater\+Page Class Reference}
+\hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage}{}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage}\index{WinUIGallery.ControlPages.ItemsRepeaterPage@{WinUIGallery.ControlPages.ItemsRepeaterPage}}
+
+
+Inheritance diagram for Win\+UIGallery.\+Control\+Pages.\+Items\+Repeater\+Page\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Win\+UIGallery.\+Control\+Pages.\+Items\+Repeater\+Page\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_adff4d7b736f83e7a0ba11b88f1f5c4f3}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_adff4d7b736f83e7a0ba11b88f1f5c4f3} 
+void {\bfseries Filter\+Recipes\+\_\+\+Filter\+Changed} (object sender, Routed\+Event\+Args e)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a609c44de11cd4811e868234d4047ef28}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a609c44de11cd4811e868234d4047ef28} 
+Observable\+Collection$<$ \mbox{\hyperlink{classWinUIGallery_1_1ControlPages_1_1Bar}{Bar}} $>$? {\bfseries Bar\+Items}
+\item 
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_af58aaf43ca8f41de89bd3478e5729afa}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_af58aaf43ca8f41de89bd3478e5729afa} 
+\mbox{\hyperlink{classWinUIGallery_1_1ControlPages_1_1MyItemsSource}{My\+Items\+Source}} {\bfseries filtered\+Recipe\+Data} = new \mbox{\hyperlink{classWinUIGallery_1_1ControlPages_1_1MyItemsSource}{My\+Items\+Source}}(\mbox{[}$\,$\mbox{]})
+\item 
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a4a23f8400bee4dfbec02d0cf55725d2f}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a4a23f8400bee4dfbec02d0cf55725d2f} 
+List$<$ \mbox{\hyperlink{classWinUIGallery_1_1ControlPages_1_1Recipe}{Recipe}} $>$ {\bfseries static\+Recipe\+Data} = \mbox{[}$\,$\mbox{]}
+\item 
+List$<$ String $>$ \mbox{\hyperlink{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_afd247bcf5352d5edebae814a79a45d84}{Color\+List}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a56b766694631df0930a4a32761234f78}\label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_a56b766694631df0930a4a32761234f78} 
+Observable\+Collection$<$ int $>$ {\bfseries Numbers} = new Observable\+Collection$<$int$>$(Enumerable.\+Range(0, 500))\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+IEnumerable$<$ \mbox{\hyperlink{classWinUIGallery_1_1Models_1_1ControlInfoDataItem}{Control\+Info\+Data\+Item}} $>$? {\bfseries Items}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase_aa6f3fcd59383eb596788c885a098513d}{Get\+Is\+Narrow\+Layout\+State}} ()
+\begin{DoxyCompactList}\small\item\em Gets a value indicating whether the application\textquotesingle{}s view is currently in "{}narrow"{} mode -\/ i.\+e. on a mobile-\/ish device. \end{DoxyCompactList}\item 
+void {\bfseries On\+Item\+Grid\+View\+Container\+Content\+Changing} (List\+View\+Base sender, Container\+Content\+Changing\+Event\+Args args)
+\item 
+void {\bfseries On\+Item\+Grid\+View\+Item\+Click} (object sender, Item\+Click\+Event\+Args e)
+\item 
+void {\bfseries On\+Item\+Grid\+View\+Loaded} (object sender, Routed\+Event\+Args e)
+\item 
+bool {\bfseries Set\+Property$<$ T $>$} (ref T storage, T value, \mbox{[}Caller\+Member\+Name\mbox{]} string? property\+Name=null)
+\item 
+void {\bfseries Notify\+Property\+Changed} (\mbox{[}Caller\+Member\+Name\mbox{]} string? property\+Name=null)
+\end{DoxyCompactItemize}
+\doxysubsection*{Events inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+Property\+Changed\+Event\+Handler? {\bfseries Property\+Changed}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_afd247bcf5352d5edebae814a79a45d84}\index{WinUIGallery.ControlPages.ItemsRepeaterPage@{WinUIGallery.ControlPages.ItemsRepeaterPage}!ColorList@{ColorList}}
+\index{ColorList@{ColorList}!WinUIGallery.ControlPages.ItemsRepeaterPage@{WinUIGallery.ControlPages.ItemsRepeaterPage}}
+\doxysubsubsection{\texorpdfstring{ColorList}{ColorList}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage_afd247bcf5352d5edebae814a79a45d84} 
+List$<$String$>$ Win\+UIGallery.\+Control\+Pages.\+Items\+Repeater\+Page.\+Color\+List}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{keyword}{new}\ List<String>()}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Blue"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BlueViolet"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Crimson"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkCyan"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkGoldenrod"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkMagenta"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkOliveGreen"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkRed"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkSlateBlue"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DeepPink"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}IndianRed"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}MediumSlateBlue"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Maroon"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}MidnightBlue"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Peru"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}SaddleBrown"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}SteelBlue"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}OrangeRed"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Firebrick"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DarkKhaki"{}}}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Win\+UIGallery/\+Samples/\+Control\+Pages/Items\+Repeater\+Page.\+xaml.\+cs\end{DoxyCompactItemize}

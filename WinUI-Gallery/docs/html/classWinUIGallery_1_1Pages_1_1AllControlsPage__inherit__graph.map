@@ -1,0 +1,9 @@
+<map id="WinUIGallery.Pages.AllControlsPage" name="WinUIGallery.Pages.AllControlsPage">
+<area shape="rect" id="Node000001" title="A page that displays a grouped collection of items." alt="" coords="5,171,243,197"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1Pages_1_1ItemsPageBase.html" title=" " alt="" coords="36,80,212,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,139,127,170,121,170,121,139"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="33,5,84,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,43,110,78,105,81,76,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="109,5,270,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="172,46,143,81,138,78,167,43"/>
+</map>

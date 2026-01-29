@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['icondata_0',['IconData',['../classWinUIGallery_1_1Models_1_1IconData.html',1,'WinUIGallery::Models']]],
+  ['iconelementpage_1',['IconElementPage',['../classWinUIGallery_1_1ControlPages_1_1IconElementPage.html',1,'WinUIGallery::ControlPages']]],
+  ['iconographypage_2',['IconographyPage',['../classWinUIGallery_1_1ControlPages_1_1IconographyPage.html',1,'WinUIGallery::ControlPages']]],
+  ['idlesynchronizer_3',['IdleSynchronizer',['../classWinUIGallery_1_1Helpers_1_1IdleSynchronizer.html',1,'WinUIGallery::Helpers']]],
+  ['imagepage_4',['ImagePage',['../classWinUIGallery_1_1ControlPages_1_1ImagePage.html',1,'WinUIGallery::ControlPages']]],
+  ['imagescrollbehavior_5',['ImageScrollBehavior',['../classWinUIGallery_1_1Behaviors_1_1ImageScrollBehavior.html',1,'WinUIGallery::Behaviors']]],
+  ['imemorybufferbyteaccess_6',['IMemoryBufferByteAccess',['../interfaceSceneNodeCommon_1_1IMemoryBufferByteAccess.html',1,'SceneNodeCommon']]],
+  ['implicittransitionpage_7',['ImplicitTransitionPage',['../classWinUIGallery_1_1ControlPages_1_1ImplicitTransitionPage.html',1,'WinUIGallery::ControlPages']]],
+  ['infobadgepage_8',['InfoBadgePage',['../classWinUIGallery_1_1ControlPages_1_1InfoBadgePage.html',1,'WinUIGallery::ControlPages']]],
+  ['infobarpage_9',['InfoBarPage',['../classWinUIGallery_1_1ControlPages_1_1InfoBarPage.html',1,'WinUIGallery::ControlPages']]],
+  ['information_10',['➡️ Further information',['../md_README.html#autotoc_md6',1,'']]],
+  ['inlinecolorpicker_11',['InlineColorPicker',['../classWinUIGallery_1_1Controls_1_1InlineColorPicker.html',1,'WinUIGallery::Controls']]],
+  ['isettingsprovider_12',['ISettingsProvider',['../interfaceWinUIGallery_1_1Helpers_1_1ISettingsProvider.html',1,'WinUIGallery::Helpers']]],
+  ['issues_13',['Reporting Security Issues',['../md_SECURITY.html#autotoc_md17',1,'']]],
+  ['item_14',['Item',['../classWinUIGallery_1_1UITests_1_1Tests_1_1AxeScanAll_1_1Item.html',1,'WinUIGallery::UITests::Tests::AxeScanAll']]],
+  ['itemheight_15',['ItemHeight',['../classWinUIGallery_1_1Layouts_1_1WrapPanel.html#a1d021dd3a90600b2e02471796b930ded',1,'WinUIGallery::Layouts::WrapPanel']]],
+  ['itemheightproperty_16',['ItemHeightProperty',['../classWinUIGallery_1_1Layouts_1_1WrapPanel.html#adb4b7b3bc23317b0fde437c02119f57f',1,'WinUIGallery::Layouts::WrapPanel']]],
+  ['itempage_17',['ItemPage',['../classWinUIGallery_1_1Pages_1_1ItemPage.html',1,'WinUIGallery::Pages']]],
+  ['itemspagebase_18',['ItemsPageBase',['../classWinUIGallery_1_1Pages_1_1ItemsPageBase.html',1,'WinUIGallery::Pages']]],
+  ['itemsrepeaterpage_19',['ItemsRepeaterPage',['../classWinUIGallery_1_1ControlPages_1_1ItemsRepeaterPage.html',1,'WinUIGallery::ControlPages']]],
+  ['itemsviewpage_20',['ItemsViewPage',['../classWinUIGallery_1_1ControlPages_1_1ItemsViewPage.html',1,'WinUIGallery::ControlPages']]],
+  ['itemtemplates_21',['ItemTemplates',['../classWinUIGallery_1_1ItemTemplates.html',1,'WinUIGallery']]],
+  ['itemwidth_22',['ItemWidth',['../classWinUIGallery_1_1Layouts_1_1WrapPanel.html#a169c70576c069b1ec0904f161587891c',1,'WinUIGallery::Layouts::WrapPanel']]],
+  ['itemwidthproperty_23',['ItemWidthProperty',['../classWinUIGallery_1_1Layouts_1_1WrapPanel.html#af19f59be2fdc8399bd35bab8f99ad508',1,'WinUIGallery::Layouts::WrapPanel']]]
+];

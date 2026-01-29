@@ -1,0 +1,93 @@
+\doxysection{Win\+UIGallery.\+Pages.\+Search\+Results\+Page Class Reference}
+\hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage}{}\label{classWinUIGallery_1_1Pages_1_1SearchResultsPage}\index{WinUIGallery.Pages.SearchResultsPage@{WinUIGallery.Pages.SearchResultsPage}}
+
+
+This page displays search results when a global search is directed to this application.  
+
+
+
+
+Inheritance diagram for Win\+UIGallery.\+Pages.\+Search\+Results\+Page\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{classWinUIGallery_1_1Pages_1_1SearchResultsPage__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Win\+UIGallery.\+Pages.\+Search\+Results\+Page\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{classWinUIGallery_1_1Pages_1_1SearchResultsPage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage_aab9b6ac8f8ab504a743b1aa0519ca917}\label{classWinUIGallery_1_1Pages_1_1SearchResultsPage_aab9b6ac8f8ab504a743b1aa0519ca917} 
+override void {\bfseries On\+Navigated\+To} (Navigation\+Event\+Args e)
+\item 
+\Hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage_af589a824de721a979dceae4919163a64}\label{classWinUIGallery_1_1Pages_1_1SearchResultsPage_af589a824de721a979dceae4919163a64} 
+override void {\bfseries On\+Navigating\+From} (Navigating\+Cancel\+Event\+Args e)
+\item 
+override bool \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1SearchResultsPage_a145d424eec3a4a713b33357af6fcc20b}{Get\+Is\+Narrow\+Layout\+State}} ()
+\begin{DoxyCompactList}\small\item\em Gets a value indicating whether the application\textquotesingle{}s view is currently in "{}narrow"{} mode -\/ i.\+e. on a mobile-\/ish device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries On\+Item\+Grid\+View\+Container\+Content\+Changing} (List\+View\+Base sender, Container\+Content\+Changing\+Event\+Args args)
+\item 
+void {\bfseries On\+Item\+Grid\+View\+Item\+Click} (object sender, Item\+Click\+Event\+Args e)
+\item 
+void {\bfseries On\+Item\+Grid\+View\+Loaded} (object sender, Routed\+Event\+Args e)
+\item 
+bool {\bfseries Set\+Property$<$ T $>$} (ref T storage, T value, \mbox{[}Caller\+Member\+Name\mbox{]} string? property\+Name=null)
+\item 
+void {\bfseries Notify\+Property\+Changed} (\mbox{[}Caller\+Member\+Name\mbox{]} string? property\+Name=null)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage_aa9b953fc914dc528be2a7c982e30098d}\label{classWinUIGallery_1_1Pages_1_1SearchResultsPage_aa9b953fc914dc528be2a7c982e30098d} 
+IEnumerable$<$ \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1Filter}{Filter}} $>$? {\bfseries Filters}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+IEnumerable$<$ \mbox{\hyperlink{classWinUIGallery_1_1Models_1_1ControlInfoDataItem}{Control\+Info\+Data\+Item}} $>$? {\bfseries Items}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Events inherited from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+Property\+Changed\+Event\+Handler? {\bfseries Property\+Changed}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This page displays search results when a global search is directed to this application. 
+
+\label{doc-func-members}
+\Hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classWinUIGallery_1_1Pages_1_1SearchResultsPage_a145d424eec3a4a713b33357af6fcc20b}\index{WinUIGallery.Pages.SearchResultsPage@{WinUIGallery.Pages.SearchResultsPage}!GetIsNarrowLayoutState@{GetIsNarrowLayoutState}}
+\index{GetIsNarrowLayoutState@{GetIsNarrowLayoutState}!WinUIGallery.Pages.SearchResultsPage@{WinUIGallery.Pages.SearchResultsPage}}
+\doxysubsubsection{\texorpdfstring{GetIsNarrowLayoutState()}{GetIsNarrowLayoutState()}}
+{\footnotesize\ttfamily \label{classWinUIGallery_1_1Pages_1_1SearchResultsPage_a145d424eec3a4a713b33357af6fcc20b} 
+override bool Win\+UIGallery.\+Pages.\+Search\+Results\+Page.\+Get\+Is\+Narrow\+Layout\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Gets a value indicating whether the application\textquotesingle{}s view is currently in "{}narrow"{} mode -\/ i.\+e. on a mobile-\/ish device. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classWinUIGallery_1_1Pages_1_1ItemsPageBase_aa6f3fcd59383eb596788c885a098513d}{Win\+UIGallery.\+Pages.\+Items\+Page\+Base}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Win\+UIGallery/\+Pages/Search\+Results\+Page.\+xaml.\+cs\end{DoxyCompactItemize}

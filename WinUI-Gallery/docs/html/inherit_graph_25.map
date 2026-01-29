@@ -1,0 +1,27 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,364,74,391"/>
+<area shape="rect" id="Node000001" href="$classWinUIGallery_1_1MainWindow.html" title=" " alt="" coords="161,5,338,32"/>
+<area shape="poly" id="edge210_Node000000_Node000001" title=" " alt="" coords="41,348,51,276,67,184,90,98,104,65,120,42,139,29,160,20,162,25,141,33,124,46,108,68,95,100,72,185,56,277,47,349"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1SamplePages_1_1SampleBuiltInSystemBackdropsWindow.html" title=" " alt="" coords="122,56,378,99"/>
+<area shape="poly" id="edge211_Node000000_Node000002" title=" " alt="" coords="38,348,42,297,54,233,65,199,79,166,97,136,120,109,135,97,138,101,124,113,101,139,83,169,70,201,59,234,47,298,44,348"/>
+<area shape="rect" id="Node000003" href="$classWinUIGallery_1_1SamplePages_1_1SampleSystemBackdropsWindow.html" title=" " alt="" coords="140,123,360,165"/>
+<area shape="poly" id="edge212_Node000000_Node000003" title=" " alt="" coords="42,348,49,309,64,263,87,216,102,194,120,175,138,163,141,167,123,179,106,198,91,218,69,265,55,311,47,349"/>
+<area shape="rect" id="Node000004" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1ModalWindow.html" title=" " alt="" coords="149,189,350,232"/>
+<area shape="poly" id="edge213_Node000000_Node000004" title=" " alt="" coords="48,348,75,294,95,266,120,242,147,226,150,231,123,246,99,269,79,297,53,351"/>
+<area shape="rect" id="Node000005" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow1.html" title=" " alt="" coords="149,256,350,299"/>
+<area shape="poly" id="edge214_Node000000_Node000005" title=" " alt="" coords="63,351,89,328,120,308,148,297,150,302,123,313,92,333,66,355"/>
+<area shape="rect" id="Node000006" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow2.html" title=" " alt="" coords="149,323,350,365"/>
+<area shape="poly" id="edge215_Node000000_Node000006" title=" " alt="" coords="89,367,148,357,149,363,89,372"/>
+<area shape="rect" id="Node000007" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow3.html" title=" " alt="" coords="149,389,350,432"/>
+<area shape="poly" id="edge216_Node000000_Node000007" title=" " alt="" coords="89,382,149,392,148,397,89,388"/>
+<area shape="rect" id="Node000008" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow4.html" title=" " alt="" coords="149,456,350,499"/>
+<area shape="poly" id="edge217_Node000000_Node000008" title=" " alt="" coords="66,400,92,422,123,442,150,453,148,458,120,446,89,426,63,404"/>
+<area shape="rect" id="Node000009" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow6.html" title=" " alt="" coords="149,523,350,565"/>
+<area shape="poly" id="edge218_Node000000_Node000009" title=" " alt="" coords="53,404,79,458,99,485,123,509,150,524,147,528,120,513,95,489,75,461,48,406"/>
+<area shape="rect" id="Node000010" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1SampleWindow7.html" title=" " alt="" coords="149,589,350,632"/>
+<area shape="poly" id="edge219_Node000000_Node000010" title=" " alt="" coords="47,405,55,444,69,490,91,536,106,557,123,575,150,592,148,597,120,579,102,560,87,539,64,492,49,445,42,407"/>
+<area shape="rect" id="Node000011" href="$classWinUIGallery_1_1Samples_1_1SamplePages_1_1TitleBarWindow.html" title=" " alt="" coords="149,656,350,699"/>
+<area shape="poly" id="edge220_Node000000_Node000011" title=" " alt="" coords="44,406,47,457,59,521,70,554,83,586,101,616,123,642,150,660,147,664,120,646,97,619,79,588,65,556,54,522,42,458,38,407"/>
+<area shape="rect" id="Node000012" href="$classWinUIGallery_1_1UnitTests_1_1UnitTestAppWindow.html" title=" " alt="" coords="157,723,343,765"/>
+<area shape="poly" id="edge221_Node000000_Node000012" title=" " alt="" coords="47,406,56,478,73,569,95,654,109,687,124,709,139,721,157,730,155,735,136,726,120,712,104,689,90,656,68,570,51,479,41,407"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="WinUIGallery.ControlPages.AnnotatedScrollBarPage" name="WinUIGallery.ControlPages.AnnotatedScrollBarPage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="631,39,817,81"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="332,21,383,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="399,35,631,51,631,56,399,40"/>
+<area shape="rect" id="Node000003" href="$classWinUIGallery_1_1ObservableCollection-1-g.html" title=" " alt="" coords="229,72,486,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="502,84,607,79,631,76,631,81,608,84,502,90"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="37,5,148,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="157,34,180,41,230,57,279,69,278,74,228,63,179,47,156,40"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,56,180,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="195,83,229,83,229,88,195,88"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="12,139,173,165"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="163,132,301,97,302,102,164,137"/>
+</map>

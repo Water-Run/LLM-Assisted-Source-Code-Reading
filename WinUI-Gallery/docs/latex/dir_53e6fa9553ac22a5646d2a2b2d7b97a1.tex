@@ -1,0 +1,40 @@
+\doxysection{scripts Directory Reference}
+\hypertarget{dir_53e6fa9553ac22a5646d2a2b2d7b97a1}{}\label{dir_53e6fa9553ac22a5646d2a2b2d7b97a1}\index{scripts Directory Reference@{scripts Directory Reference}}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{readme.md_autotoc_md9}{}\doxysubsection{\texorpdfstring{\`{}scripts\`{} Folder}{\`{}scripts\`{} Folder}}\label{readme.md_autotoc_md9}
+The {\ttfamily scripts} folder contains a set of tools and utilities that are repeatedly used by developers to assist in managing and developing the Win\+UI Gallery. These tools streamline various development tasks, providing functionality to track, manage, and organize files within the repository.
+
+\begin{quote}
+{\bfseries{Note}}\+: Before running any Power\+Shell script, you must set the execution policy to allow locally created scripts to run. Use the following command to set the policy\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Set-\/ExecutionPolicy\ RemoteSigned\ -\/Scope\ CurrentUser}
+
+\end{DoxyCode}
+ This ensures that Power\+Shell scripts downloaded from the internet are not run unless they are signed by a trusted publisher, while locally created scripts are allowed to run. \end{quote}
+\hypertarget{readme.md_autotoc_md10}{}\doxysubsection{\texorpdfstring{Running scripts}{Running scripts}}\label{readme.md_autotoc_md10}
+\hypertarget{readme.md_autotoc_md11}{}\doxysubsubsubsection{\texorpdfstring{1st Way\+: From File Explorer}{1st Way\+: From File Explorer}}\label{readme.md_autotoc_md11}
+
+\begin{DoxyItemize}
+\item Step 1\+: Navigate to the {\ttfamily scripts} folder.
+\item Step 2\+: Right-\/click the {\ttfamily Get-\/\+Latest\+Added\+Samples.\+ps1} script and select {\bfseries{Run with Power\+Shell}}.
+\item Step 3\+: The script will output a list of newly added files along with their first commit dates.
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md12}{}\doxysubsubsubsection{\texorpdfstring{2nd Way\+: From Visual Studio}{2nd Way\+: From Visual Studio}}\label{readme.md_autotoc_md12}
+
+\begin{DoxyItemize}
+\item Step 1\+: Open {\ttfamily \doxylink{namespaceWinUIGallery}{Win\+UIGallery}} project in Visual Studio.
+\item Step 2\+: Navigate to the {\bfseries{scripts}} menu and select {\bfseries{Open Power\+Shell Window}}.
+\item Step 3\+: In the Power\+Shell window, type the following command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{..\(\backslash\)scripts\(\backslash\)Get-\/LatestAddedSamples.ps1}
+
+\end{DoxyCode}
+
+\item Step 4\+: The script will output the list of added files.
+\end{DoxyItemize}\hypertarget{readme.md_autotoc_md13}{}\doxysubsection{\texorpdfstring{Scripts}{Scripts}}\label{readme.md_autotoc_md13}
+\hypertarget{readme.md_autotoc_md14}{}\doxysubsubsection{\texorpdfstring{Get-\/\+Latest\+Added\+Samples tool}{Get-\/\+Latest\+Added\+Samples tool}}\label{readme.md_autotoc_md14}
+The goal of the {\ttfamily Get-\/\+Latest\+Added\+Samples.\+ps1} script is to assist developers in identifying newly added files in the {\ttfamily Control\+Pages} directory, along with the date of their first commit. This helps in tracking the progress of new additions to the project and identifying which samples should be included on the home page, ensuring that the most recent content is always showcased.\hypertarget{readme.md_autotoc_md15}{}\doxysubsubsection{\texorpdfstring{Get-\/\+Latest\+Updated\+Samples tool}{Get-\/\+Latest\+Updated\+Samples tool}}\label{readme.md_autotoc_md15}
+The goal of the {\ttfamily Get-\/\+Latest\+Updated\+Samples.\+ps1} script is to help developers quickly identify files in the {\ttfamily Control\+Pages} directory that have been updated, along with their last commit dates. This information is useful for tracking changes made to the project, ensuring that developers can monitor updates to existing samples, and identifying which updated samples might need to be showcased on the home page. 

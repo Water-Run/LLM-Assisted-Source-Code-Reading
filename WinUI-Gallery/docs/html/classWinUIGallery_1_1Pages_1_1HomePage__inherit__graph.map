@@ -1,0 +1,9 @@
+<map id="WinUIGallery.Pages.HomePage" name="WinUIGallery.Pages.HomePage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,171,214,197"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1Pages_1_1ItemsPageBase.html" title=" " alt="" coords="21,80,198,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,139,112,170,107,170,107,139"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="18,5,70,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="66,43,95,78,91,81,62,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="94,5,256,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="157,46,128,81,124,78,153,43"/>
+</map>

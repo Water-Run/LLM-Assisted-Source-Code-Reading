@@ -1,0 +1,5 @@
+<map id="WinUIGallery.Controls.ControlExampleSubstitution" name="WinUIGallery.Controls.ControlExampleSubstitution">
+<area shape="rect" id="Node000001" title="Describes a textual substitution in sample content. If enabled (default), then &#160;is replaced with the ..." alt="" coords="5,80,203,123"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="38,5,170,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,48,107,80,101,80,101,48"/>
+</map>

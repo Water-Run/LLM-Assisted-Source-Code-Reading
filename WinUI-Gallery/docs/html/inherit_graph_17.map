@@ -1,0 +1,15 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,180,120,207"/>
+<area shape="rect" id="Node000001" href="$classWinUIGallery_1_1Converters_1_1BooleanToInvertedVisibilityConverter.html" title=" " alt="" coords="168,5,403,48"/>
+<area shape="poly" id="edge186_Node000000_Node000001" title=" " alt="" coords="76,165,112,111,137,82,166,58,187,46,190,51,169,62,141,86,116,114,80,168"/>
+<area shape="rect" id="Node000002" href="$classWinUIGallery_1_1Converters_1_1BrushToColorConverter.html" title=" " alt="" coords="200,72,370,115"/>
+<area shape="poly" id="edge187_Node000000_Node000002" title=" " alt="" coords="92,169,127,146,167,124,199,112,201,117,169,129,130,150,95,173"/>
+<area shape="rect" id="Node000003" href="$classWinUIGallery_1_1Converters_1_1DoubleToThicknessConverter.html" title=" " alt="" coords="189,139,382,181"/>
+<area shape="poly" id="edge188_Node000000_Node000003" title=" " alt="" coords="135,180,188,172,189,177,135,185"/>
+<area shape="rect" id="Node000004" href="$classWinUIGallery_1_1Converters_1_1EmptyStringToVisibilityConverter.html" title=" " alt="" coords="179,205,392,248"/>
+<area shape="poly" id="edge189_Node000000_Node000004" title=" " alt="" coords="135,201,179,208,178,213,135,207"/>
+<area shape="rect" id="Node000005" href="$classWinUIGallery_1_1Converters_1_1NullToVisibilityConverter.html" title=" " alt="" coords="200,272,370,315"/>
+<area shape="poly" id="edge190_Node000000_Node000005" title=" " alt="" coords="95,214,130,236,169,258,201,270,199,275,167,262,127,241,92,218"/>
+<area shape="rect" id="Node000006" href="$classWinUIGallery_1_1Converters_1_1NullableBooleanToBooleanConverter.html" title=" " alt="" coords="169,339,402,381"/>
+<area shape="poly" id="edge191_Node000000_Node000006" title=" " alt="" coords="80,219,116,273,141,301,169,324,190,336,187,340,166,329,137,305,112,276,76,222"/>
+</map>

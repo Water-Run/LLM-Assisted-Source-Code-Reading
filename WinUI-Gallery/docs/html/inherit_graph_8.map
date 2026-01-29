@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,80,138,107"/>
+<area shape="rect" id="Node000001" href="$classWinUIGallery_1_1Behaviors_1_1ImageScrollBehavior.html" title=" " alt="" coords="192,5,392,48"/>
+<area shape="poly" id="edge169_Node000000_Node000001" title=" " alt="" coords="132,72,218,46,220,51,134,77"/>
+<area shape="rect" id="Node000003" href="$classWinUIGallery_1_1Controls_1_1ControlExampleSubstitution.html" title="Describes a textual substitution in sample content. If enabled (default), then &#160;is replaced with the ..." alt="" coords="194,72,391,115"/>
+<area shape="poly" id="edge170_Node000000_Node000003" title=" " alt="" coords="153,91,193,91,193,96,153,96"/>
+<area shape="rect" id="Node000004" href="$classWinUIGallery_1_1Helpers_1_1NavigationHelper.html" title="NavigationHelper aids in navigation between pages. It manages the backstack and integrates Suspension..." alt="" coords="186,139,399,181"/>
+<area shape="poly" id="edge171_Node000000_Node000004" title=" " alt="" coords="134,109,220,135,218,141,132,114"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="33,13,110,40"/>
+<area shape="poly" id="edge172_Node000002_Node000001" title=" " alt="" coords="125,24,192,24,192,29,125,29"/>
+</map>
