@@ -58,7 +58,7 @@
 #include "lstring.h"
 #include "ltable.h"
 #include "ltm.h"
-
+ 
 /*
 ** 从lua_State指针获取对应的LX结构体指针
 ** LX结构体包含lua_State和额外空间(extra space)
