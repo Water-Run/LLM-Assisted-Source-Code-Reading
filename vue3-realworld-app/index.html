@@ -1,22 +1,58 @@
+<!--
+  【开头概述】
+  这是项目的 HTML 入口文件。
+  它提供一个空的挂载点 <div id="app"></div>，
+  Vue 会把整个应用渲染到这里。
+  -->
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Conduit</title>
-    <link
-      href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link rel="stylesheet" href="//demo.productionready.io/main.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <!--
+      【主体详解】
+      meta charset 指定页面字符集为 UTF-8，防止中文乱码。
+      -->
+  <meta charset="utf-8" />
+  <title>Conduit</title>
+
+  <!--
+      引入图标字体（ionicons），用于页面上的各种小图标。
+      这里用的是外部 CDN。
+      -->
+  <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
+  <!--
+      引入 Google Fonts 字体，提供更好看的排版效果。
+      -->
+  <link
+    href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
+    rel="stylesheet" type="text/css" />
+
+  <!--
+      引入项目样式（RealWorld 官方的 demo 样式）。
+      -->
+  <link rel="stylesheet" href="//demo.productionready.io/main.css" />
+</head>
+
+<body>
+  <!--
+      这是 Vue 应用的挂载点。
+      在 main.ts 里会执行 createApp(...).mount('#app')
+      -->
+  <div id="app"></div>
+
+  <!--
+      使用 type="module" 表示这是 ES 模块，
+      入口是 /src/main.ts（真正启动 Vue 应用的代码）。
+      -->
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
+
+<!--
+  【结尾总结】
+  这个文件就是“Vue 应用壳子”：
+  提供挂载点、引入样式/字体，并加载 main.ts 启动应用。
+  -->
