@@ -131,7 +131,7 @@ namespace Miniscript {  // 定义 Miniscript 命名空间,用于组织代码并�
 		/// 
 		/// 【实现原理】
 		/// 使用 Array.IndexOf() 方法在 all 数组中查找指定文本
-		/// 
+		///  
 		/// 【C# 高级特性说明 - Array.IndexOf()】
 		/// Array.IndexOf() 是 System.Array 类的静态方法
 		/// 功能: 在一维数组中搜索指定对象,返回第一次出现的索引

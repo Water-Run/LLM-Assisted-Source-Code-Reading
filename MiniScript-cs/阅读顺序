@@ -1,0 +1,26 @@
+1. **MiniscriptKeywords.cs**  
+   先知道有哪些关键字，后面看 Lexer/Parser 识别时更顺。
+
+2. **MiniscriptLexer.cs**  
+   源码如何切成 Token；重点看 `Token.Type`、`Dequeue()`、字符串/数字/注释/换行处理。
+
+3. **MiniscriptParser.cs**  
+   核心：如何把 Token 解析成语句/表达式并生成 TAC；重点看 `ParseStatement`、表达式优先级链、回填(backpatch)。
+
+4. **MiniscriptTAC.cs（先看 Line，再看 Context）**  
+   了解 Parser 生成的“中间代码”长什么样；`Line.Op` 是 Parser 的目标语言。
+
+5. **MiniscriptTypes.cs**  
+   看 Parser 里用到的各种 Value（ValVar/ValTemp/ValSeqElem/ValList/ValMap 等）具体语义。
+
+6. **MiniscriptIntrinsics.cs**  
+   Parser 里会生成对内置函数的调用，理解内置函数注册与调用方式。
+
+7. **MiniscriptErrors.cs**  
+   了解 Lexer/Parser 报错的异常类型与格式。
+
+8. **MiniscriptInterpreter.cs**  
+   作为“前端输出”的承接层，看看 Compile 如何调用 Parser 并生成 VM。
+
+9. **Program.cs / MiniscriptUnitTest.cs / Miniscript.cs**  
+   作为使用入口与测试验证，最后扫一遍。
