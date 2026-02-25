@@ -23,7 +23,7 @@ namespace Miniscript {
 		// 错误上下文信息,用于错误报告(如文件名)
 		public string errorContext;	// name of file, etc., used for error reporting
 									// 文件名等,用于错误报告
-		
+
 		//public int lineNum;			// which line number we're currently parsing
 										// 当前正在解析的行号
 
@@ -47,7 +47,7 @@ namespace Miniscript {
 		// (typically, the top of a loop of some sort).
 		// 表示代码中稍后需要跳转到的位置(通常是某种循环的顶部)。
 		class JumpPoint {
-			public int lineNum;			// line number to jump to		
+			public int lineNum;			// line number to jump to
 										// 要跳转到的行号
 			public string keyword;		// jump type, by keyword: "while", "for", etc.
 										// 通过关键字标识跳转类型:"while"、"for"等
@@ -61,24 +61,24 @@ namespace Miniscript {
 		class ParseState {
 			// 生成的TAC(三地址码)指令列表
 			public List<TAC.Line> code = new List<TAC.Line>();
-			
+
 			// 待回填的跳转列表(需要后续确定跳转目标的指令)
 			public List<BackPatch> backpatches = new List<BackPatch>();
-			
+
 			// 跳转点列表(循环开始位置等)
 			public List<JumpPoint> jumpPoints = new List<JumpPoint>();
-			
+
 			// 下一个临时变量编号(临时变量用于存储中间计算结果)
 			public int nextTempNum = 0;
-			
+
 			// 仅在局部作用域查找的标识符
 			public string localOnlyIdentifier;	// identifier to be looked up in local scope *only*
 												// 仅在局部作用域中查找的标识符
-			
+
 			// 是否严格限制localOnlyIdentifier(严格模式会报错,非严格仅警告)
 			public bool localOnlyStrict;		// whether localOnlyIdentifier applies strictly, or merely warns
 												// localOnlyIdentifier是否严格应用,或仅发出警告
-			
+
 			/// <summary>
 			/// 添加一行TAC代码到代码列表
 			/// </summary>
@@ -90,7 +90,7 @@ namespace Miniscript {
 			/// <summary>
 			/// 将最后一行代码添加为回填点
 			/// 当遇到指定的关键字时,会回填这行代码的rhsA字段(跳转目标)
-			/// 
+			///
 			/// 使用场景示例:
 			/// if condition then  <- 这里生成条件跳转,但还不知道跳到哪
 			///   statements
@@ -113,7 +113,7 @@ namespace Miniscript {
 			/// <summary>
 			/// 关闭跳转点(循环结束时调用)
 			/// 返回跳转点信息并从列表中移除
-			/// 
+			///
 			/// 工作原理:
 			/// 1. 检查最后一个跳转点是否匹配关键字
 			/// 2. 如果不匹配,说明块结构不对称(如while没有end while)
@@ -134,7 +134,7 @@ namespace Miniscript {
 			/// <summary>
 			/// 检查给定行号是否是跳转目标
 			/// 用于优化:如果某行是跳转目标,则不能进行某些优化
-			/// 
+			///
 			/// 检查两个来源:
 			/// 1. 已生成的代码中的跳转指令
 			/// 2. 待跳转的jumpPoints列表
@@ -146,7 +146,7 @@ namespace Miniscript {
 				for (int i=0; i < code.Count; i++) {
 					var op = code[i].op;
 					// 检查是否是跳转指令,且跳转目标是指定行号
-					if ((op == TAC.Line.Op.GotoA || op == TAC.Line.Op.GotoAifB 
+					if ((op == TAC.Line.Op.GotoA || op == TAC.Line.Op.GotoAifB
 					 || op == TAC.Line.Op.GotoAifNotB || op == TAC.Line.Op.GotoAifTrulyB)
 					 && code[i].rhsA is ValNumber && code[i].rhsA.IntValue() == lineNum) return true;
 				}
@@ -161,7 +161,7 @@ namespace Miniscript {
 			/// 当遇到'end'关键字时调用此方法
 			/// 回填所有等待该关键字的跳转指令
 			/// 将匹配的回填点(及其后的)修补到当前代码末尾
-			/// 
+			///
 			/// 工作流程:
 			/// 1. 找到所有等待指定关键字的backpatch
 			/// 2. 将它们的跳转目标设置为当前位置+reservingLines
@@ -176,7 +176,7 @@ namespace Miniscript {
 			/// <summary>
 			/// Patch方法的完整版本
 			/// 回填等待指定关键字的跳转,并可选择是否同时回填break语句
-			/// 
+			///
 			/// 参数说明:
 			/// - alsoBreak: break语句可以跳出任何循环,所以可能需要特殊处理
 			/// - reservingLines: 有时需要在当前位置后预留几行,跳转到预留位置之后
@@ -188,7 +188,7 @@ namespace Miniscript {
 				// 计算跳转目标:当前代码行数+预留行数
 				Value target = TAC.Num(code.Count + reservingLines);
 				bool done = false;
-				
+
 				// 从后向前遍历backpatch列表(栈式处理)
 				for (int idx = backpatches.Count - 1; idx >= 0 && !done; idx--) {
 					bool patchIt = false;
@@ -216,14 +216,14 @@ namespace Miniscript {
 			/// <summary>
 			/// 修补单个if块的所有分支
 			/// 包括最后的"else"块,以及一个或多个"end if"跳转
-			/// 
+			///
 			/// if块的结构比较复杂:
 			/// if cond then
 			///   ...         <- 条件为假时跳到else
 			/// else          <- if部分结束时跳到end if
 			///   ...
 			/// end if        <- else结束跳到这里
-			/// 
+			///
 			/// 还要处理单行if的情况
 			/// </summary>
 			/// <param name="singleLineIf">是否是单行if</param>
@@ -265,7 +265,7 @@ namespace Miniscript {
 				throw new CompilerException("'end if' without matching 'if'");
 			}
 		}
-		
+
 		// 部分输入(当使用行继续符时的情况)
 		// 例如: x = 1 +
 		//          2  <- 这两行会被合并
@@ -309,7 +309,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 完全清除并重置解析状态
 		/// 丢弃所有代码和中间结果
-		/// 
+		///
 		/// 使用场景:开始解析新的源代码文件时
 		/// </summary>
 		public void Reset() {
@@ -322,7 +322,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 部分重置,放弃回填点,但保留已编译的代码
 		/// 在REPL(交互式解释器)中使用,当用户可能想要在错误的循环或函数后重置并继续时
-		/// 
+		///
 		/// 使用场景:用户在REPL中输入了未完成的循环或函数,想要取消并继续
 		/// </summary>
 		public void PartialReset() {
@@ -340,7 +340,7 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 检查是否需要更多输入
-		/// 
+		///
 		/// 返回true的情况:
 		/// 1. 有部分输入(行继续)
 		/// 2. 有未完成的函数(栈深度>1)
@@ -357,11 +357,11 @@ namespace Miniscript {
 		/// <summary>
 		/// 检查给定的源代码是否以表示语句在下一行继续的标记结束
 		/// 包括二元运算符、开括号或圆括号等
-		/// 
+		///
 		/// 实现原理:
 		/// 1. 获取源代码的最后一个token
 		/// 2. 检查该token类型是否暗示语句未完成
-		/// 
+		///
 		/// 例如:
 		/// x = 1 +     <- 以+结尾,需要继续
 		/// x = [1,     <- 以逗号结尾,需要继续
@@ -401,7 +401,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 检查是否有未闭合的回填点
 		/// 如果有,抛出相应的错误信息
-		/// 
+		///
 		/// 使用场景:文件结束但仍有未闭合的结构
 		/// </summary>
 		/// <param name="sourceLineNum">源代码行号</param>
@@ -430,13 +430,13 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析源代码的主入口点
-		/// 
+		///
 		/// 工作流程:
 		/// 1. 处理行继续(如果在REPL模式)
 		/// 2. 创建词法分析器(Lexer)
 		/// 3. 调用ParseMultipleLines解析所有语句
 		/// 4. 检查是否需要更多输入
-		/// 
+		///
 		/// REPL模式特点:
 		/// - 检测行继续,累积部分输入
 		/// - 允许交互式输入
@@ -466,14 +466,14 @@ namespace Miniscript {
 				if (outputStack.Count > 1) {
 					throw new CompilerException(errorContext, tokens.lineNum,
 						"'function' without matching 'end function'");
-				} 
+				}
 				CheckForOpenBackpatches(tokens.lineNum);
 			}
 		}
 
 		/// <summary>
 		/// 创建加载了已解析代码的虚拟机
-		/// 
+		///
 		/// TAC.Context: 三地址码执行上下文
 		/// TAC.Machine: 虚拟机,执行TAC指令
 		/// </summary>
@@ -483,12 +483,12 @@ namespace Miniscript {
 			TAC.Context root = new TAC.Context(output.code);
 			return new TAC.Machine(root, standardOutput);
 		}
-		
+
 		/// <summary>
 		/// 使用已解析的代码创建Function,用作import
 		/// 这意味着,它运行所有代码,然后在末尾返回`locals`,
 		/// 以便调用者可以获取其符号(导入的变量/函数)
-		/// 
+		///
 		/// 工作原理:
 		/// 1. 添加一行代码:return locals
 		/// 2. 将整个代码包装为Function
@@ -507,7 +507,7 @@ namespace Miniscript {
 		/// <summary>
 		/// REPL(Read-Eval-Print Loop)入口
 		/// 解析一行代码并立即执行
-		/// 
+		///
 		/// 步骤:
 		/// 1. 解析输入
 		/// 2. 创建虚拟机
@@ -516,7 +516,7 @@ namespace Miniscript {
 		/// <param name="line">输入的代码行</param>
 		public void REPL(string line) {
 			Parse(line);
-		
+
 			TAC.Machine vm = CreateVM(null);
 			// Step(): 单步执行虚拟机
 			while (!vm.done) vm.Step();
@@ -525,7 +525,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 允许换行
 		/// 跳过所有EOL token,直到遇到非EOL token或到达末尾
-		/// 
+		///
 		/// 使用场景:
 		/// - 二元运算符后
 		/// - 括号内
@@ -544,7 +544,7 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析多条语句,直到token用完或遇到'end function'
-		/// 
+		///
 		/// 核心流程:
 		/// 1. 跳过空行
 		/// 2. 处理'end function'(弹出解析栈)
@@ -598,13 +598,13 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析单条语句
-		/// 
+		///
 		/// MiniScript的语句类型:
 		/// 1. 关键字语句: if/while/for/return/break/continue
 		/// 2. 赋值语句: x = expr
 		/// 3. 复合赋值: x += expr, x -= expr等
 		/// 4. 命令语句: print "hello" (无括号的函数调用)
-		/// 
+		///
 		/// allowExtra参数:
 		/// - 用于单行if: if cond then statement
 		/// - 允许语句后跟else而不是EOL
@@ -633,7 +633,7 @@ namespace Miniscript {
 						// 解析if语句
 						Value condition = ParseExpr(tokens);
 						RequireToken(tokens, Token.Type.Keyword, "then");
-						
+
 						// 生成条件跳转:如果条件为假,跳过then部分
 						// 现在还不知道跳转目标,添加到backpatch列表
 						output.Add(new TAC.Line(null, TAC.Line.Op.GotoAifNotB, null, condition));
@@ -642,7 +642,7 @@ namespace Miniscript {
 						// 因为可能有多个需要回填的跳转(if、else if等)
 						output.AddBackpatch("if:MARK");
 						output.AddBackpatch("else");
-						
+
 						// 处理单行if的特殊情况
 						// 单行if: if cond then statement [else statement]
 						if (tokens.Peek().type != Token.Type.EOL) {
@@ -716,7 +716,7 @@ namespace Miniscript {
 					{
 						// for循环处理
 						// MiniScript的for循环: for item in sequence
-						
+
 						// 1. 获取循环变量、"in"关键字和序列表达式
 						Token loopVarTok = RequireToken(tokens, Token.Type.Identifier);
 						ValVar loopVar = new ValVar(loopVarTok.text);
@@ -737,7 +737,7 @@ namespace Miniscript {
 
 						// 4. 索引递增
 						output.Add(new TAC.Line(idxVar, TAC.Line.Op.APlusB, idxVar, TAC.Num(1)));
-						
+
 						// 5. 检查索引是否超出序列长度,如果是则跳出循环
 						ValTemp sizeOfSeq = new ValTemp(output.nextTempNum++);
 						output.Add(new TAC.Line(sizeOfSeq, TAC.Line.Op.LengthOfA, stuff));
@@ -806,15 +806,15 @@ namespace Miniscript {
 			}
 
 		}
-		
+
 		/// <summary>
 		/// 开始else子句
-		/// 
+		///
 		/// 工作流程:
 		/// 1. 生成从if块末尾到end if的跳转(跳过else部分)
 		/// 2. 回填之前的跳转(让它跳到这里,else的开始)
 		/// 3. 为新生成的跳转添加回填点
-		/// 
+		///
 		/// 示例:
 		/// if cond then
 		///   ...         <- 条件为假时跳到这里 ↓
@@ -835,13 +835,13 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析赋值语句或命令语句
-		/// 
+		///
 		/// MiniScript支持多种赋值形式:
 		/// 1. 简单赋值: x = expr
 		/// 2. 复合赋值: x += expr, x -= expr, x *= expr, x /= expr, x %= expr, x ^= expr
 		/// 3. 命令语句: print "hello" (无括号函数调用)
 		/// 4. 隐式结果: 单独的表达式,结果存到隐式变量
-		/// 
+		///
 		/// 优化:
 		/// - 如果最后一条指令是对RHS临时变量的赋值,且没有跳转到下一行,
 		///   则直接修改那条指令的LHS,避免额外的赋值操作
@@ -853,7 +853,7 @@ namespace Miniscript {
 			Value expr = ParseExpr(tokens, true, true);
 			Value lhs, rhs;
 			Token peek = tokens.Peek();
-			
+
 			if (peek.type == Token.Type.EOL ||
 					(peek.type == Token.Type.Keyword && (peek.text == "else" || peek.text == "else if"))) {
 				// 没有显式赋值;存储隐式结果
@@ -862,27 +862,27 @@ namespace Miniscript {
 				output.Add(new TAC.Line(null, TAC.Line.Op.AssignImplicit, rhs));
 				return;
 			}
-			
+
 			if (peek.type == Token.Type.OpAssign) {
 				// 简单赋值: x = expr
 				tokens.Dequeue();	// 跳过'='
 				lhs = expr;
-				
+
 				// 设置localOnly标识符
 				// 如果赋值左侧是变量,右侧对该变量的引用应该在局部作用域查找
 				output.localOnlyIdentifier = null;
 				output.localOnlyStrict = false;
 				if (lhs is ValVar vv) output.localOnlyIdentifier = vv.identifier;
-				
+
 				rhs = ParseExpr(tokens);
 				output.localOnlyIdentifier = null;
-				
+
 			} else if (peek.type == Token.Type.OpAssignPlus || peek.type == Token.Type.OpAssignMinus
 				    || peek.type == Token.Type.OpAssignTimes || peek.type == Token.Type.OpAssignDivide
 				    || peek.type == Token.Type.OpAssignMod || peek.type == Token.Type.OpAssignPower) {
 				// 复合赋值: x += expr 等
 				// 等价于: x = x + expr
-				
+
 				// 确定操作类型
 				var op = TAC.Line.Op.APlusB;
 				switch (tokens.Dequeue().type) {
@@ -895,14 +895,14 @@ namespace Miniscript {
 				}
 
 				lhs = expr;
-				
+
 				// 设置严格的localOnly模式
 				output.localOnlyIdentifier = null;
 				output.localOnlyStrict = true;
 				if (lhs is ValVar vv) output.localOnlyIdentifier = vv.identifier;
-				
+
 				rhs = ParseExpr(tokens);
-				
+
 				// 生成: temp = lhs op rhs
 				var opA = FullyEvaluate(lhs, ValVar.LocalOnlyMode.Strict);
 				Value opB = FullyEvaluate(rhs);
@@ -910,7 +910,7 @@ namespace Miniscript {
 				output.Add(new TAC.Line(TAC.LTemp(tempNum), op, opA, opB));
 				rhs = TAC.RTemp(tempNum);
 				output.localOnlyIdentifier = null;
-				
+
 			} else {
 				// 这看起来像命令语句
 				// 解析行的其余部分作为函数调用的参数
@@ -933,13 +933,13 @@ namespace Miniscript {
 				}
 				// 调用函数
 				ValTemp result = new ValTemp(output.nextTempNum++);
-				output.Add(new TAC.Line(result, TAC.Line.Op.CallFunctionA, funcRef, TAC.Num(argCount)));					
+				output.Add(new TAC.Line(result, TAC.Line.Op.CallFunctionA, funcRef, TAC.Num(argCount)));
 				output.Add(new TAC.Line(null, TAC.Line.Op.AssignImplicit, result));
 				return;
 			}
 
 			// 现在需要将rhs的值赋给lhs
-			
+
 			// 检查lhs是否是临时变量;这表示它不是lvalue
 			// (例如,它可能是列表切片)
 			if (lhs is ValTemp) {
@@ -950,7 +950,7 @@ namespace Miniscript {
 			// 这种情况下,作为简单但非常有用的优化,我们可以直接修改那条指令
 			// 让它赋值给LHS。但是,如果有任何跳转到下一行,我们不能这样做,
 			// 因为短路求值可能会发生(问题#6)。
-			if (rhs is ValTemp && output.code.Count > 0 && !output.IsJumpTarget(output.code.Count)) {			
+			if (rhs is ValTemp && output.code.Count > 0 && !output.IsJumpTarget(output.code.Count)) {
 				TAC.Line line = output.code[output.code.Count - 1];
 				if (line.lhs.Equals(rhs)) {
 					// 是的,就是这种情况。修补它。
@@ -958,7 +958,7 @@ namespace Miniscript {
 					return;
 				}
 			}
-			
+
             // 如果最后一行是创建并赋值函数,那么我们不添加第二个赋值操作
             // 而是用正确的LHS更新那一行
             if (rhs is ValFunction && output.code.Count > 0) {
@@ -975,14 +975,14 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析表达式的入口点
-		/// 
+		///
 		/// 参数说明:
 		/// - asLval: 是否作为左值(可以被赋值)
 		/// - statementStart: 是否在语句开始(影响某些解析决策)
-		/// 
+		///
 		/// 表达式解析使用递归下降,按优先级从低到高:
-		/// Function -> Or -> And -> Not -> IsA -> Comparisons -> AddSub -> 
-		/// MultDiv -> UnaryMinus -> New -> Power -> AddressOf -> Call -> 
+		/// Function -> Or -> And -> Not -> IsA -> Comparisons -> AddSub ->
+		/// MultDiv -> UnaryMinus -> New -> Power -> AddressOf -> Call ->
 		/// Map -> List -> Quantity -> Atom
 		/// </summary>
 		Value ParseExpr(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -992,12 +992,12 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析函数定义
-		/// 
+		///
 		/// 函数定义语法:
 		/// function(param1, param2=default, ...)
 		///   statements
 		/// end function
-		/// 
+		///
 		/// 特殊处理:
 		/// 1. 创建新的ParseState(新的代码上下文)
 		/// 2. 暂存到pendingState(当前语句结束后才压栈)
@@ -1011,7 +1011,7 @@ namespace Miniscript {
 
 			Function func = new Function(null);
 			tok = tokens.Peek();
-			if (tok.type != Token.Type.EOL) { 
+			if (tok.type != Token.Type.EOL) {
 				// 解析参数列表
 				var paren = RequireToken(tokens, Token.Type.LParen);
 				while (tokens.Peek().type != Token.Type.RParen) {
@@ -1056,11 +1056,11 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析'or'运算符
-		/// 
+		///
 		/// 短路求值:
 		/// - 如果左侧为真(>=1),不计算右侧,直接返回1
 		/// - 否则计算右侧,返回 left or right 的结果
-		/// 
+		///
 		/// 实现:
 		/// 1. 计算左侧
 		/// 2. 如果左侧为真,跳转到结果赋值(result=1)
@@ -1113,11 +1113,11 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析'and'运算符
-		/// 
+		///
 		/// 短路求值:
 		/// - 如果左侧为假,不计算右侧,直接返回0
 		/// - 否则计算右侧,返回 left and right 的结果
-		/// 
+		///
 		/// 实现类似ParseOr,但短路条件和结果相反
 		/// </summary>
 		Value ParseAnd(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -1160,7 +1160,7 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析'not'运算符(一元运算符)
-		/// 
+		///
 		/// 语法: not expression
 		/// 生成: temp = not expression
 		/// </summary>
@@ -1185,7 +1185,7 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析'isa'运算符
-		/// 
+		///
 		/// 用于类型检查: value isa type
 		/// 例如: x isa number, obj isa MyClass
 		/// </summary>
@@ -1203,12 +1203,12 @@ namespace Miniscript {
 			}
 			return val;
 		}
-		
+
 		/// <summary>
 		/// 解析比较运算符
-		/// 
+		///
 		/// 支持的比较: ==, !=, <, <=, >, >=
-		/// 
+		///
 		/// 链式比较:
 		/// a < b < c  等价于  (a < b) and (b < c)
 		/// 实现:将所有比较结果相乘(所有为真时结果为真)
@@ -1262,11 +1262,11 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析加法和减法运算符
-		/// 
+		///
 		/// 特殊处理减号:
 		/// - 在语句开始且后面有空格时,可能是一元减号
 		/// - 检查是否在空白处,避免歧义
-		/// 
+		///
 		/// 例如:
 		/// x = -5     <- 一元减号
 		/// x = 3-5    <- 二元减号
@@ -1276,7 +1276,7 @@ namespace Miniscript {
 			ExpressionParsingMethod nextLevel = ParseMultDiv;
 			Value val = nextLevel(tokens, asLval, statementStart);
 			Token tok = tokens.Peek();
-			while (tok.type == Token.Type.OpPlus || 
+			while (tok.type == Token.Type.OpPlus ||
 					(tok.type == Token.Type.OpMinus
 					&& (!statementStart || !tok.afterSpace  || tokens.IsAtWhitespace()))) {
 				tokens.Dequeue();
@@ -1286,7 +1286,7 @@ namespace Miniscript {
 				val = FullyEvaluate(val);
 				Value opB = nextLevel(tokens);
 				int tempNum = output.nextTempNum++;
-				output.Add(new TAC.Line(TAC.LTemp(tempNum), 
+				output.Add(new TAC.Line(TAC.LTemp(tempNum),
 					tok.type == Token.Type.OpPlus ? TAC.Line.Op.APlusB : TAC.Line.Op.AMinusB,
 					val, opB));
 				val = TAC.RTemp(tempNum);
@@ -1329,10 +1329,10 @@ namespace Miniscript {
 			}
 			return val;
 		}
-			
+
 		/// <summary>
 		/// 解析一元减号
-		/// 
+		///
 		/// 优化:
 		/// - 如果后面是数字字面量,直接取反
 		/// - 否则生成 0 - value 的指令
@@ -1360,7 +1360,7 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析'new'运算符
-		/// 
+		///
 		/// 用于创建对象实例: new ClassName
 		/// 生成NewA指令,创建继承自指定类的新对象
 		/// </summary>
@@ -1380,7 +1380,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 解析幂运算符(^)
 		/// MiniScript中优先级最高的二元运算符
-		/// 
+		///
 		/// 例如: 2^3 = 8
 		/// </summary>
 		Value ParsePower(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -1405,10 +1405,10 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析地址运算符(@)
-		/// 
+		///
 		/// 用于获取函数引用而不调用它
 		/// 例如: @print  (返回print函数的引用,不调用它)
-		/// 
+		///
 		/// 实现:设置noInvoke标志,防止自动调用
 		/// </summary>
 		Value ParseAddressOf(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -1428,14 +1428,14 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 完全求值一个值
-		/// 
+		///
 		/// 如果值是变量或序列元素,可能需要调用它(如果是函数)
-		/// 
+		///
 		/// 特殊处理:
 		/// 1. 被@保护的值:不调用
 		/// 2. super和self:保持原样,运行时特殊处理
 		/// 3. 其他变量/序列元素:生成CallFunctionA(可能调用函数,也可能只是获取值)
-		/// 
+		///
 		/// localOnlyMode: 控制变量查找范围
 		/// - Off: 正常查找
 		/// - Warn: 仅局部查找,但只警告
@@ -1458,24 +1458,24 @@ namespace Miniscript {
 				ValSeqElem elem = ((ValSeqElem)val);
 				// 如果序列元素被@保护,原样返回;不尝试调用它
 				if (elem.noInvoke) return val;
-				// 求值序列查找(可能是我们需要调用的函数)				
+				// 求值序列查找(可能是我们需要调用的函数)
 				ValTemp temp = new ValTemp(output.nextTempNum++);
 				output.Add(new TAC.Line(temp, TAC.Line.Op.CallFunctionA, val, ValNumber.zero));
 				return temp;
 			}
 			return val;
 		}
-		
+
 		/// <summary>
 		/// 解析调用表达式和成员访问
-		/// 
+		///
 		/// 处理:
 		/// 1. 点运算符: obj.member
 		/// 2. 索引/切片: list[i], list[1:3], list[:5]
 		/// 3. 函数调用: func(args)
-		/// 
+		///
 		/// 可以链式调用: obj.method().property[0]
-		/// 
+		///
 		/// 切片语法:
 		/// - list[start:end]: 从start到end(不包括end)
 		/// - list[:end]: 从开始到end
@@ -1498,13 +1498,13 @@ namespace Miniscript {
 					if (tokens.Peek().type == Token.Type.LParen && !tokens.Peek().afterSpace) {
 						// 如果这个新元素后面跟着括号,我们需要立即将其解析为调用
 						val = ParseCallArgs(val, tokens);
-					}				
+					}
 				} else if (tokens.Peek().type == Token.Type.LSquare && !tokens.Peek().afterSpace) {
 					// 方括号:索引或切片
 					tokens.Dequeue();	// 丢弃'['
 					AllowLineBreak(tokens); // 开括号后允许换行
 					val = FullyEvaluate(val);
-	
+
 					if (tokens.Peek().type == Token.Type.Colon) {	// 例如,foo[:4]
 						tokens.Dequeue();	// 丢弃':'
 						AllowLineBreak(tokens); // 冒号后允许换行
@@ -1544,7 +1544,7 @@ namespace Miniscript {
 							}
 						}
 					}
-	
+
 					RequireToken(tokens, Token.Type.RSquare);
 				} else if ((val is ValVar && !((ValVar)val).noInvoke)
 					    || (val is ValSeqElem && !((ValSeqElem)val).noInvoke)) {
@@ -1556,19 +1556,19 @@ namespace Miniscript {
 					} else break;
 				} else break;
 			}
-			
+
 			return val;
 		}
 
 		/// <summary>
 		/// 解析映射(字典)字面量
-		/// 
+		///
 		/// 语法: {key1: value1, key2: value2, ...}
-		/// 
+		///
 		/// 重要:
 		/// - 使用CopyA操作,确保每次执行都创建新实例
 		/// - 映射是可变对象,必须在运行时创建,而非解析时
-		/// 
+		///
 		/// 允许尾随逗号和多行格式
 		/// </summary>
 		Value ParseMap(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -1596,7 +1596,7 @@ namespace Miniscript {
 				Value value = ParseExpr(tokens);
 				// 如果key为null,使用ValNull.instance
 				map.map[key ?? ValNull.instance] = value;
-				
+
 				if (RequireEitherToken(tokens, Token.Type.Comma, Token.Type.RCurly).type == Token.Type.RCurly) break;
 			}
 			Value result = new ValTemp(output.nextTempNum++);
@@ -1606,13 +1606,13 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析列表字面量
-		/// 
+		///
 		/// 语法: [elem1, elem2, ...]
-		/// 
+		///
 		/// 重要:
 		/// - 使用CopyA操作,确保每次执行都创建新实例
 		/// - 列表是可变对象,必须在运行时创建,而非解析时
-		/// 
+		///
 		/// 允许尾随逗号和多行格式
 		/// </summary>
 		Value ParseList(Lexer tokens, bool asLval=false, bool statementStart=false) {
@@ -1645,9 +1645,9 @@ namespace Miniscript {
 
 		/// <summary>
 		/// 解析括号表达式
-		/// 
+		///
 		/// 语法: (expression)
-		/// 
+		///
 		/// 括号用于:
 		/// 1. 改变运算优先级
 		/// 2. 提高可读性
@@ -1665,11 +1665,11 @@ namespace Miniscript {
 		/// <summary>
 		/// 辅助方法:收集参数,为每个参数生成PushParam指令,
 		/// 然后生成对给定函数的实际调用
-		/// 
+		///
 		/// 支持两种形式:
 		/// 1. 括号形式: func(arg1, arg2)
 		/// 2. 无括号形式: func (无参数)
-		/// 
+		///
 		/// 工作流程:
 		/// 1. 解析所有参数,生成PushParam指令
 		/// 2. 生成CallFunctionA指令,参数数量作为第二个操作数
@@ -1694,16 +1694,16 @@ namespace Miniscript {
 			output.Add(new TAC.Line(result, TAC.Line.Op.CallFunctionA, funcRef, TAC.Num(argCount)));
 			return result;
 		}
-			
+
 		/// <summary>
 		/// 解析原子(最基本的值)
-		/// 
+		///
 		/// 原子包括:
 		/// 1. 数字: 42, 3.14, 1e10
 		/// 2. 字符串: "hello", 'world'
 		/// 3. 标识符: x, myVar, self
 		/// 4. 关键字常量: null, true, false
-		/// 
+		///
 		/// 数字解析:
 		/// - 使用double.TryParse
 		/// - CultureInfo.InvariantCulture: 确保使用不变文化(点号作为小数点)
@@ -1716,7 +1716,7 @@ namespace Miniscript {
 				// TryParse: 尝试解析字符串为double
 				// NumberStyles: 枚举,指定允许的数字格式
 				// CultureInfo.InvariantCulture: 不变文化,确保一致的格式(如点号作为小数点)
-				if (double.TryParse(tok.text, NumberStyles.Number | NumberStyles.AllowExponent, 
+				if (double.TryParse(tok.text, NumberStyles.Number | NumberStyles.AllowExponent,
 					CultureInfo.InvariantCulture, out d)) return new ValNumber(d);
 				throw new CompilerException("invalid numeric literal: " + tok.text);
 			} else if (tok.type == Token.Type.String) {
@@ -1741,7 +1741,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 要求特定类型和文本的token
 		/// 如果不匹配,抛出错误
-		/// 
+		///
 		/// 特殊错误检测:
 		/// - 检测if条件中使用=而非==的常见错误
 		/// </summary>
@@ -1751,10 +1751,10 @@ namespace Miniscript {
 				Token expected = new Token(type, text);
 				// 为if条件中使用`=`而非`==`的常见错误提供特殊错误消息
 				if (got.type == Token.Type.OpAssign && text == "then") {
-					throw new CompilerException(errorContext, tokens.lineNum, 
+					throw new CompilerException(errorContext, tokens.lineNum,
 						"found = instead of == in if condition");
 				}
-				throw new CompilerException(errorContext, tokens.lineNum, 
+				throw new CompilerException(errorContext, tokens.lineNum,
 					string.Format("got {0} where {1} is required", got, expected));
 			}
 			return got;
@@ -1770,7 +1770,7 @@ namespace Miniscript {
 				|| ((text1 != null && got.text != text1) && (text2 != null && got.text != text2))) {
 				Token expected1 = new Token(type1, text1);
 				Token expected2 = new Token(type2, text2);
-				throw new CompilerException(errorContext, tokens.lineNum, 
+				throw new CompilerException(errorContext, tokens.lineNum,
 					string.Format("got {0} where {1} or {2} is required", got, expected1, expected2));
 			}
 			return got;
@@ -1787,7 +1787,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 测试有效解析
 		/// 单元测试辅助方法
-		/// 
+		///
 		/// 参数:
 		/// - src: 要解析的源代码
 		/// - dumpTac: 是否转储生成的TAC代码(用于调试)
@@ -1806,7 +1806,7 @@ namespace Miniscript {
 		/// <summary>
 		/// 运行单元测试
 		/// 测试各种MiniScript语法构造
-		/// 
+		///
 		/// 覆盖:
 		/// - 表达式
 		/// - 函数定义
