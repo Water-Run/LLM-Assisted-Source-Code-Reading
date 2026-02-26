@@ -19,7 +19,7 @@ using System.Collections;  // 提供 IEnumerable 等基础集合接口
 using System.Collections.Generic;  // 提供泛型集合类如 List<T>, Dictionary<TKey, TValue>
 
 namespace Miniscript {
-
+   
 	// 静态类：TAC 是静态类，意味着它只包含静态成员，不能被实例化
 	// 静态类通常用于组织相关的功能和类型定义
 	public static class TAC {
